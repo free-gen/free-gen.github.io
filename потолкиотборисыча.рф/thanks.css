@@ -1,0 +1,80 @@
+@font-face {
+    font-family: 'med';
+    src: url('fonts/GothaProMed.eot');
+    src: url('fonts/GothaProMed.eot') format('embedded-opentype'),
+         url('fonts/GothaProMed.woff2') format('woff2'),
+         url('fonts/GothaProMed.woff') format('woff'),
+         url('fonts/GothaProMed.ttf') format('truetype'),
+         url('fonts/GothaProMed.svg#GothaProMed') format('svg');
+}
+html, body {
+	overflow-x: hidden;
+	background-color: #fff;
+	padding: 0 !important;
+}
+#link  {text-decoration: none;}
+#link :hover {text-decoration: none;}
+#link :link {text-decoration: none;}
+#link :visited {text-decoration: none;}
+.section {
+	width: 100vw;
+	height: 100vh;
+	background-color: #fff;
+}
+.section-header {
+	color: #000;
+	font-family: med;
+	font-size: 1.5vw;
+	margin-top: 5vh;
+	margin-bottom: 5vh;
+}
+.section-header>span {
+	font-size: 1vw;
+	color: #333;
+}
+#link {
+	color: #fff;
+	font-family: med;
+	font-size: 15pt;
+	background-color: #003580;
+	border-radius: 5px;
+	padding: 1em;
+	-webkit-box-shadow: 0px 10px 40px -5px rgba(0,0,0,0.75);
+	-moz-box-shadow: 0px 10px 40px -5px rgba(0,0,0,0.75);
+	box-shadow: 0px 10px 40px -5px rgba(0,0,0,0.75);
+}
+#logo {
+	margin-top: 25vh;
+}
+img {
+	width: 25vw;
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+	#logo {margin-top: 15vh;}
+	img {width: 35vw;}
+	.section-header {font-size: 2vw;}
+	.section-header>span {font-size: 1.3vw;}
+	#link {font-size: 1.5vw;}
+}
+@media (min-width: 768px) and (max-width: 991px) {
+	#logo {margin-top: 15vh;}
+	img {width: 35vw;}
+	.section-header {font-size: 2vw;}
+	.section-header>span {font-size: 1.3vw;}
+	#link {font-size: 2vw;}
+}
+@media (min-width: 481px) and (max-width: 767px) {
+	#logo {margin-top: 10vh;}
+	img {width: 80vw;}
+	.section-header {font-size: 5vw; margin-bottom: 50px;}
+	.section-header>span {font-size: 3vw;}
+	#link {font-size: 4vw;}
+}
+@media (max-width: 480px) {
+	#logo {margin-top: 5vh;}
+	img {width: 80vw;}
+	.section-header {font-size: 5vw;}
+	.section-header>span {font-size: 3vw;}
+	#link {font-size: 6vw;}
+}
