@@ -41,3 +41,11 @@ html, section {
 #links a:hover {
 	color: yellow;
 }
+
+@media (max-width: 480px) {
+	.container {
+	-webkit-background-size: 100% auto;
+	background-size: 100% auto;
+	background-position: auto;
+	}
+}
