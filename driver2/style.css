@@ -1,0 +1,43 @@
+@font-face {
+	font-family: 'impactreg';
+	src: url('./font/impactreg.eot');
+	src: local('impactreg'), url('./font/impactreg.woff') format('woff'), url('./font/impactreg.ttf') format('truetype');
+}
+a {text-decoration: none!important; color: white;}
+a:hover {text-decoration: none!important; color: yellow;}
+a:link {text-decoration: none!important; color: white;}
+a:visited {text-decoration: none!important; color: white;}
+
+html, body {overflow-x: hidden; padding: 0!important}
+
+html, section {
+	background-color: red;
+	color: white;
+	background-image: url(tanner.png);
+	height: 100vh;
+	width: 100vw;
+	-webkit-background-size: auto 100%;
+	background-size: auto 100%;
+	background-repeat: no-repeat;
+	background-position: right;
+}
+.container {
+	height: 100vh;
+	width: 100vw;
+	background-image: url(logo1.png);
+	-webkit-background-size: 60% auto;
+	background-size: 60% auto;
+	background-repeat: no-repeat;
+	background-position: 2em 2em;
+}
+#links {
+	font-family: 'impactreg';
+	position: absolute;
+	bottom: 2em;
+	right: 30%;
+	font-size: 36pt;
+}
+#links a{margin: 1em;}
+#links a:hover {
+	color: yellow;
+}
