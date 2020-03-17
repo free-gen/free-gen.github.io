@@ -35,7 +35,7 @@ html, section {
 	font-size: 10vw;
 	text-align: center;
 	position: relative;
-	top: 60vh;
+	top: 65vh;
 }
 #links a{}
 #links a:hover {
@@ -47,14 +47,21 @@ html, section {
 		-webkit-background-size: 100% auto;
 		background-size: 100% auto;
 		background-position: center 20%;
+	}
+	.modal-dialog {
+    	width: 100%;
+	}
 }
 
-/* @media all and (orientation:portrait) {} */
-
-@media all and (orientation:landscape) {
+@media (min-width: 320px) and (orientation:landscape) {
 	.container {
-		-webkit-background-size: 60% auto;
-		background-size: 60% auto;
-		background-position: left 20%;
+		-webkit-background-size: 80% auto;
+		background-size: 80% auto;
+		background-position: center 20%;
+	}
+	#links {top: 75vh; font-size: 6vw;}
 }
 
+@media (min-width: 320px) and (orientation:portrait) {
+	#links {top: 75vh; font-size: 15vw;}
+}
