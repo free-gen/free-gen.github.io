@@ -1,19 +1,62 @@
-@font-face {
-	font-family: 'impactreg';
-	src: url('./font/impactreg.eot');
-	src: local('impactreg'), url('./font/impactreg.woff') format('woff'), url('./font/impactreg.ttf') format('truetype');
-}
 a {text-decoration: none!important; color: white;}
 a:hover {text-decoration: none!important; color: yellow;}
 a:link {text-decoration: none!important; color: white;}
 a:visited {text-decoration: none!important; color: white;}
 
-html, body {overflow: hidden; padding: 0!important}
+html, body {overflow-x: hidden; padding: 0!important}
+
+hr {
+	border: none; /* Убираем границу для браузера Firefox */
+    color: white; /* Цвет линии для остальных браузеров */
+    background-color: white; /* Цвет линии для браузера Firefox и Opera */
+    height: 2px;
+    width: 100%;
+}
+
+.Modal {
+    position: fixed;
+    display: none;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 0;
+    background: rgba(0,0,0,0.7);
+    pointer-events: none;
+}
+.Modal:target {
+    display: flex;
+    pointer-events: auto;
+} 
+.Modal_Body {
+	width: 100%;
+	height: 100%;
+    position: relative;
+    z-index: 2;
+    display: block;
+    margin: auto;
+    padding: 15px;
+    background: red;
+}
+
+.content {
+	font-size: 16px;
+	width: 80%;
+	margin-left: 10%;
+	text-align: left;
+}
+img {
+	width: 25vw;
+}
+.credits {
+	color: #ccc;
+	font-size: 12px;
+}
 
 html, section {
 	background-color: red;
 	color: white;
-	background-image: url(tanner.png);
+	background-image: url(tanner.jpg);
 	height: 100vh;
 	width: 100vw;
 	-webkit-background-size: auto 100%;
@@ -31,13 +74,13 @@ html, section {
 	background-position: 2em 2em;
 }
 #links {
-	font-family: 'impactreg';
+	font-family: 'Oswald', sans-serif;
 	font-size: 10vw;
 	text-align: center;
 	position: relative;
 	top: 65vh;
 }
-#links a{}
+#links a{font-weight: 900;}
 #links a:hover {
 	color: yellow;
 }

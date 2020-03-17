@@ -7,26 +7,50 @@
 	
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
+	<link href="https://fonts.googleapis.com/css?family=Oswald&display=swap" rel="stylesheet">
+
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
 </head>
 <body>
 	<section>
 		<div class="container">
 
 			<div id="links">
-				<a href="#largeModal" data-toggle="modal">Скачать</a> <br>
-				
-				<div id="largeModal" class="modal fade" tabindex="-1" role="docment">
-			        <div class="modal-dialog modal-lg">
-			            <div class="modal-content">
-			                <div class="modal-body">
-			                    Содержимое модального окна...
-			                </div>
-			            </div>
-			        </div>
-			    </div>
+				<a href="#ModalWindow">Подробнее</a> <br>
+
+				<div id="ModalWindow" class="Modal">
+				    <div class="Modal_Body">
+				        <div class="content">
+				        	<p>Driver 2: Wheelman Is Back</p>
+					        <p>В новом любительском переводе.</p>
+					        <hr>
+					        <p> 
+					        	К 20 летней годовщине выхода игры в свет, я решил сделать более осмысленный ее перевод и озвучивание. Данный перевод является фанатским/любительским, поэтому он не претендует на высокую точность и качество. <br>
+					        </p>
+
+					        <div class="row">
+					        	<div class="col-sm-4">
+					        		<img src="drvr (1).jpg" alt="">
+					        	</div>
+					        	<div class="col-sm-4">
+					        		<img src="drvr (2).jpg" alt="">
+					        	</div>
+					        	<div class="col-sm-4">
+					        		<img src="drvr (3).jpg" alt="">
+					        	</div>
+					        </div>
+					        <p class="credits">
+					        	* Перевод и хакинг: FreeGen (Евгений Сохарев) © 2020 <br>
+								* Озвучивание: Евгений Сохарев и Николай Вагабов <br>
+								* Отдельные благодарности Sharpnull и megavolt85 <br>
+					        </p>
+					        <a href="#ModalWindowClose">Закрыть это окно</a>
+				        </div>
+				    </div>
+				</div>
 
 			</div>
 
