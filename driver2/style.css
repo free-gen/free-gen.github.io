@@ -42,10 +42,9 @@ html, section {
 	color: yellow;
 }
 
-@media (min-width: 240px) and (max-width: 767px) {
+@media (min-width: 768px) and (max-width: 1199px) {
 	.container {
-		-webkit-background-size: 80% auto;
-		background-size: 80% auto;
-		background-position: center 2em;
-	}
+		-webkit-background-size: 100% auto;
+		background-size: 100% auto;
+		background-position: center 20%;
 }
