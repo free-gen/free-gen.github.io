@@ -85,6 +85,17 @@ html, section {
 	color: yellow;
 }
 
+#links2 {
+	width: 50%;
+	text-align: center;
+	padding: 20px;
+}
+.button {
+	background-color: black;
+	height: 40px;
+	line-height: 40px;
+}
+
 @media (min-width: 768px) and (max-width: 1199px) {
 	.container {
 		-webkit-background-size: 100% auto;
