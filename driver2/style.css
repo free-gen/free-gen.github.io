@@ -32,12 +32,12 @@ html, section {
 }
 #links {
 	font-family: 'impactreg';
-	position: absolute;
-	bottom: 2em;
-	right: 30%;
-	font-size: 36pt;
+	font-size: 10vw;
+	text-align: center;
+	position: relative;
+	top: 60vh;
 }
-#links a{margin: 1em;}
+#links a{}
 #links a:hover {
 	color: yellow;
 }
@@ -48,3 +48,13 @@ html, section {
 		background-size: 100% auto;
 		background-position: center 20%;
 }
+
+/* @media all and (orientation:portrait) {} */
+
+@media all and (orientation:landscape) {
+	.container {
+		-webkit-background-size: 60% auto;
+		background-size: 60% auto;
+		background-position: left 20%;
+}
+
