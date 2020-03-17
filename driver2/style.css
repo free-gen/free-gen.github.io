@@ -8,7 +8,7 @@ a:hover {text-decoration: none!important; color: yellow;}
 a:link {text-decoration: none!important; color: white;}
 a:visited {text-decoration: none!important; color: white;}
 
-html, body {overflow-x: hidden; padding: 0!important}
+html, body {overflow: hidden; padding: 0!important}
 
 html, section {
 	background-color: red;
