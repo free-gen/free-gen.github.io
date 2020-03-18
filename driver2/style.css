@@ -6,9 +6,9 @@ a:visited {text-decoration: none!important; color: white;}
 html, body {overflow-x: hidden; padding: 0!important}
 
 hr {
-	border: none; /* Убираем границу для браузера Firefox */
-    color: white; /* Цвет линии для остальных браузеров */
-    background-color: white; /* Цвет линии для браузера Firefox и Opera */
+	border: none;
+    color: white;
+    background-color: white;
     height: 2px;
     width: 100%;
 }
@@ -38,7 +38,6 @@ hr {
     padding: 15px;
     background: red;
 }
-
 .content {
 	font-size: 16px;
 	width: 80%;
@@ -46,7 +45,11 @@ hr {
 	text-align: left;
 }
 img {
-	width: 25vw;
+	width: 90%;
+	margin: 5%;
+}
+.img {
+	width: 33.333333%;
 }
 .credits {
 	color: #ccc;
