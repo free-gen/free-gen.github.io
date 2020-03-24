@@ -8,3 +8,9 @@ html, body {overflow-x: hidden; background-color: #151515; color: #fff; font-fam
 	max-width: 40%;
 	height: auto !important;
 }
+
+@media (min-width: 320px) and (orientation:portrait) {
+	html, body {font-size: 20px;}
+	.logo {max-width: 80%; margin-bottom: 5%;}
+	.links {width: 105%; margin-left: -2.5%; padding: 20px; margin-top: 0}
+}
