@@ -558,6 +558,6 @@ h2 {
 	.head {left: 2vw;}
 	h1 {font-size: 36pt; line-height: 40pt;}
 	h2 {font-size: 16pt;}
-	.console {font-size: 8pt; top: 40vh; left: 2vw;}
-	.wrapper {font-size: 10pt; top: 40vh; left: 2vw;}
+	.console {font-size: 8pt; top: 30vh; left: 2vw;}
+	.wrapper {font-size: 10pt; top: 30vh; left: 2vw;}
 }
