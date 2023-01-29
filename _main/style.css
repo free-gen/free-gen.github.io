@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@200;300;400;500;600;700;800;900&display=swap');
 /* Variables */
 :root {
-	--bg_image: url("./bg.gif");
+	--bg_image: url("https://free-gen.github.io/_main/bg.gif");
 
   --bg_alpha: rgba(0, 0, 0, 0.5);
 	--bg_solid: rgb(0, 0, 0);
