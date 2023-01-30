@@ -1,7 +1,13 @@
 document.addEventListener('DOMContentLoaded',function(event){
   window.onload = function() {
-  var dataText = [ "Современные методы верстки ", "Стильные визуальные решения ", "Индивидуальный подход ", "Решения на любой вкус и кошелек ", "Стараюсь не оставлять вас равнодушным "];
-  var caret = "▋";
+  var dataText = [ 
+		"Современные методы верстки ", 
+		"Стильные визуальные решения ", 
+		"Индивидуальный подход ", 
+		"Решения на любой вкус и кошелек ", 
+		"Стараюсь не оставлять вас равнодушным "
+	];
+  var caret = "|";
   function type(text, i, fnCallback) {
     if (i < (text.length)) {
       document.querySelector("#text").textContent = text.substring(0, i+1) + caret;
