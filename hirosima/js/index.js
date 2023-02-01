@@ -1,11 +1,5 @@
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-// ——————————————————————————————————————————————————
-// TextScramble
-// ——————————————————————————————————————————————————
-
 var TextScramble = function () {
   function TextScramble(el) {
     _classCallCheck(this, TextScramble);
@@ -14,7 +8,6 @@ var TextScramble = function () {
     this.chars = '愚かな女性';
     this.update = this.update.bind(this);
   }
-
   _createClass(TextScramble, [{
     key: 'setText',
     value: function setText(newText) {
@@ -78,19 +71,19 @@ var TextScramble = function () {
       return this.chars[Math.floor(Math.random() * this.chars.length)];
     }
   }]);
-
   return TextScramble;
 }();
-
-// ——————————————————————————————————————————————————
-// Example
-// ——————————————————————————————————————————————————
-
-var phrases = ['тук-тук', 'это я :)', 'извини, что пропадал','но у меня был пиздец','пиздецы - мое второе я','не спеши с выводами','просто так вышло','я хотел бы увидеться','давай сегодня?', '?', '??', '???', '????', '?????', '', '', '', '', '', '', '', '', '', ''];
-
+var phrases = [
+	'здравствуй, моя хиросима', 
+	'держи чистосердечное', 
+	'я буду любить тебя всю зиму',
+	'и так далее...',
+	'покрывают меня курсивами',
+	'поцелуи твои...',
+	'...и тд...'
+];
 var el = document.querySelector('.text');
 var fx = new TextScramble(el);
-
 var counter = 0;
 var next = function next() {
   fx.setText(phrases[counter]).then(function () {
@@ -98,5 +91,4 @@ var next = function next() {
   });
   counter = (counter + 1) % phrases.length;
 };
-
 next();
