@@ -494,9 +494,9 @@ body {
 	h2 {font-size: 14pt; line-height: 22pt;}
 }
 @media screen and (max-width: 480px) {
-	body {background-size: contain; background-position: 0 40%;}
+	body {background-size: contain; background-position: 0 35%;}
 	.head {left: 0; text-align: center;}
 	h1 {font-size: 34pt; line-height: 40pt;}
 	h2 {font-size: 14pt; background-color: rgba(0, 0, 0, 0.5);}
-	.terminal {left: 1pt; top: 38vh; font-size: 10pt; width: 100%;}
+	.terminal {left: 1pt; top: 35vh; font-size: 10pt; width: 100%;line-height: 10pt; background-color: rgba(0, 0, 0, 0.5);}
 }
