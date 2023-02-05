@@ -22,10 +22,7 @@ h2 {
 	font-weight: 400;
 	line-height: 28pt;
 }
-a {
-	text-decoration: none;
-	color: var(--txt_second);
-}
+a {text-decoration: none;color: var(--txt_second);}
 a:hover, a:focus {cursor: pointer;}
 a>span:hover, a>span:focus {color: yellow;animation: hover_glitch 2s steps(100) infinite;}
 .about, .works, .contacts {padding: 6pt 6pt 6pt 0; }
