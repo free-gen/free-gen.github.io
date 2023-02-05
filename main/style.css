@@ -11,14 +11,14 @@
 }
 /* STRING */
 h1 {
-	font-size: 84pt;
+	font-family: 'Montserrat', monospace;
+	font-size: 96pt;
 	font-weight: 900;
 	animation: glitch 2s steps(100) infinite;
 	line-height: 60pt;
 }
 h2 {
-	font-family: 'Source Code Pro';
-	font-size: 18pt;
+	font-size: 22pt;
 	font-weight: 400;
 	line-height: 28pt;
 }
@@ -26,22 +26,22 @@ a {
 	text-decoration: none;
 	color: var(--txt_second);
 }
-a:hover {
-	color: var(--link);
-	animation: hover_glitch 2s steps(100) infinite;
-}
+a:hover, a:focus {cursor: pointer;}
+a>span:hover, a>span:focus {color: yellow;animation: hover_glitch 2s steps(100) infinite;}
+.about, .works, .contacts {padding: 6pt 6pt 6pt 0; }
+.aboutHide, .worksHide, .contactsHide {display: none;}
 /* BLOCK */
 body {
+	font-family: 'Source Code Pro';
 	margin: 0;
   padding: 0;
   width: 100vw;
   height: 100vh;
   overflow: hidden;
 	background-image: url("./bg.gif");
-	background-size: auto;
-	background-position: 85% 30%;
+	background-size: 600px;
+	background-position: 85% 40%;
 	background-repeat: no-repeat;
-	font-family: 'Montserrat', monospace;
 	background-color: var(--bg_solid);
 	color: var(--txt_second);
 }
@@ -49,46 +49,19 @@ body {
 	color: var(--txt_first);
 	position: relative;
 	top: 5vh;
-	left: 3vw;
+	left: 10vw;
 }
-.console {
-	position: relative;
-	top: 13vh;
-	left: 3vw;
+.terminal {
 	font-size: 12pt;
-	font-family: 'Source Code Pro';
-	font-weight: 400;
-}
-.user {
-	font-weight: 400;
-	padding: 2pt 5pt 4pt;
-}
-.user:hover {
-	animation: hover_glitch 2s steps(100) infinite;
-}
-.wrapper {
-	position: relative;
-	top: 18vh;
-	left: 2vw;
-	font-size: 12pt;
-	display: grid;
-	width: 50vw;
-}
-.portfolio {
-	grid-column: 1 / 2;
-  grid-row: 1;
-	text-align: left;
-	font-family: 'Source Code Pro';
-	font-weight: 400;
-	padding: 1vw;
-}
-.contacts {
-	grid-column: 2 / 2;
-  grid-row: 1;
-	text-align: left;
-	font-family: 'Source Code Pro';
-	font-weight: 400;
-	padding: 1vw;
+	font-weight: 600;
+  /* text-transform: uppercase; */
+  position: relative;
+  top: 30vh;
+	left: 10vw;
+  line-height: 12pt;
+  width: 50%;
+  height: 40%;
+	padding: 6pt;
 }
 /* ANIMATIONS */
 @keyframes glitch {
@@ -505,27 +478,27 @@ body {
 }
 /* SCREENS */
 @media screen and (max-width: 1280px) {
-	.wrapper {width: 60%;}
+	.head {left: 5vw; top: 1vh;}
+	.terminal {left: 5vw; top: 15vh; width: 60%;}
+	body {background-size: auto;	background-position: 100% 30%;}
 }
 @media screen and (max-width: 980px) {
 	body {background-position: 100% 30%;}
+	.terminal {width: 70%;}
 	h1 {font-size: 60pt;}
 	h2 {font-size: 16pt;line-height: 22pt;}
-	.wrapper {width: 80%; font-size: 12pt;}
 }
 @media screen and (max-width: 736px) {
-	body {background-size: contain;}
+	body {background-size: 60%; background-position: 110% center;}
 	.head {top: 5vh;}
-	h1 {font-size: 44pt; line-height: 48pt;}
-	h2 {font-size: 18pt; line-height: 30pt;}
-	.console {font-size: 12pt;}
-	.wrapper {top: 20vh; width: 100%; font-size: 12pt; line-height: 20pt;}
+	.terminal {width: 80%;}
+	h1 {font-size: 48pt; line-height: 48pt;}
+	h2 {font-size: 14pt; line-height: 22pt;}
 }
 @media screen and (max-width: 480px) {
-	body {background-size: contain;}
+	body {background-size: contain; background-position: 0 40%;}
 	.head {left: 0; text-align: center;}
-	h1 {font-size: 36pt; line-height: 40pt;}
-	h2 {font-size: 16pt; background-color: rgba(0, 0, 0, 0.5);}
-	.console {font-size: 10pt; top: 30vh; left: 2vw;}
-	.wrapper {font-size: 10pt; top: 30vh; left: 2vw;}
+	h1 {font-size: 34pt; line-height: 40pt;}
+	h2 {font-size: 14pt; background-color: rgba(0, 0, 0, 0.5);}
+	.terminal {left: 1pt; top: 35vh; font-size: 11pt; width: 100%;}
 }
