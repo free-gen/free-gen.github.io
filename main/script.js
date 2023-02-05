@@ -55,9 +55,10 @@ document.addEventListener('DOMContentLoaded',function(event){
   window.onload = function() {
   var dataText = [ 
 		"Современные методы верстки ", 
-		"Стильные визуальные решения ", 
-		"Индивидуальный подход ", 
-		"Решения на любой вкус и кошелек "
+		"Трендовые визуальные приемы ", 
+		"Максимально индивидуальный подход ", 
+		"Решения на любой вкус и кошелек ",
+		"Choose your fate... "
 	];
   var caret = "|";
   function type(text, i, fnCallback) {
