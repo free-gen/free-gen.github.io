@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded',function(event){
   StartAnimation(0);
   }
 });
-//RANDOM BG
+//RANDOM BGND
 const backgrounds = [
   './main/001.gif',
   './main/002.gif',
