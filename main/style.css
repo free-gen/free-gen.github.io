@@ -498,5 +498,5 @@ body {
 	.head {left: 0; text-align: center;}
 	h1 {font-size: 34pt; line-height: 40pt;}
 	h2 {font-size: 14pt; background-color: rgba(0, 0, 0, 0.5);}
-	.terminal {left: 1pt; top: 38vh; font-size: 10pt; width: 100%;line-height: 11pt; background-color: rgba(0, 0, 0, 0.5);}
+	.terminal {left: 1pt; top: 37vh; font-size: 10pt; width: 100%;line-height: 11pt; background-color: rgba(0, 0, 0, 0.5);}
 }
