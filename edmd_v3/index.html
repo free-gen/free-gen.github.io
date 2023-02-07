@@ -10,12 +10,13 @@
 	<link href="css/bootstrap.min.css" rel="stylesheet"> 
 	<style>
 		@font-face {font-family: 'sfmono';src: local('sfmono'), url('sfmono.woff') format('woff');}
-		body {font-family: 'sfmono', monospace; background-color: #373737; color: #d6d6d6;}
-		.container {width: 60vw; min-width: 360px; overflow: hidden; position: relative; margin: auto; background-color: #313131; padding: 3vw; border-radius: 5px;}
+		body {font-family: 'sfmono', monospace; background-color: #373737; color: #d6d6d6; overflow-x: hidden;}
+		.container {width: 60vw; position: relative; margin: auto; background-color: #313131; padding: 3vw; border-radius: 5px;}
 		h1, h2, span {color: #fff;}
 		span {color: #f1ae1b;}
 		section {line-height: 16pt;}
 		h2 {line-height: 24pt;}
+		@media screen and (max-width: 736px) {.container {width: 90vw;}}
 	</style>
 	<!-- FONTAWESOME WEB -->
 	<script src="https://kit.fontawesome.com/37ff3af7dc.js"></script>
