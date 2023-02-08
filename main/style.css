@@ -1,5 +1,23 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@200;300;400;500;600;700;800;900&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@200;300;400;500;600;700;800;900&display=swap'); */
+@font-face {
+	font-family: 'SF Mono Semibold';
+	font-style: normal;
+	font-weight: normal;
+	src: local('SF Mono Semibold'), url('SFMonoSemibold.woff') format('woff');
+	}
+@font-face {
+	font-family: 'SF UI Text Semibold';
+	font-style: normal;
+	font-weight: normal;
+	src: local('SF UI Text Semibold'), url('SFUIText-Semibold.woff') format('woff');
+	}
+@font-face {
+	font-family: 'SF UI Text Heavy';
+	font-style: normal;
+	font-weight: normal;
+	src: local('SF UI Text Heavy'), url('SFUIText-Heavy.woff') format('woff');
+	}
 /* VARIABLES */
 :root {
   --bg_alpha: rgba(0, 0, 0, 0.5);
@@ -11,7 +29,7 @@
 }
 /* STRING */
 h1 {
-	font-family: 'Montserrat', monospace;
+	font-family: 'SF UI Text Heavy';
 	font-size: 96pt;
 	font-weight: 900;
 	animation: glitch 2s steps(100) infinite;
@@ -29,7 +47,7 @@ a>span:hover, a>span:focus {color: yellow;animation: hover_glitch 2s steps(100) 
 .aboutHide, .worksHide, .contactsHide {display: none;}
 /* BLOCK */
 body {
-	font-family: 'Source Code Pro';
+	font-family: 'SF Mono Semibold';
 	margin: 0;
   padding: 0;
   width: 100vw;
