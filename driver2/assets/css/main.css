@@ -1,12 +1,12 @@
 @import url(fontawesome-all.min.css);
 /* @import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i"); */
-/* @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&display=swap');
 /* @import url('https://fonts.googleapis.com/css2?family=Alumni+Sans:wght@700;800;900&display=swap'); */
 
 @font-face {
 	font-family: "font";
 	src: local("font"),
-		url("../font.woff") format("woff");
+		url("../font.otf") format("opentype");
 }
 
 /*----------------------Мои нововведения------------------------*/
@@ -222,7 +222,7 @@ input, select, textarea {
 	}
 
 	body, input, select, textarea {
-		font-family: "font", sans-serif;
+		font-family: "Oswald", sans-serif;
 		font-size: 1rem;
 		font-weight: 600;
 		line-height: 1.65;
@@ -251,11 +251,11 @@ input, select, textarea {
 
 	p {
 		margin: 0 0 2rem 0;
-		font-size: 1.5rem;
+		font-size: 1.25rem;
 	}
 
 		p.major {
-			font-size: 1.5rem;
+			font-size: 1.25rem;
 		}
 
 	h1, h2, h3, h4, h5, h6 {
@@ -271,12 +271,12 @@ input, select, textarea {
 		}
 
 	h1 {
-		font-size: 3.5rem;
+		font-size: 3rem;
 		line-height: 1.2;
 	}
 
 	h2 {
-		font-size: 3rem;
+		font-size: 2.5rem;
 		line-height: 1.2;
 	}
 
