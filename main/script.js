@@ -1,4 +1,4 @@
-let close = "┌─[ ЗАКРЫТЬ (X) ]";
+let close = "─$ [ ЗАКРЫТЬ (X) ]";
 // Обьекты
 let about = document.querySelector('.about');
 let works = document.querySelector('.works');
