@@ -1,21 +1,9 @@
-/* @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@200;300;400;500;600;700;800;900&display=swap'); */
 @font-face {
 	font-family: 'SF Mono Semibold';
-	font-style: normal;
-	font-weight: normal;
 	src: local('SF Mono Semibold'), url('SFMonoSemibold.woff') format('woff');
 	}
 @font-face {
-	font-family: 'SF UI Text Semibold';
-	font-style: normal;
-	font-weight: normal;
-	src: local('SF UI Text Semibold'), url('SFUIText-Semibold.woff') format('woff');
-	}
-@font-face {
 	font-family: 'SF UI Text Heavy';
-	font-style: normal;
-	font-weight: normal;
 	src: local('SF UI Text Heavy'), url('SFUIText-Heavy.woff') format('woff');
 	}
 /* VARIABLES */
@@ -35,7 +23,6 @@ h1 {
 	line-height: calc(var(--index) * 3.8);
 	margin-left: calc(var(--index) * -.3);;
 	animation: glitch 2s steps(100) infinite;
-	/* background-color: red; */
 }
 h2 {
 	font-size: calc(var(--index) * 1.5);
@@ -45,6 +32,7 @@ h2 {
 a {text-decoration: none;color: var(--txt_second);}
 a:hover, a:focus {cursor: pointer;}
 a>span:hover, a>span:focus {color: yellow;}
+.aboutButton, .worksButton, .contactsButton {color: #fff}
 .aboutHide, .worksHide, .contactsHide {display: none;}
 /* BLOCK */
 body {
@@ -54,12 +42,10 @@ body {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-	/* background-image: url(./1.png); */
 	background-size: calc(var(--index) * 25);
 	background-position: calc(var(--index) * 32.5) center;
 	background-repeat: no-repeat;
 	background-color: var(--bg_solid);
-	/* background-color: darkblue; */
 	color: var(--txt_second);
 }
 .head {
@@ -73,12 +59,10 @@ body {
 	line-height: calc(var(--index) * .8);
 	font-weight: 600;
   position: absolute;
-  /* top: calc(var(--index) * 20.6); */
 	bottom: calc(var(--index) * -1.1);;
 	left: calc(var(--index) * 6);
   width: 50%;
   height: 40%;
-	/* padding: 6pt; */
 }
 /* ANIMATIONS */
 @keyframes glitch {
@@ -391,18 +375,9 @@ body {
 }
 /* SCREENS */
 @media all and (orientation: portrait) {
-  body {background-size: contain; background-position: 0 calc(var(--index) * 15);}
+  body {background-size: contain; background-position: 0 calc(var(--index) * 12);}
 	.head {left: 0; top: calc(var(--index) * 2); width: 100%; text-align: center;}
 	h1 {font-size: calc(var(--index) * 4); line-height: calc(var(--index) * 4);}
 	h2 {font-size: calc(var(--index) * 1.8); line-height: calc(var(--index) * 2.5); background-color: rgba(0, 0, 0, 0.5);}
-	.terminal {
-		font-size: calc(var(--index) * 1);
-		line-height: calc(var(--index) * 2);
-		left: 0;
-		padding-left: 2pt;
-		bottom: calc(var(--index) * 2);
-		width: 100%;
-		height: calc(var(--index) * 13); 
-		background-color: rgba(0, 0, 0, 0.5);
-	}
+	.terminal {font-size: calc(var(--index) * 1);line-height: calc(var(--index) * 2);left: 0;padding-left: 2pt;bottom: calc(var(--index) * 2);width: 100%;height: calc(var(--index) * 13);background-color: rgba(0, 0, 0, 0.5);}
 }
