@@ -20,6 +20,7 @@
 	}
 /* VARIABLES */
 :root {
+	--index: calc(1vw + 1vh);
   --bg_alpha: rgba(0, 0, 0, 0.5);
 	--bg_solid: rgb(0, 0, 0);
 	--txt_first: rgb(255, 255, 255);
@@ -30,20 +31,20 @@
 /* STRING */
 h1 {
 	font-family: 'SF UI Text Heavy';
-	font-size: 96pt;
-	font-weight: 900;
+	font-size: calc(var(--index) * 3.8);
+	line-height: calc(var(--index) * 3.8);
+	margin-left: calc(var(--index) * -.3);;
 	animation: glitch 2s steps(100) infinite;
-	line-height: 60pt;
+	/* background-color: red; */
 }
 h2 {
-	font-size: 22pt;
+	font-size: calc(var(--index) * 1.5);
 	font-weight: 400;
-	line-height: 28pt;
+	line-height: calc(var(--index) * 1.8);
 }
 a {text-decoration: none;color: var(--txt_second);}
 a:hover, a:focus {cursor: pointer;}
-a>span:hover, a>span:focus {color: yellow;animation: hover_glitch 2s steps(100) infinite;}
-.about, .works, .contacts {padding: 6pt 6pt 6pt 0; }
+a>span:hover, a>span:focus {color: yellow;}
 .aboutHide, .worksHide, .contactsHide {display: none;}
 /* BLOCK */
 body {
@@ -53,28 +54,31 @@ body {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-	background-size: 600px;
-	background-position: 85% 40%;
+	/* background-image: url(./1.png); */
+	background-size: calc(var(--index) * 25);
+	background-position: calc(var(--index) * 32.5) center;
 	background-repeat: no-repeat;
 	background-color: var(--bg_solid);
+	/* background-color: darkblue; */
 	color: var(--txt_second);
 }
 .head {
 	color: var(--txt_first);
-	position: relative;
-	top: 5vh;
-	left: 10vw;
+	position: absolute;
+	top: calc(var(--index) * 3.3);
+	left: calc(var(--index) * 6);
 }
 .terminal {
-	font-size: 12pt;
+	font-size: calc(var(--index) * 0.6);
+	line-height: calc(var(--index) * .8);
 	font-weight: 600;
-  position: relative;
-  top: 25vh;
-	left: 10vw;
-  line-height: 12pt;
+  position: absolute;
+  /* top: calc(var(--index) * 20.6); */
+	bottom: calc(var(--index) * -1.1);;
+	left: calc(var(--index) * 6);
   width: 50%;
   height: 40%;
-	padding: 6pt;
+	/* padding: 6pt; */
 }
 /* ANIMATIONS */
 @keyframes glitch {
@@ -385,133 +389,19 @@ body {
     text-shadow: -1px 0 0 blue, 1px 0 0 lime;
   }
 }
-@keyframes hover_glitch {
-0%{text-shadow:1px 0 0 red,-1px 0 0 blue;}
-1%{text-shadow:1px 0 0 red,-1px 0 0 blue;}
-2%{text-shadow:1px 0 0 red,-1px 0 0 blue;}
-3%{text-shadow:1px 0 0 red,-1px 0 0 blue;}
-4%{text-shadow:1px 0 0 red,-1px 0 0 blue;}
-5%{text-shadow:-1px 0 0 red,1px 0 0 blue;}
-6%{text-shadow:-1px 0 0 red,1px 0 0 blue;}
-7%{text-shadow:-1px 0 0 red,1px 0 0 blue;}
-8%{text-shadow:-1px 0 0 red,1px 0 0 blue;}
-9%{text-shadow:-1px 0 0 red,1px 0 0 blue;}
-10%{text-shadow:-1px 0 0 red,1px 0 0 blue;}
-11%{text-shadow:0.5px 0 0 red,-0.5px 0 0 lime;}
-12%{text-shadow:0.5px 0 0 red,-0.5px 0 0 lime;}
-13%{text-shadow:0.5px 0 0 red,-0.5px 0 0 lime;}
-14%{text-shadow:0.5px 0 0 red,-0.5px 0 0 lime;}
-15%{text-shadow:0.5px 0 0 red,-0.5px 0 0 lime;}
-16%{text-shadow:-1px 0 0 red,1px 0 0 lime;}
-17%{text-shadow:-1px 0 0 red,1px 0 0 lime;}
-18%{text-shadow:-1px 0 0 red,1px 0 0 lime;}
-19%{text-shadow:-1px 0 0 red,1px 0 0 lime;}
-20%{text-shadow:-1px 0 0 red,1px 0 0 lime;}
-21%{text-shadow:0.7px 0 0 blue,-0.7px 0 0 lime;}
-22%{text-shadow:0.7px 0 0 blue,-0.7px 0 0 lime;}
-23%{text-shadow:0.7px 0 0 blue,-0.7px 0 0 lime;}
-24%{text-shadow:0.7px 0 0 blue,-0.7px 0 0 lime;}
-25%{text-shadow:0.7px 0 0 blue,-0.7px 0 0 lime;}
-26%{text-shadow:0.7px 0 0 blue,-0.7px 0 0 lime;}
-27%{text-shadow:0.7px 0 0 blue,-0.7px 0 0 lime;}
-28%{text-shadow:0.7px 0 0 blue,-0.7px 0 0 lime;}
-29%{text-shadow:0.7px 0 0 blue,-0.7px 0 0 lime;}
-30%{text-shadow:0.7px 0 0 blue,-0.7px 0 0 lime;}
-31%{text-shadow:-1px 0 0 blue,1px 0 0 lime;}
-32%{text-shadow:-1px 0 0 blue,1px 0 0 lime;}
-33%{text-shadow:-1px 0 0 blue,1px 0 0 lime;}
-34%{text-shadow:-1px 0 0 blue,1px 0 0 lime;}
-35%{text-shadow:-1px 0 0 blue,1px 0 0 lime;}
-36%{text-shadow:-1px 0 0 blue,1px 0 0 lime;}
-37%{text-shadow:-1px 0 0 blue,1px 0 0 lime;}
-38%{text-shadow:-1px 0 0 blue,1px 0 0 lime;}
-39%{text-shadow:-1px 0 0 blue,1px 0 0 lime;}
-40%{text-shadow:-1px 0 0 blue,1px 0 0 lime;}
-41%{text-shadow:50px 0 0 blue,-50px 0 0 lime;}
-42%{text-shadow:0 0 0 blue,0 0 0 lime;}
-43%{text-shadow:0.5px 0 0 red,-0.5px 0 0 lime;}
-44%{text-shadow:0.5px 0 0 red,-0.5px 0 0 lime;}
-45%{text-shadow:0.5px 0 0 red,-0.5px 0 0 lime;}
-46%{text-shadow:0.5px 0 0 red,-0.5px 0 0 lime;}
-47%{text-shadow:-1px 0 0 red,1px 0 0 lime;}
-48%{text-shadow:-1px 0 0 red,1px 0 0 lime;}
-49%{text-shadow:-1px 0 0 red,1px 0 0 lime;}
-50%{text-shadow:-1px 0 0 red,1px 0 0 lime;}
-51%{text-shadow:1px 0 0 red,-1px 0 0 blue;}
-52%{text-shadow:1px 0 0 red,-1px 0 0 blue;}
-53%{text-shadow:1px 0 0 red,-1px 0 0 blue;}
-54%{text-shadow:1px 0 0 red,-1px 0 0 blue;}
-55%{text-shadow:1px 0 0 red,-1px 0 0 blue;}
-56%{text-shadow:-1px 0 0 red,1px 0 0 blue;}
-57%{text-shadow:-1px 0 0 red,1px 0 0 blue;}
-58%{text-shadow:-1px 0 0 red,1px 0 0 blue;}
-59%{text-shadow:-1px 0 0 red,1px 0 0 blue;}
-60%{text-shadow:-1px 0 0 red,1px 0 0 blue;}
-61%{text-shadow:30px 0 0 red,-30px 0 0 lime;}
-62%{text-shadow:0 0 0 red,0 0 0 lime;}
-63%{text-shadow:0.5px 0 0 red,-0.5px 0 0 blue;}
-64%{text-shadow:0.5px 0 0 red,-0.5px 0 0 blue;}
-65%{text-shadow:0.5px 0 0 red,-0.5px 0 0 blue;}
-66%{text-shadow:0.5px 0 0 red,-0.5px 0 0 blue;}
-67%{text-shadow:-1px 0 0 red,1px 0 0 blue;}
-68%{text-shadow:-1px 0 0 red,1px 0 0 blue;}
-69%{text-shadow:-1px 0 0 red,1px 0 0 blue;}
-70%{text-shadow:-1px 0 0 red,1px 0 0 blue;}
-71%{text-shadow:70px 0 0 red,-70px 0 0 blue;}
-72%{text-shadow:0 0 0 red,0 0 0 blue;}
-73%{text-shadow:1px 0 0 red,-1px 0 0 blue;}
-74%{text-shadow:1px 0 0 red,-1px 0 0 blue;}
-75%{text-shadow:1px 0 0 red,-1px 0 0 blue;}
-76%{text-shadow:1px 0 0 red,-1px 0 0 blue;}
-77%{text-shadow:-1px 0 0 red,1px 0 0 blue;}
-78%{text-shadow:-1px 0 0 red,1px 0 0 blue;}
-79%{text-shadow:-1px 0 0 red,1px 0 0 blue;}
-80%{text-shadow:-1px 0 0 red,1px 0 0 blue;}
-81%{text-shadow:0.5px 0 0 red,-0.5px 0 0 lime;}
-82%{text-shadow:0.5px 0 0 red,-0.5px 0 0 lime;}
-83%{text-shadow:0.5px 0 0 red,-0.5px 0 0 lime;}
-84%{text-shadow:0.5px 0 0 red,-0.5px 0 0 lime;}
-85%{text-shadow:0.5px 0 0 red,-0.5px 0 0 lime;}
-86%{text-shadow:-1px 0 0 red,1px 0 0 lime;}
-87%{text-shadow:-1px 0 0 red,1px 0 0 lime;}
-88%{text-shadow:-1px 0 0 red,1px 0 0 lime;}
-89%{text-shadow:-1px 0 0 red,1px 0 0 lime;}
-90%{text-shadow:-1px 0 0 red,1px 0 0 lime;}
-91%{text-shadow:60px 0 0 lime,-60px 0 0 blue;}
-92%{text-shadow:0 0 0 lime,0 0 0 blue;}
-92%{text-shadow:0.7px 0 0 blue,-0.7px 0 0 lime;}
-93%{text-shadow:0.7px 0 0 blue,-0.7px 0 0 lime;}
-94%{text-shadow:0.7px 0 0 blue,-0.7px 0 0 lime;}
-95%{text-shadow:0.7px 0 0 blue,-0.7px 0 0 lime;}
-96%{text-shadow:-1px 0 0 blue,1px 0 0 lime;}
-97%{text-shadow:-1px 0 0 blue,1px 0 0 lime;}
-98%{text-shadow:-1px 0 0 blue,1px 0 0 lime;}
-99%{text-shadow:-1px 0 0 blue,1px 0 0 lime;}
-100%{text-shadow:-1px 0 0 blue,1px 0 0 lime;}
-}
-/* SCREENS */
-@media screen and (max-width: 1280px) {
-	.head {left: 5vw; top: 1vh;}
-	.terminal {left: 5vw; top: 15vh; width: 60%;}
-	body {background-size: auto;	background-position: 100% 30%;}
-}
-@media screen and (max-width: 980px) {
-	body {background-position: 100% 30%;}
-	.terminal {width: 70%;}
-	h1 {font-size: 60pt;}
-	h2 {font-size: 16pt;line-height: 22pt;}
-}
-@media screen and (max-width: 736px) {
-	body {background-size: 60%; background-position: 110% center;}
-	.head {top: 5vh;}
-	.terminal {width: 80%;}
-	h1 {font-size: 48pt; line-height: 48pt;}
-	h2 {font-size: 14pt; line-height: 22pt;}
-}
-@media screen and (max-width: 480px) {
-	body {background-size: contain; background-position: 0 35%;}
-	.head {left: 0; text-align: center;}
-	h1 {font-size: 34pt; line-height: 40pt;}
-	h2 {font-size: 14pt; background-color: rgba(0, 0, 0, 0.5);}
-	.terminal {left: 1pt; top: 37vh; font-size: 10pt; width: 100%;line-height: 11pt; background-color: rgba(0, 0, 0, 0.5);}
+/* SCREENS background-color: rgba(0, 0, 0, 0.5); */
+@media all and (orientation: portrait) {
+  body {background-size: contain; background-position: 0 calc(var(--index) * 13);}
+	.head {left: 0; top: calc(var(--index) * 2); width: 100%; text-align: center;}
+	h1 {font-size: calc(var(--index) * 5); line-height: calc(var(--index) * 5);}
+	h2 {font-size: calc(var(--index) * 2); line-height: calc(var(--index) * 2.5); background-color: rgba(0, 0, 0, 0.5);}
+	.terminal {
+		font-size: calc(var(--index) * 1.2);
+		line-height: calc(var(--index) * 1.6);
+		left: 0;
+		padding-left: 2pt;
+		bottom: calc(var(--index) * 6);
+		width: 100%;
+		height: calc(var(--index) * 13); 
+		background-color: rgba(0, 0, 0, 0.5);}
 }
