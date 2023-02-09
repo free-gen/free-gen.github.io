@@ -31,8 +31,8 @@ h2 {
 }
 a {text-decoration: none;color: var(--txt_second);}
 a:hover, a:focus {cursor: pointer;}
-a>span:hover, a>span:focus {color: yellow;}
-.aboutButton, .worksButton, .contactsButton {color: #fff}
+a>span:hover, a>span:focus {color: var(--link);}
+.aboutButton, .worksButton, .contactsButton {color: var(--txt_first);}
 .aboutHide, .worksHide, .contactsHide {display: none;}
 /* BLOCK */
 body {
