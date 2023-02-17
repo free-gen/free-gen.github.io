@@ -20,7 +20,6 @@
 			<div class="container"></div>
 			<div class="empty"></div>
 		</section>
-		<script src="./imports/WebGL.js"></script>
 
     <script type="importmap">
         {
@@ -118,18 +117,6 @@
 					}, false );
 
 					render();
-				// Check WebGL
-					if ( WebGL.isWebGLAvailable() ) {
-
-						// Инициализируйте функцию или другие инициализации здесь
-						render();
-
-						} else {
-
-						const warning = WebGL.getWebGLErrorMessage();
-						document.getElementById( 'container' ).appendChild( warning );
-
-						}
     </script>
 </body>
 </html>
