@@ -12,7 +12,7 @@
     <style>
         * {margin:0;padding:0;}
 				:root {--index: calc(1vw + 1vh);}
-        body {overflow: hidden; background-color: #000; color: white; font-family: sans-serif;}
+        body {overflow: hidden; background-color: #555; color: white; font-family: sans-serif;}
 				.container {width: calc(var(--index) * 20); height: calc(var(--index) * 20); position: fixed; top: calc(var(--index) * 6); left: calc(var(--index) * 6); border: dashed 1px greenyellow;}
     </style>
 
@@ -20,6 +20,7 @@
 			<div class="container"></div>
 			<div class="empty"></div>
 		</section>
+		<script src="./imports/WebGL.js"></script>
 
     <script type="importmap">
         {
@@ -117,7 +118,18 @@
 					}, false );
 
 					render();
+				// Check WebGL
+					if ( WebGL.isWebGLAvailable() ) {
 
+						// Инициализируйте функцию или другие инициализации здесь
+						render();
+
+						} else {
+
+						const warning = WebGL.getWebGLErrorMessage();
+						document.getElementById( 'container' ).appendChild( warning );
+
+						}
     </script>
 </body>
 </html>
