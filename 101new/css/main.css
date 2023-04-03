@@ -20,6 +20,9 @@
     border: none;
     box-shadow: none;
 }
+a {
+	text-decoration: none;
+}
 body {
 	background-repeat: no-repeat;
 	overflow-x: hidden !important;
@@ -222,4 +225,24 @@ body {
 .teamDescription {
 	font-weight: 400;
 	color: var(--baseTextColorLight);
+}
+/* FOOTER */
+footer, a {
+	background-color: #111;
+	color: var(--secondaryTextColor);
+	padding-bottom: 50px;
+	font-size: 10pt;
+}
+.companyLogo>img {
+	height: 50px;
+	margin-top: 50px;
+}
+.companyLinks {
+	margin-top: 50px;
+}
+.copyright {
+	margin-top: 50px;
+}
+.autor {
+	color: orange;
 }
