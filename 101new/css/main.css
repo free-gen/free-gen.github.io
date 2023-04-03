@@ -1,0 +1,228 @@
+/* Based */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap');
+:root {
+	--index: calc(1vw + 1vh);
+	--baseTextColor: #313131;
+	--baseTextColorLight: #5f5f5f;
+	--secondaryTextColor: #fff;
+	--secondaryBgColor: #f5f5f5;
+	--buttonPrimary: #1c71d8;
+	--buttonHover: #3584e4;
+	--alphaBased: rgba(0, 0, 0, 0.5);
+	--alphaPrimary: rgba(30, 115, 215, 0.2);
+}
+/* Menu Button Styles OFF */
+.navbar-toggler,
+.navbar-toggler:focus,
+.navbar-toggler:active,
+.navbar-toggler-icon:focus {
+    outline: none;
+    border: none;
+    box-shadow: none;
+}
+body {
+	background-repeat: no-repeat;
+	overflow-x: hidden !important;
+	font-family: 'Open Sans';
+}
+/* section {
+	height: 100vh;
+} */
+/* Btn Style */
+.btn {
+	width: 15em;
+	/* height: calc(var(--index) * 2); */
+	font-size: 12pt;
+	font-weight: 700;
+	margin: 5px;
+	padding: 12pt;
+	border-radius: 10px;
+}
+.btn-primary {
+	background-color: var(--buttonPrimary);
+	border-color: var(--buttonPrimary);
+	color: var(--secondaryTextColor);
+}
+.btn-primary:hover {
+	background-color: var(--buttonHover);
+	border-color: var(--buttonHover);
+}
+.btn-outline-primary {
+	border-color: var(--buttonPrimary);
+	color: var(--secondaryTextColor);
+}
+.btn-outline-primary:hover {
+	border-color: var(--buttonHover);
+	background-color: transparent;
+}
+/* .hr {
+	color: var(--buttonPrimary);
+	font-size: 36pt;
+	line-height: 36pt;
+	font-weight: 900;
+	padding-bottom: 100px;
+} */
+/* Header ---------------------------------------------------*/
+.navbar {
+	background-color: #111;
+	padding: calc(var(--index) * 0.3);
+}
+.navbar-nav .nav-item .nav-link {
+	border-bottom: 1px solid rgba(0, 0, 0, 0);
+}
+.navbar-nav .nav-item.active .nav-link,
+.navbar-nav .nav-item:hover .nav-link {
+	border-bottom: 1px solid var(--buttonPrimary);
+}
+.brandLogo {
+	position: relative;
+	top: 5px;
+	height: 42px;
+}
+.city {
+	font-size: 10pt;
+	color: var(--buttonHover);
+}
+/* Main Screen ---------------------------------------------------*/
+.mainTextArea>h1 {
+	font-size: 36pt;
+	font-weight: 800;
+} 
+.mainTextArea>p {
+	margin-top: calc(var(--index) * 3);
+	margin-bottom: calc(var(--index) * 3);
+	font-size: 18pt;
+}
+.mainSection {
+	height: 100vh;
+	background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 1)), url(../img/banner3.jpg) center center/cover no-repeat;
+}
+.mainSectionContent {
+	position: relative;
+	padding-top: 30vh;
+	color: var(--secondaryTextColor)
+}
+.mainTextArea {
+	z-index: 5;
+	width: 50vw;
+	position: absolute;
+	height: 60vh;
+	/* background-color: blue; */
+}
+.mainBrokenPhone {
+	z-index: 1;
+	position: relative;
+	bottom: 15vh;
+	height: 80vh;
+	background: url(../img/phone3.png) right center/contain no-repeat;
+	/* background-color: red; */
+}
+/* Advantage Section */
+.sectionHeader {
+	padding-top: 60pt;
+	padding-bottom: 100pt;
+	/* margin-bottom: 48pt; */
+	font-size: 30pt;
+	line-height: 30pt;
+	font-weight: 700;
+}
+.advantageIcon {
+	color: var(--buttonPrimary);
+	/* text-align: left; */
+	font-size: 60pt;
+	line-height: 70pt;
+	/* background-color: red; */
+}
+.advantageItem {
+	/* background-color: red; */
+}
+.advantageItem>h2 {
+	margin: 12pt;
+	font-weight: 600;
+	font-size: 16pt;
+	text-align: left;
+	padding-top: 36pt;
+	padding-bottom: 8pt;
+}
+.advantageItem>p {
+	margin: 12pt;
+	font-weight: 400;
+	font-size: 12pt;
+	padding-top: 6pt;
+	text-align: left;
+	color: var(--baseTextColorLight);
+}
+.sectionContent {
+	padding-top: 24pt;
+	padding-bottom: 8em;
+}
+/* guaranteeSection */
+.guaranteeSection {
+	background-color: var(--secondaryBgColor);
+}
+.guaranteeItem  {
+	text-align: center;
+	background-color: #fff;
+	padding: 12pt;
+	border-radius: 15px;
+}
+.itemName {
+	font-size: 16pt;
+	font-weight: 500;
+	padding-bottom: 12pt;
+}
+.daysCount {
+	font-size: 60pt;
+	line-height: 30pt;
+	font-weight: 800;
+	padding-top: 16pt;
+	/* background-color: red; */
+	/* color: var(--buttonPrimary); */
+	/* line-height: 30pt; */
+}
+.daysCount>span {
+	color: var(--baseTextColorLight);
+	font-size: 12pt;
+	font-weight: 500;
+}
+.itemDescription {
+	/* margin: 3pt; */
+	padding-top: 12pt;
+	height: 100px;
+}
+.btnItem {
+	width: 12em;
+	margin-top: 12pt;
+	font-size: 12pt;
+	font-weight: 400;
+}
+/* portfolioSection */
+.carousel-item>img {
+	position: relative;
+	object-fit: contain;
+}
+.carousel-caption {
+	background-color: var(--alphaBased);
+	border-radius: 15px;
+}
+.carousel-indicators {
+	padding-bottom: 12pt;
+}
+/* teamSection */
+.teamSection {
+	background-color: var(--secondaryBgColor);
+}
+.teamPhoto>img {
+	/* background-color: red; */
+	width: 200px;
+	border-radius: 100px;
+}
+.teamName {
+	font-size: 16pt;
+	padding-top: 24pt;
+	font-weight: 500;
+}
+.teamDescription {
+	font-weight: 400;
+	color: var(--baseTextColorLight);
+}
