@@ -1,4 +1,4 @@
-/* Based */
+/* BASE */
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap');
 :root {
 	--index: calc(1vw + 1vh);
@@ -11,6 +11,9 @@
 	--alphaBased: rgba(0, 0, 0, 0.5);
 	--alphaPrimary: rgba(30, 115, 215, 0.2);
 }
+
+
+
 /* Menu Button Styles OFF */
 .navbar-toggler,
 .navbar-toggler:focus,
@@ -28,10 +31,22 @@ body {
 	overflow-x: hidden !important;
 	font-family: 'Open Sans';
 }
-/* section {
-	height: 100vh;
-} */
-/* Btn Style */
+.sectionHeader {
+	padding-top: 60pt;
+	padding-bottom: 100pt;
+	/* margin-bottom: 48pt; */
+	font-size: 30pt;
+	line-height: 30pt;
+	font-weight: 700;
+}
+.sectionContent {
+	padding-top: 24pt;
+	padding-bottom: 8em;
+}
+
+
+
+/* BUTTONS */
 .btn {
 	width: 15em;
 	/* height: calc(var(--index) * 2); */
@@ -58,14 +73,10 @@ body {
 	border-color: var(--buttonHover);
 	background-color: transparent;
 }
-/* .hr {
-	color: var(--buttonPrimary);
-	font-size: 36pt;
-	line-height: 36pt;
-	font-weight: 900;
-	padding-bottom: 100px;
-} */
-/* Header ---------------------------------------------------*/
+
+
+
+/* HEADER */
 .navbar {
 	background-color: #111;
 	padding: calc(var(--index) * 0.3);
@@ -86,15 +97,21 @@ body {
 	font-size: 10pt;
 	color: var(--buttonHover);
 }
-/* Main Screen ---------------------------------------------------*/
+
+
+
+/* MAIN */
 .mainTextArea>h1 {
 	font-size: 36pt;
 	font-weight: 800;
+	width: 25vw;
+	line-height: 48pt;
 } 
 .mainTextArea>p {
 	margin-top: calc(var(--index) * 3);
 	margin-bottom: calc(var(--index) * 3);
 	font-size: 18pt;
+	width: 35vw;
 }
 .mainSection {
 	height: 100vh;
@@ -120,14 +137,12 @@ body {
 	background: url(../img/phone3.png) right center/contain no-repeat;
 	/* background-color: red; */
 }
-/* Advantage Section */
-.sectionHeader {
-	padding-top: 60pt;
-	padding-bottom: 100pt;
-	/* margin-bottom: 48pt; */
-	font-size: 30pt;
-	line-height: 30pt;
-	font-weight: 700;
+
+
+
+/* ADVANTAGE */
+.advantageSection {
+	background-color: var(--secondaryBgColor);
 }
 .advantageIcon {
 	color: var(--buttonPrimary);
@@ -152,24 +167,29 @@ body {
 	text-align: left;
 	color: var(--baseTextColorLight);
 }
-.sectionContent {
-	padding-top: 24pt;
-	padding-bottom: 8em;
+.serviceCounter {
+	margin-top: 96pt;
+	font-size: 24pt;
+	font-weight: 600;
 }
-/* guaranteeSection */
-.guaranteeSection {
-	background-color: var(--secondaryBgColor);
+.serviceCounter>span {
+	color: var(--buttonPrimary);
+	font-weight: 800;
 }
+
+
+
+/* GUARANTEE */
 .guaranteeItem  {
+	background-color: var(--secondaryBgColor);
 	text-align: center;
-	background-color: #fff;
 	padding: 12pt;
 	border-radius: 15px;
 }
 .itemName {
 	font-size: 16pt;
 	font-weight: 500;
-	padding-bottom: 12pt;
+	/* padding-bottom: 12pt; */
 }
 .daysCount {
 	font-size: 60pt;
@@ -196,7 +216,22 @@ body {
 	font-size: 12pt;
 	font-weight: 400;
 }
-/* portfolioSection */
+
+
+
+/* PORTFOLIO */
+.portfolioSection {
+	background-color: var(--secondaryBgColor);
+}
+.carousel {
+	/* width: 80%;
+	margin-left: 10%; */
+	margin-left: 8em;
+	margin-right: 8em;
+}
+.carousel-inner {
+	border-radius: 15px;
+}
 .carousel-item>img {
 	position: relative;
 	object-fit: contain;
@@ -208,9 +243,12 @@ body {
 .carousel-indicators {
 	padding-bottom: 12pt;
 }
+
+
+
 /* teamSection */
 .teamSection {
-	background-color: var(--secondaryBgColor);
+	/* background-color: var(--secondaryBgColor); */
 }
 .teamPhoto>img {
 	/* background-color: red; */
@@ -226,22 +264,36 @@ body {
 	font-weight: 400;
 	color: var(--baseTextColorLight);
 }
+
+
+
+/* CONTACTS */
+.contactsSection {
+	background-color: var(--secondaryBgColor);
+}
+
+
+
 /* FOOTER */
 footer, a {
 	background-color: #111;
 	color: var(--secondaryTextColor);
-	padding-bottom: 50px;
+	/* padding-bottom: 50px; */
 	font-size: 10pt;
 }
-.companyLogo>img {
-	height: 50px;
-	margin-top: 50px;
+.footer {
+	display: flex;
+	gap: 10vw;
+	justify-content: center;
 }
 .companyLinks {
-	margin-top: 50px;
+	margin: 24pt;
+}
+.companyLinks>a>i {
+	margin-right: 6pt;
 }
 .copyright {
-	margin-top: 50px;
+	margin: 24pt;
 }
 .autor {
 	color: orange;
