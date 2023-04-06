@@ -53,12 +53,14 @@ body {
 
 /* BUTTONS */
 .btn {
-	width: 15em;
-	font-size: 12pt;
-	font-weight: 700;
 	margin: 5px;
 	padding: 12pt;
 	border-radius: 10px;
+}
+.btnMain {
+	font-size: 12pt;
+	font-weight: 700;
+	width: 15em;
 }
 .btn-primary {
 	background-color: var(--buttonPrimary);
