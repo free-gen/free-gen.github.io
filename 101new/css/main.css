@@ -1,4 +1,4 @@
-/* BASE */
+/* ----------------------- BASE ----------------------- */
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap');
 :root {
 	--index: calc(1vw + 1vh);
@@ -14,7 +14,7 @@
 
 
 
-/* Menu Button Styles OFF */
+/* ----------------------- Menu Button Styles OFF ----------------------- */
 .navbar-toggler,
 .navbar-toggler:focus,
 .navbar-toggler:active,
@@ -51,7 +51,7 @@ body {
 
 
 
-/* BUTTONS */
+/* ----------------------- BUTTONS ----------------------- */
 .btn {
 	margin: 5px;
 	padding: 12pt;
@@ -82,7 +82,7 @@ body {
 
 
 
-/* HEADER */
+/* ----------------------- HEADER ----------------------- */
 .fa-bars {
 	font-size: 24pt;
 }
@@ -109,7 +109,7 @@ body {
 
 
 
-/* MAIN */
+/* ----------------------- MAIN ----------------------- */
 .mainTextArea>h1 {
 	font-size: 36pt;
 	font-weight: 800;
@@ -133,25 +133,19 @@ body {
 }
 .mainTextArea {
 	z-index: 5;
-	/* width: 50vw; */
 	position: absolute;
 	top: 6em;
-	/* height: 60vh; */
-	/* background-color: red; */
 }
 .mainBrokenPhone {
 	z-index: 1;
 	position: relative;
-	/* top: calc(var(--index) * 5); */
-	/* bottom: 15vh; */
 	height: 40em;
 	background: url(../img/phone.png) right center/contain no-repeat;
-	/* background-color: blue; */
 }
 
 
 
-/* ADVANTAGE */
+/* ----------------------- ADVANTAGE ----------------------- */
 .advantageSection {
 	background-color: var(--secondaryBgColor);
 }
@@ -188,7 +182,7 @@ body {
 
 
 
-/* GUARANTEE */
+/* ----------------------- GUARANTEE ----------------------- */
 .guaranteeItem  {
 	background-color: var(--secondaryBgColor);
 	text-align: center;
@@ -217,14 +211,13 @@ body {
 }
 .btnItem {
 	width: 10em;
-	/* margin-top: 12pt; */
 	font-size: 12pt;
 	font-weight: 400;
 }
 
 
 
-/* PORTFOLIO */
+/* ----------------------- PORTFOLIO ----------------------- */
 .portfolioSection {
 	background-color: var(--secondaryBgColor);
 }
@@ -242,7 +235,7 @@ body {
 
 
 
-/* TEAM */
+/* ----------------------- TEAM ----------------------- */
 .teamPhoto>img {
 	width: 200px;
 	border-radius: 100px;
@@ -260,17 +253,16 @@ body {
 
 
 
-/* CONTACTS */
+/* ----------------------- CONTACTS ----------------------- */
 .contactsSection {
 	background-color: var(--secondaryBgColor);
 }
 
 
-/* 2GIS */
+/* ----------------------- 2GIS ----------------------- */
 .carousel2GIS {
 	background-color: var(--secondaryBgColor);
 	height: 300px;
-	/* padding: 24pt; */
 }
 .testImonialBlock {
 	padding-top: 12pt;
@@ -287,7 +279,7 @@ body {
 
 
 
-/* FOOTER */
+/* ----------------------- FOOTER ----------------------- */
 footer, a {
 	background-color: #111;
 	color: var(--secondaryTextColor);
