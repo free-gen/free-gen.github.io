@@ -6,6 +6,7 @@
 		margin-right: 15vw;
 	}
 }
+
 @media (max-width: 991.98px) {
 	/* ADVANTAGE */
 	.advantageItem {
@@ -16,6 +17,7 @@
 		/* font-size: 18pt; */
 	}
 }
+
 @media (max-width: 767.98px) {
 	/* BASE */
 	.sectionHeader {
@@ -27,6 +29,9 @@
 		margin-right: 0;
 	}
 	/* MAIN */
+	/* .mainSection {
+		height: auto;
+	} */
 	.mainTextArea>h1 {
 		font-size: 30pt;
 		line-height: 40pt;
@@ -62,6 +67,7 @@
 		font-size: 8pt;
 	}
 }
+
 @media (max-width: 575.98px) {
 	/* BASE */
 	.carousel {
@@ -74,6 +80,8 @@
 	}
 	.sectionHeader{
 		font-size: 18pt;
+		padding-top: 30pt;
+		padding-bottom: 60pt;
 	}
 	/* MAIN */
 	.mainSectionContent {
@@ -101,6 +109,29 @@
 		margin-left:auto;
 		margin-right:auto;
 	}
+	/* ADVANTAGE */
+	.advantageItem>h2 {
+		font-size: 12pt;
+	}
+	.advantageItem>p {
+		font-size: 10pt;
+	}
+	.serviceCounter {
+		font-size: 12pt;
+	}
+	/* GUARANTEE */
+	.btnItem {
+		margin-top: 0;
+	}
+	.itemName {
+		font-size: 12pt;
+	}
+	.daysCount>span {
+		font-size: 10pt;
+	}
+	.itemDescription {
+		font-size: 10pt;
+	}
 	/* PORTFOLIO */
 	.carousel-indicators {
 		visibility: hidden;
@@ -112,6 +143,13 @@
 	}
 	/* CONTACTS */
 	.contactsDescription {
+		font-size: 10pt;
+	}
+	/* TEAM */
+	.teamName {
+		font-size: 12pt;
+	}
+	.teamDescription {
 		font-size: 10pt;
 	}
 	/* 2GIS */
@@ -127,8 +165,6 @@
 	}
 	.footer {
 		display: grid;
-		/* gap: 10vw; */
-		/* justify-content: center; */
 	}
 	.companyLinks>a>i {
 		margin-right: 6pt;

@@ -214,8 +214,8 @@ body {
 	height: 100px;
 }
 .btnItem {
-	width: 12em;
-	margin-top: 12pt;
+	width: 10em;
+	/* margin-top: 12pt; */
 	font-size: 12pt;
 	font-weight: 400;
 }
