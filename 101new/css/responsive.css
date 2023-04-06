@@ -1,3 +1,11 @@
+@media (min-width: 1199.98px) {
+	.buttonLeft {
+		margin-left: 15vw;
+	}
+	.buttonRight {
+		margin-right: 15vw;
+	}
+}
 @media (max-width: 991.98px) {
 	/* ADVANTAGE */
 	.advantageItem {
@@ -60,13 +68,30 @@
 		margin-left: 0;
 		margin-right: 0;
 	}
-	/* MAIN */
 	.nav-item {
 		margin-top: 5pt;
 		margin-bottom: 5pt;
 	}
-	.mainButtons {
-		/* text-align: center; */
+	.sectionHeader{
+		font-size: 18pt;
+	}
+	/* MAIN */
+	.mainSectionContent {
+		top: calc(var(--index) * 6);
+	}
+	.mainTextArea {
+		top: 10em;
+	}
+	.mainTextArea>h1 {
+		font-size: 22pt;
+		line-height: 30pt;
+	}
+	.mainTextArea>p {
+		font-size: 11pt;
+		/* margin-left: 10px; */
+	}
+	.btn {
+		font-size: 8pt;
 	}
 	.mainTextArea {
 		text-align: center;
@@ -76,13 +101,39 @@
 		margin-left:auto;
 		margin-right:auto;
 	}
-	.mainBrokenPhone {
-		/* position: relative; */
+	/* PORTFOLIO */
+	.carousel-indicators {
+		visibility: hidden;
 	}
 	/* GUARANTEE */
 	.guaranteeItem {
 		margin-left: 10vw;
 		margin-right: 10vw;
 	}
-	
+	/* CONTACTS */
+	.contactsDescription {
+		font-size: 10pt;
+	}
+	/* 2GIS */
+	.carousel2GIS {
+		height: 350px;
+	}
+	.gisText {
+		font-size: 8pt;
+	}
+	/* FOOTER */
+	.companyLinks>a, .copyright {
+		font-size: 8pt;
+	}
+	.footer {
+		display: grid;
+		/* gap: 10vw; */
+		/* justify-content: center; */
+	}
+	.companyLinks>a>i {
+		margin-right: 6pt;
+	}
+	.copyright {
+		margin-bottom: 24pt;
+	}
 }
