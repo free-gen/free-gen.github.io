@@ -1,0 +1,88 @@
+@media (max-width: 991.98px) {
+	/* ADVANTAGE */
+	.advantageItem {
+		padding-bottom: 60pt;
+	}
+	.serviceCounter {
+		margin-top: 60pt;
+		/* font-size: 18pt; */
+	}
+}
+@media (max-width: 767.98px) {
+	/* BASE */
+	.sectionHeader {
+		font-size: 24pt;
+		padding-top: 40pt;
+	}
+	.carousel {
+		margin-left: 0;
+		margin-right: 0;
+	}
+	/* MAIN */
+	.mainTextArea>h1 {
+		font-size: 30pt;
+		line-height: 40pt;
+	}
+	.mainTextArea>p {
+		font-size: 16pt;
+	}
+	.btn {
+		font-size: 10pt;
+	}
+	/* ADVANTAGE */
+	.advantageItem {
+		padding-bottom: 60pt;
+	}
+	.serviceCounter {
+		margin-top: 60pt;
+		font-size: 18pt;
+	}
+	/* GUARANTEE */
+	.guaranteeItem {
+		margin-bottom: 18pt;
+	}
+	.daysCount {
+		font-size: 40pt;
+	}
+	/* FOOTER */
+	.contactsDescription {
+		margin-left: 10vw;
+		margin-right: 10vw;
+		margin-bottom: 10vh;
+	}
+	.companyLinks>a, .copyright {
+		font-size: 8pt;
+	}
+}
+@media (max-width: 575.98px) {
+	/* BASE */
+	.carousel {
+		margin-left: 0;
+		margin-right: 0;
+	}
+	/* MAIN */
+	.nav-item {
+		margin-top: 5pt;
+		margin-bottom: 5pt;
+	}
+	.mainButtons {
+		/* text-align: center; */
+	}
+	.mainTextArea {
+		text-align: center;
+		position: absolute;
+		left:0;
+		right:0;
+		margin-left:auto;
+		margin-right:auto;
+	}
+	.mainBrokenPhone {
+		/* position: relative; */
+	}
+	/* GUARANTEE */
+	.guaranteeItem {
+		margin-left: 10vw;
+		margin-right: 10vw;
+	}
+	
+}

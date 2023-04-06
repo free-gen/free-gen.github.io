@@ -9,6 +9,8 @@
 	<link rel="stylesheet" href="./css/all.min.css"><!-- FontAwesome -->
 	<link rel="stylesheet" href="./css/bootstrap.min.css"><!-- Bootstrap -->
 	<link rel="stylesheet" href="./css/main.css"><!-- Main -->
+	<link rel="stylesheet" href="./css/animate.css"><!-- Animate -->
+	<link rel="stylesheet" href="./css/responsive.css"><!-- Responsive -->
 	<!-- FAVICON -->
 	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico"> 
 	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"> 
@@ -18,54 +20,58 @@
 	<!-- HEADER -->
 	<header>
 		<!-- HEADER BODY -->
-		<nav class="navbar fixed-top navbar-expand-lg navbar-dark">
-			<div class="container">
-
-				<!-- LOGO -->
-				<a class="navbar-brand col-6" href="#main"><img class="brandLogo" src="./img/logo.png" alt=""><br><span class="city">г. Комсомольск-на-Амуре</span></a>
-
-				<!-- NAVBAR HIDDEN BUTTON -->
-				<button class="navbar-toggler second-button" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="fa fa-bars"></span>
-				</button>
-
-				<!-- NAVBAR -->
-				<div class="collapse navbar-collapse" id="navbarNavDropdown">
-					<ul class="navbar-nav">
-						<li class="nav-item">
-							<a class="nav-link active" href="#advantage">Преимущества</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link active" href="#guarantee">Гарантия</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link active" href="#portfolio">Галерея</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link active" href="#team">Сотрудники</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link active" href="#contacts">Контакты</a>
-						</li>
-					</ul>
+		<div class="container">
+			<nav class="navbar fixed-top navbar-expand-xl navbar-dark">
+				<div class="container">
+	
+					<!-- LOGO -->
+					<a class="navbar-brand col-6" href="#main"><img class="brandLogo" src="./img/logo.png" alt=""><br><span class="city">г. Комсомольск-на-Амуре</span></a>
+	
+					<!-- NAVBAR HIDDEN BUTTON -->
+					<button class="navbar-toggler second-button" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="far fa-bars"></span>
+					</button>
+	
+					<!-- NAVBAR -->
+					<div class="collapse navbar-collapse" id="navbarNavDropdown">
+						<ul class="navbar-nav">
+							<li class="nav-item">
+								<a class="nav-link active" href="#advantage">Преимущества</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link active" href="#guarantee">Гарантия</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link active" href="#portfolio">Галерея</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link active" href="#team">Сотрудники</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link active" href="#contacts">Контакты</a>
+							</li>
+						</ul>
+					</div>
+	
 				</div>
-
-			</div>
-		</nav>
+			</nav>
+		</div>
 	</header>
 	<!-- MAIN SECTION -->
 	<section class="mainSection" id="main">
 		<div class="container mainSectionContent">
-			<div class="mainTextArea">
+			<div class="mainTextArea wow fadeInLeft">
 				<!-- <h4>СРОЧНЫЙ РЕМОНТ БЕЗ ПЕРЕПЛАТ</h4> -->
-				<h1>Срочный ремонт без переплат</h1>
-				<p>Забудьте о долгом и дорогом ремонте! <br> Качественный и быстрый сервис в современно оборудованных сервисных центрах.
+				<h1>Срочный ремонт <br> без переплат</h1>
+				<p>Забудьте о долгом и дорогом ремонте! <br> Качественный и быстрый сервис в современно <br> оборудованных сервисных центрах.
 				</p>
-				<button onclick="window.location.href = '#contacts';" type="button" class="btn btn-primary">РАСЧЕТ СТОИМОСТИ</button>
+				<div class="mainButtons">
+					<button onclick="window.location.href = '#contacts';" type="button" class="btn btn-primary">РАСЧЕТ СТОИМОСТИ</button>
 				<button onclick="window.location.href = '#guarantee';" type="button" class="btn btn-outline-primary">ГАРАНТИЯ</button>
+				</div>
 			</div>
 			<!-- empty block for phone image -->
-			<div class="mainBrokenPhone"> </div>
+			<div class="mainBrokenPhone wow fadeInRight"> </div>
 		</div>
 	</section>
 	<!-- ADVANTAGE SECTION -->
@@ -74,21 +80,21 @@
 			<div class="row">
 				<h1 class="text-center sectionHeader">Наши преимущества</h1>
 				<!-- <div class="text-center hr">__ __</div> -->
-				<div class="col-lg-4 advantageItem text-center">
+				<div class="col-lg-4 advantageItem text-center wow fadeInUp">
 					<div class="advantageIcon">
 						<i class="fa-thin fa-rabbit-running"></i>
 					</div>
 					<h2>Скорость</h2>
 					<p>Мы действительно самые быстрые. Выполним замену экрана, стекла или порта зарядки в течении нескольких часов, а не дней, как другие сервисы.</p>
 				</div>
-				<div class="col-lg-4 advantageItem text-center">
+				<div class="col-lg-4 advantageItem text-center wow fadeInUp">
 					<div class="advantageIcon">
 						<i class="fa-thin fa-piggy-bank"></i>
 					</div>
 					<h2>Прозрачность</h2>
 					<p>Мы не скрываем от вас стоимость ремонта и не берем дополнительные платежи. Вы платите только за то, что было выполнено.</p>
 				</div>
-				<div class="col-lg-4 advantageItem text-center">
+				<div class="col-lg-4 advantageItem text-center wow fadeInUp">
 					<div class="advantageIcon">
 						<i class="fa-thin fa-handshake"></i>
 					</div>
@@ -100,44 +106,44 @@
 		</div>
 	</section>
 	<!-- GUARANTEE SECTION -->
-	<section class="guaranteeSection" id="guarantee">
+	<section class="guaranteeSection wow fadeInUp" id="guarantee">
 		<div class="container sectionContent">
 			<div class="row">
 				<h1 class="text-center sectionHeader">Наши гарантии</h1>
 				
-				<div class="col-lg-3">
-					<div class="guaranteeItem">
+				<div class="col-sm-6 col-lg-3">
+					<div class="guaranteeItem border">
 						<p class="itemName">Дисплеи</p> <hr>
 						<p class="daysCount">180<br><span>дней</span></p> <hr>
 						<p class="itemDescription">Только на оригинальные дисплеи, приобретенные в нашем сервисе.</p>
-						<button type="button" class="btn btn-primary btnItem">УЗНАТЬ ЦЕНУ</button>
+						<button type="button" onclick="window.location.href = '#contacts';" class="btn btn-primary btnItem">УЗНАТЬ ЦЕНУ</button>
 					</div>
 				</div>
 				
-				<div class="col-lg-3">
-					<div class="guaranteeItem">
+				<div class="col-sm-6 col-lg-3">
+					<div class="guaranteeItem border">
 						<p class="itemName">Крышки</p> <hr>
 						<p class="daysCount">90<br><span>дней</span></p> <hr>
 						<p class="itemDescription">На новую крышку и работу по её замене в нашем сервисе.</p>
-						<button type="button" class="btn btn-primary btnItem">УЗНАТЬ ЦЕНУ</button>
+						<button type="button" onclick="window.location.href = '#contacts';" class="btn btn-primary btnItem">УЗНАТЬ ЦЕНУ</button>
 					</div>
 				</div>
 				
-				<div class="col-lg-3">
-					<div class="guaranteeItem">
+				<div class="col-sm-6 col-lg-3">
+					<div class="guaranteeItem border">
 						<p class="itemName">Пайка</p> <hr>
 						<p class="daysCount">60<br><span>дней</span></p> <hr>
 						<p class="itemDescription">На работы по устранению короткого замыкания и замене компонентов.</p>
-						<button type="button" class="btn btn-primary btnItem">УЗНАТЬ ЦЕНУ</button>
+						<button type="button" onclick="window.location.href = '#contacts';" class="btn btn-primary btnItem">УЗНАТЬ ЦЕНУ</button>
 					</div>
 				</div>
 				
-				<div class="col-lg-3">
-					<div class="guaranteeItem">
+				<div class="col-sm-6 col-lg-3">
+					<div class="guaranteeItem border">
 						<p class="itemName">Аккумуляторы</p> <hr>
 						<p class="daysCount">30<br><span>дней</span></p> <hr>
 						<p class="itemDescription">На аккумуляторы приобретенные у нас и работу по их замене.</p>
-						<button type="button" class="btn btn-primary btnItem">УЗНАТЬ ЦЕНУ</button>
+						<button type="button" onclick="window.location.href = '#contacts';" class="btn btn-primary btnItem">УЗНАТЬ ЦЕНУ</button>
 					</div>
 				</div>
 
@@ -145,11 +151,11 @@
 		</div>
 	</section>
 	<!-- PORTFOLIO SECTION -->
-	<section class="portfolioSection" id="portfolio">
+	<section class="portfolioSection wow fadeInUp" id="portfolio">
 		<div class="container sectionContent">
 			<h1 class="text-center sectionHeader">Примеры работ</h1>
 
-			<div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+			<div id="carouselExampleCaptions" class="carousel carousel-dark slide border" data-bs-ride="carousel">
 				<div class="carousel-indicators">
 					<button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
 					<button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -238,40 +244,40 @@
 		</div>
 	</section>
 	<!-- TEAM SECTION -->
-	<section class="teamSection" id="team">
+	<section class="teamSection wow fadeInUp" id="team">
 		<div class="container sectionContent">
 			<h1 class="text-center sectionHeader">Наша команда</h1>
 			<div class="row">
 
-				<div class="col-lg-3">
+				<div class="col-sm-6 col-lg-3">
 					<div class="text-center teamItem">
 						<div class="teamPhoto"><img src="./img/team/user.png" alt=""></div>
-						<h2 class="teamName">Вася Пупкин</h2>
-						<p class="teamDescription">Технический Директор</p>
+						<h2 class="teamName">Ярослав</h2>
+						<p class="teamDescription">Мастер</p>
 					</div>
 				</div>
 
-				<div class="col-lg-3">
+				<div class="col-sm-6 col-lg-3">
 					<div class="text-center teamItem">
 						<div class="teamPhoto"><img src="./img/team/user.png" alt=""></div>
-						<h2 class="teamName">Вася Пупкин</h2>
-						<p class="teamDescription">Технический Директор</p>
+						<h2 class="teamName">Амадей</h2>
+						<p class="teamDescription">Мастер</p>
 					</div>
 				</div>
 
-				<div class="col-lg-3">
+				<div class="col-sm-6 col-lg-3">
 					<div class="text-center teamItem">
 						<div class="teamPhoto"><img src="./img/team/user.png" alt=""></div>
-						<h2 class="teamName">Вася Пупкин</h2>
-						<p class="teamDescription">Технический Директор</p>
+						<h2 class="teamName">Кирилл</h2>
+						<p class="teamDescription">Мастер</p>
 					</div>
 				</div>
 
-				<div class="col-lg-3">
+				<div class="col-sm-6 col-lg-3">
 					<div class="text-center teamItem">
 						<div class="teamPhoto"><img src="./img/team/user.png" alt=""></div>
 						<h2 class="teamName">Вася Пупкин</h2>
-						<p class="teamDescription">Технический Директор</p>
+						<p class="teamDescription">мастер</p>
 					</div>
 				</div>
 
@@ -279,28 +285,182 @@
 		</div>
 	</section>
 	<!-- CONTACTS SECTION -->
-	<section class="contactsSection" id="contacts">
+	<section class="contactsSection wow fadeInUp" id="contacts">
 		<div class="container sectionContent">
 			<h1 class="text-center sectionHeader">Обратная связь</h1>
-			<p class="text-center contctsDescription">Узнать стоимость и сроки ремонта можно обратившись к нам в мессенджеры</p>
+			<p class="text-center contactsDescription">Узнать стоимость и сроки ремонта можно обратившись к нам в мессенджеры</p>
 			<div class="row text-center">
-				<div class="col-3"> </div>
-				<div class="col-3">
-					<button onClick="javascript:window.open('https://t.me/79681702336', '_blank');" type="button" class="btn btn-primary btnItem"><i class="fa-brands fa-telegram"></i>	Telegram</button>
+				<!-- <div class="col-lg-3"> </div> -->
+				<div class="col-6">
+					<button onClick="javascript:window.open('https://t.me/+79681702336', '_blank');" type="button" class="btn btn-primary btnItem"><i class="fa-brands fa-telegram"></i>	Telegram</button>
 				</div>
-				<div class="col-3">
+				<div class="col-6">
 					<button onClick="javascript:window.open('https://wa.me/79681702336', '_blank');" type="button" class="btn btn-primary btnItem"><i class="fa-brands fa-whatsapp"></i> Whats'App</button>
 				</div>
-				<div class="col-3"> </div>
+				<!-- <div class="col-3"> </div> -->
 			</div>
 		</div>
 	</section>
 	<!-- 2GIS -->
-	<section class="2gisSection">
+	<section class="2gisSection wow fadeInUp">
 		<div class="container sectionContent">
 			<h1 class="sectionHeader text-center">Отзывы</h1>
-			<script src="https://res.smartwidgets.ru/app.js" defer></script>
-			<div class="sw-app" data-app="2e631ed8fc49ca4c66cc68563630a58e"></div>
+			<!-- CAROUSEL WRAPPER -->
+			<div id="carousel2GIS" class="carousel carousel-dark slide carousel2GIS border" data-bs-ride="carousel">
+				<div class="gisLogo text-center"><img width="100px" src="https://content.2gis.ru/assets/contentHeader/logo-color.svg" alt=""></div>
+				<div class="carousel-inner">
+					<div class="carousel-item active">
+						<div class="testImonialBlock text-center">
+							<h4 class="gisName">Андрей Тихонов</h4>
+							<p class="gisDate">31 марта 2023</p>
+							<p class="gisText text-muted">Быстро, качественно и за разумные деньги</p>
+							<ul class="list-unstyled d-flex justify-content-center text-warning mb-0">
+								<li><i class="fas fa-star fa-sm"></i></li>
+								<li><i class="fas fa-star fa-sm"></i></li>
+								<li><i class="fas fa-star fa-sm"></i></li>
+								<li><i class="fas fa-star fa-sm"></i></li>
+								<li><i class="fas fa-star fa-sm"></i></li>
+							</ul>
+						</div>
+					</div>
+					<div class="carousel-item">
+						<div class="testImonialBlock text-center">
+							<h4 class="gisName">Игорь Солодкин</h4>
+							<p class="gisDate">19 февраля 2023</p>
+							<p class="gisText text-muted">Быстрый, качественный ремонт в центре города, вежливое, внимательное отношение к клиентам</p>
+							<ul class="list-unstyled d-flex justify-content-center text-warning mb-0">
+								<li><i class="fas fa-star fa-sm"></i></li>
+								<li><i class="fas fa-star fa-sm"></i></li>
+								<li><i class="fas fa-star fa-sm"></i></li>
+								<li><i class="fas fa-star fa-sm"></i></li>
+								<li><i class="fas fa-star fa-sm"></i></li>
+							</ul>
+						</div>
+					</div>
+					<div class="carousel-item">
+						<div class="testImonialBlock text-center">
+							<h4 class="gisName">Дмитрий Шультайс​</h4>
+							<p class="gisDate">21 января 2023</p>
+							<p class="gisText text-muted">Реально быстро! Разбито стекло камеры на хоноре - обращение+работа=15 минут. Цена 500р. Все адекватно, быстро и качественно.</p>
+							<ul class="list-unstyled d-flex justify-content-center text-warning mb-0">
+								<li><i class="fas fa-star fa-sm"></i></li>
+								<li><i class="fas fa-star fa-sm"></i></li>
+								<li><i class="fas fa-star fa-sm"></i></li>
+								<li><i class="fas fa-star fa-sm"></i></li>
+								<li><i class="fas fa-star fa-sm"></i></li>
+							</ul>
+						</div>
+					</div>
+					<div class="carousel-item">
+						<div class="testImonialBlock text-center">
+							<h4 class="gisName">Сергей С</h4>
+							<p class="gisDate">16 января 2023</p>
+							<p class="gisText text-muted">Отличный сервис, сдавал на ремонт iPhone XR меняли камеру и стекло камеры, сделали оперативно и качественно, все работает как обычно. Цены норм. Рекомендую</p>
+							<ul class="list-unstyled d-flex justify-content-center text-warning mb-0">
+								<li><i class="fas fa-star fa-sm"></i></li>
+								<li><i class="fas fa-star fa-sm"></i></li>
+								<li><i class="fas fa-star fa-sm"></i></li>
+								<li><i class="fas fa-star fa-sm"></i></li>
+								<li><i class="fas fa-star fa-sm"></i></li>
+							</ul>
+						</div>
+					</div>
+					<div class="carousel-item">
+						<div class="testImonialBlock text-center">
+							<h4 class="gisName">Ксю Дегтярёва</h4>
+							<p class="gisDate">16 января 2023</p>
+							<p class="gisText text-muted">Обратилась в сервис что бы отремонтировали 2 старых телефона, но мне посоветовали приобрести новые😂 ибо получилось бы дороже восстанавливать... Молодцы, честно работают 🤘</p>
+							<ul class="list-unstyled d-flex justify-content-center text-warning mb-0">
+								<li><i class="fas fa-star fa-sm"></i></li>
+								<li><i class="fas fa-star fa-sm"></i></li>
+								<li><i class="fas fa-star fa-sm"></i></li>
+								<li><i class="fas fa-star fa-sm"></i></li>
+								<li><i class="fas fa-star fa-sm"></i></li>
+							</ul>
+						</div>
+					</div>
+					<div class="carousel-item">
+						<div class="testImonialBlock text-center">
+							<h4 class="gisName">Ерохин Савелий</h4>
+							<p class="gisDate">13 декабря 2022</p>
+							<p class="gisText text-muted">Обратился с заменой заднего стекла на iPhone 11, очень доволен работой мастера! Грамотное и быстрое обслуживание, при выдаче смартфона мастеру, выдали квитанцию где все подробно описано. Работа выполнена в течении дня, все идеально и повторюсь быстро! Спасибо большое! ☺️</p>
+							<ul class="list-unstyled d-flex justify-content-center text-warning mb-0">
+								<li><i class="fas fa-star fa-sm"></i></li>
+								<li><i class="fas fa-star fa-sm"></i></li>
+								<li><i class="fas fa-star fa-sm"></i></li>
+								<li><i class="fas fa-star fa-sm"></i></li>
+								<li><i class="fas fa-star fa-sm"></i></li>
+							</ul>
+						</div>
+					</div>
+					<div class="carousel-item">
+						<div class="testImonialBlock text-center">
+							<h4 class="gisName">Александр Зубков</h4>
+							<p class="gisDate">30 ноября 2022</p>
+							<p class="gisText text-muted">Принёс колонку, которая была тщательно заклеена от влаги. Сам пробовал разобрать и ничего не получилось, непонятно как и что. Отнёс в сервис, её разобрали и собрали так, что и не заметна разборка. Все чётко сделано и качественно. Все работает. Был сломан штекер зарядки.</p>
+							<ul class="list-unstyled d-flex justify-content-center text-warning mb-0">
+								<li><i class="fas fa-star fa-sm"></i></li>
+								<li><i class="fas fa-star fa-sm"></i></li>
+								<li><i class="fas fa-star fa-sm"></i></li>
+								<li><i class="fas fa-star fa-sm"></i></li>
+								<li><i class="fas fa-star fa-sm"></i></li>
+							</ul>
+						</div>
+					</div>
+					<div class="carousel-item">
+						<div class="testImonialBlock text-center">
+							<h4 class="gisName">Дмитрий В</h4>
+							<p class="gisDate">18 ноября 2022</p>
+							<p class="gisText text-muted">Здравствуйте, принёс системный блок, была проблема с установкой windows 10, ребята справились с поставленной задачей, не смотря на трудности. Хорошие грамотные специалисты! Спасибо</p>
+							<ul class="list-unstyled d-flex justify-content-center text-warning mb-0">
+								<li><i class="fas fa-star fa-sm"></i></li>
+								<li><i class="fas fa-star fa-sm"></i></li>
+								<li><i class="fas fa-star fa-sm"></i></li>
+								<li><i class="fas fa-star fa-sm"></i></li>
+								<li><i class="fas fa-star fa-sm"></i></li>
+							</ul>
+						</div>
+					</div>
+					<div class="carousel-item">
+						<div class="testImonialBlock text-center">
+							<h4 class="gisName">Наташа Шабалина​</h4>
+							<p class="gisDate">18 ноября 2022</p>
+							<p class="gisText text-muted">Отличный сервисный центр! Приехала,отдала ноутбук и сразу при мне сделали диагностику. Выявили причину, сказали цену и сроки.
+								Перезвонили на следующий день и сказали, что можно забирать.Спасибо за быстрый ремонт моего ноутбука!</p>
+							<ul class="list-unstyled d-flex justify-content-center text-warning mb-0">
+								<li><i class="fas fa-star fa-sm"></i></li>
+								<li><i class="fas fa-star fa-sm"></i></li>
+								<li><i class="fas fa-star fa-sm"></i></li>
+								<li><i class="fas fa-star fa-sm"></i></li>
+								<li><i class="fas fa-star fa-sm"></i></li>
+							</ul>
+						</div>
+					</div>
+					<div class="carousel-item">
+						<div class="testImonialBlock text-center">
+							<h4 class="gisName">Павел Шубенкин</h4>
+							<p class="gisDate">18 ноября 2022</p>
+							<p class="gisText text-muted">Отличный сервисный центр. Знаю их давно,много раз выручали по ремонту и настройке компьютерной и мобильной техники. Могут сделать практически всё и цены приемлемые. Есть гарантия на работу. Всем советую.</p>
+							<ul class="list-unstyled d-flex justify-content-center text-warning mb-0">
+								<li><i class="fas fa-star fa-sm"></i></li>
+								<li><i class="fas fa-star fa-sm"></i></li>
+								<li><i class="fas fa-star fa-sm"></i></li>
+								<li><i class="fas fa-star fa-sm"></i></li>
+								<li><i class="fas fa-star fa-sm"></i></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<button class="carousel-control-prev" type="button" data-bs-target="#carousel2GIS" data-bs-slide="prev">
+					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+					<span class="visually-hidden">Previous</span>
+				</button>
+				<button class="carousel-control-next" type="button" data-bs-target="#carousel2GIS" data-bs-slide="next">
+					<span class="carousel-control-next-icon" aria-hidden="true"></span>
+					<span class="visually-hidden">Next</span>
+				</button>
+			</div>
+			
 		</div>
 	</section>
 	<!-- FOOTER -->
@@ -317,6 +477,24 @@
 	</footer>
 	<!-- SCRIPTS -->
 	<script src="./js/bootstrap.min.js"></script>
+	<script src="./js/wow.min.js"></script>
+	<script>
+    wow = new WOW(
+      {
+        animateClass: 'animated',
+        offset:       100,
+        callback:     function(box) {
+          console.log("WOW: animating <" + box.tagName.toLowerCase() + ">")
+        }
+      }
+    );
+    wow.init();
+    document.getElementById('moar').onclick = function() {
+      var section = document.createElement('section');
+      section.className = 'section--purple wow fadeInDown';
+      this.parentNode.insertBefore(section, this);
+    };
+  </script>
 </body>
 
 </html>
