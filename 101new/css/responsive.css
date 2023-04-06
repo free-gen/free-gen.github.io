@@ -131,6 +131,7 @@
 	/* GUARANTEE */
 	.btnItem {
 		margin-top: 0;
+		width: 10em;
 	}
 	.itemName {
 		font-size: 12pt;
