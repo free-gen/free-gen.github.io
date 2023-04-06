@@ -17,8 +17,12 @@
 	}
 	/* GUARANTEE */
 	.btnItem {
-		width: 20em;
+		width: 12em;
 		font-size: 12pt;
+	}
+	.carousel {
+		margin-left: 0;
+		margin-right: 0;
 	}
 }
 
