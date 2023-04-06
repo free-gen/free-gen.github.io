@@ -124,7 +124,7 @@ body {
 }
 .mainSection {
 	height: 100vh;
-	background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 1)), url(../img/banner3.jpg) center center/cover no-repeat;
+	background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 1)), url(../img/banner.jpg) center center/cover no-repeat;
 }
 .mainSectionContent {
 	position: relative;
@@ -145,7 +145,7 @@ body {
 	/* top: calc(var(--index) * 5); */
 	/* bottom: 15vh; */
 	height: 40em;
-	background: url(../img/phone3.png) right center/contain no-repeat;
+	background: url(../img/phone.png) right center/contain no-repeat;
 	/* background-color: blue; */
 }
 
