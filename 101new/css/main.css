@@ -189,6 +189,13 @@ body {
 	padding: 12pt;
 	margin-bottom: 18pt;
 	border-radius: 15px;
+	box-shadow: 3px 10px 20px 0px rgba(90, 116, 148, 0.2);
+}
+.btnItem {
+	box-shadow: 3px 10px 20px 0px rgba(90, 116, 148, 0.4);
+}
+.carousel {
+	box-shadow: 3px 10px 20px 0px rgba(90, 116, 148, 0.2);
 }
 .itemName {
 	font-size: 16pt;
@@ -237,7 +244,7 @@ body {
 
 /* ----------------------- TEAM ----------------------- */
 .teamPhoto>img {
-	width: 200px;
+	width: 180px;
 	border-radius: 100px;
 }
 .teamName {
@@ -246,9 +253,16 @@ body {
 	font-weight: 500;
 }
 .teamDescription {
-	margin-bottom: 60pt;
+	/* margin-bottom: 60pt; */
 	font-weight: 400;
 	color: var(--baseTextColorLight);
+}
+.teamItem {
+	/* background-color: var(--secondaryBgColor); */
+	border-radius: 10px;
+	padding: 12pt;
+	margin-bottom: 24pt;
+	box-shadow: 3px 10px 20px 0px rgba(90, 116, 148, 0.2);
 }
 
 
@@ -257,11 +271,14 @@ body {
 .contactsSection {
 	background-color: var(--secondaryBgColor);
 }
+.contactsDescription {
+	padding-bottom: 24pt;
+}
 
 
 /* ----------------------- 2GIS ----------------------- */
 .carousel2GIS {
-	background-color: var(--secondaryBgColor);
+	/* background-color: var(--secondaryBgColor); */
 	height: 300px;
 }
 .testImonialBlock {
@@ -270,11 +287,28 @@ body {
 	padding-right: 12vw;
 }
 .gisName {
+	padding-left: 6pt;
 	font-size: 12pt;
+	font-weight: 600;
+	margin-bottom: 3pt;
+}
+.gisDate {
+	padding-left: 6pt;
+	margin-bottom: 2pt;
+	font-size: 10pt;
+	/* line-height: 12pt; */
+	/* background-color: blue; */
+}
+.gisStars {
+	padding-left: 6pt;
 }
 .gisText {
-	text-align: left;
-	font-size: 8pt;
+	/* text-align: left; */
+	margin-top: 18pt;
+	background-color: var(--secondaryBgColor);
+	padding: 12pt;
+	border-radius: 10px;
+	font-size: 10pt;
 }
 .gisLogo {
 	padding-top: 12pt;
