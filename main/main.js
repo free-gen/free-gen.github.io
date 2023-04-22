@@ -87,23 +87,3 @@ document.addEventListener('DOMContentLoaded',function(event){
   StartAnimation(0);
   }
 });
-//RANDOM BGND
-const backgrounds = [
-  './main/001.gif',
-  './main/002.gif',
-  './main/003.gif',
-  './main/004.gif',
-  './main/005.gif'
-];
-$(document).ready(
-  () => {
-    const num = randomNum( 5 );
-    const bg = backgrounds[num];
-    $('.random').css('background-image','url('+bg+')');
-  }
-);
-
-function randomNum(limit){
-  let rn = Math.round(Math.random()*(limit-1));
-  return rn;
-}

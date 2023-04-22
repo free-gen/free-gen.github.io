@@ -6,7 +6,7 @@
 	font-family: 'SF UI Text Heavy';
 	src: local('SF UI Text Heavy'), url('SFUIText-Heavy.woff') format('woff');
 	}
-/* VARIABLES */
+/* =========================== */
 :root {
 	--index: calc(1vw + 1vh);
   --bg_alpha: rgba(0, 0, 0, 0.5);
@@ -16,7 +16,12 @@
 	--txt_bg: rgb(190, 0, 0);
 	--link: rgb(255, 247, 0);
 }
-/* STRING */
+a {text-decoration: none;color: var(--txt_second);}
+a:hover, a:focus {cursor: pointer;}
+a>span:hover, a>span:focus {color: var(--link);}
+.aboutButton, .worksButton, .contactsButton {color: var(--txt_first);}
+.aboutHide, .worksHide, .contactsHide {display: none;}
+/* =========================== */
 h1 {
 	font-family: 'SF UI Text Heavy';
 	font-size: calc(var(--index) * 3.8);
@@ -29,12 +34,9 @@ h2 {
 	font-weight: 400;
 	line-height: calc(var(--index) * 1.8);
 }
-a {text-decoration: none;color: var(--txt_second);}
-a:hover, a:focus {cursor: pointer;}
-a>span:hover, a>span:focus {color: var(--link);}
-.aboutButton, .worksButton, .contactsButton {color: var(--txt_first);}
-.aboutHide, .worksHide, .contactsHide {display: none;}
-/* BLOCK */
+
+/* ================================ */
+
 body {
 	font-family: 'SF Mono Semibold';
 	margin: 0;
@@ -42,9 +44,6 @@ body {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-	background-size: calc(var(--index) * 25);
-	background-position: calc(var(--index) * 32.5) center;
-	background-repeat: no-repeat;
 	background-color: var(--bg_solid);
 	color: var(--txt_second);
 }
@@ -64,318 +63,26 @@ body {
   width: 50%;
   height: 40%;
 }
-/* ANIMATIONS */
-@keyframes glitch {
-  0% {
-    text-shadow: 1px 0 0 red, -1px 0 0 blue;
-  }
-  1% {
-    text-shadow: 1px 0 0 red, -1px 0 0 blue;
-  }
-  2% {
-    text-shadow: 1px 0 0 red, -1px 0 0 blue;
-  }
-  3% {
-    text-shadow: 1px 0 0 red, -1px 0 0 blue;
-  }
-  4% {
-    text-shadow: 1px 0 0 red, -1px 0 0 blue;
-  }
-  5% {
-    text-shadow: -1px 0 0 red, 1px 0 0 blue;
-  }
-  6% {
-    text-shadow: -1px 0 0 red, 1px 0 0 blue;
-  }
-  7% {
-    text-shadow: -1px 0 0 red, 1px 0 0 blue;
-  }
-  8% {
-    text-shadow: -1px 0 0 red, 1px 0 0 blue;
-  }
-  9% {
-    text-shadow: -1px 0 0 red, 1px 0 0 blue;
-  }
-  10% {
-    text-shadow: -1px 0 0 red, 1px 0 0 blue;
-  }
-  11% {
-    text-shadow: 0.5px 0 0 red, -0.5px 0 0 lime;
-  }
-  12% {
-    text-shadow: 0.5px 0 0 red, -0.5px 0 0 lime;
-  }
-  13% {
-    text-shadow: 0.5px 0 0 red, -0.5px 0 0 lime;
-  }
-  14% {
-    text-shadow: 0.5px 0 0 red, -0.5px 0 0 lime;
-  }
-  15% {
-    text-shadow: 0.5px 0 0 red, -0.5px 0 0 lime;
-  }
-  16% {
-    text-shadow: -1px 0 0 red, 1px 0 0 lime;
-  }
-  17% {
-    text-shadow: -1px 0 0 red, 1px 0 0 lime;
-  }
-  18% {
-    text-shadow: -1px 0 0 red, 1px 0 0 lime;
-  }
-  19% {
-    text-shadow: -1px 0 0 red, 1px 0 0 lime;
-  }
-  20% {
-    text-shadow: -1px 0 0 red, 1px 0 0 lime;
-  }
-  21% {
-    text-shadow: 0.7px 0 0 blue, -0.7px 0 0 lime;
-  }
-  22% {
-    text-shadow: 0.7px 0 0 blue, -0.7px 0 0 lime;
-  }
-  23% {
-    text-shadow: 0.7px 0 0 blue, -0.7px 0 0 lime;
-  }
-  24% {
-    text-shadow: 0.7px 0 0 blue, -0.7px 0 0 lime;
-  }
-  25% {
-    text-shadow: 0.7px 0 0 blue, -0.7px 0 0 lime;
-  }
-  26% {
-    text-shadow: 0.7px 0 0 blue, -0.7px 0 0 lime;
-  }
-  27% {
-    text-shadow: 0.7px 0 0 blue, -0.7px 0 0 lime;
-  }
-  28% {
-    text-shadow: 0.7px 0 0 blue, -0.7px 0 0 lime;
-  }
-  29% {
-    text-shadow: 0.7px 0 0 blue, -0.7px 0 0 lime;
-  }
-  30% {
-    text-shadow: 0.7px 0 0 blue, -0.7px 0 0 lime;
-  }
-  31% {
-    text-shadow: -1px 0 0 blue, 1px 0 0 lime;
-  }
-  32% {
-    text-shadow: -1px 0 0 blue, 1px 0 0 lime;
-  }
-  33% {
-    text-shadow: -1px 0 0 blue, 1px 0 0 lime;
-  }
-  34% {
-    text-shadow: -1px 0 0 blue, 1px 0 0 lime;
-  }
-  35% {
-    text-shadow: -1px 0 0 blue, 1px 0 0 lime;
-  }
-  36% {
-    text-shadow: -1px 0 0 blue, 1px 0 0 lime;
-  }
-  37% {
-    text-shadow: -1px 0 0 blue, 1px 0 0 lime;
-  }
-  38% {
-    text-shadow: -1px 0 0 blue, 1px 0 0 lime;
-  }
-  39% {
-    text-shadow: -1px 0 0 blue, 1px 0 0 lime;
-  }
-  40% {
-    text-shadow: -1px 0 0 blue, 1px 0 0 lime;
-  }
-  41% {
-    text-shadow: 50px 0 0 blue, -50px 0 0 lime;
-  }
-  42% {
-    text-shadow: 0 0 0 blue, 0 0 0 lime;
-  }
-  43% {
-    text-shadow: 0.5px 0 0 red, -0.5px 0 0 lime;
-  }
-  44% {
-    text-shadow: 0.5px 0 0 red, -0.5px 0 0 lime;
-  }
-  45% {
-    text-shadow: 0.5px 0 0 red, -0.5px 0 0 lime;
-  }
-  46% {
-    text-shadow: 0.5px 0 0 red, -0.5px 0 0 lime;
-  }
-  47% {
-    text-shadow: -1px 0 0 red, 1px 0 0 lime;
-  }
-  48% {
-    text-shadow: -1px 0 0 red, 1px 0 0 lime;
-  }
-  49% {
-    text-shadow: -1px 0 0 red, 1px 0 0 lime;
-  }
-  50% {
-    text-shadow: -1px 0 0 red, 1px 0 0 lime;
-  }
-  51% {
-    text-shadow: 1px 0 0 red, -1px 0 0 blue;
-  }
-  52% {
-    text-shadow: 1px 0 0 red, -1px 0 0 blue;
-  }
-  53% {
-    text-shadow: 1px 0 0 red, -1px 0 0 blue;
-  }
-  54% {
-    text-shadow: 1px 0 0 red, -1px 0 0 blue;
-  }
-  55% {
-    text-shadow: 1px 0 0 red, -1px 0 0 blue;
-  }
-  56% {
-    text-shadow: -1px 0 0 red, 1px 0 0 blue;
-  }
-  57% {
-    text-shadow: -1px 0 0 red, 1px 0 0 blue;
-  }
-  58% {
-    text-shadow: -1px 0 0 red, 1px 0 0 blue;
-  }
-  59% {
-    text-shadow: -1px 0 0 red, 1px 0 0 blue;
-  }
-  60% {
-    text-shadow: -1px 0 0 red, 1px 0 0 blue;
-  }
-  61% {
-    text-shadow: 30px 0 0 red, -30px 0 0 lime;
-  }
-  62% {
-    text-shadow: 0 0 0 red, 0 0 0 lime;
-  }
-  63% {
-    text-shadow: 0.5px 0 0 red, -0.5px 0 0 blue;
-  }
-  64% {
-    text-shadow: 0.5px 0 0 red, -0.5px 0 0 blue;
-  }
-  65% {
-    text-shadow: 0.5px 0 0 red, -0.5px 0 0 blue;
-  }
-  66% {
-    text-shadow: 0.5px 0 0 red, -0.5px 0 0 blue;
-  }
-  67% {
-    text-shadow: -1px 0 0 red, 1px 0 0 blue;
-  }
-  68% {
-    text-shadow: -1px 0 0 red, 1px 0 0 blue;
-  }
-  69% {
-    text-shadow: -1px 0 0 red, 1px 0 0 blue;
-  }
-  70% {
-    text-shadow: -1px 0 0 red, 1px 0 0 blue;
-  }
-  71% {
-    text-shadow: 70px 0 0 red, -70px 0 0 blue;
-  }
-  72% {
-    text-shadow: 0 0 0 red, 0 0 0 blue;
-  }
-  73% {
-    text-shadow: 1px 0 0 red, -1px 0 0 blue;
-  }
-  74% {
-    text-shadow: 1px 0 0 red, -1px 0 0 blue;
-  }
-  75% {
-    text-shadow: 1px 0 0 red, -1px 0 0 blue;
-  }
-  76% {
-    text-shadow: 1px 0 0 red, -1px 0 0 blue;
-  }
-  77% {
-    text-shadow: -1px 0 0 red, 1px 0 0 blue;
-  }
-  78% {
-    text-shadow: -1px 0 0 red, 1px 0 0 blue;
-  }
-  79% {
-    text-shadow: -1px 0 0 red, 1px 0 0 blue;
-  }
-  80% {
-    text-shadow: -1px 0 0 red, 1px 0 0 blue;
-  }
-  81% {
-    text-shadow: 0.5px 0 0 red, -0.5px 0 0 lime;
-  }
-  82% {
-    text-shadow: 0.5px 0 0 red, -0.5px 0 0 lime;
-  }
-  83% {
-    text-shadow: 0.5px 0 0 red, -0.5px 0 0 lime;
-  }
-  84% {
-    text-shadow: 0.5px 0 0 red, -0.5px 0 0 lime;
-  }
-  85% {
-    text-shadow: 0.5px 0 0 red, -0.5px 0 0 lime;
-  }
-  86% {
-    text-shadow: -1px 0 0 red, 1px 0 0 lime;
-  }
-  87% {
-    text-shadow: -1px 0 0 red, 1px 0 0 lime;
-  }
-  88% {
-    text-shadow: -1px 0 0 red, 1px 0 0 lime;
-  }
-  89% {
-    text-shadow: -1px 0 0 red, 1px 0 0 lime;
-  }
-  90% {
-    text-shadow: -1px 0 0 red, 1px 0 0 lime;
-  }
-  91% {
-    text-shadow: 60px 0 0 lime, -60px 0 0 blue;
-  }
-  92% {
-    text-shadow: 0 0 0 lime, 0 0 0 blue;
-  }
-  92% {
-    text-shadow: 0.7px 0 0 blue, -0.7px 0 0 lime;
-  }
-  93% {
-    text-shadow: 0.7px 0 0 blue, -0.7px 0 0 lime;
-  }
-  94% {
-    text-shadow: 0.7px 0 0 blue, -0.7px 0 0 lime;
-  }
-  95% {
-    text-shadow: 0.7px 0 0 blue, -0.7px 0 0 lime;
-  }
-  96% {
-    text-shadow: -1px 0 0 blue, 1px 0 0 lime;
-  }
-  97% {
-    text-shadow: -1px 0 0 blue, 1px 0 0 lime;
-  }
-  98% {
-    text-shadow: -1px 0 0 blue, 1px 0 0 lime;
-  }
-  99% {
-    text-shadow: -1px 0 0 blue, 1px 0 0 lime;
-  }
-  100% {
-    text-shadow: -1px 0 0 blue, 1px 0 0 lime;
-  }
+
+.myLogo {
+	position: absolute;
+	z-index: -1;
+	right: calc(var(--index) * 8);
+	top: calc(var(--index) * 7);
+	width: calc(var(--index) * 20); 
+	height: calc(var(--index) * 20); 
+	/* border: lightskyblue 1px dotted; */
 }
 /* SCREENS */
 @media all and (orientation: portrait) {
-  body {background-size: contain; background-position: 0 calc(var(--index) * 12);}
+  .myLogo {
+		width: 100vw;
+		height: 50vh;
+		right: 0;
+		left: 0;
+		top: calc(var(--index) * 15);
+		/* margin-left: calc(var(--index) * 2.7); */
+	}
 	.head {left: 0; top: calc(var(--index) * 2); width: 100%; text-align: center;}
 	h1 {font-size: calc(var(--index) * 4); line-height: calc(var(--index) * 4);}
 	h2 {font-size: calc(var(--index) * 1.8); line-height: calc(var(--index) * 2.5); background-color: rgba(0, 0, 0, 0.5);}
