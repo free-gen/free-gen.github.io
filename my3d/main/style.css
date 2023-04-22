@@ -76,12 +76,12 @@ body {
 /* SCREENS */
 @media all and (orientation: portrait) {
   .myLogo {
-		width: calc(var(--index) * 30);
-		height: calc(var(--index) * 30);
+		width: 100vw;
+		height: 60vh;
 		right: 0;
 		left: 0;
-		top: calc(var(--index) * 18);
-		margin-left: calc(var(--index) * 2.7);
+		top: calc(var(--index) * 15);
+		/* margin-left: calc(var(--index) * 2.7); */
 	}
 	.head {left: 0; top: calc(var(--index) * 2); width: 100%; text-align: center;}
 	h1 {font-size: calc(var(--index) * 4); line-height: calc(var(--index) * 4);}

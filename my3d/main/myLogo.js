@@ -27,7 +27,7 @@ let materialShininess = 10; // уровень сияния
 let rotationSpeed = 30; // скорость вращения
 let model; // инициализация
 let modelRotate = { x: 120, y: 1, z: 5 }; // наклон модели
-let modelPosition = { x: 0.02, y: -0.18, z: 4 } // позиционирование модели
+let modelPosition = { x: 0, y: -0.18, z: 4 } // позиционирование модели
 
 // ============ CODE ============ //
 
