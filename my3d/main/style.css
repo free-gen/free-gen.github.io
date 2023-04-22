@@ -77,7 +77,7 @@ body {
 @media all and (orientation: portrait) {
   .myLogo {
 		width: 100vw;
-		height: 60vh;
+		height: 50vh;
 		right: 0;
 		left: 0;
 		top: calc(var(--index) * 15);
