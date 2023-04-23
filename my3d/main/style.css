@@ -36,8 +36,21 @@ h2 {
 }
 
 /* ================================ */
-
+/* .overlay {
+	position: fixed;
+  width: 100%;
+  height: 100%;
+	background: repeating-linear-gradient(transparent, transparent 1px, rgb(88, 88, 88) 1px, transparent 2px);
+  background-size: auto 100%;
+  background-position: center center;
+  z-index: 2;
+	cursor: pointer;
+} */
 body {
+	background: repeating-linear-gradient(transparent, transparent 2px, gray 2px, black 3px);
+  background-size: auto 100%;
+  background-position: center center;
+  opacity: 1;
 	font-family: 'SF Mono Semibold';
 	margin: 0;
   padding: 0;
@@ -46,6 +59,7 @@ body {
   overflow: hidden;
 	background-color: var(--bg_solid);
 	color: var(--txt_second);
+	z-index: 2;
 }
 .head {
 	color: var(--txt_first);
@@ -68,9 +82,9 @@ body {
 	position: absolute;
 	z-index: -1;
 	right: calc(var(--index) * 8);
-	top: calc(var(--index) * 7);
-	width: calc(var(--index) * 20); 
-	height: calc(var(--index) * 20); 
+	top: calc(var(--index) * 5);
+	width: calc(var(--index) * 25); 
+	height: calc(var(--index) * 25); 
 	/* border: lightskyblue 1px dotted; */
 }
 /* SCREENS */

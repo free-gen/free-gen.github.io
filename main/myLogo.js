@@ -108,6 +108,13 @@ function render() {
 	window.addEventListener( 'resize', function () {
 	camera.aspect = container.clientWidth / container.clientHeight;
 	camera.updateProjectionMatrix();
+	const resizeWidht = container.clientWidth  * pixelRatio | 0;
+	const resizeHeight = container.clientHeight  * pixelRatio | 0;
+	const needResize = container.resizeWidht !== resizeWidht || container.resizeHeight !== resizeHeight;
+	if (needResize) {
+		renderer.setSize(resizeWidht, resizeWidht, false);
+	}
+	return needResize;
 	renderer.setSize( container.clientWidth, container.clientHeight );
 	}, false );
 
