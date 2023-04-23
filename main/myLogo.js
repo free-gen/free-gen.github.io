@@ -34,7 +34,8 @@ let modelPosition = { x: 0, y: -0.18, z: 4 } // позиционирование
 // create renderer
 const renderer = new THREE.WebGLRenderer({ logarithmicDepthBuffer: true, antialias: true, alpha: true })
 renderer.setSize(width, height)
-container.appendChild( renderer.domElement );
+renderer.setPixelRatio(window.devicePixelRatio); // добавляем настройку пиксельного соотношения
+container.appendChild( renderer.domElement ); 
 
 // create scene and fog
 const scene = new THREE.Scene();
@@ -48,6 +49,8 @@ scene.environment = pmremGenerator.fromScene( new RoomEnvironment(), 0.08 ).text
 // create camera and light
 const camera = new THREE.PerspectiveCamera( 7, width / height, 10, 100 );
 camera.position.z = 15;
+camera.aspect = container.clientWidth / container.clientHeight; // добавляем настройку пиксельного соотношения
+camera.updateProjectionMatrix(); // обновляем матрицу проекции
 
 const ambientLight = new THREE.AmbientLight( ambientLightColor );
 scene.add( ambientLight );
@@ -95,27 +98,19 @@ loader.load('./main/logo.gltf', gltf => {
 
 // create render and animation
 function render() {
-	requestAnimationFrame( render );
-		rotationSpeed
-		model.rotation.z += rotationSpeed * 0.001;
-		// model.rotation.y += rotationSpeed * 0.000005;
-		// model.rotation.x += rotationSpeed * 0.000005;
-
-	renderer.render( scene, camera );
-	}
+  requestAnimationFrame( render );
+  model.rotation.z += rotationSpeed * 0.001;
+  renderer.render( scene, camera );
+}
 
 	// create responsive
-	window.addEventListener( 'resize', function () {
-	camera.aspect = container.clientWidth / container.clientHeight;
-	camera.updateProjectionMatrix();
-	const resizeWidht = container.clientWidth  * pixelRatio | 0;
-	const resizeHeight = container.clientHeight  * pixelRatio | 0;
-	const needResize = container.resizeWidht !== resizeWidht || container.resizeHeight !== resizeHeight;
-	if (needResize) {
-		renderer.setSize(resizeWidht, resizeWidht, false);
-	}
-	return needResize;
-	renderer.setSize( container.clientWidth, container.clientHeight );
-	}, false );
+window.addEventListener( 'resize', function () {
+  width = container.clientWidth; // обновляем ширину контейнера
+  height = container.clientHeight; // обновляем высоту контейнера
+  camera.aspect = width / height;
+  camera.updateProjectionMatrix();
+  renderer.setSize( width, height );
+  renderer.setPixelRatio(window.devicePixelRatio); // добавляем настройку пиксельного соотношения
+}, false );
 
-	render();
+render();
