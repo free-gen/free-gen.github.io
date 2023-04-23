@@ -30,7 +30,7 @@
 		line-height: calc(var(--index) * 2);
 		left: 0;
 		padding-left: 2pt;
-		bottom: calc(var(--index) * 9);
+		bottom: calc(var(--index) * 5);
 		width: 100%;
 		height: calc(var(--index) * 13);
 		/* background-color: rgba(0, 0, 0, 0.5); */
