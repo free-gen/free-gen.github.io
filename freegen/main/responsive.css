@@ -5,6 +5,7 @@
   .myLogo {
 		width: 100vw;
 		height: 50vh;
+		top: -30px;
 	}
 	.head {
 		position: relative;
@@ -30,7 +31,7 @@
 		line-height: calc(var(--index) * 2);
 		left: 0;
 		padding-left: 2pt;
-		bottom: calc(var(--index) * 3);
+		bottom: calc(var(--index) * 1);
 		width: 100%;
 		height: calc(var(--index) * 13);
 		/* background-color: rgba(0, 0, 0, 0.5); */
