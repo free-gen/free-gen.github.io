@@ -13,21 +13,21 @@ let height = container.clientHeight;
 // дымка
 let fogColor = 0xff0000;
 let fogNear = 5;
-let fogFar = 20;
+let fogFar = 25;
 
 let materialColor = 0x0000ff; // цвет материала
-let materialEmissive = 0x009900; // свечение материала
+let materialEmissive = 0x006600; // свечение материала
 let materialSpecular = 0x00ff00; // цвет бликов
-let materialRoughness = 0.1; // шероховатость материала
-let materialMetalness = 0.5; // металличность материала
+let materialRoughness = 0.5; // шероховатость материала
+let materialMetalness = 0.7; // металличность материала
 let ambientLightColor = 0xffffff; // цвет основной подсветки
-let pointLightColor = 0xffffff; // цвет дополнительной подсветки
+let pointLightColor = { l1: 0x774444, l2: 0x447744, l3: 0x444477 }; // цвет дополнительной подсветки
 let materialShininess = 10; // уровень сияния
 
 let rotationSpeed = 30; // скорость вращения
 let model; // инициализация
 let modelRotate = { x: 120, y: 1, z: 5 }; // наклон модели
-let modelPosition = { x: 0, y: -0.18, z: 4 } // позиционирование модели
+let modelPosition = { x: 0, y: 0.03, z: 4 } // позиционирование модели
 
 // ============ CODE ============ //
 
@@ -47,7 +47,7 @@ const pmremGenerator = new THREE.PMREMGenerator( renderer );
 scene.environment = pmremGenerator.fromScene( new RoomEnvironment(), 0.08 ).texture;
 
 // create camera and light
-const camera = new THREE.PerspectiveCamera( 7, width / height, 10, 100 );
+const camera = new THREE.PerspectiveCamera( 6, width / height, 10, 100 );
 camera.position.z = 15;
 camera.aspect = container.clientWidth / container.clientHeight; // добавляем настройку пиксельного соотношения
 camera.updateProjectionMatrix(); // обновляем матрицу проекции
@@ -55,21 +55,21 @@ camera.updateProjectionMatrix(); // обновляем матрицу проек
 const ambientLight = new THREE.AmbientLight( ambientLightColor );
 scene.add( ambientLight );
 
-const light1 = new THREE.PointLight( pointLightColor, 1, 0 );
-light1.position.set( 0, 200, 0 );
+const light1 = new THREE.PointLight( pointLightColor.l1, 1, 0 );
+light1.position.set( 10, 20, 30 );
 scene.add( light1 );
 
-const light2 = new THREE.PointLight( pointLightColor, 1, 0 );
+const light2 = new THREE.PointLight( pointLightColor.l2, 1, 0 );
 light2.position.set( 100, 200, 100 );
 scene.add( light2 );
 
-const light3 = new THREE.PointLight( pointLightColor, 1, 0 );
+const light3 = new THREE.PointLight( pointLightColor.l3, 1, 0 );
 light3.position.set( - 100, - 200, - 100 );
 scene.add( light3 );
 
 // Загружаем GLTF модель
 const loader = new GLTFLoader();
-loader.load('./main/logo.gltf', gltf => {
+loader.load('./main/freegenLogo.gltf', gltf => {
   model = gltf.scene.children[0]; // получаем объект модели
 	model.position.set(modelPosition.x, modelPosition.y, modelPosition.z); 
   model.rotation.x = THREE.MathUtils.degToRad(modelRotate.x); // наклон по оси X
@@ -96,10 +96,18 @@ loader.load('./main/logo.gltf', gltf => {
   scene.add(model); // добавляем модель в сцену
 });
 
+// вращение для всех трех источников точечного света
+function rotateLights() {
+  light1.position.applyAxisAngle(new THREE.Vector3(0, 1, 0), THREE.MathUtils.degToRad(1));
+  light2.position.applyAxisAngle(new THREE.Vector3(0, 1, 0), THREE.MathUtils.degToRad(1));
+  light3.position.applyAxisAngle(new THREE.Vector3(0, 1, 0), THREE.MathUtils.degToRad(1));
+}
+
 // create render and animation
 function render() {
   requestAnimationFrame( render );
   model.rotation.z += rotationSpeed * 0.001;
+	rotateLights(); // вызываем функцию вращения источников света
   renderer.render( scene, camera );
 }
 

@@ -1,8 +1,4 @@
 @font-face {
-	font-family: 'SF Mono Semibold';
-	src: local('SF Mono Semibold'), url('SFMonoSemibold.woff') format('woff');
-	}
-@font-face {
 	font-family: 'SF UI Text Heavy';
 	src: local('SF UI Text Heavy'), url('SFUIText-Heavy.woff') format('woff');
 	}
@@ -23,7 +19,7 @@ body {
 	flex-direction: row;
 	align-items: center;
 	justify-content: center;
-	font-family: 'SF Mono Semibold';
+	font-family: 'Noto Sans Mono', monospace;
 	margin: 0;
   padding: 0;
   width: 100vw;
@@ -40,11 +36,10 @@ body {
 }
 .prices {
 	color: var(--txt_first);
-	font-family: 'Noto Sans Mono', monospace;
 	font-weight: 300;
 	background-color: var(--bg_alpha);
 	border-radius: 10px;
-	font-size: 10pt;
+	font-size: 12pt;
 	padding: 10px;
 }
 .serviceName {
@@ -73,18 +68,16 @@ h1 {
 	animation: glitch 2s steps(100) infinite;
 }
 h2 {
-	font-size: calc(var(--index) * 1.5);
+	font-size: calc(var(--index) * 1.6);
+	font-family: 'SF UI Text Heavy';
 }
 .terminal {
 	color: var(--txt_second);
 	font-size: calc(var(--index) * 0.6);
-	line-height: calc(var(--index) * .8);
-	/* font-weight: 600; */
+	line-height: calc(var(--index) * 0.8);
+	font-weight: 300;
 	position: absolute;
-	bottom: 10vh;
-}
-.price {
-	color: var(--txt_first);
+	bottom: 5vh;
 }
 /* ============= BLOCK ============= */
 
