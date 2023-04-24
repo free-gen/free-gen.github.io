@@ -34,6 +34,8 @@
 		bottom: calc(var(--index) * 1);
 		width: 100%;
 		height: calc(var(--index) * 13);
-		/* background-color: rgba(0, 0, 0, 0.5); */
+	}
+	.prices {
+		font-size: 6pt;
 	}
 }
