@@ -4,7 +4,6 @@ var modalWindow = new tingle.modal({
   closeMethods: ['overlay', 'button', 'escape'],
   closeLabel: "",
 });
-
 var btn = document.getElementById("modalTrigger");
 btn.addEventListener("click", function() {
   modalWindow.open();
