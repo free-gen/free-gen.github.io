@@ -1,4 +1,4 @@
-let close = "$ [ Закрыть (X) ]";
+let close = "$ [X] Закрыть";
 // Обьекты
 let about = document.querySelector('.about');
 let works = document.querySelector('.works');

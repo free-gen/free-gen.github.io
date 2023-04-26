@@ -36,6 +36,6 @@
 		height: calc(var(--index) * 13);
 	}
 	.prices {
-		font-size: 6pt;
+		font-size: 3vw;
 	}
 }
