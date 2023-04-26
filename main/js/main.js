@@ -1,8 +1,9 @@
-let close = "─$ [ Закрыть (X) ]";
+let close = "$ [X] Закрыть";
 // Обьекты
 let about = document.querySelector('.about');
 let works = document.querySelector('.works');
 let contacts = document.querySelector('.contacts');
+let modal = document.querySelector('.modal');
 // Кнопки
 let aboutButton = document.querySelector('.aboutButton');
 let worksButton = document.querySelector('.worksButton');
@@ -20,6 +21,7 @@ $(aboutButton).click(function() {
   $('hide').toggleClass("aboutHide");
   $(works).toggleClass("worksHide");
   $(contacts).toggleClass("contactsHide");
+	$(modal).toggleClass("worksHide");
   if ( $(this).hasClass( "active" ) ) {
     $(this).text( close );
   } else {
@@ -32,6 +34,7 @@ $(worksButton).click(function() {
   $('hide').toggleClass("worksHide");
   $(about).toggleClass("aboutHide");
   $(contacts).toggleClass("contactsHide");
+	$(modal).toggleClass("worksHide");
   if ( $(this).hasClass( "active" ) ) {
     $(this).text( close );
   } else {
@@ -44,6 +47,7 @@ $(contactsButton).click(function() {
   $('hide').toggleClass("contactsHide");
   $(about).toggleClass("aboutHide");
   $(works).toggleClass("worksHide");
+  $(modal).toggleClass("worksHide");
   if ( $(this).hasClass( "active" ) ) {
     $(this).text( close );
   } else {
