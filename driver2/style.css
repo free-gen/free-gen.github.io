@@ -98,7 +98,7 @@ a:visited:hover { color: #FFC000;}
 
 @media (min-width: 320px) and (orientation:portrait) {
 	.title {
-		font-size: 6vw;
+		font-size: calc(var(--index) * 1.6);
 		margin-top: 100px;
 	}
 	.container {
