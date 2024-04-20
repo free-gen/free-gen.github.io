@@ -98,13 +98,16 @@ a:visited:hover { color: #FFC000;}
 
 @media (min-width: 320px) and (orientation:portrait) {
 	.title {
-		/* font-size: 6vw; */
+		font-size: 6vw;
 		margin-top: 100px;
 	}
 	.container {
-		font-size: calc(var(--index) * 1.2);
-		line-height: calc(var(--index) * 2);
+		font-size: calc(var(--index) * 0.9);
+		line-height: calc(var(--index) * 1.6);
+		/* font-weight: 100; */
+		width: 100%;
+		/* margin: 150; */
 	}
-	#link {font-size: calc(var(--index) * 1.2)}
+	#link {font-size: calc(var(--index) * 1)}
 	#footer {margin-top: 2%;}
 }
