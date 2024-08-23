@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alesis_HR16A</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+			<h1>ALESIS HR16A</h1>
+			<h2>Драм-машина в стиле Сектор Газа</h2>
+        <div class="controls">
+            <label for="bpm">BPM:</label>
+            <input type="number" id="bpm" value="120" min="60" max="240">
+            <button id="play">Play</button>
+            <button id="stop">Stop</button>
+        </div>
+        <div class="tracks">
+            <div class="track-labels">
+                <!-- Подписи треков будут созданы динамически -->
+            </div>
+            <div class="track-grid">
+                <!-- Дорожки и ячейки будут созданы динамически -->
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

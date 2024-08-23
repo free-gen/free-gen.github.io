@@ -1,0 +1,163 @@
+body {
+	font-family: monospace;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	margin: 0;
+	background-color: #ccc;
+}
+
+.container {
+	text-align: center;
+}
+
+.controls {
+	margin-bottom: 20px;
+	font-family: monospace;
+	font-size: 15pt;
+	font-weight: 900;
+	text-align: center;
+}
+#bpm {
+	width: 200px;
+	height: 30px;
+	font-family: monospace;
+	font-size: 15pt;
+	font-weight: 900;
+	text-align: center;
+	border-radius: 9px;
+	background-color: yellowgreen;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+	color: green;
+	border: none;
+}
+button {
+	font-family: monospace;
+	font-size: 15pt;
+	font-weight: 900;
+	text-align: center;
+	width: 150px;
+	height: 30px;
+	border-radius: 3px;
+	border: none;
+	box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.4),
+0px 7px 13px -3px rgba(0,0,0,0.3),
+0px -3px 0px 0px rgba(0,0,0,0.2) inset;
+}
+button:active {
+	box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.4) inset,
+0px 0px 13px 2px rgba(0,0,0,0.3) inset,
+0px 3px 0px 0px rgba(0,0,0,0.2) inset;
+} 
+.tracks {
+	display: flex;
+	flex-direction: row;
+	gap: 10px;
+	align-items: flex-start;
+}
+
+.track-labels {
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 5px;
+	border-radius: 5px;
+	box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.25) inset,
+0px 2px 8px 0px rgba(0,0,0,0.25) inset,
+0px 0px 0px 1px rgba(255,255,255,0.1) inset;
+	/* margin-top: 5px; */
+	display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-right: 10px;
+    align-items: flex-start; /* Выравнивание по левому краю */
+		background-color: #ccc;
+}
+
+.track {
+	display: grid;
+	grid-template-columns: repeat(16, 30px);
+	gap: 2px;
+}
+
+.track-name {
+	/* margin-top: 5px; */
+	width: 100px;
+	height: 25px;
+	/* border: solid 1px #ccc; */
+	box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.4),
+0px 7px 13px -3px rgba(0,0,0,0.3),
+0px -2px 0px 0px rgba(0,0,0,0.2) inset;
+	margin-bottom: 5px;
+	border-radius: 3px;
+	line-height: 1.8;
+	/* font-weight: bold; */
+	background-color: #eee;
+}
+
+.cell {
+	width: 28px;
+	height: 28px;
+	background-color: #ccc; /* Default color */
+	/* border: 2px solid #555; */
+	margin: 2px;
+	box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.4),
+0px 7px 13px -3px rgba(0,0,0,0.3),
+0px -3px 0px 0px rgba(0,0,0,0.2) inset;
+	border-radius: 5px;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+/* Color variations */
+.cell:nth-child(4n + 1),
+.cell:nth-child(4n + 2),
+.cell:nth-child(4n + 3),
+.cell:nth-child(4n + 4) {
+	background-color: #fff;
+}
+
+.cell:nth-child(4n + 5),
+.cell:nth-child(4n + 6),
+.cell:nth-child(4n + 7),
+.cell:nth-child(4n + 8) {
+	background-color: #eee;
+}
+
+.cell:nth-child(4n + 9),
+.cell:nth-child(4n + 10),
+.cell:nth-child(4n + 11),
+.cell:nth-child(4n + 12) {
+	background-color: #fff;
+}
+
+.cell:nth-child(4n + 13),
+.cell:nth-child(4n + 14),
+.cell:nth-child(4n + 15),
+.cell:nth-child(4n + 16) {
+	background-color: #eee;
+}
+
+.cell.active {
+	background-color: #eee;
+	box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.4) inset,
+0px 0px 13px 2px rgba(0,0,0,0.3) inset,
+0px 3px 0px 0px rgba(0,0,0,0.2) inset;
+}
+
+.cell.highlight {
+	background-color: yellowgreen;
+	box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.4) inset,
+0px 0px 13px 2px rgba(0,0,0,0.3) inset,
+0px 3px 0px 0px rgba(0,0,0,0.2) inset;
+	animation: blink 0.6s;
+}
+
+/*  */
+
+.controls input[type="number"] {
+	width: 80px;
+	margin: 0 10px;
+}
