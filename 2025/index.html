@@ -111,13 +111,25 @@
     </div>
 
     <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Предварительная загрузка видео
+            const video = document.getElementById('videoPlayer');
+            video.load();
+            
+            // Принудительная предварительная буферизация
+            video.addEventListener('loadedmetadata', () => {
+                video.currentTime = 0;
+                video.pause();
+            });
+        });
+
         // Заменим конфигурацию видео на более точную
         const videoConfig = {
             bellsTimeMinutes: 4,
             bellsTimeSeconds: 49,
             bellsTimeMillis: 500,
             targetHours: 22,
-            targetMinutes: 20,
+            targetMinutes: 40,
             targetSeconds: 0
         };
 
@@ -204,10 +216,15 @@
         // Добавим переменную для отслеживания состояния видео
         let videoStarted = false;
 
-        function updateClock() {
+        // Добавим функцию для более точного определения времени
+        function getCurrentTime() {
             const now = new Date();
             const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
-            const utcPlus10 = new Date(utc + (3600000 * 10));
+            return new Date(utc + (3600000 * 10)); // UTC+10
+        }
+
+        function updateClock() {
+            const utcPlus10 = getCurrentTime();
             
             const hours = utcPlus10.getHours().toString().padStart(2, '0');
             const minutes = utcPlus10.getMinutes().toString().padStart(2, '0');
@@ -222,8 +239,16 @@
                 newYearTime.setDate(newYearTime.getDate() + 1);
             }
             
-            const timeLeft = newYearTime - utcPlus10;
-            
+            // Вычисляем время начала трансляции
+            const startTime = new Date(newYearTime);
+            startTime.setMinutes(startTime.getMinutes() - videoConfig.bellsTimeMinutes);
+            startTime.setSeconds(startTime.getSeconds() - videoConfig.bellsTimeSeconds);
+            startTime.setMilliseconds(startTime.getMilliseconds() - videoConfig.bellsTimeMillis);
+
+            const timeToStart = startTime.getTime() - utcPlus10.getTime();
+            const timeLeft = newYearTime.getTime() - utcPlus10.getTime();
+
+            // Обновляем часы
             if (timeLeft > 0) {
                 const hoursLeft = Math.floor(timeLeft / 3600000).toString().padStart(2, '0');
                 const minutesLeft = Math.floor((timeLeft % 3600000) / 60000).toString().padStart(2, '0');
@@ -234,40 +259,24 @@
                     `${hours}:${minutes}:${seconds}.${millis} (UTC+10) | До Нового Года: ${hoursLeft}:${minutesLeft}:${secondsLeft}.${millisLeft}`;
             }
 
-            // Проверяем время для запуска видео
-            const startTime = new Date(newYearTime);
-            startTime.setMinutes(startTime.getMinutes() - videoConfig.bellsTimeMinutes);
-            startTime.setSeconds(startTime.getSeconds() - videoConfig.bellsTimeSeconds);
-            startTime.setMilliseconds(startTime.getMilliseconds() - videoConfig.bellsTimeMillis);
-
-            const timeToStart = startTime - utcPlus10;
-
-            // Запускаем видео, если время пришло и оно ещё не запущено
-            if (timeToStart <= 0 && !videoStarted && utcPlus10 < newYearTime) {
+            // Запускаем видео точно вовремя
+            if (!videoStarted && timeToStart <= 0 && utcPlus10.getTime() < newYearTime.getTime()) {
                 videoStarted = true;
                 startVideo();
             }
 
-            // Сбрасываем состояние, если время трансляции прошло
-            if (utcPlus10 >= newYearTime) {
+            // Сбрасываем состояние
+            if (utcPlus10.getTime() >= newYearTime.getTime()) {
                 videoStarted = false;
             }
 
-            // Обновляем сообщение в контейнере только если видео ещё не запущено
+            // Обновляем сообщение в контейнере
             if (!videoStarted) {
-                updateMessage(utcPlus10, newYearTime);
+                updateMessage(timeToStart);
             }
         }
 
-        function updateMessage(currentTime, newYearTime) {
-            // Вычисляем время начала трансляции
-            const startTime = new Date(newYearTime);
-            startTime.setMinutes(startTime.getMinutes() - videoConfig.bellsTimeMinutes);
-            startTime.setSeconds(startTime.getSeconds() - videoConfig.bellsTimeSeconds);
-            startTime.setMilliseconds(startTime.getMilliseconds() - videoConfig.bellsTimeMillis);
-            
-            const timeToStart = startTime - currentTime;
-            
+        function updateMessage(timeToStart) {
             if (timeToStart > 0) {
                 const hoursToStart = Math.floor(timeToStart / 3600000).toString().padStart(2, '0');
                 const minutesToStart = Math.floor((timeToStart % 3600000) / 60000).toString().padStart(2, '0');
@@ -322,8 +331,14 @@
             }
         }
 
-        // Изменим интервал обновления на более частый для точной синхронизации
-        setInterval(updateClock, 100);
+        // Заменяем setInterval на requestAnimationFrame
+        function tick() {
+            updateClock();
+            requestAnimationFrame(tick);
+        }
+
+        // Заменяем setInterval на requestAnimationFrame
+        requestAnimationFrame(tick);
         updateClock(); // Инициализация часов
 
         // Обработка окончания видео
