@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Фильмач</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: left;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        button {
+            background: #000000;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin: 5px;
+        }
+        button:hover {
+            background: #434343;
+        }
+        #status {
+            margin-top: 20px;
+            color: #666;
+        }
+        #customLink {
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            box-sizing: border-box;
+        }
+        .kinopoisk-btn {
+            background: #000000;
+            color: #ffcc00;
+        }
+        .kinopoisk-btn:hover {
+            background: #000000;
+            color: #ffe270;
+        }
+        .button-group {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Кинопоиск на халяву!</h1>
+        <div class="button-group">
+            <button class="kinopoisk-btn" onclick="window.open('https://kinopoisk.ru', '_blank')">Выбрать фильм на Кинопоиске</button>
+        </div>
+        <div class="text">
+            <li>Выбери любой фильм на Кинопоиске</li>
+            <li>Скопируй ссылку на этот фильм</li>
+            <li>Вернись сюда и нажми начать просмотр</li>
+        </div>
+        <br>
+        <button id="pasteButton">Начать просмотр</button>
+        <div id="status">Нажмите кнопку и вставьте ссылку на Кинопоиск</div>
+        
+        
+        <input type="text" id="customLink" placeholder="Или вставьте ссылку вручную">
+        <button onclick="openCustomLink()">Открыть</button>
+    </div>
+
+    <script>
+        const pasteButton = document.getElementById('pasteButton');
+        const statusDiv = document.getElementById('status');
+
+        // Обработчик кнопки "Вставить ссылку"
+        pasteButton.addEventListener('click', async () => {
+            try {
+                // Чтение из буфера обмена
+                const clipboardText = await navigator.clipboard.readText();
+                
+                if (!clipboardText.includes('kinopoisk.ru')) {
+                    statusDiv.textContent = 'Это не ссылка Кинопоиска!';
+                    return;
+                }
+
+                // Замена домена
+                const filmId = extractFilmId(clipboardText);
+                if (!filmId) {
+                    statusDiv.textContent = 'Не удалось извлечь ID фильма';
+                    return;
+                }
+
+                const sspoiskUrl = `https://sspoisk.ru/film/${filmId}`;
+                statusDiv.textContent = `Открываю: ${sspoiskUrl}`;
+                
+                // Открытие в новом окне
+                window.open(sspoiskUrl, '_blank');
+
+            } catch (err) {
+                statusDiv.textContent = 'Ошибка: ' + err.message;
+                console.error(err);
+            }
+        });
+
+        // Извлечение ID фильма из ссылки
+        function extractFilmId(url) {
+            const match = url.match(/kinopoisk\.ru\/film\/(\d+)/);
+            return match ? match[1] : null;
+        }
+
+        // Обработчик ручного ввода ссылки
+        function openCustomLink() {
+            const customLink = document.getElementById('customLink').value;
+            if (!customLink) return;
+
+            const filmId = extractFilmId(customLink);
+            if (!filmId) {
+                statusDiv.textContent = 'Некорректная ссылка';
+                return;
+            }
+
+            const sspoiskUrl = `https://sspoisk.ru/film/${filmId}`;
+            window.open(sspoiskUrl, '_blank');
+        }
+    </script>
+</body>
+</html>
