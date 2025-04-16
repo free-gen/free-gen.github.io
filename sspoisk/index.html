@@ -13,7 +13,7 @@
             text-align: left;
         }
         .container {
-            margin-top: 50px;
+            margin-top: 20px;
         }
         button {
             background: #000000;
@@ -32,22 +32,15 @@
             margin-top: 20px;
             color: #666;
         }
-        #customLink {
-            width: 100%;
-            padding: 10px;
-            margin-top: 20px;
-            box-sizing: border-box;
+        #hiddenInput {
+            position: absolute;
+            opacity: 0;
+            height: 0;
+            width: 0;
         }
         .kinopoisk-btn {
             background: #000000;
             color: #ffcc00;
-        }
-        .kinopoisk-btn:hover {
-            background: #000000;
-            color: #ffe270;
-        }
-        .button-group {
-            margin-bottom: 20px;
         }
         .text {
             margin: 20px 0;
@@ -57,98 +50,64 @@
 <body>
     <div class="container">
         <h1>Кинопоиск на халяву!</h1>
-        <div class="button-group">
-            <button class="kinopoisk-btn" onclick="window.open('https://kinopoisk.ru', '_blank')">Выбрать фильм на Кинопоиске</button>
-        </div>
+        <button class="kinopoisk-btn" onclick="window.open('https://kinopoisk.ru', '_blank')">Выбрать фильм на Кинопоиске</button>
         <div class="text">
             <li>Выбери любой фильм на Кинопоиске</li>
             <li>Скопируй ссылку на этот фильм</li>
-            <li>Вернись сюда и нажми начать просмотр</li>
+            <li>Вернись сюда и нажми <b>"Начать просмотр"</b></li>
         </div>
         <br>
         <button id="pasteButton">Начать просмотр</button>
-        <div id="status">Нажмите кнопку и вставьте ссылку на Кинопоиск</div>
+        <div id="status">Нажмите кнопку и разрешите вставку</div>
         
-        <input type="text" id="customLink" placeholder="Или вставьте ссылку вручную">
-        <button onclick="openCustomLink()">Открыть</button>
+        <!-- Скрытое поле для вставки -->
+        <input type="text" id="hiddenInput">
     </div>
 
     <script>
         const pasteButton = document.getElementById('pasteButton');
         const statusDiv = document.getElementById('status');
-        const customLinkInput = document.getElementById('customLink');
-
-        // Функция для обработки вставки из буфера обмена
-        async function handlePaste() {
-            try {
-                // Пытаемся использовать modern Clipboard API
-                if (navigator.clipboard && navigator.clipboard.readText) {
-                    const clipboardText = await navigator.clipboard.readText();
-                    processClipboardText(clipboardText);
-                } else {
-                    // Для Safari на iOS показываем поле ввода
-                    statusDiv.textContent = 'Вставьте ссылку в поле ниже';
-                    customLinkInput.focus();
-                    // Добавляем обработчик вставки в поле ввода
-                    customLinkInput.addEventListener('paste', (e) => {
-                        const pastedText = e.clipboardData.getData('text');
-                        processClipboardText(pastedText);
-                    });
-                }
-            } catch (err) {
-                // Если доступ к буферу запрещен (например, в Safari)
-                statusDiv.textContent = 'Вставьте ссылку в поле ниже';
-                customLinkInput.focus();
-                console.log('Clipboard access denied, using fallback');
-            }
-        }
+        const hiddenInput = document.getElementById('hiddenInput');
 
         // Обработчик кнопки "Начать просмотр"
-        pasteButton.addEventListener('click', handlePaste);
+        pasteButton.addEventListener('click', async () => {
+            try {
+                // Пытаемся вставить в скрытое поле
+                hiddenInput.value = '';
+                hiddenInput.focus();
+                
+                // Запрашиваем вставку (на iOS появится системное окно)
+                document.execCommand('paste');
+                
+                // Ждём немного, пока пользователь разрешит вставку
+                setTimeout(() => {
+                    const clipboardText = hiddenInput.value.trim();
+                    
+                    if (!clipboardText.includes('kinopoisk.ru')) {
+                        statusDiv.textContent = 'Это не ссылка Кинопоиска! Скопируйте ссылку и нажмите снова.';
+                        return;
+                    }
 
-        // Обработка текста из буфера обмена
-        function processClipboardText(text) {
-            if (!text.includes('kinopoisk.ru')) {
-                statusDiv.textContent = 'Это не ссылка Кинопоиска! Вставьте правильную ссылку';
-                return;
+                    const filmId = extractFilmId(clipboardText);
+                    if (!filmId) {
+                        statusDiv.textContent = 'Не удалось извлечь ID фильма';
+                        return;
+                    }
+
+                    const sspoiskUrl = `https://sspoisk.ru/film/${filmId}`;
+                    statusDiv.textContent = `Открываю: ${sspoiskUrl}`;
+                    window.open(sspoiskUrl, '_blank');
+                }, 300); // Даём время на вставку
+                
+            } catch (err) {
+                statusDiv.textContent = 'Ошибка: ' + err.message;
             }
-
-            const filmId = extractFilmId(text);
-            if (!filmId) {
-                statusDiv.textContent = 'Не удалось извлечь ID фильма';
-                return;
-            }
-
-            const sspoiskUrl = `https://sspoisk.ru/film/${filmId}`;
-            statusDiv.textContent = `Открываю: ${sspoiskUrl}`;
-            window.open(sspoiskUrl, '_blank');
-        }
+        });
 
         // Извлечение ID фильма из ссылки
         function extractFilmId(url) {
             const match = url.match(/kinopoisk\.ru\/film\/(\d+)/);
             return match ? match[1] : null;
-        }
-
-        // Обработчик ручного ввода ссылки
-        function openCustomLink() {
-            const customLink = customLinkInput.value;
-            if (!customLink) return;
-
-            const filmId = extractFilmId(customLink);
-            if (!filmId) {
-                statusDiv.textContent = 'Некорректная ссылка';
-                return;
-            }
-
-            const sspoiskUrl = `https://sspoisk.ru/film/${filmId}`;
-            window.open(sspoiskUrl, '_blank');
-        }
-
-        // Фокус на поле ввода при загрузке для мобильных устройств
-        if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-            customLinkInput.focus();
-            statusDiv.textContent = 'Вставьте ссылку в поле выше и нажмите "Открыть"';
         }
     </script>
 </body>
