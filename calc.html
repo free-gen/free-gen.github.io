@@ -13,7 +13,7 @@
         }
         
         body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background: #ffffff;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -25,17 +25,15 @@
         .container {
             width: 100%;
             max-width: 1200px;
-            background: white;
-            border-radius: 0;
-            box-shadow: none;
+            background: #fff;
             overflow: hidden;
             margin: 0;
         }
         
         header {
             background: #2c3e50;
-            color: white;
-            padding: 16px;
+            color: #fff;
+            padding: 12px;
             text-align: center;
         }
         
@@ -50,7 +48,7 @@
         }
         
         .input-section {
-            padding: 16px;
+            padding: 12px;
             background: #f8f9fa;
             border-bottom: 1px solid #eaeaea;
         }
@@ -68,11 +66,10 @@
         
         input[type="number"] {
             width: 100%;
-            padding: 12px 15px;
+            padding: 10px 12px;
             border: 1px solid #ddd;
-            border-radius: 6px;
+            border-radius: 4px;
             font-size: 16px;
-            transition: border-color 0.3s;
         }
         /* Скрываем стрелки у number inputs */
         input[type="number"]::-webkit-outer-spin-button,
@@ -89,7 +86,6 @@
         input[type="number"]:focus {
             border-color: #3498db;
             outline: none;
-            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
         }
         
         .details-container {
@@ -98,8 +94,8 @@
         
         .detail-item {
             display: flex;
-            gap: 15px;
-            margin-bottom: 12px;
+            gap: 12px;
+            margin-bottom: 10px;
             align-items: center;
         }
         
@@ -108,22 +104,18 @@
         }
         
         .remove-item-btn {
-            background: #ffffff;
+            background: #fff;
             color: #e74c3c;
             border: 1px solid #e0e0e0;
             width: 38px;
             height: 44px;
-            border-radius: 6px;
+            border-radius: 4px;
             font-size: 20px;
             line-height: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-        }
-        .remove-item-btn:hover {
-            background: #fdecea;
-            border-color: #f5c6cb;
         }
 
         .inline-group {
@@ -141,17 +133,16 @@
         .button-group {
             display: flex;
             gap: 12px;
-            margin-top: 20px;
+            margin-top: 12px;
         }
         
         button {
-            padding: 12px 20px;
+            padding: 10px 14px;
             border: none;
-            border-radius: 6px;
+            border-radius: 4px;
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
         }
         
         #calculate-btn {
@@ -160,11 +151,7 @@
             flex: 2;
         }
         
-        #calculate-btn:hover {
-            background: #2980b9;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
-        }
+        #calculate-btn:hover { background: #2980b9; }
         
         #reset-btn {
             background: #e74c3c;
@@ -172,15 +159,9 @@
             flex: 1;
         }
         
-        #reset-btn:hover {
-            background: #c0392b;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(231, 76, 60, 0.3);
-        }
+        #reset-btn:hover { background: #c0392b; }
         
-        .results-section {
-            padding: 16px;
-        }
+        .results-section { padding: 12px; }
         
         .results-header {
             display: flex;
@@ -197,10 +178,10 @@
         }
         
         .summary {
-            background: #e8f4fc;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 25px;
+            background: #eef6fd;
+            padding: 12px;
+            border-radius: 4px;
+            margin-bottom: 16px;
         }
         
         .summary-item {
@@ -221,16 +202,15 @@
         
         .profile-result {
             background: #f8f9fa;
-            border-radius: 8px;
-            padding: 16px;
-            box-shadow: none;
+            border-radius: 4px;
+            padding: 12px;
         }
         
         .profile-header {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
             border-bottom: 1px dashed #ccc;
         }
         
@@ -246,12 +226,12 @@
         }
         
         .visualization {
-            height: 60px;
+            height: 52px;
             background: #e0e0e0;
-            border-radius: 6px;
+            border-radius: 4px;
             overflow: hidden;
             position: relative;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             border: 1px solid #ccc;
         }
         
@@ -261,12 +241,13 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
+            color: #ffffff;
             font-weight: 600;
             font-size: 14px;
-            transition: all 0.3s ease;
             cursor: default;
             overflow: hidden;
+            background: #4a90e2;
+            border-left: 1px solid #ffffff;
         }
         
         /* Убраны hover-эффекты намеренно */
@@ -282,17 +263,7 @@
             color: #666;
         }
         
-        .waste-segment {
-            background: #95a5a6 !important;
-        }
-        
-        .color-0 { background: #3498db; }
-        .color-1 { background: #2ecc71; }
-        .color-2 { background: #9b59b6; }
-        .color-3 { background: #e67e22; }
-        .color-4 { background: #1abc9c; }
-        .color-5 { background: #d35400; }
-        .color-6 { background: #34495e; }
+        .waste-segment { background: #95a5a6 !important; }
         
         .hidden {
             display: none;
@@ -611,15 +582,12 @@
                     const visualization = document.createElement('div');
                     visualization.className = 'visualization';
                     
-                    const segmentDetails = document.createElement('div');
-                    segmentDetails.className = 'segment-details';
-                    
                     let position = 0;
                     profile.pieces.forEach((piece, pieceIndex) => {
                         const width = (piece / profileLength) * 100;
                         
                         const segment = document.createElement('div');
-                        segment.className = `segment color-${pieceIndex % 7}`;
+                        segment.className = 'segment';
                         segment.style.left = `${position}%`;
                         segment.style.width = `${width}%`;
                         segment.title = `${piece} мм`;
@@ -630,10 +598,6 @@
                         segment.appendChild(segmentText);
                         
                         visualization.appendChild(segment);
-                        
-                        const pieceDetail = document.createElement('div');
-                        pieceDetail.textContent = `${piece} мм`;
-                        segmentDetails.appendChild(pieceDetail);
                         
                         position += width;
                     });
@@ -658,7 +622,6 @@
                     
                     profileDiv.appendChild(profileHeader);
                     profileDiv.appendChild(visualization);
-                    profileDiv.appendChild(segmentDetails);
                     
                     profileResultsDiv.appendChild(profileDiv);
                 });
