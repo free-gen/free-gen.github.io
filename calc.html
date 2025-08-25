@@ -254,6 +254,9 @@
         
         .segment-text {
             white-space: nowrap;
+            font-weight: 400;
+            font-size: 12px;
+            color: #ffffff;
         }
         
         .segment-details {
@@ -299,7 +302,7 @@
     <div class="container">
         <header>
             <h1>Калькулятор раскроя профилей</h1>
-            <p class="description">Оптимизированный расчет раскроя с визуализацией</p>
+            <p class="description">Оптимизированный расчет с визуализацией</p>
         </header>
         
         <section class="input-section">
@@ -317,7 +320,7 @@
             </div>
             
             <div class="form-group">
-                <label>Детали для раскроя (ДЛИНА / КОЛИЧЕСТВО):</label>
+                <label>Детали:</label>
                 <div class="details-container" id="details-container">
                     <div class="detail-item">
                         <input type="number" class="detail-length" placeholder="Длина (мм)" min="1">
@@ -328,8 +331,8 @@
             </div>
             
             <div class="button-group">
-                <button id="calculate-btn">Рассчитать</button>
-                <button id="reset-btn">Сбросить</button>
+                <button id="calculate-btn">Расчет</button>
+                <button id="reset-btn">Сброс</button>
             </div>
         </section>
         
@@ -594,7 +597,7 @@
                         
                         const segmentText = document.createElement('div');
                         segmentText.className = 'segment-text';
-                        segmentText.textContent = `${piece} мм`;
+                        segmentText.textContent = `${piece}`;
                         segment.appendChild(segmentText);
                         
                         visualization.appendChild(segment);
@@ -614,7 +617,7 @@
                         
                         const wasteText = document.createElement('div');
                         wasteText.className = 'segment-text';
-                        wasteText.textContent = `Отход: ${profile.remaining} мм`;
+                        wasteText.textContent = `${profile.remaining}`;
                         wasteSegment.appendChild(wasteText);
                         
                         visualization.appendChild(wasteSegment);
