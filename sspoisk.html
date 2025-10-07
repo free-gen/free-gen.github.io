@@ -2,11 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
-
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="SSPoisk">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     
     <title>SSPoisk Searcher</title>
 
@@ -18,199 +14,31 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
 
     <style>
-        :root {
-            --bg-color: #202020;
-            --card-bg: #2B2B2B;
-            --light-text: #ececec;
-            --dark-text: #000;
-            --accent-color: #FF6000;
-            --input-bg: #2D2D2D;
-            --border-color: #3A3A3A;
-            --placeholder-color: #888;
-            --error-color: #ff4444;
-            --border-radius: 4px;
-            --padding: 10px;
-            --film-color: #888;
-            --series-color: #888;
-        }
-
-        * {
-            font-family: "Nunito Sans", sans-serif !important;
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        h1 {
-            text-align: center; 
-            margin-top: 50px;
-            margin-bottom: 30px;
-            color: var(--light-text);
-            font-size: 18pt;
-            font-weight: 900;
-        }
-
-        body { 
-            max-width: 800px; 
-            margin: 10px auto; 
-            padding: 15px; 
-            background-color: var(--bg-color);
-            color: var(--light-text);
-            line-height: 1.4;
-            padding-top: env(safe-area-inset-top);
-            padding-left: env(safe-area-inset-left);
-            padding-right: env(safe-area-inset-right);
-            padding-bottom: env(safe-area-inset-bottom);
-        }
-
-        .search-box { 
-            display: flex; 
-            gap: 8px;
-            margin-bottom: 30px; 
-        }
-
-        #searchInput { 
-            flex: 1; 
-            padding: 12px;
-            background: var(--input-bg);
-            color: var(--light-text);
-            border: 1px solid var(--border-color);
-            border-radius: var(--border-radius);
-            outline: none;
-            font-size: 12px;
-            min-width: 0;
-        }
-
-        #searchInput::placeholder {
-            color: var(--placeholder-color);
-        }
-
-        #searchBtn { 
-            padding: 12px 16px;
-            background: var(--accent-color); 
-            color: var(--light-text); 
-            border: none; 
-            cursor: pointer; 
-            border-radius: var(--border-radius);
-            font-weight: bold;
-            font-size: 14px;
-            transition: opacity 0.2s;
-            white-space: nowrap;
-        }
-
-        #searchBtn:hover {
-            opacity: 0.9;
-        }
-
-        .film-item { 
-            display: flex; 
-            align-items: stretch;
-            padding: 15px;
-            margin-bottom: 15px; 
-            background: var(--card-bg);
-            border-radius: var(--border-radius);
-            gap: 15px;
-            border: 1px solid var(--border-color);
-            height: 150px;
-        }
-
-        .film-poster { 
-            width: 80px; 
-            height: 120px; 
-            object-fit: cover; 
-            border-radius: var(--border-radius);
-            flex-shrink: 0;
-            align-self: center;
-        }
-
-        .film-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            justify-content: space-between;
-            height: 120px;
-            position: relative;
-        }
-
-        .film-header {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-            flex: 1;
-        }
-
-        .film-type {
-            font-size: 8pt;
-            font-weight: 500;
-            color: var(--film-color);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .film-title {
-            font-size: 12pt;
-            font-weight: 900;
-            color: var(--light-text);
-            line-height: 1.2;
-        }
-
-        .film-year {
-            color: var(--placeholder-color);
-            font-size: 10pt;
-            font-weight: 700;
-        }
-
-        .film-actions {
-            position: absolute;
-            bottom: 0;
-            right: 0;
-            text-align: right;
-        }
-
-        .watch-btn {
-            font-weight: 900;
-            background: var(--accent-color); 
-            color: var(--light-text); 
-            border: none; 
-            padding: 8px 16px; 
-            cursor: pointer; 
-            text-decoration: none; 
-            border-radius: var(--border-radius);
-            font-weight: bold;
-            font-size: 10pt;
-            display: inline-block;
-            transition: opacity 0.2s;
-        }
-
-        .watch-btn:hover {
-            opacity: 0.9;
-        }
-
-        .loading { 
-            text-align: center; 
-            padding: 40px; 
-            color: var(--light-text);
-            font-size: 14pt;
-        }
-
-        .error { 
-            color: var(--error-color); 
-            text-align: center; 
-            padding: 40px;
-            font-size: 14pt;
-        }
-        @supports (padding: max(0px)) {
-            body {
-                padding-top: max(env(safe-area-inset-top), 15px);
-                padding-left: max(env(safe-area-inset-left), 15px);
-                padding-right: max(env(safe-area-inset-right), 15px);
-                padding-bottom: max(env(safe-area-inset-bottom), 15px);
-            }
-        }
+        :root {--bg-color: #202020;--card-bg: #2B2B2B;--light-text: #ececec;--dark-text: #000;--accent-color: #FF6000;--input-bg: #2D2D2D;--border-color: #3A3A3A;--placeholder-color: #888;--error-color: #ff4444;--border-radius: 4px;--padding: 10px;--film-color: #888;--series-color: #888;}
+        * {font-family: "Nunito Sans", sans-serif !important;margin: 0;padding: 0;box-sizing: border-box;}
+        h1 {text-align: center; margin-top: 50px;margin-bottom: 30px;color: var(--light-text);font-size: 18pt;font-weight: 900;}
+        body {max-width: 800px; margin: 10px auto; padding: 15px; background-color: var(--bg-color);color: var(--light-text);line-height: 1.4;}
+        .search-box {display: flex; gap: 8px;margin-bottom: 30px;}
+        #searchInput {flex: 1; padding: 12px; background: var(--input-bg); color: var(--light-text); border: 1px solid var(--border-color); border-radius: var(--border-radius); outline: none; font-size: 12px; min-width: 0;}
+        #searchInput::placeholder {color: var(--placeholder-color);}
+        #searchBtn {padding: 12px 16px; background: var(--accent-color); color: var(--light-text); border: none; cursor: pointer; border-radius: var(--border-radius); font-weight: bold; font-size: 14px; transition: opacity 0.2s; white-space: nowrap;}
+        #searchBtn:hover {opacity: 0.9;}
+        .film-item {display: flex; align-items: stretch;padding: 15px;margin-bottom: 15px; background: var(--card-bg); border-radius: var(--border-radius); gap: 15px; border: 1px solid var(--border-color); height: 150px;}
+        .film-poster {width: 80px; height: 120px; object-fit: cover; border-radius: var(--border-radius); flex-shrink: 0; align-self: center;}
+        .film-content {flex: 1; display: flex; flex-direction: column; gap: 12px; justify-content: space-between; height: 120px; position: relative;}
+        .film-header {display: flex; flex-direction: column; gap: 5px; flex: 1;}
+        .film-type {font-size: 8pt; font-weight: 500; color: var(--film-color); text-transform: uppercase; letter-spacing: 1px;}
+        .film-title {font-size: 12pt; font-weight: 900; color: var(--light-text); line-height: 1.2;}
+        .film-year {color: var(--placeholder-color); font-size: 10pt; font-weight: 700;}
+        .film-actions {position: absolute;bottom: 0;right: 0;text-align: right;}
+        .watch-btn {font-weight: 900;background: var(--accent-color); color: var(--light-text); border: none; padding: 8px 16px; cursor: pointer; text-decoration: none; border-radius: var(--border-radius);font-weight: bold;font-size: 10pt;display: inline-block;transition: opacity 0.2s;}
+        .watch-btn:hover {opacity: 0.9;}
+        .loading {text-align: center; padding: 40px; color: var(--light-text);font-size: 14pt;}
+        .error {color: var(--error-color); text-align: center; padding: 40px;font-size: 14pt;}
     </style>
 </head>
 <body>
+    
     <h1>SSPoisk Movie Searcher</h1>
     
     <div class="search-box">
@@ -259,14 +87,14 @@
             const resultsDiv = document.getElementById('results');
             
             if (!films || films.length === 0) {
-                resultsDiv.innerHTML = '<div class="error">Фильмы не найдены</div>';
+                resultsDiv.innerHTML = '<div class="error">Ничего не найдено</div>';
                 return;
             }
 
             resultsDiv.innerHTML = films.map(film => {
                 const filmId = film.filmId || film.kinopoiskId;
                 const title = film.nameRu || film.nameEn || 'Без названия';
-                const year = film.year || '';
+                const year = film.year || 'Неизвестно';
                 const poster = film.posterUrlPreview || '';
                 const filmType = film.type || film.filmType || 'FILM';
                 const isSeries = filmType === 'TV_SERIES' || filmType === 'MINI_SERIES' || filmType === 'TV_SHOW';
@@ -296,8 +124,3 @@
 </body>
 
 </html>
-
-
-
-
-
