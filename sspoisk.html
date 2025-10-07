@@ -14,27 +14,282 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
 
     <style>
-        :root {--bg-color: #202020;--card-bg: #2B2B2B;--light-text: #ececec;--dark-text: #000;--accent-color: #FF6000;--input-bg: #2D2D2D;--border-color: #3A3A3A;--placeholder-color: #888;--error-color: #ff4444;--border-radius: 4px;--padding: 10px;--film-color: #888;--series-color: #888;}
-        * {font-family: "Nunito Sans", sans-serif !important;margin: 0;padding: 0;box-sizing: border-box;}
-        h1 {text-align: center; margin-top: 50px;margin-bottom: 30px;color: var(--light-text);font-size: 22pt;font-weight: 900;}
-        body {max-width: 800px; margin: 10px auto; padding: 15px; background-color: var(--bg-color);color: var(--light-text);line-height: 1.4;}
-        .search-box {display: flex; gap: 8px;margin-bottom: 30px;}
-        #searchInput {flex: 1; padding: 12px; background: var(--input-bg); color: var(--light-text); border: 1px solid var(--border-color); border-radius: var(--border-radius); outline: none; font-size: 12px; min-width: 0;}
-        #searchInput::placeholder {color: var(--placeholder-color);}
-        #searchBtn {padding: 12px 16px; background: var(--accent-color); color: var(--light-text); border: none; cursor: pointer; border-radius: var(--border-radius); font-weight: bold; font-size: 14px; transition: opacity 0.2s; white-space: nowrap;}
-        #searchBtn:hover {opacity: 0.9;}
-        .film-item {display: flex; align-items: stretch;padding: 15px;margin-bottom: 15px; background: var(--card-bg); border-radius: var(--border-radius); gap: 15px; border: 1px solid var(--border-color); height: 150px;}
-        .film-poster {width: 80px; height: 120px; object-fit: cover; border-radius: var(--border-radius); flex-shrink: 0; align-self: center;}
-        .film-content {flex: 1; display: flex; flex-direction: column; gap: 12px; justify-content: space-between; height: 120px; position: relative;}
-        .film-header {display: flex; flex-direction: column; gap: 5px; flex: 1;}
-        .film-type {font-size: 8pt; font-weight: 500; color: var(--film-color); text-transform: uppercase; letter-spacing: 1px;}
-        .film-title {font-size: 12pt; font-weight: 900; color: var(--light-text); line-height: 1.2;}
-        .film-year {color: var(--placeholder-color); font-size: 10pt; font-weight: 700;}
-        .film-actions {position: absolute;bottom: 0;right: 0;text-align: right;}
-        .watch-btn {font-weight: 900;background: var(--accent-color); color: var(--light-text); border: none; padding: 8px 16px; cursor: pointer; text-decoration: none; border-radius: var(--border-radius);font-weight: bold;font-size: 10pt;display: inline-block;transition: opacity 0.2s;}
-        .watch-btn:hover {opacity: 0.9;}
-        .loading {text-align: center; padding: 40px; color: var(--light-text);font-size: 14pt;}
-        .error {color: var(--error-color); text-align: center; padding: 40px;font-size: 14pt;}
+        :root {
+            --bg-color: #202020;
+            --card-bg: #2B2B2B;
+            --light-text: #ececec;
+            --dark-text: #000;
+            --accent-color: #FF6000;
+            --input-bg: #2D2D2D;
+            --border-color: #3A3A3A;
+            --placeholder-color: #888;
+            --error-color: #ff4444;
+            --border-radius: 4px;
+            --padding: 10px;
+            --film-color: #888;
+            --series-color: #888;
+            --rating-red: #ff2222;
+            --rating-orange: #ff6600;
+            --rating-yellow: #ffbb00;
+        }
+        
+        * {
+            font-family: "Nunito Sans", sans-serif !important;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        h1, h2 {
+            text-align: center;
+            margin-top: 30px;
+            margin-bottom: 30px;
+            color: var(--light-text);
+            font-size: 28pt;
+            font-weight: 900;
+        }
+        
+        h2 {
+            font-size: 20pt;
+            margin-top: 80px;
+            margin-bottom: 30px;
+        }
+        
+        body {
+            max-width: 800px;
+            margin: 10px auto;
+            padding: 15px;
+            background-color: var(--bg-color);
+            color: var(--light-text);
+            line-height: 1.4;
+        }
+        
+        .search-box {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 30px;
+        }
+        
+        #searchInput {
+            flex: 1;
+            padding: 12px;
+            background: var(--input-bg);
+            color: var(--light-text);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            outline: none;
+            font-size: 12px;
+            min-width: 0;
+        }
+        
+        #searchInput::placeholder {
+            color: var(--placeholder-color);
+        }
+        
+        #searchBtn {
+            padding: 12px 16px;
+            background: var(--accent-color);
+            color: var(--light-text);
+            border: none;
+            cursor: pointer;
+            border-radius: var(--border-radius);
+            font-weight: bold;
+            font-size: 14px;
+            transition: opacity 0.2s;
+            white-space: nowrap;
+        }
+        
+        #searchBtn:hover {
+            opacity: 0.9;
+        }
+        
+        .film-item {
+            display: flex;
+            align-items: stretch;
+            padding: 15px;
+            margin-bottom: 15px;
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            gap: 15px;
+            border: 1px solid var(--border-color);
+            height: 150px;
+        }
+        
+        .film-poster {
+            width: 80px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: var(--border-radius);
+            flex-shrink: 0;
+            align-self: center;
+        }
+        
+        .film-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            justify-content: space-between;
+            height: 120px;
+            position: relative;
+        }
+        
+        .film-header {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            flex: 1;
+        }
+        
+        .film-type {
+            font-size: 8pt;
+            font-weight: 500;
+            color: var(--film-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .film-rating {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 8pt;
+            font-weight: 500;
+        }
+        
+        .rating-value {
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 8pt;
+        }
+        
+        .rating-red {
+            color: var(--rating-red);
+        }
+        
+        .rating-orange {
+            color: var(--rating-orange);
+        }
+        
+        .rating-yellow {
+            color: var(--rating-yellow);
+        }
+        
+        .film-title {
+            font-size: 12pt;
+            font-weight: 900;
+            color: var(--light-text);
+            line-height: 1.2;
+        }
+        
+        .film-year {
+            color: var(--placeholder-color);
+            font-size: 10pt;
+            font-weight: 700;
+        }
+        
+        .film-actions {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            text-align: right;
+        }
+        
+        .watch-btn {
+            font-weight: 900;
+            background: var(--accent-color);
+            color: var(--light-text);
+            border: none;
+            padding: 8px 16px;
+            cursor: pointer;
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            font-weight: bold;
+            font-size: 10pt;
+            display: inline-block;
+            transition: opacity 0.2s;
+        }
+        
+        .watch-btn:hover {
+            opacity: 0.9;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--light-text);
+            font-size: 14pt;
+        }
+        
+        .error {
+            color: var(--error-color);
+            text-align: center;
+            padding: 40px;
+            font-size: 14pt;
+        }
+        
+        /* Рекомендации */
+        .recommendations-section {
+            margin-top: 40px;
+        }
+        
+        .recommendations-controls {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            align-items: center;
+            width: 100%;
+        }
+        
+        .genre-select {
+            flex: 1;
+            padding: 12px 40px 12px 12px;
+            background: var(--input-bg);
+            color: var(--light-text);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            font-size: 12px;
+            cursor: pointer;
+            min-width: 0;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 16px;
+        }
+                
+        .genre-select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+        
+        .refresh-btn {
+            padding: 12px 16px;
+            background: var(--accent-color);
+            color: var(--light-text);
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+            transition: opacity 0.2s;
+            white-space: nowrap;
+        }
+        
+        .refresh-btn:hover {
+            opacity: 0.9;
+        }
+
+        .refresh-btn.loading {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
     </style>
 </head>
 <body>
@@ -48,6 +303,34 @@
 
     <div id="results"></div>
 
+    <!-- Раздел рекомендаций -->
+    <div class="recommendations-section">
+
+        <h2>Топ КиноПоиска</h2>
+        
+        <div class="recommendations-controls">
+            <select id="genreSelect" class="genre-select">
+                <option value="">Все жанры</option>
+                <option value="драма">Драма</option>
+                <option value="комедия">Комедия</option>
+                <option value="боевик">Боевик</option>
+                <option value="триллер">Триллер</option>
+                <option value="фантастика">Фантастика</option>
+                <option value="фэнтези">Фэнтези</option>
+                <option value="ужасы">Ужасы</option>
+                <option value="детектив">Детектив</option>
+                <option value="приключения">Приключения</option>
+                <option value="мелодрама">Мелодрама</option>
+                <option value="криминал">Криминал</option>
+                <option value="мультфильм">Мультфильм</option>
+            </select>
+            
+            <button id="refreshRecommendations" class="refresh-btn">Обновить</button>
+        </div>
+        
+        <div id="recommendations"></div>
+    </div>
+
     <script>
         const API_KEY = '8e4b3214-1071-45b5-9e67-e31e97a6b1ec';
         
@@ -55,6 +338,21 @@
         document.getElementById('searchInput').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') searchFilms();
         });
+
+        // Функция для получения цвета рейтинга
+        function getRatingColor(rating) {
+            if (rating >= 0 && rating < 3) return 'rating-red';
+            if (rating >= 3 && rating < 6) return 'rating-orange';
+            if (rating >= 6 && rating <= 10) return 'rating-yellow';
+            return 'rating-red';
+        }
+
+        // Функция для форматирования рейтинга
+        function formatRating(rating) {
+            if (!rating || rating === 'null') return null;
+            const numRating = parseFloat(rating);
+            return isNaN(numRating) ? null : numRating.toFixed(1);
+        }
 
         async function searchFilms() {
             const query = document.getElementById('searchInput').value.trim();
@@ -101,12 +399,163 @@
                 const typeText = isSeries ? 'Сериал' : 'Фильм';
                 const typeClass = isSeries ? 'type-series' : 'type-film';
                 
+                // Получаем и форматируем рейтинг
+                const rating = formatRating(film.rating || film.ratingKinopoisk);
+                const ratingColor = rating ? getRatingColor(rating) : '';
+                const ratingDisplay = rating ? 
+                    `<span class="film-rating">| Рейтинг: <span class="rating-value ${ratingColor}">${rating}</span></span>` : 
+                    '';
+                
                 return `
                     <div class="film-item">
                         <img src="${poster}" alt="${title}" class="film-poster" onerror="this.style.display='none'">
                         <div class="film-content">
                             <div class="film-header">
-                                <div class="film-type ${typeClass}">${typeText}</div>
+                                <div class="film-type ${typeClass}">${typeText} ${ratingDisplay}</div>
+                                <div class="film-title">${title}</div>
+                                ${year ? `<div class="film-year">${year} год</div>` : ''}
+                            </div>
+                            <div class="film-actions">
+                                <a href="https://sspoisk.ru/film/${filmId}/" class="watch-btn">
+                                    Смотреть
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Функции для рекомендаций
+        let currentGenre = '';
+        let recommendationsCache = null;
+
+        // Инициализация рекомендаций
+        document.addEventListener('DOMContentLoaded', function() {
+            loadRecommendations();
+            
+            // Обработчик для выпадающего списка жанров
+            document.getElementById('genreSelect').addEventListener('change', function() {
+                currentGenre = this.value;
+                loadRecommendations();
+            });
+            
+            // Обработчик для кнопки обновления
+            document.getElementById('refreshRecommendations').addEventListener('click', function() {
+                recommendationsCache = null;
+                loadRecommendations(true);
+            });
+        });
+
+        async function loadRecommendations(forceRefresh = false) {
+            const recommendationsDiv = document.getElementById('recommendations');
+            const refreshBtn = document.getElementById('refreshRecommendations');
+            
+            if (!forceRefresh && recommendationsCache) {
+                displayRecommendations(recommendationsCache);
+                return;
+            }
+
+            recommendationsDiv.innerHTML = '<div class="loading">Загрузка рекомендаций...</div>';
+            refreshBtn.classList.add('loading');
+            refreshBtn.disabled = true;
+            
+            try {
+                const movies = await fetchRecommendedMovies(currentGenre);
+                recommendationsCache = movies;
+                displayRecommendations(movies);
+            } catch (error) {
+                console.error('Error loading recommendations:', error);
+                recommendationsDiv.innerHTML = '<div class="error">Ошибка при загрузке рекомендаций</div>';
+            } finally {
+                refreshBtn.classList.remove('loading');
+                refreshBtn.disabled = false;
+            }
+        }
+
+        async function fetchRecommendedMovies(genre = '') {
+            try {
+                let url;
+                
+                if (genre) {
+                    // Поиск по жанру
+                    const genreId = getGenreId(genre);
+                    url = `https://kinopoiskapiunofficial.tech/api/v2.2/films?genres=${genreId}&order=RATING&type=ALL&ratingFrom=7&page=1`;
+                } else {
+                    // Топ фильмов
+                    url = 'https://kinopoiskapiunofficial.tech/api/v2.2/films/top?type=TOP_250_BEST_FILMS&page=1';
+                }
+                
+                const response = await fetch(url, {
+                    headers: {
+                        'X-API-KEY': API_KEY,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!response.ok) throw new Error('Ошибка загрузки рекомендаций');
+                
+                const data = await response.json();
+                return data.items || data.films || [];
+                
+            } catch (error) {
+                console.error('Error fetching recommendations:', error);
+                throw error;
+            }
+        }
+
+        function getGenreId(genre) {
+            const genreMap = {
+                'драма': '2',
+                'комедия': '13',
+                'боевик': '11',
+                'триллер': '1',
+                'фантастика': '6',
+                'фэнтези': '12',
+                'ужасы': '17',
+                'детектив': '5',
+                'приключения': '7',
+                'мелодрама': '18',
+                'криминал': '3',
+                'мультфильм': '16'
+            };
+            return genreMap[genre] || '2';
+        }
+
+        function displayRecommendations(movies) {
+            const recommendationsDiv = document.getElementById('recommendations');
+            
+            if (!movies || movies.length === 0) {
+                recommendationsDiv.innerHTML = '<div class="error">Рекомендации не найдены</div>';
+                return;
+            }
+
+            // Ограничиваем количество рекомендаций
+            const limitedMovies = movies.slice(0, 20);
+
+            recommendationsDiv.innerHTML = limitedMovies.map(movie => {
+                const filmId = movie.kinopoiskId || movie.filmId;
+                const title = movie.nameRu || movie.nameEn || 'Без названия';
+                const year = movie.year || 'Неизвестно';
+                const poster = movie.posterUrlPreview || movie.posterUrl || '';
+                const filmType = movie.type || 'FILM';
+                const isSeries = filmType === 'TV_SERIES' || filmType === 'MINI_SERIES' || filmType === 'TV_SHOW';
+                const typeText = isSeries ? 'Сериал' : 'Фильм';
+                const typeClass = isSeries ? 'type-series' : 'type-film';
+                
+                // Получаем и форматируем рейтинг
+                const rating = formatRating(movie.ratingKinopoisk || movie.rating);
+                const ratingColor = rating ? getRatingColor(rating) : '';
+                const ratingDisplay = rating ? 
+                    `<span class="film-rating">| Рейтинг: <span class="rating-value ${ratingColor}">${rating}</span></span>` : 
+                    '';
+                
+                return `
+                    <div class="film-item">
+                        <img src="${poster}" alt="${title}" class="film-poster" onerror="this.style.display='none'">
+                        <div class="film-content">
+                            <div class="film-header">
+                                <div class="film-type ${typeClass}">${typeText} ${ratingDisplay}</div>
                                 <div class="film-title">${title}</div>
                                 ${year ? `<div class="film-year">${year} год</div>` : ''}
                             </div>
@@ -122,6 +571,4 @@
         }
     </script>
 </body>
-
 </html>
-
