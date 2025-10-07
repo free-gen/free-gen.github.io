@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSPoisk Searcher</title>
+    <style>
+        :root {
+            --bg-color: #111;
+            --card-bg: #222;
+            --light-text: #ececec;
+            --dark-text: #000;
+            --accent-color: #FF6000;
+            --input-bg: #333;
+            --border-color: #555;
+            --placeholder-color: #888;
+            --error-color: #ff4444;
+            --border-radius: 4px;
+            --padding: 10px;
+            --film-color: #888;
+            --series-color: #888;
+        }
+
+        * {
+            font-family: monospace !important;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            text-align: center; 
+            margin: 50px 0; 
+            color: var(--light-text);
+            font-size: 24pt;
+        }
+
+        body { 
+            max-width: 800px; 
+            margin: 20px auto; 
+            padding: 20px; 
+            background-color: var(--bg-color);
+            color: var(--light-text);
+            line-height: 1.4;
+        }
+
+        .search-box { 
+            display: flex; 
+            gap: 10px;
+            margin-bottom: 30px; 
+        }
+
+        #searchInput { 
+            flex: 1; 
+            padding: 12px;
+            background: var(--input-bg);
+            color: var(--light-text);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            outline: none;
+            font-size: 14pt;
+        }
+
+        #searchInput::placeholder {
+            color: var(--placeholder-color);
+        }
+
+        #searchBtn { 
+            padding: 12px 24px;
+            background: var(--accent-color); 
+            color: var(--light-text); 
+            border: none; 
+            cursor: pointer; 
+            border-radius: var(--border-radius);
+            font-weight: bold;
+            font-size: 14pt;
+            transition: opacity 0.2s;
+        }
+
+        #searchBtn:hover {
+            opacity: 0.9;
+        }
+
+        .film-item { 
+            display: flex; 
+            align-items: center;
+            padding: 20px;
+            margin-bottom: 15px; 
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            gap: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        .film-poster { 
+            width: 100px; 
+            height: 150px; 
+            object-fit: cover; 
+            border-radius: var(--border-radius);
+            flex-shrink: 0;
+        }
+
+        .film-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            height: 150px;
+        }
+
+        .film-header {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .film-type {
+            font-size: 10pt;
+            font-weight: bold;
+            color: var(--film-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .film-title {
+            font-size: 12pt;
+            font-weight: bold;
+            color: var(--light-text);
+            line-height: 1.2;
+        }
+
+        .film-year {
+            color: var(--placeholder-color);
+            font-size: 10pt;
+            font-weight: 900;
+        }
+
+        .film-actions {
+            margin-top: auto;
+            text-align: right;
+        }
+
+        .watch-btn {
+            font-weight: 900;
+            background: var(--accent-color); 
+            color: var(--light-text); 
+            border: none; 
+            padding: 5px 20px; 
+            cursor: pointer; 
+            text-decoration: none; 
+            border-radius: var(--border-radius);
+            font-weight: bold;
+            font-size: 12pt;
+            display: inline-block;
+            transition: opacity 0.2s;
+        }
+
+        .watch-btn:hover {
+            opacity: 0.9;
+        }
+
+        .loading { 
+            text-align: center; 
+            padding: 40px; 
+            color: var(--light-text);
+            font-size: 14pt;
+        }
+
+        .error { 
+            color: var(--error-color); 
+            text-align: center; 
+            padding: 40px;
+            font-size: 14pt;
+        }
+    </style>
+</head>
+<body>
+    <h1>SSPoisk Movie Searcher</h1>
+    
+    <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Найти фильм или сериал...">
+        <button id="searchBtn">Поиск</button>
+    </div>
+
+    <div id="results"></div>
+
+    <script>
+        const API_KEY = '8e4b3214-1071-45b5-9e67-e31e97a6b1ec';
+        
+        document.getElementById('searchBtn').addEventListener('click', searchFilms);
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') searchFilms();
+        });
+
+        async function searchFilms() {
+            const query = document.getElementById('searchInput').value.trim();
+            if (!query) return;
+
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '<div class="loading">Поиск фильмов...</div>';
+
+            try {
+                const url = `https://kinopoiskapiunofficial.tech/api/v2.1/films/search-by-keyword?keyword=${encodeURIComponent(query)}&page=1`;
+                
+                const response = await fetch(url, {
+                    headers: {
+                        'X-API-KEY': API_KEY,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!response.ok) throw new Error('Ошибка поиска');
+                
+                const data = await response.json();
+                displayResults(data.films);
+                
+            } catch (error) {
+                resultsDiv.innerHTML = '<div class="error">Ошибка при поиске фильмов</div>';
+            }
+        }
+
+        function displayResults(films) {
+            const resultsDiv = document.getElementById('results');
+            
+            if (!films || films.length === 0) {
+                resultsDiv.innerHTML = '<div class="error">Фильмы не найдены</div>';
+                return;
+            }
+
+            resultsDiv.innerHTML = films.map(film => {
+                const filmId = film.filmId || film.kinopoiskId;
+                const title = film.nameRu || film.nameEn || 'Без названия';
+                const year = film.year || '';
+                const poster = film.posterUrlPreview || '';
+                const filmType = film.type || film.filmType || 'FILM';
+                const isSeries = filmType === 'TV_SERIES' || filmType === 'MINI_SERIES' || filmType === 'TV_SHOW';
+                const typeText = isSeries ? 'Сериал' : 'Фильм';
+                const typeClass = isSeries ? 'type-series' : 'type-film';
+                
+                return `
+                    <div class="film-item">
+                        <img src="${poster}" alt="${title}" class="film-poster" onerror="this.style.display='none'">
+                        <div class="film-content">
+                            <div class="film-header">
+                                <div class="film-type ${typeClass}">${typeText}</div>
+                                <div class="film-title">${title}</div>
+                                ${year ? `<div class="film-year">${year} год</div>` : ''}
+                            </div>
+                            <div class="film-actions">
+                                <a href="https://sspoisk.ru/film/${filmId}/" target="_blank" class="watch-btn">
+                                    Смотреть
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+    </script>
+</body>
+</html>
