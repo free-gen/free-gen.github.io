@@ -28,9 +28,10 @@
             --padding: 10px;
             --film-color: #888;
             --series-color: #888;
-            --rating-red: #ff2222;
-            --rating-orange: #ff6600;
-            --rating-yellow: #ffbb00;
+            --rating-low: #ff2222;
+            --rating-med: #fd781f;
+            --rating-high: #ffd000;
+            --cancel-color: #ff4444;
         }
         
         * {
@@ -62,6 +63,12 @@
             background-color: var(--bg-color);
             color: var(--light-text);
             line-height: 1.4;
+        }
+
+        .search-section {
+            background: linear-gradient(to bottom, #000000 0%, #202020 100%);
+            padding: 20px;
+            margin: -15px;
         }
         
         .search-box {
@@ -95,12 +102,16 @@
             border-radius: var(--border-radius);
             font-weight: bold;
             font-size: 14px;
-            transition: opacity 0.2s;
+            transition: all 0.2s;
             white-space: nowrap;
         }
         
         #searchBtn:hover {
             opacity: 0.9;
+        }
+        
+        #searchBtn.cancel-mode {
+            background: var(--cancel-color);
         }
         
         .film-item {
@@ -155,7 +166,7 @@
         .film-rating {
             display: inline-flex;
             align-items: center;
-            gap: 5px;
+            gap: 3px;
             font-size: 8pt;
             font-weight: 500;
         }
@@ -165,18 +176,19 @@
             border-radius: 4px;
             font-weight: 700;
             font-size: 8pt;
+            margin-left: -5px;
         }
         
-        .rating-red {
-            color: var(--rating-red);
+        .rating-low {
+            color: var(--rating-low);
         }
         
-        .rating-orange {
-            color: var(--rating-orange);
+        .rating-med {
+            color: var(--rating-med);
         }
         
-        .rating-yellow {
-            color: var(--rating-yellow);
+        .rating-high {
+            color: var(--rating-high);
         }
         
         .film-title {
@@ -237,114 +249,144 @@
             margin-top: 40px;
         }
         
-        .recommendations-controls {
-            display: flex;
-            gap: 8px;
+        .top250-info {
+            text-align: center;
+            color: var(--placeholder-color);
             margin-bottom: 20px;
+            font-size: 12pt;
+        }
+
+        /* Пагинация */
+        .pagination {
+            display: flex;
+            justify-content: center;
             align-items: center;
-            width: 100%;
+            gap: 15px;
+            margin-top: 20px;
         }
-        
-        .genre-select {
-            flex: 1;
-            padding: 12px 40px 12px 12px;
-            background: var(--input-bg);
-            color: var(--light-text);
-            border: 1px solid var(--border-color);
-            border-radius: var(--border-radius);
-            font-size: 12px;
-            cursor: pointer;
-            min-width: 0;
-            appearance: none;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-            background-repeat: no-repeat;
-            background-position: right 12px center;
-            background-size: 16px;
-        }
-                
-        .genre-select:focus {
-            outline: none;
-            border-color: var(--accent-color);
-        }
-        
-        .refresh-btn {
-            padding: 12px 16px;
+
+        .pagination-btn {
+            padding: 10px 15px;
             background: var(--accent-color);
             color: var(--light-text);
             border: none;
             border-radius: var(--border-radius);
             cursor: pointer;
             font-weight: bold;
-            font-size: 14px;
-            transition: opacity 0.2s;
-            white-space: nowrap;
-        }
-        
-        .refresh-btn:hover {
-            opacity: 0.9;
         }
 
-        .refresh-btn.loading {
-            opacity: 0.7;
+        .pagination-btn:disabled {
+            opacity: 0.5;
             cursor: not-allowed;
+        }
+
+        .page-info {
+            color: var(--light-text);
+            font-weight: bold;
+        }
+
+        /* Скрытие секции рекомендаций */
+        .recommendations-section.hidden {
+            display: none;
         }
     </style>
 </head>
 <body>
     
-    <h1>Фильмотека</h1>
-    
-    <div class="search-box">
-        <input type="text" id="searchInput" placeholder="Найти фильм или сериал...">
-        <button id="searchBtn">Поиск</button>
+    <div class="search-section">
+        <h1>Фильмотека</h1>
+        
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Найти фильм или сериал...">
+            <button id="searchBtn">Поиск</button>
+        </div>
+
+        <div id="results"></div>
     </div>
 
-    <div id="results"></div>
+    <div class="recommendations-section" id="recommendationsSection">
 
-    <!-- Раздел рекомендаций -->
-    <div class="recommendations-section">
-
-        <h2>Топ КиноПоиска</h2>
+        <h2>Топ-250 КиноПоиска</h2>
         
-        <div class="recommendations-controls">
-            <select id="genreSelect" class="genre-select">
-                <option value="">Все жанры</option>
-                <option value="драма">Драма</option>
-                <option value="комедия">Комедия</option>
-                <option value="боевик">Боевик</option>
-                <option value="триллер">Триллер</option>
-                <option value="фантастика">Фантастика</option>
-                <option value="фэнтези">Фэнтези</option>
-                <option value="ужасы">Ужасы</option>
-                <option value="детектив">Детектив</option>
-                <option value="приключения">Приключения</option>
-                <option value="мелодрама">Мелодрама</option>
-                <option value="криминал">Криминал</option>
-                <option value="мультфильм">Мультфильм</option>
-            </select>
-            
-            <button id="refreshRecommendations" class="refresh-btn">Обновить</button>
+        <div class="top250-info">Лучшие фильмы всех времен по версии КиноПоиска</div>
+        
+        <div class="pagination">
+            <button id="prevPage" class="pagination-btn" disabled>◄ Назад</button>
+            <span class="page-info">Страница <span id="currentPage">1</span></span>
+            <button id="nextPage" class="pagination-btn">Вперед ►</button>
         </div>
+
+        <br>
         
         <div id="recommendations"></div>
+
     </div>
 
     <script>
         const API_KEY = '8e4b3214-1071-45b5-9e67-e31e97a6b1ec';
+        let isSearchActive = false;
         
-        document.getElementById('searchBtn').addEventListener('click', searchFilms);
-        document.getElementById('searchInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') searchFilms();
+        const searchBtn = document.getElementById('searchBtn');
+        const searchInput = document.getElementById('searchInput');
+        const resultsDiv = document.getElementById('results');
+        const recommendationsSection = document.getElementById('recommendationsSection');
+        
+        searchBtn.addEventListener('click', toggleSearch);
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                if (isSearchActive) {
+                    clearSearch();
+                } else {
+                    searchFilms();
+                }
+            }
         });
+
+        // Функция для переключения режима поиска/отмены
+        function toggleSearch() {
+            if (isSearchActive) {
+                clearSearch();
+            } else {
+                searchFilms();
+            }
+        }
+
+        // Функция для очистки поиска
+        function clearSearch() {
+            searchInput.value = '';
+            resultsDiv.innerHTML = '';
+            isSearchActive = false;
+            updateSearchButton();
+            showRecommendations();
+        }
+
+        // Функция для обновления вида кнопки поиска
+        function updateSearchButton() {
+            if (isSearchActive) {
+                searchBtn.textContent = 'Закрыть';
+                searchBtn.classList.add('cancel-mode');
+            } else {
+                searchBtn.textContent = 'Поиск';
+                searchBtn.classList.remove('cancel-mode');
+            }
+        }
+
+        // Функция для скрытия секции рекомендаций
+        function hideRecommendations() {
+            recommendationsSection.classList.add('hidden');
+        }
+
+        // Функция для показа секции рекомендаций
+        function showRecommendations() {
+            recommendationsSection.classList.remove('hidden');
+        }
 
         // Функция для получения цвета рейтинга
         function getRatingColor(rating) {
-            if (rating >= 0 && rating < 3) return 'rating-red';
-            if (rating >= 3 && rating < 6) return 'rating-orange';
-            if (rating >= 6 && rating <= 10) return 'rating-yellow';
-            return 'rating-red';
+            if (rating >= 0 && rating < 3) return 'rating-low';
+            if (rating >= 3 && rating < 6) return 'rating-med';
+            if (rating >= 6 && rating <= 10) return 'rating-high';
+            return 'rating-low';
         }
 
         // Функция для форматирования рейтинга
@@ -355,10 +397,13 @@
         }
 
         async function searchFilms() {
-            const query = document.getElementById('searchInput').value.trim();
+            const query = searchInput.value.trim();
             if (!query) return;
 
-            const resultsDiv = document.getElementById('results');
+            isSearchActive = true;
+            updateSearchButton();
+            hideRecommendations();
+            
             resultsDiv.innerHTML = '<div class="loading">Поиск фильмов...</div>';
 
             try {
@@ -382,8 +427,6 @@
         }
 
         function displayResults(films) {
-            const resultsDiv = document.getElementById('results');
-            
             if (!films || films.length === 0) {
                 resultsDiv.innerHTML = '<div class="error">Ничего не найдено</div>';
                 return;
@@ -426,65 +469,56 @@
             }).join('');
         }
 
-        // Функции для рекомендаций
-        let currentGenre = '';
-        let recommendationsCache = null;
+        // Функции для Топ-250
+        let top250Cache = {};
+        let currentPage = 1;
+        const filmsPerPage = 20;
+        const totalFilms = 250;
 
-        // Инициализация рекомендаций
+        // Инициализация Топ-250
         document.addEventListener('DOMContentLoaded', function() {
-            loadRecommendations();
+            loadTop250();
             
-            // Обработчик для выпадающего списка жанров
-            document.getElementById('genreSelect').addEventListener('change', function() {
-                currentGenre = this.value;
-                loadRecommendations();
+            document.getElementById('prevPage').addEventListener('click', () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    loadTop250();
+                }
             });
             
-            // Обработчик для кнопки обновления
-            document.getElementById('refreshRecommendations').addEventListener('click', function() {
-                recommendationsCache = null;
-                loadRecommendations(true);
+            document.getElementById('nextPage').addEventListener('click', () => {
+                if (currentPage < Math.ceil(totalFilms / filmsPerPage)) {
+                    currentPage++;
+                    loadTop250();
+                }
             });
         });
 
-        async function loadRecommendations(forceRefresh = false) {
+        async function loadTop250() {
             const recommendationsDiv = document.getElementById('recommendations');
-            const refreshBtn = document.getElementById('refreshRecommendations');
             
-            if (!forceRefresh && recommendationsCache) {
-                displayRecommendations(recommendationsCache);
+            if (top250Cache[currentPage]) {
+                displayTop250(top250Cache[currentPage]);
+                updatePagination();
                 return;
             }
 
-            recommendationsDiv.innerHTML = '<div class="loading">Загрузка рекомендаций...</div>';
-            refreshBtn.classList.add('loading');
-            refreshBtn.disabled = true;
+            recommendationsDiv.innerHTML = '<div class="loading">Загрузка Топ-250...</div>';
             
             try {
-                const movies = await fetchRecommendedMovies(currentGenre);
-                recommendationsCache = movies;
-                displayRecommendations(movies);
+                const movies = await fetchTop250(currentPage);
+                top250Cache[currentPage] = movies;
+                displayTop250(movies);
+                updatePagination();
             } catch (error) {
-                console.error('Error loading recommendations:', error);
-                recommendationsDiv.innerHTML = '<div class="error">Ошибка при загрузке рекомендаций</div>';
-            } finally {
-                refreshBtn.classList.remove('loading');
-                refreshBtn.disabled = false;
+                console.error('Error loading top 250:', error);
+                recommendationsDiv.innerHTML = '<div class="error">Ошибка при загрузке Топ-250</div>';
             }
         }
 
-        async function fetchRecommendedMovies(genre = '') {
+        async function fetchTop250(page = 1) {
             try {
-                let url;
-                
-                if (genre) {
-                    // Поиск по жанру
-                    const genreId = getGenreId(genre);
-                    url = `https://kinopoiskapiunofficial.tech/api/v2.2/films?genres=${genreId}&order=RATING&type=ALL&ratingFrom=7&page=1`;
-                } else {
-                    // Топ фильмов
-                    url = 'https://kinopoiskapiunofficial.tech/api/v2.2/films/top?type=TOP_250_BEST_FILMS&page=1';
-                }
+                const url = `https://kinopoiskapiunofficial.tech/api/v2.2/films/top?type=TOP_250_BEST_FILMS&page=${page}`;
                 
                 const response = await fetch(url, {
                     headers: {
@@ -493,58 +527,33 @@
                     }
                 });
 
-                if (!response.ok) throw new Error('Ошибка загрузки рекомендаций');
+                if (!response.ok) throw new Error('Ошибка загрузки Топ-250');
                 
                 const data = await response.json();
-                return data.items || data.films || [];
+                return data.films || [];
                 
             } catch (error) {
-                console.error('Error fetching recommendations:', error);
+                console.error('Error fetching top 250:', error);
                 throw error;
             }
         }
 
-        function getGenreId(genre) {
-            const genreMap = {
-                'драма': '2',
-                'комедия': '13',
-                'боевик': '11',
-                'триллер': '1',
-                'фантастика': '6',
-                'фэнтези': '12',
-                'ужасы': '17',
-                'детектив': '5',
-                'приключения': '7',
-                'мелодрама': '18',
-                'криминал': '3',
-                'мультфильм': '16'
-            };
-            return genreMap[genre] || '2';
-        }
-
-        function displayRecommendations(movies) {
+        function displayTop250(movies) {
             const recommendationsDiv = document.getElementById('recommendations');
             
             if (!movies || movies.length === 0) {
-                recommendationsDiv.innerHTML = '<div class="error">Рекомендации не найдены</div>';
+                recommendationsDiv.innerHTML = '<div class="error">Фильмы не найдены</div>';
                 return;
             }
 
-            // Ограничиваем количество рекомендаций
-            const limitedMovies = movies.slice(0, 20);
-
-            recommendationsDiv.innerHTML = limitedMovies.map(movie => {
+            recommendationsDiv.innerHTML = movies.map((movie, index) => {
                 const filmId = movie.kinopoiskId || movie.filmId;
                 const title = movie.nameRu || movie.nameEn || 'Без названия';
                 const year = movie.year || 'Неизвестно';
                 const poster = movie.posterUrlPreview || movie.posterUrl || '';
-                const filmType = movie.type || 'FILM';
-                const isSeries = filmType === 'TV_SERIES' || filmType === 'MINI_SERIES' || filmType === 'TV_SHOW';
-                const typeText = isSeries ? 'Сериал' : 'Фильм';
-                const typeClass = isSeries ? 'type-series' : 'type-film';
+                const position = (currentPage - 1) * filmsPerPage + index + 1;
                 
-                // Получаем и форматируем рейтинг
-                const rating = formatRating(movie.ratingKinopoisk || movie.rating);
+                const rating = formatRating(movie.rating || movie.ratingKinopoisk);
                 const ratingColor = rating ? getRatingColor(rating) : '';
                 const ratingDisplay = rating ? 
                     `<span class="film-rating">| Рейтинг: <span class="rating-value ${ratingColor}">${rating}</span></span>` : 
@@ -555,7 +564,7 @@
                         <img src="${poster}" alt="${title}" class="film-poster" onerror="this.style.display='none'">
                         <div class="film-content">
                             <div class="film-header">
-                                <div class="film-type ${typeClass}">${typeText} ${ratingDisplay}</div>
+                                <div class="film-type">#${position} ${ratingDisplay}</div>
                                 <div class="film-title">${title}</div>
                                 ${year ? `<div class="film-year">${year} год</div>` : ''}
                             </div>
@@ -568,6 +577,16 @@
                     </div>
                 `;
             }).join('');
+        }
+
+        function updatePagination() {
+            const prevBtn = document.getElementById('prevPage');
+            const nextBtn = document.getElementById('nextPage');
+            const currentPageSpan = document.getElementById('currentPage');
+            
+            currentPageSpan.textContent = currentPage;
+            prevBtn.disabled = currentPage === 1;
+            nextBtn.disabled = currentPage >= Math.ceil(totalFilms / filmsPerPage);
         }
     </script>
 </body>
