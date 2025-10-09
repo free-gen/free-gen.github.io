@@ -14,362 +14,50 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
 
     <style>
-        :root {
-            --bg-color: #202020;
-            --card-bg: #2B2B2B;
-            --light-text: #ececec;
-            --dark-text: #000;
-            --accent-btn: #FF6000;
-            --secondary-btn: #0f0f0f;
-            --search-bg: #2D2D2D;
-            --search-text: #888;
-            --border-color: #3A3A3A;
-            --error-color: #ff4444;
-            --radius-small: 5px;
-            --radius-large: 20px;
-            --sub-info: #888;
-            --rating-low: #ff2222;
-            --rating-med: #fd781f;
-            --rating-high: #ffd000;            
-        }
-        
-        * {
-            font-family: "Nunito Sans", sans-serif !important;
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        h1 {
-            text-align: center;
-            margin-top: 20px;
-            margin-bottom: 30px;
-            color: var(--light-text);
-            font-size: 28pt;
-            font-weight: 900;
-        }
-        
-        h2 {
-            font-weight: 900;
-            color: var(--light-text);
-            text-align: left;
-            font-size: 16pt;
-            margin-top: 50px;
-            margin-bottom: 10px;
-        }
-        
-        body {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 15px;
-            background-color: var(--bg-color);
-            color: var(--light-text);
-            line-height: 1.4;
-            overflow-x: hidden;
-        }
-
-        .search-section {
-            position: relative;
-            margin: -15px;
-            padding: 20px 0;
-            margin-bottom: 40px;
-        }
-
-        .search-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100vw;
-            height: 100%;
-            background: linear-gradient(to bottom, #000000 0%, #202020 100%);
-            z-index: -1;
-            box-sizing: content-box;
-        }
-
-        .search-container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 0 15px;
-        }
-        
-        .search-box {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 30px;
-        }
-        
-        #searchInput {
-            flex: 1;
-            padding: 10px 20px;
-            background: var(--search-bg);
-            color: var(--light-text);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-large);
-            outline: none;
-            font-size: 12px;
-            min-width: 0;
-        }
-        
-        #searchInput::placeholder {
-            color: var(--search-text);
-        }
-        
-        #searchBtn {
-            padding: 10px 20px;
-            background: var(--accent-btn);
-            color: var(--light-text);
-            border: none;
-            cursor: pointer;
-            border-radius: var(--radius-large);
-            font-weight: bold;
-            font-size: 14px;
-            transition: all 0.2s;
-            white-space: nowrap;
-        }
-        
-        #searchBtn:hover {
-            opacity: 0.9;
-        }
-        
-        #searchBtn.cancel-mode {
-            background: var(--error-color);
-        }
-        
-        .film-item {
-            display: flex;
-            align-items: stretch;
-            padding: 15px;
-            margin-bottom: 15px;
-            background: var(--card-bg);
-            border-radius: var(--radius-small);
-            gap: 15px;
-            border: 1px solid var(--border-color);
-            height: 150px;
-        }
-        
-        .film-poster {
-            width: 80px;
-            height: 120px;
-            object-fit: cover;
-            border-radius: var(--radius-small);
-            flex-shrink: 0;
-            align-self: center;
-        }
-        
-        .film-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            justify-content: space-between;
-            height: 120px;
-            position: relative;
-        }
-        
-        .film-header {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-            flex: 1;
-        }
-        
-        .film-type {
-            font-size: 8pt;
-            font-weight: 500;
-            color: var(--sub-info);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .film-rating {
-            display: inline-flex;
-            align-items: center;
-            gap: 3px;
-            font-size: 8pt;
-            font-weight: 500;
-        }
-        
-        .rating-value {
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-weight: 700;
-            font-size: 8pt;
-            margin-left: -5px;
-        }
-        
-        .rating-low {
-            color: var(--rating-low);
-        }
-        
-        .rating-med {
-            color: var(--rating-med);
-        }
-        
-        .rating-high {
-            color: var(--rating-high);
-        }
-        
-        .film-title {
-            font-size: 12pt;
-            font-weight: 900;
-            color: var(--light-text);
-            line-height: 1.2;
-        }
-        
-        .film-year {
-            color: var(--search-text);
-            font-size: 10pt;
-            font-weight: 700;
-        }
-        
-        .film-actions {
-            position: absolute;
-            bottom: 0;
-            right: 0;
-            text-align: right;
-            display: flex;
-            gap: 8px;
-        }
-        
-        .watch-btn {
-            font-weight: 900;
-            background: var(--accent-btn);
-            color: var(--light-text);
-            border: none;
-            padding: 8px 16px;
-            cursor: pointer;
-            text-decoration: none;
-            border-radius: var(--radius-large);
-            font-weight: bold;
-            font-size: 10pt;
-            display: inline-block;
-            transition: opacity 0.2s;
-        }
-        
-        .watch-btn:hover {
-            opacity: 0.9;
-        }
-        
-        .similar-btn {
-            font-weight: 900;
-            background: var(--secondary-btn);
-            color: var(--light-text);
-            border: none;
-            padding: 8px 16px;
-            cursor: pointer;
-            text-decoration: none;
-            border-radius: var(--radius-large);
-            font-weight: bold;
-            font-size: 10pt;
-            display: inline-block;
-            transition: opacity 0.2s;
-        }
-        
-        .similar-btn:hover {
-            opacity: 0.9;
-        }
-        
-        .loading {
-            text-align: center;
-            padding: 40px;
-            color: var(--light-text);
-            font-size: 14pt;
-        }
-        
-        .error {
-            color: var(--error-color);
-            text-align: center;
-            padding: 40px;
-            font-size: 14pt;
-        }
-        
-        .recommendations-section {
-            margin-top: 40px;
-        }
-        
-        .top250-info {
-            text-align: left;
-            color: var(--search-text);
-            margin-bottom: 20px;
-            font-size: 12pt;
-        }
-
-        .pagination {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .pagination-btn {
-            padding: 10px 15px;
-            background: var(--accent-btn);
-            color: var(--light-text);
-            border: none;
-            border-radius: var(--radius-large);
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .pagination-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .page-info {
-            color: var(--light-text);
-            font-weight: bold;
-        }
-
-        .recommendations-section.hidden {
-            display: none;
-        }
-        
-        .back-btn {
-            display: block;
-            margin: 20px auto;
-            padding: 10px 20px;
-            background: var(--accent-btn);
-            color: var(--light-text);
-            border: none;
-            border-radius: var(--radius-large);
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 12pt;
-            transition: opacity 0.2s;
-        }
-        
-        .back-btn:hover {
-            opacity: 0.9;
-        }
-        
-        .similar-section {
-            margin-top: 40px;
-        }
-        
-        .similar-section.hidden {
-            display: none;
-        }
-
-        .spinner {
-            border: 6px solid rgba(255, 255, 255, 0.1);
-            border-top: 6px solid var(--accent-btn);
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-            margin: 40px auto;
-        }
-
+        :root{--bg-color:#202020;--card-bg:#2B2B2B;--light-text:#ececec;--accent:#FF6000;--secondary:#0f0f0f;--search-bg:#2D2D2D;--muted-text:#888;--border:#3A3A3A;--error:#f44;--rating-low:#f22;--rating-med:#fd781f;--rating-high:#ffd000;--radius-sm:5px;--radius-lg:20px}
+        *{font-family:"Nunito Sans",sans-serif!important;margin:0;padding:0;box-sizing:border-box}
+        body{max-width:800px;margin:0 auto;padding:15px;background:var(--bg-color);color:var(--light-text);line-height:1.4;overflow-x:hidden}
+        h1,h2{font-weight:900;color:var(--light-text)}
+        h1{text-align:center;margin:20px 0 30px;font-size:28pt}
+        h2{text-align:left;font-size:16pt;margin:50px 0 10px}
+        .section{margin-top:40px}
+        .section.hidden{display:none}
+        .search-section{position:relative;margin:-15px;padding:20px 0;margin-bottom:40px}
+        .search-section::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:100vw;height:100%;background:linear-gradient(to bottom,#000 0%,var(--bg-color) 100%);z-index:-1}
+        .search-container{max-width:800px;margin:0 auto;padding:0 15px}
+        .search-box{display:flex;gap:8px;margin-bottom:30px}
+        .form-input{flex:1;padding:8px 20px;background:var(--search-bg);color:var(--light-text);border:1px solid var(--border);border-radius:var(--radius-lg);outline:none;font-size:12pt;min-width:0}
+        .form-input::placeholder{color:var(--muted-text)}
+        .btn{padding:8px 20px;color:var(--light-text);border:none;cursor:pointer;border-radius:var(--radius-lg);font-weight:700;font-size:12pt;transition:opacity .2s;text-decoration:none;display:inline-block;white-space:nowrap}
+        .btn:hover{opacity:.9}
+        .btn--primary{background:var(--accent)}
+        .btn--secondary{background:var(--secondary)}
+        .btn--danger{background:var(--error)}
+        .btn--block{display:block;margin:20px auto}
+        .film-item{display:flex;align-items:stretch;padding:15px;margin-bottom:15px;background:var(--card-bg);border-radius:var(--radius-sm);gap:15px;border:1px solid var(--border);height:150px}
+        .film-poster{width:80px;height:120px;object-fit:cover;border-radius:var(--radius-sm);flex-shrink:0;align-self:center}
+        .film-content{flex:1;display:flex;flex-direction:column;gap:12px;justify-content:space-between;height:120px;position:relative}
+        .film-header{display:flex;flex-direction:column;gap:5px;flex:1}
+        .film-type{font-size:8pt;font-weight:500;color:var(--muted-text);text-transform:uppercase;letter-spacing:1px;display:flex;align-items:center;gap:8px}
+        .film-rating{display:inline-flex;align-items:center;gap:3px;font-size:8pt;font-weight:500}
+        .rating-value{padding:2px 6px;border-radius:4px;font-weight:700;font-size:8pt;margin-left:-5px}
+        .rating-low{color:var(--rating-low)}
+        .rating-med{color:var(--rating-med)}
+        .rating-high{color:var(--rating-high)}
+        .film-title{font-size:12pt;font-weight:900;color:var(--light-text);line-height:1.2}
+        .film-year{color:var(--muted-text);font-size:10pt;font-weight:700}
+        .film-actions{position:absolute;bottom:0;right:0;text-align:right;display:flex;gap:8px}
+        .info-text{text-align:left;color:var(--muted-text);margin-bottom:20px;font-size:12pt}
+        .message{text-align:center;padding:40px;font-size:14pt}
+        .loading{color:var(--light-text)}
+        .error{color:var(--error)}
+        .pagination{display:flex;justify-content:center;align-items:center;gap:15px;margin-top:20px}
+        .pagination-btn:disabled{opacity:.5;cursor:not-allowed}
+        .page-info{color:var(--light-text);font-weight:700}
+        .spinner{border:6px solid #ffffff1a;border-top:6px solid var(--accent);border-radius:50%;width:50px;height:50px;animation:spin 1s linear infinite;margin:40px auto}
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        0%{transform:rotate(0deg)}
+        100%{transform:rotate(360deg)}
         }
     </style>
 </head>
@@ -380,42 +68,44 @@
             <h1>Фильмотека</h1>
             
             <div class="search-box">
-                <input type="text" id="searchInput" placeholder="Найти фильм или сериал...">
-                <button id="searchBtn">Поиск</button>
+                <input type="text" id="searchInput" class="form-input" placeholder="Найти фильм или сериал...">
+                <button id="searchBtn" class="btn btn--primary">Поиск</button>
             </div>
 
             <div id="results"></div>
         </div>
     </div>
 
-    <div class="similar-section hidden" id="similarSection">
+    <div class="section hidden" id="similarSection">
         <h2 id="similarTitle">Похожие фильмы</h2>
-        <button class="back-btn" id="backBtn">На главную</button>
+        <button class="btn btn--primary btn--block" id="backBtn">На главную</button>
         <div id="similarResults"></div>
     </div>
 
-    <div class="recommendations-section" id="recommendationsSection">
-
+    <div class="section" id="recommendationsSection">
         <h2>Топ-250 КиноПоиска</h2>
         
-        <div class="top250-info">Лучшие фильмы всех времен по версии КиноПоиска</div>
+        <div class="info-text">Лучшие фильмы всех времен по версии КиноПоиска</div>
         
         <div class="pagination">
-            <button id="prevPage" class="pagination-btn" disabled>◄ Назад</button>
+            <button id="prevPage" class="btn btn--primary pagination-btn" disabled>◄ Назад</button>
             <span class="page-info">Страница <span id="currentPage">1</span></span>
-            <button id="nextPage" class="pagination-btn">Вперед ►</button>
+            <button id="nextPage" class="btn btn--primary pagination-btn">Вперед ►</button>
         </div>
 
         <br>
         
         <div id="recommendations"></div>
-
     </div>
 
     <script>
         const API_KEY = '5bd42146-7679-4016-b124-f278ca89ea1b';
         let isSearchActive = false;
-        
+        let top250Cache = {};
+        let currentPage = 1;
+        const filmsPerPage = 20;
+        const totalFilms = 250;
+
         const searchBtn = document.getElementById('searchBtn');
         const searchInput = document.getElementById('searchInput');
         const resultsDiv = document.getElementById('results');
@@ -424,7 +114,29 @@
         const similarResultsDiv = document.getElementById('similarResults');
         const similarTitle = document.getElementById('similarTitle');
         const backBtn = document.getElementById('backBtn');
-        
+        const prevPageBtn = document.getElementById('prevPage');
+        const nextPageBtn = document.getElementById('nextPage');
+        const currentPageSpan = document.getElementById('currentPage');
+        const recommendationsDiv = document.getElementById('recommendations');
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadTop250();
+            
+            prevPageBtn.addEventListener('click', () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    loadTop250();
+                }
+            });
+            
+            nextPageBtn.addEventListener('click', () => {
+                if (currentPage < Math.ceil(totalFilms / filmsPerPage)) {
+                    currentPage++;
+                    loadTop250();
+                }
+            });
+        });
+
         searchBtn.addEventListener('click', toggleSearch);
         searchInput.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
@@ -441,29 +153,26 @@
             showRecommendations();
         });
 
-        function toggleSearch() {
-            if (isSearchActive) {
-                clearSearch();
-            } else {
-                searchFilms();
-            }
+        function getRatingColor(rating) {
+            if (rating >= 0 && rating < 3) return 'rating-low';
+            if (rating >= 3 && rating < 6) return 'rating-med';
+            if (rating >= 6 && rating <= 10) return 'rating-high';
+            return 'rating-low';
         }
 
-        function clearSearch() {
-            searchInput.value = '';
-            resultsDiv.innerHTML = '';
-            isSearchActive = false;
-            updateSearchButton();
-            showRecommendations();
+        function formatRating(rating) {
+            if (!rating || rating === 'null') return null;
+            const numRating = parseFloat(rating);
+            return isNaN(numRating) ? null : numRating.toFixed(1);
         }
 
         function updateSearchButton() {
             if (isSearchActive) {
                 searchBtn.textContent = 'Закрыть';
-                searchBtn.classList.add('cancel-mode');
+                searchBtn.classList.add('btn--danger');
             } else {
                 searchBtn.textContent = 'Поиск';
-                searchBtn.classList.remove('cancel-mode');
+                searchBtn.classList.remove('btn--danger');
             }
         }
 
@@ -483,17 +192,88 @@
             similarSection.classList.remove('hidden');
         }
 
-        function getRatingColor(rating) {
-            if (rating >= 0 && rating < 3) return 'rating-low';
-            if (rating >= 3 && rating < 6) return 'rating-med';
-            if (rating >= 6 && rating <= 10) return 'rating-high';
-            return 'rating-low';
+        function updatePagination() {
+            currentPageSpan.textContent = currentPage;
+            prevPageBtn.disabled = currentPage === 1;
+            nextPageBtn.disabled = currentPage >= Math.ceil(totalFilms / filmsPerPage);
         }
 
-        function formatRating(rating) {
-            if (!rating || rating === 'null') return null;
-            const numRating = parseFloat(rating);
-            return isNaN(numRating) ? null : numRating.toFixed(1);
+        function createFilmItem(film, options = {}) {
+            const {
+                showPosition = false,
+                position = 0,
+                customType = null
+            } = options;
+            
+            const filmId = film.kinopoiskId || film.filmId;
+            const title = film.nameRu || film.nameEn || 'Без названия';
+            const year = film.year || 'Неизвестно';
+            const poster = film.posterUrlPreview || film.posterUrl || '';
+            
+            const filmType = film.type || film.filmType || 'FILM';
+            const isSeries = filmType === 'TV_SERIES' || filmType === 'MINI_SERIES' || filmType === 'TV_SHOW';
+            const typeText = customType || (isSeries ? 'Сериал' : 'Фильм');
+            
+            const rating = formatRating(film.rating || film.ratingKinopoisk || film.ratingImdb);
+            const ratingColor = rating ? getRatingColor(rating) : '';
+            const ratingDisplay = rating ? 
+                `<span class="film-rating">| Рейтинг: <span class="rating-value ${ratingColor}">${rating}</span></span>` : 
+                '';
+            
+            const positionDisplay = showPosition ? `#${position} ` : '';
+            
+            return `
+                <div class="film-item">
+                    <img src="${poster}" alt="${title}" class="film-poster" onerror="this.style.display='none'">
+                    <div class="film-content">
+                        <div class="film-header">
+                            <div class="film-type">${positionDisplay}${typeText} ${ratingDisplay}</div>
+                            <div class="film-title">${title}</div>
+                            ${year && year !== 'Неизвестно' ? `<div class="film-year">${year} год</div>` : ''}
+                        </div>
+                        <div class="film-actions">
+                            <button class="btn btn--secondary" onclick="showSimilarFilms(${filmId}, '${title.replace(/'/g, "\\'")}')">
+                                Похожие
+                            </button>
+                            <button class="btn btn--primary" onclick="watchFilm(${filmId})">
+                                Смотреть
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function displayFilms(container, films, options = {}) {
+            if (!films || films.length === 0) {
+                container.innerHTML = '<div class="message error">Фильмы не найдены</div>';
+                return;
+            }
+
+            container.innerHTML = films.map((film, index) => {
+                const position = options.startPosition ? (options.startPosition + index) : (index + 1);
+                return createFilmItem(film, {
+                    showPosition: options.showPosition || false,
+                    position: position,
+                    customType: options.customType || null
+                });
+            }).join('');
+        }
+
+        function toggleSearch() {
+            if (isSearchActive) {
+                clearSearch();
+            } else {
+                searchFilms();
+            }
+        }
+
+        function clearSearch() {
+            searchInput.value = '';
+            resultsDiv.innerHTML = '';
+            isSearchActive = false;
+            updateSearchButton();
+            showRecommendations();
         }
 
         async function searchFilms() {
@@ -505,7 +285,7 @@
             hideRecommendations();
             hideSimilar();
             
-            resultsDiv.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+            resultsDiv.innerHTML = '<div class="message loading"><div class="spinner"></div></div>';
 
             try {
                 const url = `https://kinopoiskapiunofficial.tech/api/v2.1/films/search-by-keyword?keyword=${encodeURIComponent(query)}&page=1`;
@@ -520,94 +300,22 @@
                 if (!response.ok) throw new Error('Ошибка поиска');
                 
                 const data = await response.json();
-                
                 const limitedFilms = data.films.slice(0, 10);
-                displayResults(limitedFilms);
+                displayFilms(resultsDiv, limitedFilms);
                 
             } catch (error) {
-                resultsDiv.innerHTML = '<div class="error">Ошибка при поиске фильмов</div>';
+                resultsDiv.innerHTML = '<div class="message error">Ошибка при поиске фильмов</div>';
             }
         }
-
-        function displayResults(films) {
-            if (!films || films.length === 0) {
-                resultsDiv.innerHTML = '<div class="error">Ничего не найдено</div>';
-                return;
-            }
-
-            resultsDiv.innerHTML = films.map(film => {
-                const filmId = film.filmId || film.kinopoiskId;
-                const title = film.nameRu || film.nameEn || 'Без названия';
-                const year = film.year || 'Неизвестно';
-                const poster = film.posterUrlPreview || '';
-                const filmType = film.type || film.filmType || 'FILM';
-                const isSeries = filmType === 'TV_SERIES' || filmType === 'MINI_SERIES' || filmType === 'TV_SHOW';
-                const typeText = isSeries ? 'Сериал' : 'Фильм';
-                const typeClass = isSeries ? 'type-series' : 'type-film';
-                
-                const rating = formatRating(film.rating || film.ratingKinopoisk);
-                const ratingColor = rating ? getRatingColor(rating) : '';
-                const ratingDisplay = rating ? 
-                    `<span class="film-rating">| Рейтинг: <span class="rating-value ${ratingColor}">${rating}</span></span>` : 
-                    '';
-                
-                return `
-                    <div class="film-item">
-                        <img src="${poster}" alt="${title}" class="film-poster" onerror="this.style.display='none'">
-                        <div class="film-content">
-                            <div class="film-header">
-                                <div class="film-type ${typeClass}">${typeText} ${ratingDisplay}</div>
-                                <div class="film-title">${title}</div>
-                                ${year ? `<div class="film-year">${year} год</div>` : ''}
-                            </div>
-                            <div class="film-actions">
-                                <button class="similar-btn" onclick="showSimilarFilms(${filmId}, '${title.replace(/'/g, "\\'")}')">
-                                    Похожие
-                                </button>
-                                <a href="https://sspoisk.ru/film/${filmId}/" class="watch-btn">
-                                    Смотреть
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        // Функции для Топ-250
-        let top250Cache = {};
-        let currentPage = 1;
-        const filmsPerPage = 20;
-        const totalFilms = 250;
-
-        document.addEventListener('DOMContentLoaded', function() {
-            loadTop250();
-            
-            document.getElementById('prevPage').addEventListener('click', () => {
-                if (currentPage > 1) {
-                    currentPage--;
-                    loadTop250();
-                }
-            });
-            
-            document.getElementById('nextPage').addEventListener('click', () => {
-                if (currentPage < Math.ceil(totalFilms / filmsPerPage)) {
-                    currentPage++;
-                    loadTop250();
-                }
-            });
-        });
 
         async function loadTop250() {
-            const recommendationsDiv = document.getElementById('recommendations');
-            
             if (top250Cache[currentPage]) {
                 displayTop250(top250Cache[currentPage]);
                 updatePagination();
                 return;
             }
 
-            recommendationsDiv.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+            recommendationsDiv.innerHTML = '<div class="message loading"><div class="spinner"></div></div>';
             
             try {
                 const movies = await fetchTop250(currentPage);
@@ -616,7 +324,7 @@
                 updatePagination();
             } catch (error) {
                 console.error('Error loading top 250:', error);
-                recommendationsDiv.innerHTML = '<div class="error">Ошибка при загрузке Топ-250</div>';
+                recommendationsDiv.innerHTML = '<div class="message error">Ошибка при загрузке Топ-250</div>';
             }
         }
 
@@ -643,67 +351,20 @@
         }
 
         function displayTop250(movies) {
-            const recommendationsDiv = document.getElementById('recommendations');
-            
-            if (!movies || movies.length === 0) {
-                recommendationsDiv.innerHTML = '<div class="error">Фильмы не найдены</div>';
-                return;
-            }
-
-            recommendationsDiv.innerHTML = movies.map((movie, index) => {
-                const filmId = movie.kinopoiskId || movie.filmId;
-                const title = movie.nameRu || movie.nameEn || 'Без названия';
-                const year = movie.year || 'Неизвестно';
-                const poster = movie.posterUrlPreview || movie.posterUrl || '';
-                const position = (currentPage - 1) * filmsPerPage + index + 1;
-                
-                const rating = formatRating(movie.rating || movie.ratingKinopoisk);
-                const ratingColor = rating ? getRatingColor(rating) : '';
-                const ratingDisplay = rating ? 
-                    `<span class="film-rating">| Рейтинг: <span class="rating-value ${ratingColor}">${rating}</span></span>` : 
-                    '';
-                
-                return `
-                    <div class="film-item">
-                        <img src="${poster}" alt="${title}" class="film-poster" onerror="this.style.display='none'">
-                        <div class="film-content">
-                            <div class="film-header">
-                                <div class="film-type">#${position} ${ratingDisplay}</div>
-                                <div class="film-title">${title}</div>
-                                ${year ? `<div class="film-year">${year} год</div>` : ''}
-                            </div>
-                            <div class="film-actions">
-                                <button class="similar-btn" onclick="showSimilarFilms(${filmId}, '${title.replace(/'/g, "\\'")}')">
-                                    Похожие
-                                </button>
-                                <a href="https://sspoisk.ru/film/${filmId}/" class="watch-btn">
-                                    Смотреть
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }).join('');
+            const startPosition = (currentPage - 1) * filmsPerPage + 1;
+            displayFilms(recommendationsDiv, movies, {
+                showPosition: true,
+                startPosition: startPosition
+            });
         }
 
-        function updatePagination() {
-            const prevBtn = document.getElementById('prevPage');
-            const nextBtn = document.getElementById('nextPage');
-            const currentPageSpan = document.getElementById('currentPage');
-            
-            currentPageSpan.textContent = currentPage;
-            prevBtn.disabled = currentPage === 1;
-            nextBtn.disabled = currentPage >= Math.ceil(totalFilms / filmsPerPage);
-        }
-
-        // Функции для похожих фильмов
-                async function showSimilarFilms(filmId, filmTitle) {
+        async function showSimilarFilms(filmId, filmTitle) {
             clearSearch();
             hideRecommendations();
             hideSimilar();
             
-            similarTitle.innerHTML = `<span style="font-size: 12pt; font-weight: 700;">${filmTitle}<br>⤷ похожие фильмы</span>`;
-            similarResultsDiv.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+            similarTitle.innerHTML = `<span style="font-size: var(--text-md); font-weight: 700;">${filmTitle}<br>⤷ похожие фильмы</span>`;
+            similarResultsDiv.innerHTML = '<div class="message loading"><div class="spinner"></div></div>';
             showSimilar();
 
             try {
@@ -720,20 +381,18 @@
                 const data = await response.json();
                 
                 if (data.items && data.items.length > 0) {
-                    // Загружаем полную информацию для каждого похожего фильма
                     const detailedFilms = await loadFilmDetails(data.items.slice(0, 10));
-                    displaySimilarFilms(detailedFilms);
+                    displayFilms(similarResultsDiv, detailedFilms);
                 } else {
-                    similarResultsDiv.innerHTML = '<div class="error">Похожие фильмы не найдены</div>';
+                    similarResultsDiv.innerHTML = '<div class="message error">Похожие фильмы не найдены</div>';
                 }
                 
             } catch (error) {
                 console.error('Error loading similar films:', error);
-                similarResultsDiv.innerHTML = '<div class="error">Ошибка при загрузке похожих фильмов</div>';
+                similarResultsDiv.innerHTML = '<div class="message error">Ошибка при загрузке похожих фильмов</div>';
             }
         }
 
-        // Функция для загрузки детальной информации о фильмах
         async function loadFilmDetails(films) {
             const detailedFilms = [];
             
@@ -753,64 +412,21 @@
                         const filmDetails = await response.json();
                         detailedFilms.push(filmDetails);
                     } else {
-                        // Если не удалось получить детали, используем базовую информацию
                         detailedFilms.push(film);
                     }
                 } catch (error) {
                     console.error('Error fetching film details:', error);
-                    detailedFilms.push(film); // Используем базовую информацию при ошибке
+                    detailedFilms.push(film);
                 }
                 
-                // Небольшая задержка чтобы не перегружать API
                 await new Promise(resolve => setTimeout(resolve, 100));
             }
             
             return detailedFilms;
         }
 
-        function displaySimilarFilms(films) {
-            if (!films || films.length === 0) {
-                similarResultsDiv.innerHTML = '<div class="error">Похожие фильмы не найдены</div>';
-                return;
-            }
-
-            similarResultsDiv.innerHTML = films.map(film => {
-                const filmId = film.kinopoiskId || film.filmId;
-                const title = film.nameRu || film.nameEn || 'Без названия';
-                const year = film.year || 'Неизвестно';
-                const poster = film.posterUrlPreview || film.posterUrl || '';
-                
-                const filmType = film.type || film.filmType || 'FILM';
-                const isSeries = filmType === 'TV_SERIES' || filmType === 'MINI_SERIES' || filmType === 'TV_SHOW';
-                const typeText = isSeries ? 'Сериал' : 'Фильм';
-                
-                const rating = formatRating(film.ratingKinopoisk || film.ratingImdb);
-                const ratingColor = rating ? getRatingColor(rating) : '';
-                const ratingDisplay = rating ? 
-                    `<span class="film-rating">| Рейтинг: <span class="rating-value ${ratingColor}">${rating}</span></span>` : 
-                    '';
-                
-                return `
-                    <div class="film-item">
-                        <img src="${poster}" alt="${title}" class="film-poster" onerror="this.style.display='none'">
-                        <div class="film-content">
-                            <div class="film-header">
-                                <div class="film-type">${typeText} ${ratingDisplay}</div>
-                                <div class="film-title">${title}</div>
-                                ${year && year !== 'Неизвестно' ? `<div class="film-year">${year} год</div>` : ''}
-                            </div>
-                            <div class="film-actions">
-                                <button class="similar-btn" onclick="showSimilarFilms(${filmId}, '${title.replace(/'/g, "\\'")}')">
-                                    Похожие
-                                </button>
-                                <a href="https://sspoisk.ru/film/${filmId}/" class="watch-btn">
-                                    Смотреть
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }).join('');
+        function watchFilm(filmId) {
+            window.location.href = `https://sspoisk.ru/film/${filmId}/`;
         }
     </script>
 </body>
