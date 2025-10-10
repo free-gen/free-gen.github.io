@@ -1,0 +1,15 @@
+{
+  "name": "Filmoteka",
+  "short_name": "Filmoteka",
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#ff6000",
+  "background_color": "#202020",
+  "icons": [
+    {
+      "src": "https://yastatic.net/s3/kinopoisk-frontend/common-static/img/hd-favicon/apple-touch-icon-180x180.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}
