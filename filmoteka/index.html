@@ -6,13 +6,23 @@
     
     <title>Filmoteka (SSPoisk)</title>
 
+    <!-- App metatags -->
     <meta name="theme-color" content="#ff6000">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Filmoteka">
-    <link rel="apple-touch-icon" href="https://yastatic.net/s3/kinopoisk-frontend/common-static/img/hd-favicon/apple-touch-icon-180x180.png">
-    <link rel="icon" href="https://yastatic.net/s3/kinopoisk-frontend/common-static/img/hd-favicon/apple-touch-icon-180x180.png">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16.png">
+
+    <!-- Apple Touch Icon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon/favicon-180.png">
+
+    <!-- Android/Manifest Icons -->
+    <link rel="icon" type="image/png" sizes="192x192" href="favicon/favicon-192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="favicon/favicon-512.png">
 
     <link rel="manifest" href="manifest.json">
 
@@ -437,9 +447,14 @@
         function watchFilm(filmId) {
             window.location.href = `https://sspoisk.ru/film/${filmId}/`;
         }
+
+        if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/filmoteka/sw.js')
+            .then(registration => console.log('SW registered'))
+            .catch(error => console.log('SW registration failed'));
+        }
     </script>
 </body>
 
 </html>
-
 
