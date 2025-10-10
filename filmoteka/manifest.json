@@ -4,23 +4,15 @@
   "display": "fullscreen",
   "name": "Filmoteka",
   "orientation": "portrait",
-  "scope": "/",
+  "scope": "/filmoteka/",
   "short_name": "Filmoteka",
-  "start_url": "/",
+  "start_url": "/filmoteka/",
   "theme_color": "#ff6000",
   "icons": [
     {
       "src": "https://yastatic.net/s3/kinopoisk-frontend/common-static/img/hd-favicon/apple-touch-icon-180x180.png",
-      "type": "image/png",
       "sizes": "180x180",
-      "isSquare": true,
-      "isPng": true,
-      "isWebp": false,
-      "isJpg": false,
-      "width": 180,
-      "is512x512": false,
-      "is256x256": false,
-      "is192x192": false
+      "type": "image/png"
     }
   ],
   "lang": "ru"
