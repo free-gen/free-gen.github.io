@@ -3,10 +3,10 @@
   "background_color": "#000000",
   "dir": "ltr",
   "display": "standalone",
-  "name": "Filmoteka",
+  "name": "Фильмотека",
   "orientation": "portrait",
   "scope": "/filmoteka/",
-  "short_name": "Filmoteka",
+  "short_name": "Фильмотека",
   "description": "База данных фильмов и сериалов с полным доступом к просмотру медиаконтента",
   "start_url": "/filmoteka/index.html",
   "theme_color": "#000000",
@@ -61,3 +61,4 @@
   "lang": "ru"
 
 }
+
