@@ -115,9 +115,6 @@ function createFilmItem(film, options = {}) {
     
     const rating = formatRating(film.rating || film.ratingKinopoisk || film.ratingImdb);
     const ratingColor = rating ? getRatingColor(rating) : '';
-    const ratingDisplay = rating ? 
-        `<span class="film-rating">| Рейтинг: <span class="rating-value ${ratingColor}">${rating}</span></span>` : 
-        '';
     
     const positionDisplay = showPosition ? `#${position} ` : '';
     
@@ -126,7 +123,10 @@ function createFilmItem(film, options = {}) {
             <img src="${poster}" alt="${title}" class="film-poster" onerror="this.style.display='none'">
             <div class="film-content">
                 <div class="film-header">
-                    <div class="film-type">${positionDisplay}${typeText} ${ratingDisplay}</div>
+                    <div class="film-meta">
+                        <span class="film-meta-item">${positionDisplay}${typeText}</span>
+                        ${rating ? `<span class="film-rating">Рейтинг: <span class="rating-value ${ratingColor}">${rating}</span></span>` : ''}
+                    </div>
                     <div class="film-title">${title}</div>
                     ${year && year !== 'Неизвестно' ? `<div class="film-year">${year} год</div>` : ''}
                 </div>

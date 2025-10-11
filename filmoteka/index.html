@@ -28,7 +28,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -47,20 +47,26 @@
         </div>
 
         <div class="section hidden" id="similarSection">
-            <h2 id="similarTitle">Похожие фильмы</h2>
-            <button class="btn btn--primary btn--block" id="backBtn">На главную</button>
+            <div class="section-pagination">
+                <div class="section-desc">
+                    <h2 id="similarTitle">Похожие фильмы</h2>
+                </div>
+                <button class="btn btn--pagination" id="backBtn">На главную</button>
+            </div>
             <div id="similarResults"></div>
         </div>
 
         <div class="section" id="recommendationsSection">
-            <div class="section-desc">
-                <h2>Рекомендации</h2>
-                <div class="info-text">Лучшие фильмы и сериалы всех времен по версии пользователей КиноПоиска</div>
-            </div>
-            <div class="pagination">
-                <button id="prevPage" class="btn btn--primary pagination-btn" disabled>◄ Назад</button>
-                <span class="page-info">Страница <span id="currentPage">1</span></span>
-                <button id="nextPage" class="btn btn--primary pagination-btn">Вперед ►</button>
+            <div class="section-pagination">
+                <div class="section-desc">
+                    <h2>Рекомендации</h2>
+                    <div class="info-text">Лучшие фильмы и сериалы всех времен по версии пользователей КиноПоиска</div>
+                </div>
+                <div class="pagination">
+                    <button id="prevPage" class="btn btn--pagination" disabled>◄</button>
+                    <span class="page-info">Страница <span id="currentPage">1</span></span>
+                    <button id="nextPage" class="btn btn--pagination">►</button>
+                </div>
             </div>
             <br>
             <div id="recommendations"></div>
