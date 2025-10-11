@@ -149,7 +149,10 @@ function displayFilms(container, films, options = {}) {
         return;
     }
 
-    container.innerHTML = films.map((film, index) => {
+    container.innerHTML = '<div class="films-container"></div>';
+    const filmsContainer = container.querySelector('.films-container');
+    
+    filmsContainer.innerHTML = films.map((film, index) => {
         const position = options.startPosition ? (options.startPosition + index) : (index + 1);
         return createFilmItem(film, {
             showPosition: options.showPosition || false,
