@@ -1,15 +1,15 @@
 {
   "id": "/filmoteka/",
-  "background_color": "#000000",
+  "background_color": "#0F0F0F",
   "dir": "ltr",
   "display": "standalone",
   "name": "Фильмотека",
   "orientation": "portrait",
   "scope": "/filmoteka/",
   "short_name": "Фильмотека",
-  "description": "База данных фильмов и сериалов с полным доступом к просмотру медиаконтента",
+  "description": "Фильмотека — веб-приложение для удобного просмотра видеоконтента. Поиск, рекомендации и подбор похожих фильмов реализованы через API КиноПоиска. Для просмотра используется агрегатор видеосервисов с синхронизацией по базе КиноПоиска.",
   "start_url": "/filmoteka/index.html",
-  "theme_color": "#000000",
+  "theme_color": "#0F0F0F",
   "icons": [
     {
       "src": "favicon/favicon-16.png",

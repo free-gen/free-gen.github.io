@@ -3,15 +3,15 @@
     --card-bg: #1A1A1A;
     --dark-bg: #0F0F0F;
     --light-text: #FFF;
-    --accent: #F25400;
+    --accent: #FF5500;
     --secondary: #141414;
     --search-bg: #1A1A1A;
     --muted-text: #999;
     --border: #262626;
-    --error: #f44;
-    --rating-low: #f22;
-    --rating-med: #fd781f;
-    --rating-high: #ffd000;
+    --error: #ff4b4b;
+    --rating-low: #FF4433;
+    --rating-med: #FF8C33;
+    --rating-high: #FFD633;
     --radius-sm: 5px;
     --radius-lg: 15px
 }
@@ -24,7 +24,7 @@
 }
 
 body {
-    background: #000;
+    background: var(--dark-bg);
     color: var(--light-text);
     line-height: 1.4;
     overflow-x: hidden
@@ -33,7 +33,18 @@ body {
 .page-container {
     padding: 15px;
     background: var(--bg-color);
-    min-height: 100vh
+    min-height: 100vh;
+    position: relative;
+}
+
+.page-container::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    height: 1px;
+    background-color: var(--border);
 }
 
 .footer {
@@ -81,7 +92,7 @@ a {
     margin: -15px;
     padding: 20px 0;
     margin-bottom: 40px;
-    background: linear-gradient(to bottom, #000 0%, var(--bg-color) 100%)
+    background: linear-gradient(to bottom, var(--dark-bg) 0%, var(--bg-color) 100%);
 }
 
 .search-section::before {
@@ -137,6 +148,19 @@ a {
     white-space: nowrap
 }
 
+#searchBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+}
+
+#searchBtn svg {
+    width: 12px;
+    height: 12px;
+    flex-shrink: 0;
+}
+
 .btn:hover {
     opacity: .9
 }
@@ -177,11 +201,6 @@ a {
     cursor: not-allowed;
 }
 
-.btn--pagination:not(:disabled):hover {
-    background: var(--accent);
-    border-color: var(--accent);
-}
-
 .section-pagination {
     background: var(--dark-bg);
     border: 1px solid var(--border);
@@ -215,7 +234,7 @@ a {
 .page-info {
     color: var(--light-text);
     font-weight: 700;
-    font-size: 10pt;
+    font-size: 8pt;
     white-space: nowrap;
 }
 
@@ -334,6 +353,13 @@ a {
     display: flex;
     gap: 10px;
     z-index: 1;
+}
+
+.film-actions .btn svg {
+    width: 12px;
+    height: 12px;
+    margin-right: 5px;
+    vertical-align: -1px; /* Поднимаем иконку на 1px */
 }
 
 /* Messages */
