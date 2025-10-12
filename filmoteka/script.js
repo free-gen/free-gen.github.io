@@ -1,7 +1,15 @@
+// === Настройка тестового режима ===
+const USE_DEBUG_DATA = false; // <<< false — реальный API, true — фейковые карточки
+
 class Filmoteka {
     constructor() {
         // === Настройки ===
-        this.API_KEY = '5bd42146-7679-4016-b124-f278ca89ea1b';
+        this.API_KEYS = [
+            '5bd42146-7679-4016-b124-f278ca89ea1b', // основной
+            '8e4b3214-1071-45b5-9e67-e31e97a6b1ec'  // резервный
+        ];
+        this.currentApiKeyIndex = 0; // индекс активного ключа
+
         this.isSearchActive = false;
         this.RecomendationsCache = {};
         this.currentPage = 1;
@@ -19,9 +27,9 @@ class Filmoteka {
                 SIMILAR_SUBTITLE: ''
             },
             ERRORS: {
-                SEARCH: 'Ошибка при поиске фильмов',
-                RECOMMENDATIONS_LOAD: 'Ошибка при загрузке рекомендаций',
-                SIMILAR_LOAD: 'Ошибка при загрузке похожих фильмов',
+                SEARCH: 'Ошибка поиска.<br>Превышен суточный лимит API-запросов.',
+                RECOMMENDATIONS_LOAD: 'Ошибка при загрузке рекомендаций.<br>Превышен суточный лимит API-запросов.',
+                SIMILAR_LOAD: 'Ошибка при загрузке похожих фильмов.<br>Превышен суточный лимит API-запросов.',
                 NOT_FOUND: 'Ничего не найдено',
                 SIMILAR_NOT_FOUND: 'Похожие фильмы не найдены'
             },
@@ -31,9 +39,57 @@ class Filmoteka {
             }
         };
 
+        // === Тестовые данные ===
+        this.DEBUG_FILM = {
+            kinopoiskId: 123456,
+            nameRu: 'Тестовый режим',
+            year: 1984,
+            rating: 3.1,
+            posterUrlPreview: 'https://upload.wikimedia.org/wikipedia/fa/4/47/Parker_2013_Movie_Poster.png',
+            type: 'FILM'
+        };
+
         this.initializeElements();
         this.bindEvents();
         this.loadRecomendations();
+    }
+
+    // === Универсальный безопасный запрос с резервным API ===
+    async safeFetch(url) {
+        for (let attempt = 0; attempt < this.API_KEYS.length; attempt++) {
+            const apiKey = this.API_KEYS[this.currentApiKeyIndex];
+            try {
+                const response = await fetch(url, {
+                    headers: this.getHeaders(apiKey)
+                });
+
+                if (response.ok) return response;
+
+                // 403 / 429 — лимит или блокировка
+                if (response.status === 403 || response.status === 429) {
+                    console.warn(`API key ${apiKey} недоступен. Переключаемся на резервный...`);
+                    this.switchApiKey();
+                    continue;
+                }
+
+                throw new Error(`Ошибка запроса (${response.status})`);
+            } catch (err) {
+                console.error(`Ошибка с ключом ${apiKey}:`, err);
+                this.switchApiKey();
+            }
+        }
+        throw new Error('Все API-ключи недоступны.');
+    }
+
+    switchApiKey() {
+        this.currentApiKeyIndex = (this.currentApiKeyIndex + 1) % this.API_KEYS.length;
+    }
+
+    getHeaders(apiKey = this.API_KEYS[this.currentApiKeyIndex]) {
+        return {
+            'X-API-KEY': apiKey,
+            'Content-Type': 'application/json'
+        };
     }
 
     // === Инициализация DOM-элементов ===
@@ -55,7 +111,6 @@ class Filmoteka {
         this.searchInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') this.searchFilms();
         });
-
         this.backBtn.addEventListener('click', () => this.showRecommendations());
         this.prevPageBtn.addEventListener('click', () => this.previousPage());
         this.nextPageBtn.addEventListener('click', () => this.nextPage());
@@ -72,7 +127,6 @@ class Filmoteka {
         if (!query) return;
 
         this.searchInput.value = '';
-
         this.showNavigation(
             this.TEXTS.NAV.SEARCH_RESULTS_TITLE,
             this.TEXTS.NAV.SEARCH_RESULTS_SUBTITLE(query),
@@ -80,21 +134,44 @@ class Filmoteka {
         );
         this.showLoading();
 
+        if (USE_DEBUG_DATA) {
+            const DEBUGFilms = Array.from({ length: 20 }, (_, i) => ({
+                ...this.DEBUG_FILM,
+                kinopoiskId: 100000 + i,
+                nameRu: `Тестовый режим #${i + 1}`
+            }));
+            this.displayFilms(DEBUGFilms);
+            return;
+        }
+
         try {
             const url = `https://kinopoiskapiunofficial.tech/api/v2.1/films/search-by-keyword?keyword=${encodeURIComponent(query)}&page=1`;
-            const response = await fetch(url, { headers: this.getHeaders() });
-            if (!response.ok) throw new Error('Ошибка поиска');
-
+            const response = await this.safeFetch(url);
             const data = await response.json();
             const limitedFilms = data.films.slice(0, 10);
             this.displayFilms(limitedFilms, { showPosition: false });
-
-        } catch (error) {
+        } catch {
             this.showError(this.TEXTS.ERRORS.SEARCH);
         }
     }
 
     async loadRecomendations() {
+        if (USE_DEBUG_DATA) {
+            this.showNavigation(
+                this.TEXTS.NAV.RECOMMENDATIONS_TITLE,
+                this.TEXTS.NAV.RECOMMENDATIONS_SUBTITLE,
+                false
+            );
+            const DEBUGFilms = Array.from({ length: 20 }, (_, i) => ({
+                ...this.DEBUG_FILM,
+                kinopoiskId: 200000 + i,
+                nameRu: `Тестовый режим #${i + 1}`
+            }));
+            this.displayFilms(DEBUGFilms, { showPosition: true, startPosition: 1 });
+            this.updatePagination();
+            return;
+        }
+
         if (this.RecomendationsCache[this.currentPage]) {
             this.displayRecomendations(this.RecomendationsCache[this.currentPage]);
             this.updatePagination();
@@ -102,7 +179,6 @@ class Filmoteka {
         }
 
         this.showLoading();
-
         try {
             const movies = await this.fetchRecomendations(this.currentPage);
             this.RecomendationsCache[this.currentPage] = movies;
@@ -113,23 +189,16 @@ class Filmoteka {
                 this.TEXTS.NAV.RECOMMENDATIONS_SUBTITLE,
                 false
             );
-        } catch (error) {
-            console.error('Error loading recomendations:', error);
+        } catch {
             this.showError(this.TEXTS.ERRORS.RECOMMENDATIONS_LOAD);
         }
     }
 
     async fetchRecomendations(page = 1) {
-        try {
-            const url = `https://kinopoiskapiunofficial.tech/api/v2.2/films/top?type=TOP_250_BEST_FILMS&page=${page}`;
-            const response = await fetch(url, { headers: this.getHeaders() });
-            if (!response.ok) throw new Error('Ошибка загрузки рекомендаций');
-            const data = await response.json();
-            return data.films || [];
-        } catch (error) {
-            console.error('Error fetching recomendations:', error);
-            throw error;
-        }
+        const url = `https://kinopoiskapiunofficial.tech/api/v2.2/films/top?type=TOP_250_BEST_FILMS&page=${page}`;
+        const response = await this.safeFetch(url);
+        const data = await response.json();
+        return data.films || [];
     }
 
     displayRecomendations(movies) {
@@ -146,48 +215,45 @@ class Filmoteka {
         );
         this.showLoading();
 
+        if (USE_DEBUG_DATA) {
+            const DEBUGFilms = Array.from({ length: 20 }, (_, i) => ({
+                ...this.DEBUG_FILM,
+                kinopoiskId: 300000 + i,
+                nameRu: `Тестовый режим (похожие) #${i + 1}`
+            }));
+            this.displayFilms(DEBUGFilms);
+            return;
+        }
+
         try {
             const url = `https://kinopoiskapiunofficial.tech/api/v2.2/films/${filmId}/similars`;
-            const response = await fetch(url, { headers: this.getHeaders() });
-            if (!response.ok) throw new Error('Ошибка загрузки похожих фильмов');
-
+            const response = await this.safeFetch(url);
             const data = await response.json();
-
             if (data.items && data.items.length > 0) {
                 const detailedFilms = await this.loadFilmDetails(data.items.slice(0, 10));
                 this.displayFilms(detailedFilms);
             } else {
                 this.showError(this.TEXTS.ERRORS.SIMILAR_NOT_FOUND);
             }
-
-        } catch (error) {
-            console.error('Error loading similar films:', error);
+        } catch {
             this.showError(this.TEXTS.ERRORS.SIMILAR_LOAD);
         }
     }
 
     async loadFilmDetails(films) {
         const detailedFilms = [];
-
         for (const film of films) {
             try {
                 const filmId = film.filmId || film.kinopoiskId;
-                const detailUrl = `https://kinopoiskapiunofficial.tech/api/v2.2/films/${filmId}`;
-                const response = await fetch(detailUrl, { headers: this.getHeaders() });
-
-                if (response.ok) {
-                    const filmDetails = await response.json();
-                    detailedFilms.push(filmDetails);
-                } else {
-                    detailedFilms.push(film);
-                }
-            } catch (error) {
-                console.error('Error fetching film details:', error);
+                const url = `https://kinopoiskapiunofficial.tech/api/v2.2/films/${filmId}`;
+                const response = await this.safeFetch(url);
+                const filmDetails = await response.json();
+                detailedFilms.push(filmDetails);
+            } catch {
                 detailedFilms.push(film);
             }
             await new Promise(resolve => setTimeout(resolve, 100));
         }
-
         return detailedFilms;
     }
 
@@ -197,16 +263,16 @@ class Filmoteka {
             this.showError(this.TEXTS.ERRORS.NOT_FOUND);
             return;
         }
-
+        
         this.cardsContainer.innerHTML = '';
-
+        
         films.forEach((film, index) => {
             const position = options.startPosition ? (options.startPosition + index) : (index + 1);
-            const filmHTML = this.createFilmItem(film, {
+            const filmElement = this.createFilmItem(film, {
                 showPosition: options.showPosition || false,
                 position: position
             });
-            this.cardsContainer.insertAdjacentHTML('beforeend', filmHTML);
+            this.cardsContainer.appendChild(filmElement);
         });
     }
 
@@ -215,48 +281,65 @@ class Filmoteka {
         const title = film.nameRu || film.nameEn || 'Без названия';
         const year = film.year || 'Неизвестно';
         const poster = film.posterUrlPreview || film.posterUrl || '';
-
         const filmType = film.type || film.filmType || 'FILM';
         const isSeries = ['TV_SERIES', 'MINI_SERIES', 'TV_SHOW'].includes(filmType);
         const typeText = isSeries ? 'Сериал' : 'Фильм';
-
         const rating = this.formatRating(film.rating || film.ratingKinopoisk || film.ratingImdb);
-        const ratingColor = rating ? this.getRatingColor(rating) : '';
+        
+        // Клонируем шаблон
+        const template = document.getElementById('filmCardTemplate');
+        const card = template.content.cloneNode(true);
+        
+        // Находим элементы
+        const posterImg = card.querySelector('.film-card__poster');
+        const metaItem = card.querySelector('.film-card__meta-item');
+        const ratingEl = card.querySelector('.film-card__rating');
+        const ratingValue = card.querySelector('.film-card__rating-value');
+        const titleEl = card.querySelector('.film-card__title');
+        const yearEl = card.querySelector('.film-card__year');
+        const similarBtn = card.querySelector('.film-card__similar-btn');
+        const watchBtn = card.querySelector('.film-card__watch-btn');
+        
+        // Заполняем данными
+        if (poster) {
+            posterImg.src = poster;
+            posterImg.alt = title;
+            posterImg.onerror = () => { posterImg.style.display = 'none'; };
+        } else {
+            posterImg.style.display = 'none';
+        }
+        
+        // Позиция и тип
         const positionDisplay = options.showPosition ? `#${options.position} ` : '';
-
-        return `
-            <div class="film-card">
-                <img src="${poster}" alt="${title}" class="film-card__poster" onerror="this.style.display='none'">
-                <div class="film-card__content">
-                    <div class="film-card__header">
-                        <div class="film-card__meta">
-                            <span class="film-card__meta-item">${positionDisplay}${typeText}</span>
-                            ${rating ? `<span class="film-card__rating">Рейтинг: <span class="film-card__rating-value film-card__rating--${ratingColor}">${rating}</span></span>` : ''}
-                        </div>
-                        <div class="film-card__title">${title}</div>
-                        ${year && year !== 'Неизвестно' ? `<div class="film-card__year">${year} год</div>` : ''}
-                    </div>
-                    <div class="film-card__actions">
-                        <button class="btn btn--secondary" onclick="filmoteka.showSimilarFilms(${filmId}, '${title.replace(/'/g, "\\'")}')">
-                            ${this.TEXTS.BUTTONS.SIMILAR}
-                        </button>
-                        <button class="btn btn--primary" onclick="filmoteka.watchFilm(${filmId})">
-                            <svg width="12" height="12" viewBox="0 0 448 512" fill="currentColor">
-                                <path d="M91.2 36.9c-12.4-6.8-27.4-6.5-39.6 .7S32 57.9 32 72v368c0 14.1 7.5 27.2 19.6 34.4s27.2 7.5 39.6 .7l336-184c12.8-7 20.8-20.5 20.8-35.1s-8-28.1-20.8-35.1l-336-184z"/>
-                            </svg>
-                            ${this.TEXTS.BUTTONS.WATCH}
-                        </button>
-                    </div>
-                </div>
-            </div>
-        `;
+        metaItem.textContent = positionDisplay + typeText;
+        
+        // Рейтинг
+        if (rating) {
+            ratingEl.classList.remove('hidden');
+            ratingValue.textContent = rating;
+            ratingValue.className = 'film-card__rating-value'; // сбрасываем классы
+            ratingValue.classList.add(`film-card__rating--${this.getRatingColor(rating)}`);
+        }
+        
+        // Заголовок и год
+        titleEl.textContent = title;
+        
+        if (year && year !== 'Неизвестно') {
+            yearEl.classList.remove('hidden');
+            yearEl.textContent = `${year} год`;
+        }
+        
+        // Обработчики событий
+        similarBtn.onclick = () => this.showSimilarFilms(filmId, title.replace(/'/g, "\\'"));
+        watchBtn.onclick = () => this.watchFilm(filmId);
+        
+        return card;
     }
 
     // === Навигация / UI ===
     showNavigation(title, subtitle, showBackButton = false) {
         this.navigationTitle.innerHTML = title;
         this.navigationSubtitle.textContent = subtitle;
-
         if (showBackButton) {
             this.backBtn.classList.remove('hidden');
             this.prevPageBtn.classList.add('hidden');
@@ -309,13 +392,6 @@ class Filmoteka {
     }
 
     // === Вспомогательные методы ===
-    getHeaders() {
-        return {
-            'X-API-KEY': this.API_KEY,
-            'Content-Type': 'application/json'
-        };
-    }
-
     getRatingColor(rating) {
         if (rating >= 0 && rating < 3) return 'low';
         if (rating >= 3 && rating < 6) return 'med';
@@ -344,6 +420,10 @@ class Filmoteka {
     }
 
     watchFilm(filmId) {
+        if (USE_DEBUG_DATA) {
+            alert('Тестовый режим: переход к фильму отключён.');
+            return;
+        }
         window.location.href = `https://sspoisk.ru/film/${filmId}/`;
     }
 }
