@@ -23,7 +23,7 @@ class Filmoteka {
                 RECOMMENDATIONS_SUBTITLE: 'Лучшие фильмы и сериалы всех времен по версии пользователей КиноПоиска',
                 SEARCH_RESULTS_TITLE: 'Результаты поиска',
                 SEARCH_RESULTS_SUBTITLE: (query) => `По запросу: "${query}"`,
-                SIMILAR_TITLE: (filmTitle) => `${filmTitle}<br> <span class="similar-title-icon"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5"/></svg></span> похожие фильмы`,
+                SIMILAR_TITLE: (filmTitle) => `${filmTitle}<br> <span class="similar-title-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5"/></svg></span> похожие фильмы`,
                 SIMILAR_SUBTITLE: ''
             },
             ERRORS: {
@@ -436,6 +436,4 @@ if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/filmoteka/sw.js')
         .then(() => console.log('SW registered'))
         .catch(err => console.log('SW registration failed', err));
-
 }
-
