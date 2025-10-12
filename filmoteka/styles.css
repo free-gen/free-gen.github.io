@@ -148,12 +148,6 @@ body {
     grid-template-columns: 1fr;
 }
 
-@media (min-width: 750px) {
-    .cards__container {
-        grid-template-columns: 1fr 1fr;
-    }
-}
-
 .footer {
     padding: 30px 15px 60px;
     background-color: var(--dark-bg);
@@ -401,6 +395,10 @@ body {
     animation: dash 1.5s ease-in-out infinite;
 }
 
+.hidden {
+    display: none !important;
+}
+
 @keyframes rotate {
     100% {
         transform: rotate(360deg);
@@ -422,8 +420,10 @@ body {
     }
 }
 
-.hidden {
-    display: none !important;
+@media (min-width: 750px) {
+    .cards__container {
+        grid-template-columns: 1fr 1fr;
+    }
 }
 
 @media (max-width: 749px) {
