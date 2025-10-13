@@ -204,6 +204,7 @@ class Filmoteka {
                 startPosition: (this.currentPage - 1) * this.filmsPerPage + 1
             });
             this.updatePagination();
+            this.showPagination(true);
         } catch {
             this.showError(this.TEXTS.ERRORS.RECOMMENDATIONS_LOAD);
         }
@@ -259,7 +260,7 @@ class Filmoteka {
         films.forEach((f, i) => {
             const card = this.createFilmItem(f, {
                 showPosition: opt.showPosition,
-                position: (opt.startPosition || 0) + i + 1
+                position: (opt.startPosition || 0) + i
             });
             this.cardsContainer.appendChild(card);
         });
@@ -332,16 +333,27 @@ class Filmoteka {
         
         if (back) {
             this.backBtn.classList.remove('hidden');
-            this.prevPageBtn.classList.add('hidden');
-            this.nextPageBtn.classList.add('hidden');
+            this.showPagination(false);
         } else {
             this.backBtn.classList.add('hidden');
+            this.showPagination(true);
+        }
+    }
+
+    showPagination(show) {
+        if (show) {
             this.prevPageBtn.classList.remove('hidden');
             this.nextPageBtn.classList.remove('hidden');
+            this.paginationInfo.classList.remove('hidden');
+        } else {
+            this.prevPageBtn.classList.add('hidden');
+            this.nextPageBtn.classList.add('hidden');
+            this.paginationInfo.classList.add('hidden');
         }
     }
 
     showRecommendations() {
+        this.currentPage = 1;
         this.loadRecomendations();
     }
 
