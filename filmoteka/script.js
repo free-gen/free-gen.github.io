@@ -82,12 +82,6 @@ class Filmoteka {
         this.footerTitle = document.getElementById('footerTitle');
         this.footerText = document.getElementById('footerText');
         this.footerCredit = document.getElementById('footerCredit');
-        
-        // Элементы модального окна плеера
-        this.playerModal = document.getElementById('playerModal');
-        this.playerTitle = document.getElementById('playerTitle');
-        this.playerIframe = document.getElementById('playerIframe');
-        this.closePlayer = document.getElementById('closePlayer');
     }
 
     applyTexts() {
@@ -110,21 +104,6 @@ class Filmoteka {
         this.backBtn.addEventListener('click', () => this.showRecommendations());
         this.prevPageBtn.addEventListener('click', () => this.previousPage());
         this.nextPageBtn.addEventListener('click', () => this.nextPage());
-        
-        // События для модального окна плеера
-        this.closePlayer.addEventListener('click', () => this.closePlayerModal());
-        this.playerModal.addEventListener('click', (e) => {
-            if (e.target === this.playerModal) {
-                this.closePlayerModal();
-            }
-        });
-        
-        // Закрытие по ESC
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && !this.playerModal.classList.contains('hidden')) {
-                this.closePlayerModal();
-            }
-        });
     }
 
     async safeFetch(url) {
@@ -178,6 +157,7 @@ class Filmoteka {
         const q = this.searchInput.value.trim();
         if (!q) return;
         this.searchInput.value = '';
+        this.scrollToTop();
         this.showNavigation(
             this.TEXTS.NAV.SEARCH_RESULTS_TITLE,
             this.TEXTS.NAV.SEARCH_RESULTS_SUBTITLE(q),
@@ -201,6 +181,7 @@ class Filmoteka {
     }
 
     async loadRecomendations() {
+        this.scrollToTop();
         this.showNavigation(
             this.TEXTS.NAV.RECOMMENDATIONS_TITLE,
             this.TEXTS.NAV.RECOMMENDATIONS_SUBTITLE
@@ -232,6 +213,7 @@ class Filmoteka {
     }
 
     async showSimilarFilms(id, title) {
+        this.scrollToTop();
         this.showNavigation(
             this.TEXTS.NAV.SIMILAR_TITLE(title),
             this.TEXTS.NAV.SIMILAR_SUBTITLE,
@@ -336,7 +318,7 @@ class Filmoteka {
         watch.insertAdjacentText('beforeend', this.TEXTS.BUTTONS.WATCH);
         
         sim.onclick = () => this.showSimilarFilms(id, title);
-        watch.onclick = () => this.watchFilm(id, title);
+        watch.onclick = () => this.watchFilm(id, title, year);
         
         return tpl;
     }
@@ -375,6 +357,8 @@ class Filmoteka {
 
     showRecommendations() {
         this.currentPage = 1;
+        this.scrollToTop();
+        this.hideFilmFrame();
         this.loadRecomendations();
     }
 
@@ -417,31 +401,55 @@ class Filmoteka {
         return isNaN(n) ? null : n.toFixed(1);
     }
 
-    // Методы для работы с плеером
-    watchFilm(id, title = '') {
+    watchFilm(id, title, year) {
         if (USE_DEBUG_DATA) {
             return alert('Тестовый режим');
         }
+
+        this.scrollToTop();
         
-        this.openPlayerModal(id, title);
+        // Прячем карточки фильмов
+        this.cardsContainer.classList.add('hidden');
+        
+        // Показываем iframe
+        this.showFilmFrame(id);
+        
+        // Обновляем навигацию как в рекомендациях
+        this.navigationTitle.textContent = title || 'Фильм';
+        this.navigationSubtitle.textContent = year ? `${year} год` : '';
+        
+        this.backBtn.classList.remove('hidden');
+        this.showPagination(false);
     }
 
-    openPlayerModal(id, title) {
-        this.playerTitle.textContent = title || 'Просмотр фильма';
-        this.playerIframe.src = `https://ddbb.lol/?id=${id}&n=0`;
+    showFilmFrame(id) {
+        if (!this.filmFrameContainer) {
+            this.filmFrameContainer = document.createElement('div');
+            this.filmFrameContainer.className = 'film-frame-container';
+            this.filmFrame = document.createElement('iframe');
+            this.filmFrame.className = 'film-frame';
+            this.filmFrame.setAttribute('allowfullscreen', 'true');
+            this.filmFrameContainer.appendChild(this.filmFrame);
+            this.cardsContainer.parentNode.insertBefore(this.filmFrameContainer, this.cardsContainer.nextSibling);
+        }
         
-        // Блокируем прокрутку body
-        document.body.style.overflow = 'hidden';
-        
-        this.playerModal.classList.remove('hidden');
+        this.filmFrame.src = `https://ddbb.lol/?id=${id}&n=0`;
+        this.filmFrameContainer.classList.remove('hidden');
     }
 
-    closePlayerModal() {
-        this.playerModal.classList.add('hidden');
-        this.playerIframe.src = '';
-        
-        // Восстанавливаем прокрутку body
-        document.body.style.overflow = '';
+    hideFilmFrame() {
+        if (this.filmFrameContainer) {
+            this.filmFrameContainer.classList.add('hidden');
+            this.filmFrame.src = '';
+        }
+        this.cardsContainer.classList.remove('hidden');
+    }
+
+    scrollToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
     }
 }
 

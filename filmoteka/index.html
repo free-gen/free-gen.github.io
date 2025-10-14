@@ -74,6 +74,10 @@
       <div class="cards__container" id="cardsContainer"></div>
     </section>
 
+    <div class="film-frame-container hidden">
+        <iframe class="film-frame" id="filmFrame" allowfullscreen></iframe>
+    </div>
+
     <div class="divider"></div>
 
     <footer class="footer">
@@ -108,23 +112,6 @@
       </div>
     </div>
   </template>
-
-  <div id="playerModal" class="player-modal hidden">
-      <div class="player-modal__overlay"></div>
-      <div class="player-modal__container">
-          <div class="player-modal__header">
-              <h3 id="playerTitle" class="player-modal__title"></h3>
-              <button id="closePlayer" class="player-modal__close">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                  </svg>
-              </button>
-          </div>
-          <div class="player-modal__content">
-              <iframe id="playerIframe" class="player-modal__iframe" frameborder="0" allowfullscreen></iframe>
-          </div>
-      </div>
-  </div>
 
   <script src="script.js"></script>
 </body>
