@@ -82,6 +82,12 @@ class Filmoteka {
         this.footerTitle = document.getElementById('footerTitle');
         this.footerText = document.getElementById('footerText');
         this.footerCredit = document.getElementById('footerCredit');
+        
+        // Элементы модального окна плеера
+        this.playerModal = document.getElementById('playerModal');
+        this.playerTitle = document.getElementById('playerTitle');
+        this.playerIframe = document.getElementById('playerIframe');
+        this.closePlayer = document.getElementById('closePlayer');
     }
 
     applyTexts() {
@@ -104,6 +110,21 @@ class Filmoteka {
         this.backBtn.addEventListener('click', () => this.showRecommendations());
         this.prevPageBtn.addEventListener('click', () => this.previousPage());
         this.nextPageBtn.addEventListener('click', () => this.nextPage());
+        
+        // События для модального окна плеера
+        this.closePlayer.addEventListener('click', () => this.closePlayerModal());
+        this.playerModal.addEventListener('click', (e) => {
+            if (e.target === this.playerModal) {
+                this.closePlayerModal();
+            }
+        });
+        
+        // Закрытие по ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !this.playerModal.classList.contains('hidden')) {
+                this.closePlayerModal();
+            }
+        });
     }
 
     async safeFetch(url) {
@@ -315,7 +336,7 @@ class Filmoteka {
         watch.insertAdjacentText('beforeend', this.TEXTS.BUTTONS.WATCH);
         
         sim.onclick = () => this.showSimilarFilms(id, title);
-        watch.onclick = () => this.watchFilm(id);
+        watch.onclick = () => this.watchFilm(id, title);
         
         return tpl;
     }
@@ -396,11 +417,31 @@ class Filmoteka {
         return isNaN(n) ? null : n.toFixed(1);
     }
 
-    watchFilm(id) {
+    // Методы для работы с плеером
+    watchFilm(id, title = '') {
         if (USE_DEBUG_DATA) {
             return alert('Тестовый режим');
         }
-        window.location.href = `https://sspoisk.ru/film/${id}/`;
+        
+        this.openPlayerModal(id, title);
+    }
+
+    openPlayerModal(id, title) {
+        this.playerTitle.textContent = title || 'Просмотр фильма';
+        this.playerIframe.src = `https://ddbb.lol/?id=${id}&n=0`;
+        
+        // Блокируем прокрутку body
+        document.body.style.overflow = 'hidden';
+        
+        this.playerModal.classList.remove('hidden');
+    }
+
+    closePlayerModal() {
+        this.playerModal.classList.add('hidden');
+        this.playerIframe.src = '';
+        
+        // Восстанавливаем прокрутку body
+        document.body.style.overflow = '';
     }
 }
 
