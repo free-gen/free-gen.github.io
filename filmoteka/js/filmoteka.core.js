@@ -6,8 +6,8 @@ class Filmoteka {
     constructor() {
         this.api = new FilmotekaAPI();
         this.ui = new FilmotekaUI({
-            onSimilarClick: (id, title) => this.showSimilarFilms(id, title),
-            onWatchClick: (id, title, year) => this.watchFilm(id, title, year)
+            onSimilarClick: (id, title) => this.showSimilarMovies(id, title),
+            onWatchClick: (id, title, year) => this.watchMovie(id, title, year)
         });
         
         this.currentPage = 1;
@@ -21,8 +21,8 @@ class Filmoteka {
 
     bindEventHandlers() {
         const handlers = {
-            '#searchBtn': () => this.searchFilms(),
-            '#searchInput': (e) => e.key === 'Enter' && this.searchFilms(),
+            '#searchBtn': () => this.searchMovies(),
+            '#searchInput': (e) => e.key === 'Enter' && this.searchMovies(),
             '#backBtn': () => this.showRecommendations(),
             '#prevPage': () => this.previousPage(),
             '#nextPage': () => this.nextPage(),
@@ -38,10 +38,10 @@ class Filmoteka {
     }
 
     resetViewState(options = {}) {
-        const { hideFilmFrame = true, scrollToTop = true } = options;
+        const { hideMovieFrame = true, scrollToTop = true } = options;
         
-        if (hideFilmFrame && this.isWatching) {
-            this.ui.hideFilmFrame();
+        if (hideMovieFrame && this.isWatching) {
+            this.ui.hideMovieFrame();
         }
         
         if (scrollToTop) {
@@ -120,7 +120,7 @@ class Filmoteka {
             return;
         }
 
-        const historyFilms = this.history.map(item => ({
+        const historyMovies = this.history.map(item => ({
             kinopoiskId: item.id,
             nameRu: item.title,
             year: item.year,
@@ -130,10 +130,10 @@ class Filmoteka {
             type: item.type || 'FILM'
         }));
 
-        this.ui.displayFilms(historyFilms);
+        this.ui.displayMovies(historyMovies);
     }
 
-    async searchFilms() {
+    async searchMovies() {
         this.resetViewState();
         
         const query = this.ui.searchInput.value.trim();
@@ -150,8 +150,8 @@ class Filmoteka {
         this.ui.showLoading();
         
         try {
-            const films = await this.api.searchFilms(query);
-            this.ui.displayFilms(films);
+            const films = await this.api.searchMovies(query);
+            this.ui.displayMovies(films);
         } catch (error) {
             this.ui.showError(TEXTS.ERRORS.SEARCH);
         }
@@ -167,8 +167,8 @@ class Filmoteka {
         this.ui.showHistoryButton(true);
         
         if (USE_DEBUG_DATA) {
-            const films = this.api.getDebugFilms('Рекомендации', 20, 200000);
-            this.ui.displayFilms(films, {
+            const films = this.api.getDebugMovies('Рекомендации', 20, 200000);
+            this.ui.displayMovies(films, {
                 showPosition: true,
                 startPosition: (this.currentPage - 1) * CONFIG.PAGINATION.FILMS_PER_PAGE
             });
@@ -178,8 +178,8 @@ class Filmoteka {
         this.ui.showLoading();
         
         try {
-            const films = await this.api.getTopFilms(this.currentPage);
-            this.ui.displayFilms(films, {
+            const films = await this.api.getTopRatedMovies(this.currentPage);
+            this.ui.displayMovies(films, {
                 showPosition: true,
                 startPosition: (this.currentPage - 1) * CONFIG.PAGINATION.FILMS_PER_PAGE
             });
@@ -190,7 +190,7 @@ class Filmoteka {
         }
     }
 
-    async showSimilarFilms(filmId, filmTitle) {
+    async showSimilarMovies(filmId, filmTitle) {
         this.resetViewState();
         
         this.ui.showNavigation(
@@ -203,19 +203,19 @@ class Filmoteka {
         this.ui.showLoading();
         
         try {
-            const similarFilms = await this.api.getSimilarFilms(filmId);
+            const similarMovies = await this.api.getSimilarMovies(filmId);
             
-            if (similarFilms.length) {
+            if (similarMovies.length) {
                 const filmsWithDetails = await Promise.all(
-                    similarFilms.slice(0, CONFIG.SIMILAR.MAX_FILMS).map(async film => {
+                    similarMovies.slice(0, CONFIG.SIMILAR.MAX_FILMS).map(async film => {
                         try {
-                            return await this.api.getFilmDetails(film.filmId);
+                            return await this.api.getMovieDetails(film.filmId);
                         } catch {
                             return film;
                         }
                     })
                 );
-                this.ui.displayFilms(filmsWithDetails);
+                this.ui.displayMovies(filmsWithDetails);
             } else {
                 this.ui.showError(TEXTS.ERRORS.SIMILAR_NOT_FOUND);
             }
@@ -224,9 +224,9 @@ class Filmoteka {
         }
     }
 
-    watchFilm(filmId, title, year) {
+    watchMovie(filmId, title, year) {
         if (!USE_DEBUG_DATA) {
-            this.api.getFilmDetails(filmId).then(filmDetails => {
+            this.api.getMovieDetails(filmId).then(filmDetails => {
                 this.addToHistory(
                     filmId, 
                     title, 
@@ -249,7 +249,7 @@ class Filmoteka {
 
         this.isWatching = true;
         this.ui.scrollToTop();
-        this.ui.showFilmFrame(filmId);
+        this.ui.showMovieFrame(filmId);
         
         this.ui.navigationTitle.textContent = title || 'Фильм';
         this.ui.navigationSubtitle.textContent = year ? `${year} год` : '';

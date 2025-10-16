@@ -113,7 +113,7 @@ class FilmotekaUI {
         if (this.footerCredit) this.footerCredit.innerHTML = t.FOOTER_CREDIT;
     }
 
-    displayFilms(films, options = {}) {
+    displayMovies(films, options = {}) {
         if (!this.cardsContainer) return;
         
         this.cardsContainer.innerHTML = '';
@@ -123,7 +123,7 @@ class FilmotekaUI {
         }
 
         const filmElements = films.map((film, index) => 
-            this.createFilmItem(film, {
+            this.createMovieItem(film, {
                 showPosition: options.showPosition,
                 position: (options.startPosition || 0) + index + 1
             })
@@ -132,7 +132,7 @@ class FilmotekaUI {
         this.cardsContainer.append(...filmElements);
     }
 
-    createFilmItem(film, options = {}) {
+    createMovieItem(film, options = {}) {
         const id = film.kinopoiskId || film.filmId;
         const title = film.nameRu || film.nameEn || 'Без названия';
         const year = film.year || 'Неизвестно';
@@ -143,14 +143,14 @@ class FilmotekaUI {
         const rating = this.formatRating(film.rating || film.ratingKinopoisk || film.ratingImdb);
 
         const template = document.getElementById('filmCardTemplate').content.cloneNode(true);
-        const img = template.querySelector('.film-card__poster');
-        const meta = template.querySelector('.film-card__meta-item');
-        const ratingEl = template.querySelector('.film-card__rating');
-        const ratingValue = template.querySelector('.film-card__rating-value');
-        const titleEl = template.querySelector('.film-card__title');
-        const yearEl = template.querySelector('.film-card__year');
-        const similarBtn = template.querySelector('.film-card__similar-btn');
-        const watchBtn = template.querySelector('.film-card__watch-btn');
+        const img = template.querySelector('.movie-card__poster');
+        const meta = template.querySelector('.movie-card__meta-item');
+        const ratingEl = template.querySelector('.movie-card__rating');
+        const ratingValue = template.querySelector('.movie-card__rating-value');
+        const titleEl = template.querySelector('.movie-card__title');
+        const yearEl = template.querySelector('.movie-card__year');
+        const similarBtn = template.querySelector('.movie-card__similar-btn');
+        const watchBtn = template.querySelector('.movie-card__watch-btn');
 
         // Установка постера
         if (img) {
@@ -174,8 +174,8 @@ class FilmotekaUI {
             this.setElementVisibility(ratingEl, true);
             ratingEl.textContent = `${TEXTS.RATING_LABEL} `;
             ratingValue.textContent = rating;
-            ratingValue.className = 'film-card__rating-value';
-            ratingValue.classList.add(`film-card__rating--${this.getRatingColor(rating)}`);
+            ratingValue.className = 'movie-card__rating-value';
+            ratingValue.classList.add(`movie-card__rating--${this.getRatingColor(rating)}`);
             ratingEl.appendChild(ratingValue);
         }
 
@@ -260,12 +260,12 @@ class FilmotekaUI {
         this.progressFill.style.width = `${progress}%`;
     }
 
-    showFilmFrame(filmId) {
+    showMovieFrame(filmId) {
         if (!this.cardsContainer) return;
 
         if (!this.filmFrameContainer) {
-            this.filmFrameContainer = this.createElement('div', 'film-frame-container');
-            this.filmFrame = this.createElement('iframe', 'film-frame');
+            this.filmFrameContainer = this.createElement('div', 'movie-frame-container');
+            this.filmFrame = this.createElement('iframe', 'movie-frame');
             this.filmFrame.setAttribute('allowfullscreen', 'true');
             this.filmFrameContainer.appendChild(this.filmFrame);
             this.cardsContainer.parentNode.insertBefore(this.filmFrameContainer, this.cardsContainer.nextSibling);
@@ -278,7 +278,7 @@ class FilmotekaUI {
         this.setElementVisibility(this.cardsContainer, false);
     }
 
-    hideFilmFrame() {
+    hideMovieFrame() {
         this.setElementVisibility(this.filmFrameContainer, false);
         this.setElementVisibility(this.cardsContainer, true);
         if (this.filmFrame) this.filmFrame.src = '';

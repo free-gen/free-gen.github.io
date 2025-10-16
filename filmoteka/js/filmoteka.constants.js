@@ -81,7 +81,7 @@ const DEBUG_BASE = {
     nameRu: 'Тестовый режим',
     year: 1984,
     rating: 3.1,
-    posterUrlPreview: 'https://upload.wikimedia.org/wikipedia/fa/4/47/Parker_2013_Movie_Poster.png',
+    posterUrlPreview: 'https://kinopoiskapiunofficial.tech/images/posters/kp_small/41520.jpg',
     type: 'FILM'
 };
 

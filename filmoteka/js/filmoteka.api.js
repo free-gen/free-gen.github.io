@@ -53,7 +53,7 @@ class FilmotekaAPI {
         return this.safeFetch(url);
     }
 
-    getDebugFilms(prefix, count, startId) {
+    getDebugMovies(prefix, count, startId) {
         return Array.from({ length: count }, (_, i) => ({
             ...DEBUG_BASE,
             kinopoiskId: startId + i,
@@ -61,9 +61,9 @@ class FilmotekaAPI {
         }));
     }
 
-    async searchFilms(query) {
+    async searchMovies(query) {
         if (USE_DEBUG_DATA) {
-            return this.getDebugFilms('Поиск', 20, 100000);
+            return this.getDebugMovies('Поиск', 20, 100000);
         }
 
         try {
@@ -78,9 +78,9 @@ class FilmotekaAPI {
         }
     }
 
-    async getTopFilms(page = 1) {
+    async getTopRatedMovies(page = 1) {
         if (USE_DEBUG_DATA) {
-            return this.getDebugFilms('Рекомендации', 20, 200000);
+            return this.getDebugMovies('Рекомендации', 20, 200000);
         }
 
         try {
@@ -95,9 +95,9 @@ class FilmotekaAPI {
         }
     }
 
-    async getSimilarFilms(filmId) {
+    async getSimilarMovies(filmId) {
         if (USE_DEBUG_DATA) {
-            return this.getDebugFilms('Похожие', 20, 300000);
+            return this.getDebugMovies('Похожие', 20, 300000);
         }
 
         try {
@@ -109,7 +109,7 @@ class FilmotekaAPI {
         }
     }
 
-    async getFilmDetails(filmId) {
+    async getMovieDetails(filmId) {
         if (USE_DEBUG_DATA) {
             return {
                 ...DEBUG_BASE,
