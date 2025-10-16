@@ -170,7 +170,7 @@ class Filmoteka {
             const films = this.api.getDebugFilms('Рекомендации', 20, 200000);
             this.ui.displayFilms(films, {
                 showPosition: true,
-                startPosition: (this.currentPage - 1) * CONFIG.PAGINATION.FILMS_PER_PAGE + 1
+                startPosition: (this.currentPage - 1) * CONFIG.PAGINATION.FILMS_PER_PAGE
             });
             return;
         }
@@ -181,7 +181,7 @@ class Filmoteka {
             const films = await this.api.getTopFilms(this.currentPage);
             this.ui.displayFilms(films, {
                 showPosition: true,
-                startPosition: (this.currentPage - 1) * CONFIG.PAGINATION.FILMS_PER_PAGE + 1
+                startPosition: (this.currentPage - 1) * CONFIG.PAGINATION.FILMS_PER_PAGE
             });
             this.ui.updatePagination(this.currentPage);
             this.ui.showPagination(true);
@@ -287,5 +287,6 @@ const filmoteka = new Filmoteka();
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/filmoteka/service-worker.js').catch(() => {});
 }
+
 
 export default Filmoteka;
