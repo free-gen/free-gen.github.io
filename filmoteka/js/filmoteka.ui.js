@@ -159,7 +159,8 @@ class FilmotekaUI {
 
         // Мета-информация
         if (meta) {
-            meta.textContent = (options.showPosition ? `#${options.position} ` : '') + type;
+            // meta.textContent = (options.showPosition ? `#${options.position} ` : '') + type;
+            meta.textContent = type;
         }
 
         // Рейтинг
@@ -273,5 +274,6 @@ class FilmotekaUI {
         });
     }
 }
+
 
 export default FilmotekaUI;
