@@ -183,7 +183,7 @@ class Filmoteka {
                 showPosition: true,
                 startPosition: (this.currentPage - 1) * CONFIG.PAGINATION.FILMS_PER_PAGE
             });
-            this.ui.updatePagination(this.currentPage);
+            this.ui.updateProgressBar(this.currentPage);
             this.ui.showPagination(true);
         } catch (error) {
             this.ui.showError(TEXTS.ERRORS.RECOMMENDATIONS_LOAD);
@@ -287,6 +287,5 @@ const filmoteka = new Filmoteka();
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/filmoteka/service-worker.js').catch(() => {});
 }
-
 
 export default Filmoteka;

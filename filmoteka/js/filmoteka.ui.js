@@ -1,4 +1,4 @@
-import { TEXTS, USE_DEBUG_DATA, CONFIG } from './filmoteka.constants.js';
+import { TEXTS, USE_DEBUG_DATA, CONFIG, IFRAME_SRC } from './filmoteka.constants.js';
 
 class FilmotekaUI {
     constructor(callbacks = {}) {
@@ -27,11 +27,17 @@ class FilmotekaUI {
         this.footerText = this.queryElement('#footerText');
         this.footerCredit = this.queryElement('#footerCredit');
 
-        this.currentPageSpan = this.createElement('span', '', '');
-        this.currentPageSpan.id = 'currentPage';
-        
+        this.progressBar = this.createElement('div', 'pagination-progress');
+        this.progressBar.innerHTML = `
+            <div class="pagination-progress__track">
+                <div class="pagination-progress__fill" id="progressFill"></div>
+            </div>
+        `;
+
         if (this.paginationInfo) {
-            this.paginationInfo.append(TEXTS.APP.PAGINATION_INFO + ' ', this.currentPageSpan);
+            this.paginationInfo.innerHTML = '';
+            this.paginationInfo.appendChild(this.progressBar);
+            this.progressFill = this.paginationInfo.querySelector('#progressFill');
         }
     }
 
@@ -245,6 +251,15 @@ class FilmotekaUI {
         if (this.currentPageSpan) this.currentPageSpan.textContent = currentPage;
     }
 
+    updateProgressBar(currentPage) {
+        if (!this.progressFill) return;
+        
+        const totalPages = Math.ceil(CONFIG.PAGINATION.TOTAL_FILMS / CONFIG.PAGINATION.FILMS_PER_PAGE);
+        const progress = (currentPage / totalPages) * 100;
+        
+        this.progressFill.style.width = `${progress}%`;
+    }
+
     showFilmFrame(filmId) {
         if (!this.cardsContainer) return;
 
@@ -256,7 +271,9 @@ class FilmotekaUI {
             this.cardsContainer.parentNode.insertBefore(this.filmFrameContainer, this.cardsContainer.nextSibling);
         }
 
-        this.filmFrame.src = `https://ddbb.lol/?id=${filmId}&n=0`;
+        // console.log('filmId:', filmId, 'type:', typeof filmId);
+        this.filmFrame.src = IFRAME_SRC(filmId);
+        // console.log('Final URL:', this.filmFrame.src);
         this.setElementVisibility(this.filmFrameContainer, true);
         this.setElementVisibility(this.cardsContainer, false);
     }
@@ -274,6 +291,5 @@ class FilmotekaUI {
         });
     }
 }
-
 
 export default FilmotekaUI;

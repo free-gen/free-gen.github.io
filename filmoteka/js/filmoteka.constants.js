@@ -1,5 +1,7 @@
 const USE_DEBUG_DATA = false;
 
+const IFRAME_SRC = (filmId) => `https://ddbb.lol/?id=${filmId}&n=0`;
+
 const API_KEYS = [
     '5bd42146-7679-4016-b124-f278ca89ea1b',
     '16ce9175-1b36-42a3-be22-9397bb20bdd0',
@@ -39,7 +41,7 @@ const TEXTS = {
         BACK_BTN: 'На главную',
         HISTORY_BTN: 'История',
         HISTORY_BTN_CLEAR: 'Очистить',
-        PAGINATION_INFO: 'Страница',
+        PAGINATION_INFO: 'progress-bar',
         FOOTER_TITLE: 'Фильмотека 2025 ©',
         FOOTER_TEXT: 'Фильмотека — веб-приложение для удобного просмотра видеоконтента. Поиск, рекомендации и подбор похожих фильмов реализованы через API КиноПоиска. Для просмотра используется агрегатор видеосервисов.',
         FOOTER_CREDIT: 'Assembled by <a href="https://free-gen.github.io" target="_blank" class="footer__link">FREEGEN</a>'
@@ -83,4 +85,4 @@ const DEBUG_BASE = {
     type: 'FILM'
 };
 
-export { USE_DEBUG_DATA, API_KEYS, TEXTS, DEBUG_BASE, API_ENDPOINTS, CONFIG };
+export { USE_DEBUG_DATA, IFRAME_SRC, API_KEYS, TEXTS, DEBUG_BASE, API_ENDPOINTS, CONFIG };
