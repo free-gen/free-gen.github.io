@@ -284,8 +284,9 @@ class Filmoteka {
 
 const filmoteka = new Filmoteka();
 
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/filmoteka/service-worker.js').catch(() => {});
-}
+// if ('serviceWorker' in navigator) {
+//     navigator.serviceWorker.register('/filmoteka/service-worker.js').catch(() => {});
+// }
+
 
 export default Filmoteka;
