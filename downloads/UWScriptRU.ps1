@@ -75,10 +75,10 @@ $script:loop = $true
 function Show-Header {
     Clear-Host
     Write-Host "============================================" -ForegroundColor Cyan
-    Write-Host "          Проверка на русский язык          " -ForegroundColor Yellow
+    Write-Host "                  UWScript                  " -ForegroundColor Yellow
     Write-Host "============================================" -ForegroundColor Cyan
     Write-Host "" 
-    Write-Host "ОТВЕТСТВЕННОСТЬ НЕ ПРИНИМАЕТСЯ, ДЕЙСТВУЙТЕ С ОСТОРОЖНОСТЬЮ!" -ForegroundColor Black -BackgroundColor Red
+    Write-Host "ПРЕДУПРЕЖДЕНИЕ: АВТОР НЕ НЕСЁТ ОТВЕТСТВЕННОСТИ" -ForegroundColor Black -BackgroundColor Red
     Write-Host ""
 }
 
@@ -2497,3 +2497,4 @@ if (Test-Path -Path $markerFilePath) {
 while ($script:loop) {
     Show-MainMenu
 }
+
