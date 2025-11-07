@@ -1,29 +1,114 @@
-# Скачивание и установка SetLuma
-powershell -Command "Invoke-WebRequest -Uri 'https://github.com/free-gen/SetLuma/releases/download/1.0/SetLuma.zip' -OutFile \"$env:TEMP\SetLuma.zip\""
-mkdir "%LOCALAPPDATA%\FreeGen\SetLuma"
-tar -xf "%TEMP%\SetLuma.zip" -C "%LOCALAPPDATA%\FreeGen\SetLuma"
-del "%TEMP%\SetLuma.zip"
-powershell -Command "$WshShell = New-Object -ComObject WScript.Shell; $Shortcut = $WshShell.CreateShortcut([System.IO.Path]::Combine($env:APPDATA, 'Microsoft\Windows\Start Menu\Programs\Startup', 'SetLuma.lnk')); $Shortcut.TargetPath = '%LOCALAPPDATA%\FreeGen\SetLuma\SetLuma.exe'; $Shortcut.WorkingDirectory = '%LOCALAPPDATA%\FreeGen\SetLuma'; $Shortcut.Save()"
-cd /d "%LOCALAPPDATA%\FreeGen\SetLuma"
-start "" "SetLuma.exe"
-cd /d "%~dp0"
+# Функция для выполнения команд с проверкой ошибок
+function Execute-Step {
+    param([string]$StepName, [scriptblock]$Action)
+    Write-Host "Выполняется: $StepName" -ForegroundColor Yellow
+    try {
+        & $Action
+        Write-Host "✓ $StepName завершено успешно" -ForegroundColor Green
+        return $true
+    }
+    catch {
+        Write-Host "✗ Ошибка в $StepName : $($_.Exception.Message)" -ForegroundColor Red
+        return $false
+    }
+}
 
-# Скачивание и установка Package Installer
-powershell -Command "Invoke-WebRequest -Uri 'https://free-gen.github.io/downloads/PackageInstaller.zip' -OutFile \"$env:TEMP\PackageInstaller.zip\""
-mkdir "%LOCALAPPDATA%\FreeGen\PackageInstaller"
-tar -xf "%TEMP%\PackageInstaller.zip" -C "%LOCALAPPDATA%\FreeGen\PackageInstaller"
-del "%TEMP%\PackageInstaller.zip"
-powershell -Command "$WshShell = New-Object -ComObject WScript.Shell; $Shortcut = $WshShell.CreateShortcut([System.IO.Path]::Combine($env:UserProfile, 'Desktop', 'Package Installer.lnk')); $Shortcut.TargetPath = '%LOCALAPPDATA%\FreeGen\PackageInstaller\PackageInstaller.exe'; $Shortcut.WorkingDirectory = '%LOCALAPPDATA%\FreeGen\PackageInstaller'; $Shortcut.Save()"
+# Создание основной папки FreeGen
+$FreeGenPath = "$env:LOCALAPPDATA\FreeGen"
+if (!(Test-Path $FreeGenPath)) {
+    mkdir $FreeGenPath -Force
+}
 
-# Скачивание и установка NanoStat App
-powershell -Command "Invoke-WebRequest -Uri 'https://free-gen.github.io/downloads/NanoStat.zip' -OutFile \"$env:TEMP\NanoStat.zip\""
-mkdir "%LOCALAPPDATA%\FreeGen\NanoStat"
-tar -xf "%TEMP%\NanoStat.zip" -C "%LOCALAPPDATA%\FreeGen\NanoStat"
-del "%TEMP%\NanoStat.zip"
-powershell -Command "$WshShell = New-Object -ComObject WScript.Shell; $StartupPath = [System.IO.Path]::Combine($env:APPDATA, 'Microsoft\Windows\Start Menu\Programs\Startup', 'NanoStat.lnk'); $Shortcut = $WshShell.CreateShortcut($StartupPath); $Shortcut.TargetPath = '%LOCALAPPDATA%\FreeGen\NanoStat\NanoStat.exe'; $Shortcut.Arguments = '--min'; $Shortcut.WorkingDirectory = '%LOCALAPPDATA%\FreeGen\NanoStat'; $Shortcut.Save()"
-cd /d "%LOCALAPPDATA%\FreeGen\NanoStat"
-start "" "NanoStat.exe" --min
-cd /d "%~dp0"
+# 1. Установка SetLuma
+Execute-Step "Установка SetLuma" {
+    $tempFile = "$env:TEMP\SetLuma.zip"
+    
+    # Скачивание
+    Invoke-WebRequest -Uri 'https://github.com/free-gen/SetLuma/releases/download/1.0/SetLuma.zip' -OutFile $tempFile
+    
+    # Создание папки и распаковка
+    $installPath = "$FreeGenPath\SetLuma"
+    if (Test-Path $installPath) { Remove-Item $installPath -Recurse -Force }
+    mkdir $installPath -Force
+    
+    # Распаковка
+    Expand-Archive -Path $tempFile -DestinationPath $installPath -Force
+    
+    # Удаление временного файла
+    Remove-Item $tempFile -Force
+    
+    # Создание ярлыка в автозагрузке
+    $WshShell = New-Object -ComObject WScript.Shell
+    $Shortcut = $WshShell.CreateShortcut("$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\SetLuma.lnk")
+    $Shortcut.TargetPath = "$installPath\SetLuma.exe"
+    $Shortcut.WorkingDirectory = $installPath
+    $Shortcut.Save()
+    
+    # Запуск приложения
+    Start-Process -FilePath "$installPath\SetLuma.exe" -WorkingDirectory $installPath
+}
 
-# Добавление папки FreeGen в список исключений Защитника Windows
-powershell -Command "Add-MpPreference -ExclusionPath '%LOCALAPPDATA%\FreeGen'"
+# 2. Установка Package Installer
+Execute-Step "Установка Package Installer" {
+    $tempFile = "$env:TEMP\PackageInstaller.zip"
+    
+    # Скачивание
+    Invoke-WebRequest -Uri 'https://free-gen.github.io/downloads/PackageInstaller.zip' -OutFile $tempFile
+    
+    # Создание папки и распаковка
+    $installPath = "$FreeGenPath\PackageInstaller"
+    if (Test-Path $installPath) { Remove-Item $installPath -Recurse -Force }
+    mkdir $installPath -Force
+    
+    # Распаковка
+    Expand-Archive -Path $tempFile -DestinationPath $installPath -Force
+    
+    # Удаление временного файла
+    Remove-Item $tempFile -Force
+    
+    # Создание ярлыка на рабочем столе
+    $WshShell = New-Object -ComObject WScript.Shell
+    $Shortcut = $WshShell.CreateShortcut("$env:USERPROFILE\Desktop\Package Installer.lnk")
+    $Shortcut.TargetPath = "$installPath\PackageInstaller.exe"
+    $Shortcut.WorkingDirectory = $installPath
+    $Shortcut.Save()
+}
+
+# 3. Установка NanoStat App
+Execute-Step "Установка NanoStat" {
+    $tempFile = "$env:TEMP\NanoStat.zip"
+    
+    # Скачивание
+    Invoke-WebRequest -Uri 'https://free-gen.github.io/downloads/NanoStat.zip' -OutFile $tempFile
+    
+    # Создание папки и распаковка
+    $installPath = "$FreeGenPath\NanoStat"
+    if (Test-Path $installPath) { Remove-Item $installPath -Recurse -Force }
+    mkdir $installPath -Force
+    
+    # Распаковка
+    Expand-Archive -Path $tempFile -DestinationPath $installPath -Force
+    
+    # Удаление временного файла
+    Remove-Item $tempFile -Force
+    
+    # Создание ярлыка в автозагрузке
+    $WshShell = New-Object -ComObject WScript.Shell
+    $Shortcut = $WshShell.CreateShortcut("$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\NanoStat.lnk")
+    $Shortcut.TargetPath = "$installPath\NanoStat.exe"
+    $Shortcut.Arguments = "--min"
+    $Shortcut.WorkingDirectory = $installPath
+    $Shortcut.Save()
+    
+    # Запуск приложения
+    Start-Process -FilePath "$installPath\NanoStat.exe" -ArgumentList "--min" -WorkingDirectory $installPath
+}
+
+# 4. Добавление в исключения Защитника Windows
+Execute-Step "Добавление в исключения Защитника Windows" {
+    Add-MpPreference -ExclusionPath $FreeGenPath
+}
+
+Write-Host "`nУстановка завершена!" -ForegroundColor Green
+Write-Host "Все программы установлены в: $FreeGenPath" -ForegroundColor Cyan
+pause
