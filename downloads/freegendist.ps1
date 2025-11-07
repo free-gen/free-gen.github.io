@@ -1,8 +1,9 @@
-# freegendist.ps1 - ОБЁРТКА для рабочего CMD кода
+# freegendist.ps1 - исправленная обёртка
+Write-Host "=== FreeGen Installer ===" -ForegroundColor Cyan
+
 $cmdCode = @'
 @echo off
 chcp 65001 >nul
-echo FreeGen Dist
 
 echo Установка SetLuma...
 powershell -Command "Invoke-WebRequest -Uri 'https://github.com/free-gen/SetLuma/releases/download/1.0/SetLuma.zip' -OutFile \"%TEMP%\SetLuma.zip\""
@@ -34,14 +35,18 @@ cd /d "%~dp0"
 echo Добавление в исключения Защитника Windows...
 powershell -Command "Add-MpPreference -ExclusionPath '%LOCALAPPDATA%\FreeGen'"
 
-echo.
 echo Установка завершена!
 echo Все программы установлены в: %LOCALAPPDATA%\FreeGen
-pause
 '@
 
-# Сохраняем CMD код во временный файл и запускаем
+# Запускаем CMD код в текущем окне PowerShell
 $cmdFile = "$env:TEMP\freegen_install.cmd"
-$cmdCode | Out-File -FilePath $cmdFile -Encoding ASCII
-Start-Process -FilePath "cmd.exe" -ArgumentList "/c $cmdFile" -Wait
+$cmdCode | Out-File -FilePath $cmdFile -Encoding UTF8
+
+# Запускаем без создания нового окна
+cmd.exe /c "$cmdFile"
+
 Remove-Item $cmdFile -Force
+
+Write-Host "`nДля продолжения нажмите клавишу ВВОД..." -ForegroundColor Yellow
+Read-Host
