@@ -14,6 +14,7 @@ $Packages = @(
         AutoRun = $true
         Launch = $true
         DesktopIcon = $false
+        LaunchArgs = $null
     },
     @{
         Name = "Package Installer"
@@ -22,6 +23,7 @@ $Packages = @(
         AutoRun = $false
         Launch = $false
         DesktopIcon = $true
+        LaunchArgs = $null
     },
     @{
         Name = "NanoStat"
@@ -89,7 +91,11 @@ function Install-Package {
     if ($Package.Launch) {
         $exePath = "$packagePath\$($Package.ExeFile)"
         if (Test-Path $exePath) {
-            Start-Process -FilePath $exePath -ArgumentList $Package.LaunchArgs -WorkingDirectory $packagePath
+            if ($Package.LaunchArgs) {
+                Start-Process -FilePath $exePath -ArgumentList $Package.LaunchArgs -WorkingDirectory $packagePath
+            } else {
+                Start-Process -FilePath $exePath -WorkingDirectory $packagePath
+            }
             Write-Host "  ✓ Приложение запущено" -ForegroundColor Green
         } else {
             Write-Host "  ⚠ Исполняемый файл не найден" -ForegroundColor Yellow
@@ -136,4 +142,5 @@ Write-Host "`nУстановка завершена!" -ForegroundColor Green
 Write-Host "Все программы установлены в: $InstallPath" -ForegroundColor Gray
 Write-Host "`nДля продолжения нажмите клавишу ВВОД..." -ForegroundColor Yellow
 Read-Host
+
 
