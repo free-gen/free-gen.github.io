@@ -14,7 +14,7 @@ Write-Host "Дополнительно при помощи менеджера wi
 Write-Host ""
 Write-Host "• Яндекс Браузер" -ForegroundColor White
 Write-Host "• qBittorrent клиент" -ForegroundColor White
-Write-Host "• Paint.NET" -ForegroundColor White
+# Write-Host "• Paint.NET" -ForegroundColor White
 Write-Host "• 7zip" -ForegroundColor White
 Write-Host "• Microsoft VSCode" -ForegroundColor White
 Write-Host "• K-Lite Codec Pack" -ForegroundColor White
@@ -173,7 +173,6 @@ Write-Host "Winget установлен" -ForegroundColor Gray
 $app = @(
 "Yandex.Browser"
 "qBittorrent.qBittorrent"
-"dotPDNLLC.paintdotnet"
 "7zip.7zip"
 "Microsoft.VisualStudioCode"
 "Microsoft.DotNet.SDK.7"
@@ -190,3 +189,4 @@ Write-Host "`nУстановка завершена!" -ForegroundColor White
 # Write-Host "Все программы установлены в: $InstallPath" -ForegroundColor Gray
 Write-Host "`nДля продолжения нажмите клавишу ВВОД..." -ForegroundColor White
 Read-Host
+
