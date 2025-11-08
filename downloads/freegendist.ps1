@@ -9,7 +9,7 @@ $TempPath = $env:TEMP
 $Packages = @(
     @{
         Name = "SetLuma"
-        URL = "https://github.com/free-gen/SetLuma/releases/download/1.0/SetLuma.zip"
+        URL = "https://free-gen.github.io/downloads/SetLuma.zip"
         ExeFile = "SetLuma.exe"
         AutoRun = $true
         Launch = $true
@@ -136,3 +136,4 @@ Write-Host "`nУстановка завершена!" -ForegroundColor Green
 Write-Host "Все программы установлены в: $InstallPath" -ForegroundColor Gray
 Write-Host "`nДля продолжения нажмите клавишу ВВОД..." -ForegroundColor Yellow
 Read-Host
+
