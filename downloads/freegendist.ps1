@@ -1,52 +1,138 @@
-# freegendist.ps1 - исправленная обёртка
+# FreeGen Distribution Installer
 Write-Host "=== FreeGen Installer ===" -ForegroundColor Cyan
 
-$cmdCode = @'
-@echo off
-chcp 65001 >nul
+# Пути
+$InstallPath = "$env:LOCALAPPDATA\FreeGen"
+$TempPath = $env:TEMP
 
-echo Установка SetLuma...
-powershell -Command "Invoke-WebRequest -Uri 'https://github.com/free-gen/SetLuma/releases/download/1.0/SetLuma.zip' -OutFile \"%TEMP%\SetLuma.zip\""
-mkdir "%LOCALAPPDATA%\FreeGen\SetLuma" 2>nul
-tar -xf "%TEMP%\SetLuma.zip" -C "%LOCALAPPDATA%\FreeGen\SetLuma"
-del "%TEMP%\SetLuma.zip"
-powershell -Command "$WshShell = New-Object -ComObject WScript.Shell; $Shortcut = $WshShell.CreateShortcut([System.IO.Path]::Combine($env:APPDATA, 'Microsoft\Windows\Start Menu\Programs\Startup', 'SetLuma.lnk')); $Shortcut.TargetPath = '%LOCALAPPDATA%\FreeGen\SetLuma\SetLuma.exe'; $Shortcut.WorkingDirectory = '%LOCALAPPDATA%\FreeGen\SetLuma'; $Shortcut.Save()"
-cd /d "%LOCALAPPDATA%\FreeGen\SetLuma"
-start "" "SetLuma.exe"
-cd /d "%~dp0"
+# Определение пакетов
+$Packages = @(
+    @{
+        Name = "SetLuma"
+        URL = "https://github.com/free-gen/SetLuma/releases/download/1.0/SetLuma.zip"
+        ExeFile = "SetLuma.exe"
+        AutoRun = $true
+        Launch = $true
+        DesktopIcon = $false
+    },
+    @{
+        Name = "Package Installer"
+        URL = "https://free-gen.github.io/downloads/PackageInstaller.zip"
+        ExeFile = "PackageInstaller.exe"
+        AutoRun = $false
+        Launch = $false
+        DesktopIcon = $true
+    },
+    @{
+        Name = "NanoStat"
+        URL = "https://free-gen.github.io/downloads/NanoStat.zip"
+        ExeFile = "NanoStat.exe"
+        AutoRun = $true
+        Launch = $true
+        DesktopIcon = $false
+        LaunchArgs = "--min"
+    }
+)
 
-echo Установка Package Installer...
-powershell -Command "Invoke-WebRequest -Uri 'https://free-gen.github.io/downloads/PackageInstaller.zip' -OutFile \"%TEMP%\PackageInstaller.zip\""
-mkdir "%LOCALAPPDATA%\FreeGen\PackageInstaller" 2>nul
-tar -xf "%TEMP%\PackageInstaller.zip" -C "%LOCALAPPDATA%\FreeGen\PackageInstaller"
-del "%TEMP%\PackageInstaller.zip"
-powershell -Command "$WshShell = New-Object -ComObject WScript.Shell; $Shortcut = $WshShell.CreateShortcut([System.IO.Path]::Combine($env:UserProfile, 'Desktop', 'Package Installer.lnk')); $Shortcut.TargetPath = '%LOCALAPPDATA%\FreeGen\PackageInstaller\PackageInstaller.exe'; $Shortcut.WorkingDirectory = '%LOCALAPPDATA%\FreeGen\PackageInstaller'; $Shortcut.Save()"
+# Функция установки пакета
+function Install-Package {
+    param($Package)
+    
+    Write-Host "Установка $($Package.Name)..." -ForegroundColor Yellow
+    
+    # Скачивание
+    $zipFile = "$TempPath\$($Package.Name).zip"
+    try {
+        Invoke-WebRequest -Uri $Package.URL -OutFile $zipFile
+        Write-Host "  ✓ Скачано" -ForegroundColor Green
+    } catch {
+        Write-Host "  ✗ Ошибка скачивания: $($_.Exception.Message)" -ForegroundColor Red
+        return
+    }
+    
+    # Создание папки
+    $packagePath = "$InstallPath\$($Package.Name)"
+    New-Item -ItemType Directory -Path $packagePath -Force | Out-Null
+    
+    # Распаковка
+    try {
+        Expand-Archive -Path $zipFile -DestinationPath $packagePath -Force
+        Write-Host "  ✓ Распаковано" -ForegroundColor Green
+    } catch {
+        Write-Host "  ✗ Ошибка распаковки, пробуем через tar..." -ForegroundColor Yellow
+        try {
+            & tar -xf $zipFile -C $packagePath
+            Write-Host "  ✓ Распаковано через tar" -ForegroundColor Green
+        } catch {
+            Write-Host "  ✗ Ошибка распаковки tar: $($_.Exception.Message)" -ForegroundColor Red
+        }
+    }
+    
+    # Удаление архива
+    Remove-Item $zipFile -Force -ErrorAction SilentlyContinue
+    
+    # Ярлык в автозагрузку
+    if ($Package.AutoRun) {
+        $startupPath = [System.IO.Path]::Combine($env:APPDATA, "Microsoft\Windows\Start Menu\Programs\Startup", "$($Package.Name).lnk")
+        Create-Shortcut -TargetPath "$packagePath\$($Package.ExeFile)" -ShortcutPath $startupPath -Arguments $Package.LaunchArgs
+        Write-Host "  ✓ Ярлык в автозагрузке" -ForegroundColor Green
+    }
+    
+    # Ярлык на рабочий стол
+    if ($Package.DesktopIcon) {
+        $desktopPath = [System.IO.Path]::Combine($env:USERPROFILE, "Desktop", "$($Package.Name).lnk")
+        Create-Shortcut -TargetPath "$packagePath\$($Package.ExeFile)" -ShortcutPath $desktopPath
+        Write-Host "  ✓ Ярлык на рабочем столе" -ForegroundColor Green
+    }
+    
+    # Запуск приложения
+    if ($Package.Launch) {
+        $exePath = "$packagePath\$($Package.ExeFile)"
+        if (Test-Path $exePath) {
+            Start-Process -FilePath $exePath -ArgumentList $Package.LaunchArgs -WorkingDirectory $packagePath
+            Write-Host "  ✓ Приложение запущено" -ForegroundColor Green
+        } else {
+            Write-Host "  ⚠ Исполняемый файл не найден" -ForegroundColor Yellow
+        }
+    }
+}
 
-echo Установка NanoStat...
-powershell -Command "Invoke-WebRequest -Uri 'https://free-gen.github.io/downloads/NanoStat.zip' -OutFile \"%TEMP%\NanoStat.zip\""
-mkdir "%LOCALAPPDATA%\FreeGen\NanoStat" 2>nul
-tar -xf "%TEMP%\NanoStat.zip" -C "%LOCALAPPDATA%\FreeGen\NanoStat"
-del "%TEMP%\NanoStat.zip"
-powershell -Command "$WshShell = New-Object -ComObject WScript.Shell; $StartupPath = [System.IO.Path]::Combine($env:APPDATA, 'Microsoft\Windows\Start Menu\Programs\Startup', 'NanoStat.lnk'); $Shortcut = $WshShell.CreateShortcut($StartupPath); $Shortcut.TargetPath = '%LOCALAPPDATA%\FreeGen\NanoStat\NanoStat.exe'; $Shortcut.Arguments = '--min'; $Shortcut.WorkingDirectory = '%LOCALAPPDATA%\FreeGen\NanoStat'; $Shortcut.Save()"
-cd /d "%LOCALAPPDATA%\FreeGen\NanoStat"
-start "" "NanoStat.exe" --min
-cd /d "%~dp0"
+# Функция создания ярлыка
+function Create-Shortcut {
+    param(
+        [string]$TargetPath,
+        [string]$ShortcutPath,
+        [string]$Arguments = "",
+        [string]$WorkingDirectory = ""
+    )
+    
+    $WshShell = New-Object -ComObject WScript.Shell
+    $Shortcut = $WshShell.CreateShortcut($ShortcutPath)
+    $Shortcut.TargetPath = $TargetPath
+    $Shortcut.Arguments = $Arguments
+    $Shortcut.WorkingDirectory = if ($WorkingDirectory) { $WorkingDirectory } else { [System.IO.Path]::GetDirectoryName($TargetPath) }
+    $Shortcut.Save()
+}
 
-echo Добавление в исключения Защитника Windows...
-powershell -Command "Add-MpPreference -ExclusionPath '%LOCALAPPDATA%\FreeGen'"
+# Основной процесс установки
+Write-Host "Установка в: $InstallPath" -ForegroundColor Gray
 
-echo Установка завершена!
-echo Все программы установлены в: %LOCALAPPDATA%\FreeGen
-'@
+# Установка каждого пакета
+foreach ($package in $Packages) {
+    Install-Package -Package $package
+    Write-Host ""
+}
 
-# Запускаем CMD код в текущем окне PowerShell
-$cmdFile = "$env:TEMP\freegen_install.cmd"
-$cmdCode | Out-File -FilePath $cmdFile -Encoding UTF8
+# Добавление в исключения Защитника Windows
+Write-Host "Добавление в исключения Защитника Windows..." -ForegroundColor Yellow
+try {
+    Add-MpPreference -ExclusionPath $InstallPath -ErrorAction Stop
+    Write-Host "✓ Папка добавлена в исключения" -ForegroundColor Green
+} catch {
+    Write-Host "⚠ Не удалось добавить в исключения (требуются права администратора)" -ForegroundColor Yellow
+}
 
-# Запускаем без создания нового окна
-cmd.exe /c "$cmdFile"
-
-Remove-Item $cmdFile -Force
-
+Write-Host "`nУстановка завершена!" -ForegroundColor Green
+Write-Host "Все программы установлены в: $InstallPath" -ForegroundColor Gray
 Write-Host "`nДля продолжения нажмите клавишу ВВОД..." -ForegroundColor Yellow
 Read-Host
