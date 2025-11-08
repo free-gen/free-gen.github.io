@@ -1,15 +1,14 @@
 # Приветствие и информация об установке
 Write-Host ""
-Write-Host "==============================================" -ForegroundColor Cyan
-Write-Host "          FreeGen Distribution Setup" -ForegroundColor Cyan
-Write-Host "==============================================" -ForegroundColor Cyan
+Write-Host "==================================================" -ForegroundColor Cyan
+Write-Host "        Мастер развертывания от FreeGen" -ForegroundColor Cyan
+Write-Host "==================================================" -ForegroundColor Cyan
 Write-Host ""
-Write-Host "Скрипт автоматического развертывания." -ForegroundColor White
-Write-Host "Будет установлено следующее ПО:" -ForegroundColor White
+Write-Host "Будет установлен следующий пакет программ:" -ForegroundColor White
 Write-Host ""
-Write-Host "• SetLuma (Управление яркостью монитора по WMI/DDC)" -ForegroundColor White
-Write-Host "• Package Installer (Менеджер пакетов Chocolatey)" -ForegroundColor White
-Write-Host "• NanoStat (Клиент для NanoStat Device)" -ForegroundColor White
+Write-Host "• SetLuma / Управление яркостью монитора по WMI/DDC" -ForegroundColor White
+Write-Host "• Package Installer / Менеджер пакетов Chocolatey" -ForegroundColor White
+Write-Host "• NanoStat / Клиент для NanoStat Device" -ForegroundColor White
 Write-Host ""
 Write-Host "Для продолжения установки нажмите любую клавишу..." -ForegroundColor Green
 Write-Host "Для отмены установки закройте окно (Ctrl+C)" -ForegroundColor Red
@@ -161,6 +160,7 @@ Write-Host "`nУстановка завершена!" -ForegroundColor Green
 Write-Host "Все программы установлены в: $InstallPath" -ForegroundColor Gray
 Write-Host "`nДля продолжения нажмите клавишу ВВОД..." -ForegroundColor Yellow
 Read-Host
+
 
 
 
