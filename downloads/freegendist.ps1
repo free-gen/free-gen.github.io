@@ -25,7 +25,7 @@ $banner = @"
 "@
 Write-Host $banner -ForegroundColor Cyan
 Write-Host " ┌──────────────────────────────────────────────────────┐ " -ForegroundColor White
-Write-Host " │ Будут установлены следующие пакеты программ:         │ " -ForegroundColor White
+Write-Host " │   Набор программ для развертывания:                  │ " -ForegroundColor White
 Write-Host " ├──────────────────────────────────────────────────────┤ " -ForegroundColor White
 Write-Host " │ + SetLuma (Управление яркостью монитора)             │ " -ForegroundColor White
 Write-Host " │ + Package Installer (Менеджер Chocolatey)            │ " -ForegroundColor White
@@ -183,3 +183,4 @@ if (Test-Path "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbw
 
 Set-Status "Все операции успешно выполнены."
 Read-Host
+
