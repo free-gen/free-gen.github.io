@@ -1,26 +1,64 @@
-# Приветствие и информация об установке
+# $banner = @"
+                                                                                               
+#   ┏━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓  
+#   ┃                ┃                                                                        ┃  
+#   ┃    ▀▄    ▄▀    ┃  ●●●●●●●●  ●●●●●●    ●●●●●●●●  ●●●●●●●●    ●●●●●●  ●●●●●●●●  ●●    ●●  ┃  
+#   ┃   ▄█▀████▀█▄   ┃  ●●        ●●    ●●  ●●        ●●        ●●        ●●        ●●●●  ●●  ┃  
+#   ┃  █▀████████▀█  ┃  ●●●●●●    ●●●●●●    ●●●●●●    ●●●●●●    ●●  ●●●●  ●●●●●●    ●● ●● ●●  ┃  
+#   ┃  █ █▀▀▀▀▀▀█ █  ┃  ●●        ●●    ●●  ●●        ●●        ●●    ●●  ●●        ●●  ●●●●  ┃  
+#   ┃     ▀▀  ▀▀     ┃  ●●        ●●    ●●  ●●●●●●●●  ●●●●●●●●    ●●●●●●  ●●●●●●●●  ●●    ●●  ┃  
+#   ┃                ┃                                                                        ┃  
+#   ┗━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛  
+                                                                                               
+# "@
+
+# Write-Host "                           " -BackgroundColor Green
+# Write-Host "                           " -BackgroundColor DarkGreen
+# Write-Host "                           " -BackgroundColor Blue
+# Write-Host "                           " -BackgroundColor DarkBlue
+# Write-Host "                           " -BackgroundColor Cyan
+# Write-Host "                           " -BackgroundColor DarkCyan
+# Write-Host "                           " -BackgroundColor Red
+# Write-Host "                           " -BackgroundColor DarkRed
+# Write-Host "                           " -BackgroundColor Magenta
+# Write-Host "                           " -BackgroundColor DarkMagenta
+# Write-Host "                           " -BackgroundColor Yellow
+# Write-Host "                           " -BackgroundColor DarkYellow
+# Write-Host "                           " -BackgroundColor Gray
+# Write-Host "                           " -BackgroundColor DarkGray
+
+$banner = @"
+                                                                                                  
+        ▀▄    ▄▀            ■■■■■■■■  ■■■■■■    ■■■■■■■■  ■■■■■■■■   ■■■■■■   ■■■■■■■■  ■■    ■■  
+       ▄█▀████▀█▄          ■■        ■■    ■■  ■■        ■■        ■■        ■■        ■■■■  ■■   
+      █▀████████▀█        ■■■■■■    ■■■■■■    ■■■■■■    ■■■■■■    ■■  ■■■■  ■■■■■■    ■■ ■■ ■■    
+      █ █▀▀▀▀▀▀█ █       ■■        ■■    ■■  ■■        ■■        ■■    ■■  ■■        ■■  ■■■■     
+         ▀▀  ▀▀         ■■        ■■    ■■  ■■■■■■■■  ■■■■■■■■    ■■■■■■  ■■■■■■■■  ■■    ■■      
+                                                                                                                                                                                                    
+"@
+Write-Host $banner -BackgroundColor Black -ForegroundColor DarkGray
+Write-Host "                      Мастер развертывания пакетов и програмного обеспечения                      " -ForegroundColor White
 Write-Host ""
-Write-Host "==================================================" -ForegroundColor Cyan
-Write-Host "        Мастер развертывания от FreeGen" -ForegroundColor Cyan
-Write-Host "==================================================" -ForegroundColor Cyan
 Write-Host ""
-Write-Host "Будет установлен следующий пакет программ:" -ForegroundColor White
+Write-Host "   Будет установлен следующий пакет программ:" -ForegroundColor Yellow
 Write-Host ""
-Write-Host "• SetLuma / Управление яркостью монитора по WMI/DDC" -ForegroundColor White
-Write-Host "• Package Installer / Менеджер пакетов Chocolatey" -ForegroundColor White
-Write-Host "• NanoStat / Клиент для NanoStat Device" -ForegroundColor White
+Write-Host "- SetLuma (Управление яркостью монитора по WMI|DDC/CI)" -ForegroundColor White
+Write-Host "- Package Installer (Менеджер пакетов Chocolatey)" -ForegroundColor White
+Write-Host "- NanoStat (Клиент для NanoStat Device)" -ForegroundColor White
+# Write-Host ""
+# Write-Host "   Дополнительно при помощи менеджера winget:" -ForegroundColor Yellow
 Write-Host ""
-Write-Host "Дополнительно при помощи менеджера winget:" -ForegroundColor White
+Write-Host "- Яндекс Браузер" -ForegroundColor White
+Write-Host "- qBittorrent клиент" -ForegroundColor White
+Write-Host "- Paint.NET" -ForegroundColor White
+Write-Host "- 7zip" -ForegroundColor White
+Write-Host "- Microsoft VSCode" -ForegroundColor White
+Write-Host "- Microsoft .NET SDK" -ForegroundColor White
+Write-Host "- Python 3.11" -ForegroundColor White
+Write-Host "- K-Lite Codec Pack" -ForegroundColor White
 Write-Host ""
-Write-Host "• Яндекс Браузер" -ForegroundColor White
-Write-Host "• qBittorrent клиент" -ForegroundColor White
-# Write-Host "• Paint.NET" -ForegroundColor White
-Write-Host "• 7zip" -ForegroundColor White
-Write-Host "• Microsoft VSCode" -ForegroundColor White
-Write-Host "• K-Lite Codec Pack" -ForegroundColor White
-Write-Host ""
-Write-Host "Для продолжения установки нажмите любую клавишу..." -ForegroundColor Green
-Write-Host "Для отмены установки закройте окно (Ctrl+C)" -ForegroundColor Red
+Write-Host "   Для продолжения установки нажмите любую клавишу" -ForegroundColor Green
+Write-Host "   Для отмены установки закройте окно (Ctrl+C)    " -ForegroundColor Red
 
 # Ожидание нажатия любой клавиши
 $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
@@ -173,6 +211,7 @@ Write-Host "Winget установлен" -ForegroundColor Gray
 $app = @(
 "Yandex.Browser"
 "qBittorrent.qBittorrent"
+"dotPDN.PaintDotNet"
 "7zip.7zip"
 "Microsoft.VisualStudioCode"
 "Microsoft.DotNet.SDK.7"
@@ -189,4 +228,3 @@ Write-Host "`nУстановка завершена!" -ForegroundColor White
 # Write-Host "Все программы установлены в: $InstallPath" -ForegroundColor Gray
 Write-Host "`nДля продолжения нажмите клавишу ВВОД..." -ForegroundColor White
 Read-Host
-
