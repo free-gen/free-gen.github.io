@@ -1,230 +1,158 @@
-# $banner = @"
-                                                                                               
-#   ┏━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓  
-#   ┃                ┃                                                                        ┃  
-#   ┃    ▀▄    ▄▀    ┃  ●●●●●●●●  ●●●●●●    ●●●●●●●●  ●●●●●●●●    ●●●●●●  ●●●●●●●●  ●●    ●●  ┃  
-#   ┃   ▄█▀████▀█▄   ┃  ●●        ●●    ●●  ●●        ●●        ●●        ●●        ●●●●  ●●  ┃  
-#   ┃  █▀████████▀█  ┃  ●●●●●●    ●●●●●●    ●●●●●●    ●●●●●●    ●●  ●●●●  ●●●●●●    ●● ●● ●●  ┃  
-#   ┃  █ █▀▀▀▀▀▀█ █  ┃  ●●        ●●    ●●  ●●        ●●        ●●    ●●  ●●        ●●  ●●●●  ┃  
-#   ┃     ▀▀  ▀▀     ┃  ●●        ●●    ●●  ●●●●●●●●  ●●●●●●●●    ●●●●●●  ●●●●●●●●  ●●    ●●  ┃  
-#   ┃                ┃                                                                        ┃  
-#   ┗━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛  
-                                                                                               
-# "@
+$ProgressPreference = 'SilentlyContinue'
+$TestMode = $false
 
-# Write-Host "                           " -BackgroundColor Green
-# Write-Host "                           " -BackgroundColor DarkGreen
-# Write-Host "                           " -BackgroundColor Blue
-# Write-Host "                           " -BackgroundColor DarkBlue
-# Write-Host "                           " -BackgroundColor Cyan
-# Write-Host "                           " -BackgroundColor DarkCyan
-# Write-Host "                           " -BackgroundColor Red
-# Write-Host "                           " -BackgroundColor DarkRed
-# Write-Host "                           " -BackgroundColor Magenta
-# Write-Host "                           " -BackgroundColor DarkMagenta
-# Write-Host "                           " -BackgroundColor Yellow
-# Write-Host "                           " -BackgroundColor DarkYellow
-# Write-Host "                           " -BackgroundColor Gray
-# Write-Host "                           " -BackgroundColor DarkGray
+function Set-Status {
+    param([string]$Text)
+    
+    $p = $host.UI.RawUI.CursorPosition
+    $p.Y = $StatusLine
+    $host.UI.RawUI.CursorPosition = $p
+    
+    Write-Host (" " * ($host.UI.RawUI.WindowSize.Width)) -NoNewline
+    $host.UI.RawUI.CursorPosition = $p
+
+    Write-Host ("   " + $Text) -ForegroundColor White
+}
+
+Clear-Host
 
 $banner = @"
-                                                                                                  
-        ▀▄    ▄▀            ■■■■■■■■  ■■■■■■    ■■■■■■■■  ■■■■■■■■   ■■■■■■   ■■■■■■■■  ■■    ■■  
-       ▄█▀████▀█▄          ■■        ■■    ■■  ■■        ■■        ■■        ■■        ■■■■  ■■   
-      █▀████████▀█        ■■■■■■    ■■■■■■    ■■■■■■    ■■■■■■    ■■  ■■■■  ■■■■■■    ■■ ■■ ■■    
-      █ █▀▀▀▀▀▀█ █       ■■        ■■    ■■  ■■        ■■        ■■    ■■  ■■        ■■  ■■■■     
-         ▀▀  ▀▀         ■■        ■■    ■■  ■■■■■■■■  ■■■■■■■■    ■■■■■■  ■■■■■■■■  ■■    ■■      
-                                                                                                                                                                                                    
+
+ ┌──────────────────────────────────────────────────────┐ 
+ │        Windows Post Install Script by FreeGen        │ 
+ │           Установка стандартного окружения           │ 
+ └──────────────────────────────────────────────────────┘ 
 "@
-Write-Host $banner -BackgroundColor Black -ForegroundColor DarkGray
-Write-Host "                      Мастер развертывания пакетов и програмного обеспечения                      " -ForegroundColor White
-Write-Host ""
-Write-Host ""
-Write-Host "   Будет установлен следующий пакет программ:" -ForegroundColor Yellow
-Write-Host ""
-Write-Host "- SetLuma (Управление яркостью монитора по WMI|DDC/CI)" -ForegroundColor White
-Write-Host "- Package Installer (Менеджер пакетов Chocolatey)" -ForegroundColor White
-Write-Host "- NanoStat (Клиент для NanoStat Device)" -ForegroundColor White
-# Write-Host ""
-# Write-Host "   Дополнительно при помощи менеджера winget:" -ForegroundColor Yellow
-Write-Host ""
-Write-Host "- Яндекс Браузер" -ForegroundColor White
-Write-Host "- qBittorrent клиент" -ForegroundColor White
-Write-Host "- Paint.NET" -ForegroundColor White
-Write-Host "- 7zip" -ForegroundColor White
-Write-Host "- Microsoft VSCode" -ForegroundColor White
-Write-Host "- Microsoft .NET SDK" -ForegroundColor White
-Write-Host "- Python 3.11" -ForegroundColor White
-Write-Host "- K-Lite Codec Pack" -ForegroundColor White
-Write-Host ""
-Write-Host "   Для продолжения установки нажмите любую клавишу" -ForegroundColor Green
-Write-Host "   Для отмены установки закройте окно (Ctrl+C)    " -ForegroundColor Red
+Write-Host $banner -ForegroundColor Cyan
+Write-Host " ┌──────────────────────────────────────────────────────┐ " -ForegroundColor White
+Write-Host " │ Будут установлены следующие пакеты программ:         │ " -ForegroundColor White
+Write-Host " ├──────────────────────────────────────────────────────┤ " -ForegroundColor White
+Write-Host " │ + SetLuma (Управление яркостью монитора)             │ " -ForegroundColor White
+Write-Host " │ + Package Installer (Менеджер Chocolatey)            │ " -ForegroundColor White
+Write-Host " │ + NanoStat (Клиент для NanoStat Device)              │ " -ForegroundColor White
+Write-Host " │ + Windows Package Manager                            │ " -ForegroundColor White
+Write-Host " │ + Яндекс Браузер                                     │ " -ForegroundColor White
+Write-Host " │ + qBittorrent                                        │ " -ForegroundColor White
+Write-Host " │ + Paint.NET                                          │ " -ForegroundColor White
+Write-Host " │ + 7zip                                               │ " -ForegroundColor White
+Write-Host " │ + Microsoft VSCode                                   │ " -ForegroundColor White
+Write-Host " │ + Microsoft .NET SDK                                 │ " -ForegroundColor White
+Write-Host " │ + Python 3.11                                        │ " -ForegroundColor White
+Write-Host " │ + K-Lite Codec Pack                                  │ " -ForegroundColor White
+Write-Host " └──────────────────────────────────────────────────────┘ " -ForegroundColor White
+Write-Host " ┌──────────────────────────────────────────────────────┐ " -ForegroundColor Green
+Write-Host " │   Для продолжения установки нажмите любую клавишу    │ " -ForegroundColor Green
+Write-Host " └──────────────────────────────────────────────────────┘ " -ForegroundColor Green
+Write-Host " ┌──────────────────────────────────────────────────────┐ " -ForegroundColor Red
+Write-Host " │   Для отмены установки закройте окно (Ctrl+C)        │ " -ForegroundColor Red
+Write-Host " └──────────────────────────────────────────────────────┘ " -ForegroundColor Red
 
-# Ожидание нажатия любой клавиши
-$null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
-Write-Host ""
-Write-Host "Начинаем установку..." -ForegroundColor White
-Write-Host ""
+$Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown") | Out-Null
 
-# Пути
+Clear-Host
+
+Write-Host $banner -ForegroundColor Cyan
+Write-Host ""
+$StatusLine = $host.UI.RawUI.CursorPosition.Y
+
 $InstallPath = "$env:LOCALAPPDATA\FreeGen"
 $TempPath = $env:TEMP
 
-# Определение пакетов
-$Packages = @(
-    @{
-        Name = "SetLuma"
-        URL = "https://free-gen.github.io/downloads/SetLuma.zip"
-        ExeFile = "SetLuma.exe"
-        AutoRun = $true
-        Launch = $true
-        DesktopIcon = $false
-        LaunchArgs = $null
-    },
-    @{
-        Name = "Package Installer"
-        URL = "https://free-gen.github.io/downloads/PackageInstaller.zip"
-        ExeFile = "PackageInstaller.exe"
-        AutoRun = $false
-        Launch = $false
-        DesktopIcon = $true
-        LaunchArgs = $null
-    },
-    @{
-        Name = "NanoStat"
-        URL = "https://free-gen.github.io/downloads/NanoStat.zip"
-        ExeFile = "NanoStat.exe"
-        AutoRun = $true
-        Launch = $true
-        DesktopIcon = $false
-        LaunchArgs = "--min"
-    }
-)
-
-# Функция установки пакета
-function Install-Package {
-    param($Package)
-    
-    Write-Host "Установка $($Package.Name)..." -ForegroundColor White
-    
-    # Скачивание
-    $zipFile = "$TempPath\$($Package.Name).zip"
-    try {
-        Invoke-WebRequest -Uri $Package.URL -OutFile $zipFile
-        Write-Host "  ✓ Загружено" -ForegroundColor Green
-    } catch {
-        Write-Host "  ✗ Ошибка загрузки: $($_.Exception.Message)" -ForegroundColor Red
-        return
-    }
-    
-    # Создание папки
-    $packagePath = "$InstallPath\$($Package.Name)"
-    New-Item -ItemType Directory -Path $packagePath -Force | Out-Null
-    
-    # Распаковка
-    try {
-        Expand-Archive -Path $zipFile -DestinationPath $packagePath -Force
-        Write-Host "  ✓ Распаковано" -ForegroundColor Green
-    } catch {
-        Write-Host "  ✗ Ошибка распаковки, пробуем через tar..." -ForegroundColor Yellow
-        try {
-            & tar -xf $zipFile -C $packagePath
-            Write-Host "  ✓ Распаковано через tar" -ForegroundColor Green
-        } catch {
-            Write-Host "  ✗ Ошибка распаковки tar: $($_.Exception.Message)" -ForegroundColor Red
-        }
-    }
-    
-    # Удаление архива
-    Remove-Item $zipFile -Force -ErrorAction SilentlyContinue
-    
-    # Ярлык в автозагрузку
-    if ($Package.AutoRun) {
-        $startupPath = [System.IO.Path]::Combine($env:APPDATA, "Microsoft\Windows\Start Menu\Programs\Startup", "$($Package.Name).lnk")
-        Create-Shortcut -TargetPath "$packagePath\$($Package.ExeFile)" -ShortcutPath $startupPath -Arguments $Package.LaunchArgs
-        Write-Host "  ✓ Добавлено в автозагрузку" -ForegroundColor Green
-    }
-    
-    # Ярлык на рабочий стол
-    if ($Package.DesktopIcon) {
-        $desktopPath = [System.IO.Path]::Combine($env:USERPROFILE, "Desktop", "$($Package.Name).lnk")
-        Create-Shortcut -TargetPath "$packagePath\$($Package.ExeFile)" -ShortcutPath $desktopPath
-        Write-Host "  ✓ Добавлен ярлык на рабочий стол" -ForegroundColor Green
-    }
-    
-    # Запуск приложения
-    if ($Package.Launch) {
-        $exePath = "$packagePath\$($Package.ExeFile)"
-        if (Test-Path $exePath) {
-            if ($Package.LaunchArgs) {
-                Start-Process -FilePath $exePath -ArgumentList $Package.LaunchArgs -WorkingDirectory $packagePath
-            } else {
-                Start-Process -FilePath $exePath -WorkingDirectory $packagePath
-            }
-            Write-Host "  ✓ Запущено в фоновом режиме" -ForegroundColor Green
-        } else {
-            Write-Host "  ⚠ Исполняемый файл не найден" -ForegroundColor Red
-        }
-    }
-}
-
-# Функция создания ярлыка
 function Create-Shortcut {
-    param(
-        [string]$TargetPath,
-        [string]$ShortcutPath,
-        [string]$Arguments = "",
-        [string]$WorkingDirectory = ""
-    )
-    
+    param($TargetPath, $ShortcutPath, $Arguments = "")
     $WshShell = New-Object -ComObject WScript.Shell
     $Shortcut = $WshShell.CreateShortcut($ShortcutPath)
     $Shortcut.TargetPath = $TargetPath
     $Shortcut.Arguments = $Arguments
-    $Shortcut.WorkingDirectory = if ($WorkingDirectory) { $WorkingDirectory } else { [System.IO.Path]::GetDirectoryName($TargetPath) }
     $Shortcut.Save()
 }
 
-# Основной процесс установки
-# Write-Host "Установка в: $InstallPath" -ForegroundColor Gray
+function Install-Package {
+    param($pkg)
 
-# Установка каждого пакета
-foreach ($package in $Packages) {
-    Install-Package -Package $package
-    Write-Host ""
+    Set-Status "Скачивание: $($pkg.Name)..."
+    $zip = "$TempPath\$($pkg.Name).zip"
+    if ($TestMode) {
+        Start-Sleep -Milliseconds 2000
+    } else {
+        Invoke-WebRequest -Uri $pkg.URL -OutFile $zip -UseBasicParsing -ErrorAction Stop | Out-Null
+    }
+
+    Set-Status "Распаковка: $($pkg.Name)..."
+    $path = "$InstallPath\$($pkg.Name)"
+    New-Item -ItemType Directory -Path $path -Force | Out-Null
+    if ($TestMode) {
+        Start-Sleep -Milliseconds 1000
+    } else {
+        Expand-Archive -Path $zip -DestinationPath $path -Force
+    }
+
+    if (-not $TestMode) {
+        Remove-Item $zip -Force -ErrorAction SilentlyContinue
+    }
+
+    # Создаем автозапуск
+    if ($pkg.AutoRun) {
+        $args = if ($pkg.LaunchArgs) { $pkg.LaunchArgs } else { "" }
+        Create-Shortcut "$path\$($pkg.ExeFile)" "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\$($pkg.Name).lnk" $args
+    }
+
+    # Создаем ярлык на рабочем столе
+    if ($pkg.DesktopIcon) {
+        $args = if ($pkg.LaunchArgs) { $pkg.LaunchArgs } else { "" }
+        Create-Shortcut "$path\$($pkg.ExeFile)" "$env:USERPROFILE\Desktop\$($pkg.Name).lnk" $args
+    }
+
+    # Запуск программы
+    if ($pkg.Launch -and -not $TestMode) {
+        if ($pkg.LaunchArgs -and $pkg.LaunchArgs.Trim() -ne "") {
+            # Есть аргументы → передаем через -ArgumentList
+            Start-Process -FilePath "$path\$($pkg.ExeFile)" -ArgumentList $pkg.LaunchArgs -WorkingDirectory $path
+        } else {
+            # Нет аргументов → запускаем без -ArgumentList
+            Start-Process -FilePath "$path\$($pkg.ExeFile)" -WorkingDirectory $path
+        }
+    }
+
+    Set-Status "Установлено: $($pkg.Name)"
+    Start-Sleep 1
 }
 
-# Добавление в исключения Защитника Windows
-# Write-Host "Добавление в исключения Защитника Windows..." -ForegroundColor Yellow
-try {
-    Add-MpPreference -ExclusionPath $InstallPath -ErrorAction Stop
-    # Write-Host "✓ Папка добавлена в исключения" -ForegroundColor Green
-} catch {
-    Write-Host "⚠ Не удалось добавить в исключения (требуются права администратора)" -ForegroundColor Red
+$Packages = @(
+    @{ Name="SetLuma"; URL="https://free-gen.github.io/downloads/SetLuma.zip"; ExeFile="SetLuma.exe"; AutoRun=$true; Launch=$true; DesktopIcon=$false; LaunchArgs="" },
+    @{ Name="Package Installer"; URL="https://free-gen.github.io/downloads/PackageInstaller.zip"; ExeFile="PackageInstaller.exe"; AutoRun=$false; Launch=$false; DesktopIcon=$true; LaunchArgs="" },
+    @{ Name="NanoStat"; URL="https://free-gen.github.io/downloads/NanoStat.zip"; ExeFile="NanoStat.exe"; AutoRun=$true; Launch=$true; DesktopIcon=$false; LaunchArgs="--min" }
+)
+
+foreach ($p in $Packages) { Install-Package $p }
+
+Set-Status "Настройка Windows Defender..."
+if (-not $TestMode) {
+    Add-MpPreference -ExclusionPath $InstallPath -ErrorAction SilentlyContinue | Out-Null
 }
 
-# Установка winget (если не установлен)
-Add-AppxPackage -RegisterByFamilyName -MainPackage Microsoft.DesktopAppInstaller_8wekyb3d8bbwe
-Write-Host "Winget установлен" -ForegroundColor Gray
+Set-Status "Проверка и регистрация Winget..."
+Add-AppxPackage -RegisterByFamilyName -MainPackage Microsoft.DesktopAppInstaller_8wekyb3d8bbwe | Out-Null
 
-# Список пакетов для установки
-$app = @(
-"Yandex.Browser"
-"qBittorrent.qBittorrent"
-"dotPDN.PaintDotNet"
-"7zip.7zip"
-"Microsoft.VisualStudioCode"
-"Microsoft.DotNet.SDK.7"
-"Python.Python.3.11"
+$wingetApps = @(
+"Yandex.Browser",
+"qBittorrent.qBittorrent",
+"dotPDN.PaintDotNet",
+"7zip.7zip",
+"Microsoft.VisualStudioCode",
+"Microsoft.DotNet.SDK.7",
+"Python.Python.3.11",
 "CodecGuide.K-LiteCodecPack.Mega"
 )
 
-# Цикл установки
-foreach ($pkg in $app) {
-    winget install --id $pkg -e --silent --disable-interactivity --accept-package-agreements --accept-source-agreements
+foreach ($w in $wingetApps) {
+    Set-Status "Установка: $w..."
+    if ($TestMode) {
+        Start-Sleep -Milliseconds 2000
+    } else {
+        winget install --id $w -e --silent --disable-interactivity --accept-package-agreements --accept-source-agreements | Out-Null
+    }
 }
 
-Write-Host "`nУстановка завершена!" -ForegroundColor White
-# Write-Host "Все программы установлены в: $InstallPath" -ForegroundColor Gray
-Write-Host "`nДля продолжения нажмите клавишу ВВОД..." -ForegroundColor White
+Set-Status "Готово!"
 Read-Host
