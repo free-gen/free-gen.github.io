@@ -154,14 +154,39 @@ $wingetApps = @(
 )
 
 # Устанвка пакетов winget
+# foreach ($w in $wingetApps) {
+#     Set-Status "Установка: $($w.Name)..."
+#     if ($TestMode) {
+#         Start-Sleep 2
+#     } else {
+#         winget install --id $w.Id -e --silent --disable-interactivity --accept-package-agreements --accept-source-agreements | Out-Null
+#     }
+# }
+
+# Устанвка пакетов winget +
 foreach ($w in $wingetApps) {
-    Set-Status "Установка: $($w.Name)..."
-    if ($TestMode) {
-        Start-Sleep 2
-    } else {
-        winget install --id $w.Id -e --silent --disable-interactivity --accept-package-agreements --accept-source-agreements | Out-Null
+
+    # Проверка наличия
+    $isInstalled = winget list --id $w.Id -e | Select-String $w.Id
+    if ($isInstalled) {
+        Set-Status "Пакет $($w.Name) уже установлен..."
+        continue
     }
+
+    # Этап: загрузка + установка
+    Set-Status "Развертывание: $($w.Name)..."
+
+    if ($TestMode) {
+        Start-Sleep 3
+    } else {
+        winget install --id $w.Id -e --silent --disable-interactivity `
+            --accept-package-agreements --accept-source-agreements | Out-Null
+    }
+
+    # Завершение
+    Set-Status "Развертывание $($w.Name) завершено..."
 }
+
 
 # Настройка defaultProfile Windows Terminal
 Set-Status "Настройка defaultProfile Windows Terminal..."
@@ -172,7 +197,7 @@ if (Test-Path "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbw
     } else {
         try {
             (Get-Content $env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json -Raw | ConvertFrom-Json | ForEach-Object { $_.defaultProfile = "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}"; $_ } | ConvertTo-Json -Depth 5) | Set-Content $env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json -Encoding UTF8
-            Set-Status "Windows Terminal настроен"
+            Set-Status "Windows Terminal - Установлен cmd.exe профиль по умолчанию"
         } catch {
             Set-Status "Ошибка настройки Windows Terminal"
         }
@@ -183,4 +208,3 @@ if (Test-Path "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbw
 
 Set-Status "Все операции успешно выполнены."
 Read-Host
-
