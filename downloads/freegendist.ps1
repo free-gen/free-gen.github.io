@@ -20,7 +20,7 @@ $banner = @"
 
  ┌──────────────────────────────────────────────────────┐ 
  │        Windows Post Install Script by FreeGen        │ 
- │           Установка стандартного окружения           │ 
+ │           Настройка стандартного окружения           │ 
  └──────────────────────────────────────────────────────┘ 
 "@
 Write-Host $banner -ForegroundColor Cyan
@@ -34,8 +34,8 @@ Write-Host " │ + Windows Package Manager                            │ " -For
 Write-Host " │ + Яндекс Браузер                                     │ " -ForegroundColor White
 Write-Host " │ + qBittorrent                                        │ " -ForegroundColor White
 Write-Host " │ + Paint.NET                                          │ " -ForegroundColor White
-Write-Host " │ + 7zip                                               │ " -ForegroundColor White
-Write-Host " │ + Microsoft VSCode                                   │ " -ForegroundColor White
+Write-Host " │ + 7-zip                                              │ " -ForegroundColor White
+Write-Host " │ + Microsoft VS Code                                  │ " -ForegroundColor White
 Write-Host " │ + Microsoft .NET SDK                                 │ " -ForegroundColor White
 Write-Host " │ + Python 3.11                                        │ " -ForegroundColor White
 Write-Host " │ + K-Lite Codec Pack                                  │ " -ForegroundColor White
@@ -48,11 +48,12 @@ Write-Host " │   Для отмены установки закройте ок�
 Write-Host " └──────────────────────────────────────────────────────┘ " -ForegroundColor Red
 
 $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown") | Out-Null
-
 Clear-Host
 
 Write-Host $banner -ForegroundColor Cyan
 Write-Host ""
+
+# Динамическая строка статуса
 $StatusLine = $host.UI.RawUI.CursorPosition.Y
 
 $InstallPath = "$env:LOCALAPPDATA\FreeGen"
@@ -67,13 +68,14 @@ function Create-Shortcut {
     $Shortcut.Save()
 }
 
+# Установка из своего источника
 function Install-Package {
     param($pkg)
 
     Set-Status "Скачивание: $($pkg.Name)..."
     $zip = "$TempPath\$($pkg.Name).zip"
     if ($TestMode) {
-        Start-Sleep -Milliseconds 2000
+        Start-Sleep 2
     } else {
         Invoke-WebRequest -Uri $pkg.URL -OutFile $zip -UseBasicParsing -ErrorAction Stop | Out-Null
     }
@@ -82,7 +84,7 @@ function Install-Package {
     $path = "$InstallPath\$($pkg.Name)"
     New-Item -ItemType Directory -Path $path -Force | Out-Null
     if ($TestMode) {
-        Start-Sleep -Milliseconds 1000
+        Start-Sleep 1
     } else {
         Expand-Archive -Path $zip -DestinationPath $path -Force
     }
@@ -118,6 +120,7 @@ function Install-Package {
     Start-Sleep 1
 }
 
+# Пакеты из своего источника
 $Packages = @(
     @{ Name="SetLuma"; URL="https://free-gen.github.io/downloads/SetLuma.zip"; ExeFile="SetLuma.exe"; AutoRun=$true; Launch=$true; DesktopIcon=$false; LaunchArgs="" },
     @{ Name="Package Installer"; URL="https://free-gen.github.io/downloads/PackageInstaller.zip"; ExeFile="PackageInstaller.exe"; AutoRun=$false; Launch=$false; DesktopIcon=$true; LaunchArgs="" },
@@ -126,33 +129,57 @@ $Packages = @(
 
 foreach ($p in $Packages) { Install-Package $p }
 
+# Исключение в Защитнике
 Set-Status "Настройка Windows Defender..."
+Start-Sleep 1
 if (-not $TestMode) {
     Add-MpPreference -ExclusionPath $InstallPath -ErrorAction SilentlyContinue | Out-Null
 }
 
+# Этап 2 - Winget
 Set-Status "Проверка и регистрация Winget..."
+Start-Sleep 1
 Add-AppxPackage -RegisterByFamilyName -MainPackage Microsoft.DesktopAppInstaller_8wekyb3d8bbwe | Out-Null
 
+# Пакеты winget
 $wingetApps = @(
-"Yandex.Browser",
-"qBittorrent.qBittorrent",
-"dotPDN.PaintDotNet",
-"7zip.7zip",
-"Microsoft.VisualStudioCode",
-"Microsoft.DotNet.SDK.7",
-"Python.Python.3.11",
-"CodecGuide.K-LiteCodecPack.Mega"
+    @{Id="Yandex.Browser"; Name="Яндекс Браузер"},
+    @{Id="qBittorrent.qBittorrent"; Name="qBittorrent"},
+    @{Id="dotPDN.PaintDotNet"; Name="Paint.NET"},
+    @{Id="7zip.7zip"; Name="7-Zip"},
+    @{Id="Microsoft.VisualStudioCode"; Name="Microsoft VS Code"},
+    @{Id="Microsoft.DotNet.SDK.7"; Name="Microsoft .NET SDK"},
+    @{Id="Python.Python.3.11"; Name="Python 3.11"},
+    @{Id="CodecGuide.K-LiteCodecPack.Mega"; Name="K-Lite Codec Pack"}
 )
 
+# Устанвка пакетов winget
 foreach ($w in $wingetApps) {
-    Set-Status "Установка: $w..."
+    Set-Status "Установка: $($w.Name)..."
     if ($TestMode) {
-        Start-Sleep -Milliseconds 2000
+        Start-Sleep 2
     } else {
-        winget install --id $w -e --silent --disable-interactivity --accept-package-agreements --accept-source-agreements | Out-Null
+        winget install --id $w.Id -e --silent --disable-interactivity --accept-package-agreements --accept-source-agreements | Out-Null
     }
 }
 
-Set-Status "Готово!"
+# Настройка defaultProfile Windows Terminal
+Set-Status "Настройка defaultProfile Windows Terminal..."
+Start-Sleep 1
+if (Test-Path "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json") {
+    if ($TestMode) {
+        Start-Sleep 1
+    } else {
+        try {
+            (Get-Content $env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json -Raw | ConvertFrom-Json | ForEach-Object { $_.defaultProfile = "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}"; $_ } | ConvertTo-Json -Depth 5) | Set-Content $env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json -Encoding UTF8
+            Set-Status "Windows Terminal настроен"
+        } catch {
+            Set-Status "Ошибка настройки Windows Terminal"
+        }
+    }
+} else {
+    Set-Status "Ошибка. Профиль не найден."
+}
+
+Set-Status "Все операции успешно выполнены."
 Read-Host
