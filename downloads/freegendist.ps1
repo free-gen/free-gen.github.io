@@ -234,32 +234,15 @@ if (-not $TestMode) {
 # Add-AppxPackage -RegisterByFamilyName -MainPackage Microsoft.DesktopAppInstaller_8wekyb3d8bbwe | Out-Null
 
 # ===== НАСТРОЙКА WINGET =====
-Set-Status "Инициализация Winget источников..."
+Set-Status "Проверка готовности Winget..."
 Start-Sleep 1
-
-try {
-    winget source reset --force | Out-Null
-    winget source update | Out-Null
-} catch {
-    Set-Status "Ошибка инициализации источников Winget"
-    Start-Sleep 2
-}
 
 # ===== УСТАНОВКА ПРИЛОЖЕНИЙ ЧЕРЕЗ WINGET =====
 foreach ($app in $WingetApps) {
-    # Проверяем, не установлено ли приложение уже
-    $isInstalled = winget show --id $app.Id -e 2>$null
-    
-    if ($isInstalled) {
-        Set-Status "Пакет $($app.Name) уже установлен..."
-        Start-Sleep 1
-        continue
-    }
 
-    # Установка приложения
     Set-Status "Развертывание: $($app.Name)..."
     Start-Sleep 1
-    
+
     if ($TestMode) {
         Start-Sleep 3
     } else {
@@ -304,6 +287,7 @@ if (Test-Path $terminalSettingsPath) {
 # ===== ЗАВЕРШЕНИЕ =====
 Set-Status "Все операции успешно выполнены."
 Read-Host
+
 
 
 
