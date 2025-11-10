@@ -238,34 +238,14 @@ Set-Status "Проверка Winget..."
 Start-Sleep 1
 
 # Проверяем, доступен ли Winget
-if (Get-Command winget -ErrorAction SilentlyContinue) {
-    Set-Status "Winget уже доступен"
-} else {
-    Set-Status "Winget не найден, регистрация..."
-    
-    if (-not $TestMode) {
-        try {
-            # Запускаем Add-AppxPackage в фоне с таймаутом
-            $wingetJob = Start-Job {
-                Add-AppxPackage -RegisterByFamilyName -MainPackage Microsoft.DesktopAppInstaller_8wekyb3d8bbwe
-            }
-
-            if (-not (Wait-Job $wingetJob -Timeout 10)) {
-                # Таймаут срабатывает, если команда зависла
-                Set-Status "Регистрация Winget не завершена (таймаут)"
-                Stop-Job $wingetJob | Out-Null
-            } else {
-                # Получаем результат выполнения команды
-                Receive-Job $wingetJob | Out-Null
-                Set-Status "Регистрация Winget завершена"
-            }
-        } catch {
-            Set-Status "Ошибка при регистрации Winget"
-        }
-    } else {
-        Set-Status "TestMode: пропуск регистрации Winget"
-    }
+if (-not (Get-Command winget.exe -ErrorAction SilentlyContinue)) {
+    Set-Status "ОШИБКА: Winget не найден. Установите Microsoft App Installer из Microsoft Store."
+    Read-Host
+    exit
 }
+
+Set-Status "Winget доступен. Начинаем установку программ..."
+Start-Sleep 1
 
 # ===== УСТАНОВКА ПРИЛОЖЕНИЙ ЧЕРЕЗ WINGET =====
 foreach ($app in $WingetApps) {
@@ -326,4 +306,5 @@ if (Test-Path $terminalSettingsPath) {
 # ===== ЗАВЕРШЕНИЕ =====
 Set-Status "Все операции успешно выполнены."
 Read-Host
+
 
