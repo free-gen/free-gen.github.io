@@ -139,7 +139,8 @@ if (-not $TestMode) {
 # Этап 2 - Winget
 Set-Status "Проверка и регистрация Winget..."
 Start-Sleep 1
-Add-AppxPackage -RegisterByFamilyName -MainPackage Microsoft.DesktopAppInstaller_8wekyb3d8bbwe | Out-Null
+# Add-AppxPackage -RegisterByFamilyName -MainPackage Microsoft.DesktopAppInstaller_8wekyb3d8bbwe | Out-Null
+Add-AppxPackage -RegisterByFamilyName -MainPackage Microsoft.DesktopAppInstaller_8wekyb3d8bbwe
 
 # Пакеты winget
 $wingetApps = @(
@@ -154,38 +155,38 @@ $wingetApps = @(
 )
 
 # Устанвка пакетов winget
-foreach ($w in $wingetApps) {
-    Set-Status "Установка: $($w.Name)..."
-    if ($TestMode) {
-        Start-Sleep 2
-    } else {
-        winget install --id $w.Id -e --silent --disable-interactivity --accept-package-agreements --accept-source-agreements | Out-Null
-    }
-}
-
-# Устанвка пакетов winget +
 # foreach ($w in $wingetApps) {
-
-#     # Проверка наличия
-#     $isInstalled = winget list --id $w.Id -e | Select-String $w.Id
-#     if ($isInstalled) {
-#         Set-Status "Пакет $($w.Name) уже установлен..."
-#         continue
-#     }
-
-#     # Этап: загрузка + установка
-#     Set-Status "Развертывание: $($w.Name)..."
-
+#     Set-Status "Установка: $($w.Name)..."
 #     if ($TestMode) {
-#         Start-Sleep 3
+#         Start-Sleep 2
 #     } else {
-#         winget install --id $w.Id -e --silent --disable-interactivity `
-#             --accept-package-agreements --accept-source-agreements | Out-Null
+#         winget install --id $w.Id -e --silent --disable-interactivity --accept-package-agreements --accept-source-agreements | Out-Null
 #     }
-
-#     # Завершение
-#     Set-Status "Развертывание $($w.Name) завершено..."
 # }
+
+# Установка пакетов winget +
+foreach ($w in $wingetApps) {
+
+    # Проверка наличия
+    $isInstalled = winget list --id $w.Id -e | Select-String $w.Id
+    if ($isInstalled) {
+        Set-Status "Пакет $($w.Name) уже установлен..."
+        continue
+    }
+
+    # Этап: загрузка + установка
+    Set-Status "Развертывание: $($w.Name)..."
+
+    if ($TestMode) {
+        Start-Sleep 3
+    } else {
+        winget install --id $w.Id -e --silent --disable-interactivity `
+            --accept-package-agreements --accept-source-agreements | Out-Null
+    }
+
+    # Завершение
+    Set-Status "Развертывание $($w.Name) завершено..."
+}
 
 
 # Настройка defaultProfile Windows Terminal
@@ -208,4 +209,5 @@ if (Test-Path "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbw
 
 Set-Status "Все операции успешно выполнены."
 Read-Host
+
 
