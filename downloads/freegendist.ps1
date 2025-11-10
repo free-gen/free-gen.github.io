@@ -56,7 +56,7 @@ Write-Host ""
 # Динамическая строка статуса
 $StatusLine = $host.UI.RawUI.CursorPosition.Y
 
-$InstallPath = "$env:LOCALAPPDATA\"
+$InstallPath = "$env:LOCALAPPDATA\FreeGen"
 $TempPath = $env:TEMP
 
 function Create-Shortcut {
@@ -72,6 +72,15 @@ function Create-Shortcut {
 function Install-Package {
     param($pkg)
 
+    $path = "$InstallPath\$($pkg.Name)"
+
+    # Проверка существования папки пакета
+    if (Test-Path $path) {
+        Set-Status "$($pkg.Name) уже установлено."
+        Start-Sleep 1
+        return
+    }
+
     Set-Status "Скачивание: $($pkg.Name)..."
     $zip = "$TempPath\$($pkg.Name).zip"
     if ($TestMode) {
@@ -81,7 +90,6 @@ function Install-Package {
     }
 
     Set-Status "Распаковка: $($pkg.Name)..."
-    $path = "$InstallPath\$($pkg.Name)"
     New-Item -ItemType Directory -Path $path -Force | Out-Null
     if ($TestMode) {
         Start-Sleep 1
@@ -213,6 +221,7 @@ if (Test-Path "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbw
 
 Set-Status "Все операции успешно выполнены."
 Read-Host
+
 
 
 
