@@ -113,13 +113,25 @@ function Create-Shortcut {
     param(
         [string]$TargetPath,
         [string]$ShortcutPath,
-        [string]$Arguments = ""
+        [string]$Arguments = "",
+        [string]$WorkingDirectory = ""
     )
     
     $WshShell = New-Object -ComObject WScript.Shell
     $Shortcut = $WshShell.CreateShortcut($ShortcutPath)
     $Shortcut.TargetPath = $TargetPath
-    $Shortcut.Arguments = $Arguments
+    
+    if ($Arguments -ne "") {
+        $Shortcut.Arguments = $Arguments
+    }
+
+    # ГЛАВНОЕ ДОБАВЛЕНИЕ
+    if ($WorkingDirectory -eq "") {
+        $Shortcut.WorkingDirectory = Split-Path $TargetPath
+    } else {
+        $Shortcut.WorkingDirectory = $WorkingDirectory
+    }
+
     $Shortcut.Save()
 }
 
@@ -287,6 +299,7 @@ if (Test-Path $terminalSettingsPath) {
 # ===== ЗАВЕРШЕНИЕ =====
 Set-Status "Все операции успешно выполнены."
 Read-Host
+
 
 
 
