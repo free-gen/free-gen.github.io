@@ -56,7 +56,7 @@ Write-Host ""
 # Динамическая строка статуса
 $StatusLine = $host.UI.RawUI.CursorPosition.Y
 
-$InstallPath = "$env:LOCALAPPDATA\FreeGen"
+$InstallPath = "$env:LOCALAPPDATA\"
 $TempPath = $env:TEMP
 
 function Create-Shortcut {
@@ -186,6 +186,7 @@ foreach ($w in $wingetApps) {
 
     # Завершение
     Set-Status "Развертывание $($w.Name) завершено..."
+    Start-Sleep 1
 }
 
 
@@ -199,15 +200,19 @@ if (Test-Path "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbw
         try {
             (Get-Content $env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json -Raw | ConvertFrom-Json | ForEach-Object { $_.defaultProfile = "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}"; $_ } | ConvertTo-Json -Depth 5) | Set-Content $env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json -Encoding UTF8
             Set-Status "Windows Terminal - Установлен cmd.exe профиль по умолчанию"
+            Start-Sleep 1
         } catch {
             Set-Status "Ошибка настройки Windows Terminal"
+            Start-Sleep 1
         }
     }
 } else {
     Set-Status "Ошибка. Профиль не найден."
+    Start-Sleep 1
 }
 
 Set-Status "Все операции успешно выполнены."
 Read-Host
+
 
 
