@@ -234,23 +234,21 @@ if (-not $TestMode) {
 # Add-AppxPackage -RegisterByFamilyName -MainPackage Microsoft.DesktopAppInstaller_8wekyb3d8bbwe | Out-Null
 
 # ===== НАСТРОЙКА WINGET =====
-Set-Status "Проверка Winget..."
+Set-Status "Инициализация Winget источников..."
 Start-Sleep 1
 
-# Проверяем, доступен ли Winget
-if (-not (Get-Command winget.exe -ErrorAction SilentlyContinue)) {
-    Set-Status "ОШИБКА: Winget не найден. Установите Microsoft App Installer из Microsoft Store."
-    Read-Host
-    exit
+try {
+    winget source reset --force | Out-Null
+    winget source update | Out-Null
+} catch {
+    Set-Status "Ошибка инициализации источников Winget"
+    Start-Sleep 2
 }
-
-Set-Status "Winget доступен. Начинаем установку программ..."
-Start-Sleep 1
 
 # ===== УСТАНОВКА ПРИЛОЖЕНИЙ ЧЕРЕЗ WINGET =====
 foreach ($app in $WingetApps) {
     # Проверяем, не установлено ли приложение уже
-    $isInstalled = winget list --id $app.Id -e | Select-String $app.Id
+    $isInstalled = winget show --id $app.Id -e 2>$null
     
     if ($isInstalled) {
         Set-Status "Пакет $($app.Name) уже установлен..."
@@ -306,5 +304,6 @@ if (Test-Path $terminalSettingsPath) {
 # ===== ЗАВЕРШЕНИЕ =====
 Set-Status "Все операции успешно выполнены."
 Read-Host
+
 
 
