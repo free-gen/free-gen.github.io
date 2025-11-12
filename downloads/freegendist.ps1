@@ -39,7 +39,7 @@ $Packages = @(
 
 # Приложения для установки через Winget
 $WingetApps = @(
-    @{ Id = "Yandex.Browser"; Name = "Яндекс Браузер" },
+    # @{ Id = "Yandex.Browser"; Name = "Яндекс Браузер" },
     @{ Id = "qBittorrent.qBittorrent"; Name = "qBittorrent" },
     @{ Id = "dotPDN.PaintDotNet"; Name = "Paint.NET" },
     @{ Id = "7zip.7zip"; Name = "7-Zip" },
@@ -66,7 +66,6 @@ $SoftwareList = @"
  │ + Package Installer (Менеджер Chocolatey)            │ 
  │ + NanoStat (Клиент для NanoStat Device)              │ 
  │ + Windows Package Manager                            │ 
- │ + Яндекс Браузер                                     │ 
  │ + qBittorrent                                        │ 
  │ + Paint.NET                                          │ 
  │ + 7-zip                                              │ 
@@ -299,6 +298,7 @@ if (Test-Path $terminalSettingsPath) {
 # ===== ЗАВЕРШЕНИЕ =====
 Set-Status "Все операции успешно выполнены."
 Read-Host
+
 
 
 
