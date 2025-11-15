@@ -62,10 +62,12 @@ $SoftwareList = @"
  ┌──────────────────────────────────────────────────────┐ 
  │   Набор программ для развертывания:                  │ 
  ├──────────────────────────────────────────────────────┤ 
+ │   Пакеты из источника FreeGen:                       │ 
  │ + SetLuma (Управление яркостью монитора)             │ 
  │ + Package Installer (Менеджер Chocolatey)            │ 
  │ + NanoStat (Клиент для NanoStat Device)              │ 
- │ + Windows Package Manager                            │ 
+ │                                                      │ 
+ │   Пакеты Windows Package Manager:                    │ 
  │ + qBittorrent                                        │ 
  │ + Paint.NET                                          │ 
  │ + 7-zip                                              │ 
@@ -171,12 +173,37 @@ function Install-Package {
     }
 
     # Создание автозапуска
+    # if ($Package.AutoRun) {
+    #     $arguments = if ($Package.LaunchArgs) { $Package.LaunchArgs } else { "" }
+    #     Create-Shortcut `
+    #         -TargetPath "$packagePath\$($Package.ExeFile)" `
+    #         -ShortcutPath "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\$($Package.Name).lnk" `
+    #         -Arguments $arguments
+    # }
+
+    # Создание автозапуска через Планировщик задач
     if ($Package.AutoRun) {
-        $arguments = if ($Package.LaunchArgs) { $Package.LaunchArgs } else { "" }
-        Create-Shortcut `
-            -TargetPath "$packagePath\$($Package.ExeFile)" `
-            -ShortcutPath "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\$($Package.Name).lnk" `
-            -Arguments $arguments
+        $taskName = $Package.Name
+        $exePath  = "$packagePath\$($Package.ExeFile)"
+        $arguments = $Package.LaunchArgs
+
+        # Удаляем старое задание, если есть
+        schtasks.exe /Delete /TN "$taskName" /F 2>$null | Out-Null
+
+        # Формируем команду запуска для /TR
+        if ($arguments -and $arguments.Trim() -ne "") {
+            $taskCommand = "`"$exePath`" $arguments"
+        } else {
+            $taskCommand = "`"$exePath`""
+        }
+
+        # Создаём новое задание
+        schtasks.exe /Create `
+            /SC ONLOGON `
+            /RL HIGHEST `
+            /TN "$taskName" `
+            /TR "$taskCommand" `
+            /F | Out-Null
     }
 
     # Создание ярлыка на рабочем столе
@@ -239,15 +266,6 @@ if (-not $TestMode) {
     Add-MpPreference -ExclusionPath $InstallPath -ErrorAction SilentlyContinue | Out-Null
 }
 
-# ===== НАСТРОЙКА WINGET =====
-# Set-Status "Проверка и регистрация Winget..."
-# Start-Sleep 1
-# Add-AppxPackage -RegisterByFamilyName -MainPackage Microsoft.DesktopAppInstaller_8wekyb3d8bbwe | Out-Null
-
-# ===== НАСТРОЙКА WINGET =====
-Set-Status "Проверка готовности Winget..."
-Start-Sleep 1
-
 # ===== УСТАНОВКА ПРИЛОЖЕНИЙ ЧЕРЕЗ WINGET =====
 foreach ($app in $WingetApps) {
 
@@ -298,9 +316,3 @@ if (Test-Path $terminalSettingsPath) {
 # ===== ЗАВЕРШЕНИЕ =====
 Set-Status "Все операции успешно выполнены."
 Read-Host
-
-
-
-
-
-
