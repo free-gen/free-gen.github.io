@@ -150,7 +150,7 @@ a:visited:hover { color: #FFC000;}
 		margin-left: 2%;
 	}
 	.title {
-		font-size: calc(var(--index) * 2.5);
+		font-size: calc(var(--index) * 2.2);
 		margin-top: 100px;
 	}
 	.subtitle {
@@ -173,4 +173,5 @@ a:visited:hover { color: #FFC000;}
 		font-size: calc(var(--index) * 1.2);
 		margin-top: 25px;
 	}
+
 }
