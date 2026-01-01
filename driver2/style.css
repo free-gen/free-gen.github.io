@@ -36,7 +36,7 @@ hr {
 .title{
 	font-size: calc(var(--index) * 2.5);
 	font-family: 'Oswald', sans-serif;
-	font-weight: 900;
+	font-weight: 400;
 }
 
 .subtitle {
@@ -175,3 +175,4 @@ a:visited:hover { color: #FFC000;}
 	}
 
 }
+
