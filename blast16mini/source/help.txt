@@ -1,0 +1,21 @@
+
+Starting the game, you will have the following options:
+
+Hotkey + [START]  - Retroarch Settings
+Hotkey + [X]      - Reset Game
+Hotkey + [Y]      - ON/OFF Fast Forward
+Hotkey + [A]      - Save the Game
+Hotkey + [B]      - Download Save
+Hotkey + [C]      - Exit to the Main Menu
+Hotkey + [LEFT]   - Rewind
+Hotkey + [RIGHT]  - Fast Forward (Hold)
+Hotkey + [UP]     - Increase Volume
+Hotkey + [DOWN]   - Decrease Volume
+
+------------------------
+
+Enabled Quick Menu Options:
+
+Rewind
+Cheats
+Shaders

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Everdrive MD v3</title>
+	<link rel="icon" href="favicon.ico" type="image/x-icon"> 
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+	<link href="css/bootstrap.min.css" rel="stylesheet"> 
+	<style>
+		@font-face {font-family: 'sfmono';src: local('sfmono'), url('sfmono.woff') format('woff');}
+		body {font-family: 'sfmono', monospace; background-color: #252526; color: #d6d6d6; margin: 0;padding: 0;width: 100vw;}
+		.container {width: 60vw; position: relative; margin: auto; background-color: #1e1e1e; padding: 3vw; border-radius: 5px;}
+		h1, h2, span {color: #fff;}
+		span {color: #f1ae1b;}
+		section {line-height: 16pt;}
+		h2 {line-height: 24pt;}
+		a {text-decoration: none; color: #f1ae1b;}
+		@media screen and (max-width: 736px) {html, body {overflow-x: hidden; max-width: 100vw;} .container {width: 90vw; margin: auto;}}
+	</style>
+	<!-- FONTAWESOME WEB -->
+	<script src="https://kit.fontawesome.com/37ff3af7dc.js"></script>
+</head>
+<body>
+<!-- HEADER --> 
+<br><header>
+	<div style="font-size: 1.5vw; white-space: nowrap;" class="container">
+		<h1 style="text-align: center; line-height: 12pt;">EverDrive MD v3 - Руководство</h1>
+	</div>
+</header><br>
+
+<!-- CONTENT/SECTION -->
+<section>
+	<div class="container">
+		<p>
+<h2>ROM файлы и системное оборудование</h2><br>
+
+1. Некоторые форматы ROM файлов не будут корректно работать на EverDrive-MD. Настоятельно рекомендуется использовать «ромсеты» проверенные GoodGen 3.0 и новее.<br>
+<br>
+2. При использовании непроверенного ROM файла, игра может не запуститься, или работать с ошибками.<br>
+<br>
+3. Мы не оказываем поддержку, если вы используете модифицированные или «хакнутые» игровые ROM-ы. Многие из таких файлов предназначены для запуска на эмуляторах, а не на оригинальном оборудовании.<br>
+<br>
+4. Модифицированные Genesis/Mega Drive консоли или клоны этих систем, возможно, не будут работать. В некоторых ситуациях может помочь режим Genny3. В любом случае, мы не гарантируем работу EverDrive-MD на модифицированных системах и клонах.<br>
+<br><br><hr><br>
+
+<h2>Меню EverDrive-MD</h2><br>
+
+<span>> PLAY GAME</span><br>
+Запуск последней записанной во флэш-память игры.<br>
+<br>
+<span>> SELECT GAME</span><br>
+Копирование новой игры во флэш-память или запуск «модуля».<br>
+<br>
+<span>> OPTIONS</span><br>
+<br>
+<span>>> HARD RESET</span><br>
+Очистка системных регистров. Эта опция должна быть включена для лучшей совместимости с играми, однако для некоторых игр или консолей может потребоваться ее отключение. o On Опция Hard Reset включена для игр Genesis/Mega Drive. На игры Master System, это значение не оказывает никакого влияния.<br>
+<br>
+<span>>> SRAM AUTO BACKUP</span><br>
+Автоматическая запись сохранений на SD карту перед сменой игры, а также автоматическая загрузка сохранений перед запуском игры.<br>
+<br>
+<span>>> GENNY 3 MODE</span><br>
+Genesis 3-й модели не подает тактовый сигнал на порт картриджа. При включении этого режима, EverDrive-MD использует для SD карты внутренний генератор. В этом режиме SD карта работает немного медленней чем обычно. Опция должна быть использована только для Genesis 3-й модели, но может быть полезна и для некоторых клонов Genesis/Mega Drive.<br>
+<br>
+<span>>> REGION FREE</span><br>
+Если ваша версия EverDrive-MD оборудована MEGAKEY (PCB 2.4 или более поздняя), он может быть использован для запуска игр других регионов. Если MEGAKEY отсутствует (PCB 2.3 или более ранняя), тогда, при включенной опции, EverDrive-MD попытается пропатчить игровой ROM другого региона для его запуска.<br>
+<br>
+ОБРАТИТЕ ВНИМАНИЕ: MEGAKEY не будет работать, если EverDrive- MD подключен через 32X расширение, а также может не работать с другими адаптерами, такими как Game Genie. При обнаружении такой ситуации, ОС будет пытаться патчить ROM вместо использования MEGAKEY.<br>
+<br>
+<span>> CHEATS</span><br>
+EverDrive-MD поддерживает коды Game Genie. Коды могут быть
+введены вручную или загружены из текстового (*.txt) файла. Размер
+текстовых файлов не должен превышать 512 байт.
+Коды применяются во время записи игры во флэш-память. Когда игра
+записана, отключить их без повторной перезаписи невозможно.<br>
+<br>
+<span>> TOOLBOX</span><br>
+<br>
+<span>>> LOAD FROM SD</span><br>
+Загрузка сохранений с SD карты в SRAM.<br>
+<br>
+<span>>> SAVE TO FILE</span>	<br>
+Запись сохранений из SRAM в существующий на SD карте файл сохранений.<br>
+<br>
+<span>>> SAVE TO NEW FILE</span><br>
+Создание на SD карте нового файла сохранений и запись в него сохранений из SRAM.<br>
+<br>
+<span>>> DEVICE INFO</span><br>
+Информация об EverDrive-MD.<br>
+<br>
+<span>>> FORMAT SD</span><br>
+Форматирование вставленной в EverDrive-MD SD карты. Перед использованием с EverDrive-MD, SD карта должна быть отформатирована с помощью этого инструмента. Форматирование SD карты удаляет все ее содержимое.<br>
+<br>
+<span>>> UPDATE OS</span><br>
+Обновление пользователем операционной системы.<br>
+<br>
+<span>>> ABOUT</span><br>
+Информация о разработчике и дистрибютере.<br>
+<br><br><hr><br>
+
+<h2>Вопрос - Ответ</h2><br>
+
+В: Я получаю сообщение об ошибке при попытке обновить операционную систему. После этого EverDrive-MD не отображает меню. Как такое исправить?<br>
+О: Зажмите на контроллере №1 клавиши A+B+C, и удерживая их включите приставку. Должна запуститься резервная ОС.<br>
+<br>
+В: При запуске игры, моя Genesis/Mega Drive показывает черный экран.<br>
+О: Отключите Hard Reset в меню Options.<br>
+<br>
+В: Игра зависает, высвечивает мне сообщение об ошибке или просто показывает черный/красный экран. Как это устранить?<br>
+О:<br>
+-  1. Возможно, вы используете ROM файл неправильного формата.<br>
+-  2. Запустите ваш игровой файл на эмуляторе. Настройте в эмуляторе тот же регион, что и на вашей консоли (тот, что указан в Tools -> Device Info). Если игра заработает на эмуляторе, то скорей всего, она заработает и на вашей Genesis/Mega Drive.<br>
+-  3. Отключите патч региона.<br>
+-  4. Game Genie коды могут привести к появлению красного экрана. В этом случае может потребоваться «мастер-код», чтобы отключить самопроверку игры. Рекомендуется перед использованием кодов разобраться как правильно с ними работать.<br>
+	<br>
+В: Как запустить «модуль» на моей Genesis/Mega Drive?<br>
+О: Вам нужно выбрать «модуль» с помощью Select Game в меню. Он будет загружен в ОЗУ приставки и запущен. Если во флэш-памяти есть игра, она оттуда никуда не денется.<br>
+<br>
+В: При попытке выйти в диспетчер файлов после выбора Select Game, я получаю ошибку «невозможно открыть корневой каталог» ("can't open root dir"). Что это может значить?<br>
+О: Видимо, вы не отформатировали SD карту с помощью инструмента Format SD в меню Toolbox.<br>
+<br>
+В: Я вижу какие-то странные глюки в диспетчере файлов. Что-то случилось с моим EverDrive-MD?<br>
+О: Скорее всего, с вашим EverDrive-MD ничего плохого не произошло.
+Во-первых, убедитесь что на SD карте не более 200 файлов в директории (не более 120 в корневом каталоге и при использовании старых версий ОС). Во-вторых, попробуйте отформатировать SD карту на вашем ПК, а затем снова отформатировать с помощью Format SD из меню Toolbox.<br>
+<br>
+В: У меня есть определенные проблемы при использовании кодов Game Genie, что мне делать??<br>
+О: Настоятельно рекомендуется разобраться как работают эти коды перед их использованием на EverDrive-MD. Game Genie не являются разработкой KRIKzz, поэтому их поддержка ограничена.<br>
+<br>
+В: Могу ли я использовать более старую версию ОС?<br>
+О: Да, но делать это не рекомендуется. Такие действия могут привести к некорректной работе картриджа или его полному отказу.<br>
+<br>
+В: Могу ли я самостоятельно обновить прошивку?<br>
+О: Не советуется самостоятельно обновлять прошивку. Перепрошивка может повредить EverDrive-MD, что лишит вас гарантии. Но пользователь может сделать это вот так:<br>
+*  1. Купите Altera USB Blaster и разьем JTAG.<br>
+*  2. Установите программу Altera Quartus II Web Edition.<br>
+*  3. Подключите Altera USB Blaster и установите драйвер из каталога <br> <span style="color: #d6d6d6; font-size: 10pt; background-color: darkblue; padding: 3pt;">"C:\altera\10.0sp1\quartus\drivers\usb-blaster\"</span>.<br>
+*  4. Запустите Altera Quartus II Web Edition.<br>
+*  5. Откройте "Tools -> Programmer".<br>
+*  6. Нажмите кнопку "Hardware Setup" и выберите "USB Blaster".<br>
+*  7. Нажмите "AddFile" и выберите файл прошивки (*.pof).<br>
+*  8. Подключите Everdrive-MD к Genesis/Mega Drive.<br>
+*  9. Подсоедините JTAG и держите под углом для лучшего соединения.<br>
+*  10. Включите питание Genesis/Mega Drive.<br>
+*  11. Нажмите "Start" в программе Quartus.<br>
+	<br>
+В: Какие игры не поддерживает EverDrive-MD?<br>
+О: Virtua Racing, Mega Man, и некоторые игры от EA sports.<br>
+<br>
+В: Сохранится ли игра во флэш-памяти при отключении консоли?<br>
+О: Да.<br>
+<br>
+В: Могу ли я использовать записанную во флэш-память игру без SD карты?<br>
+О: Да.<br>
+<br>
+В: Могу ли я играть в игры Master System через подключенное 32X расширение?<br>
+О: Нет.<br>
+<br>
+В: Могу ли я играть в игры Master System на Nomad?<br>
+О: Да, но для этого потребуется модифицировать Nomad. Поищите в интернете информацию о том, как включить SMS режим на Nomad.
+		</p>
+  </div><br>
+</section>
+
+<!-- FOOTER -->
+<footer>
+	<div class="container" style="text-align: center;">
+		<p>Copyright © 2011 Stone Age Gamer / Igor Galubovskiy.<br>All trademarks are property of their respective owner.<br>All rights reserved.</p>
+		<a href="../index.html">Developed by freegen</a>
+	</div><br>
+</footer>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script> 
+<script src="js/bootstrap.min.js"></script>
+</body>
+</html>

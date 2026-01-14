@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>&lt;/&gt; DONATIONS</title>
+
+	<link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+
+	<style>
+		body {
+			margin: 0;
+			width: 100vw;
+			height: 100vh;
+			background: #000;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			font-family: 'Source Code Pro', monospace;
+			color: #000;
+		}
+
+		.section {
+			display: flex;
+			flex-direction: column;
+			gap: 40px;
+		}
+
+		.card {
+			background: #fff;
+			width: 280px;
+			padding: 24px;
+			border-radius: 12px;
+			text-align: center;
+			box-sizing: border-box;
+		}
+
+		.title {
+			font-weight: 600;
+			margin-bottom: 12px;
+		}
+
+		.separator {
+			margin: 8px 0 16px;
+		}
+
+		a.button {
+			display: inline-block;
+			padding: 10px 18px;
+			border: 1px solid #000;
+			border-radius: 8px;
+			text-decoration: none;
+			color: #000;
+			transition: background .2s, color .2s;
+		}
+
+		a.button:hover {
+			background: #000;
+			color: #fff;
+		}
+
+		.usdt-box {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 10px;
+			word-break: break-all;
+			font-size: 11pt;
+		}
+
+		.copy-btn {
+			cursor: pointer;
+			border: none;
+			background: none;
+			padding: 4px;
+		}
+
+		.copy-btn svg {
+			width: 20px;
+			height: 20px;
+			fill: #000;
+		}
+
+		.copy-btn:hover svg {
+			opacity: 0.7;
+		}
+	</style>
+</head>
+<body>
+
+	<div class="section">
+
+		<!-- Ozon Bank -->
+		<div class="card">
+			<div class="title">Ozon Чаевые (СБП)</div>
+			<div class="separator">--------------------</div>
+			<a
+				class="button"
+				href="https://finance.ozon.ru/apps/sbp/ozonbankpay/019993bb-a466-72de-bc2c-e7ee85abc8a6"
+				target="_blank"
+			>
+				Поддержать рублем
+			</a>
+		</div>
+
+		<!-- USDT -->
+		<div class="card">
+			<div class="title">USDT (TRC-20)</div>
+			<div class="separator">--------------------</div>
+
+			<div class="usdt-box">
+				<span id="usdtAddress">
+					TBpVNoKJVRHz26tq6WTJkzwQjVJvvHD3HE
+				</span>
+
+				<button class="copy-btn" onclick="copyUSDT()" title="Скопировать">
+					<svg viewBox="0 0 24 24">
+						<path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+					</svg>
+				</button>
+			</div>
+		</div>
+
+	</div>
+
+	<script>
+		function copyUSDT() {
+			const text = document.getElementById('usdtAddress').innerText;
+			navigator.clipboard.writeText(text);
+		}
+	</script>
+
+</body>
+</html>

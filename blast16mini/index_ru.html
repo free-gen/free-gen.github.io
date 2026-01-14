@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head> 
+<meta charset="utf-8"> 
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta keywords="sega mega drive classic, blast 16, retroarch, sega mini">
+<meta name="viewport" content="width=device-width, initial-scale=1"> 
+<title>Sega Megadrive/Genesis mini для Raspberry Pi</title> 
+
+<link rel="shortcut icon" type="image/x-icon" href="favicon.ico"> 
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"> 
+<link href="css/bootstrap.min.css" rel="stylesheet"> 
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="header_banner col-xs-12">
+            	<h2 style="font-size: 30px"><a href="index.html">EN</a>/<a href="index_ru.html">RU</a></h2>
+                <img class="img_center" src="source/logo.png" alt="">
+                <h1 class="mini" align="center">MINI</h1>
+                <p class="thisis" align="center">BLAST16MINI - Это модификация, которая превращает ваш <a class="content_link" target="_blank" href="../blast16/index.html">Blast16</a> в Sega Megadrive/Genesis mini.</p>
+            </div>
+        </div>
+        <br><br>
+        <h1 align="center">СОВМЕСТИМЫЕ УСТРОЙСТВА</h1>
+        <br><br>
+        <div class="row">
+            <div id="pic1" class="text-center col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <p>MEGAPI CASE</p>
+                <img align="center" width="250px" src="source/megapi.png" alt="">
+            </div>
+            <div id="pic2" class="text-center col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <p>8BITDO M30 GAMEPAD</p>
+                <img align="center" width="250px" src="source/m30.png" alt="">
+            </div>
+        </div><br>
+        <p align="center">И многие другие геймпады</p>
+        <br><br><hr><br>
+        <h1 align="center">ДЕМОНСТРАЦИЯ</h1>
+        <br><br>
+		<div class="video">
+            <iframe title="mdmini" width="100%" src="https://www.youtube.com/embed/7t4YaL3OeFI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+		</div>
+		<br><hr><br>
+		<h1 align="center">ОСОБЕННОСТИ</h1>
+		<br>
+		<ul>
+			<li>Поддерживает игры Mega Drive / Genesis (.bin, .smd, .gen и .md), Sega CD / Mega CD (.chd, .img, .iso, один .bin + .cue, несколько .bin + .cue) , Mega Drive 32X / Sega 32X (.bin, .32x), игры Master System (.sms) и Game Gear (.gg).</li>
+			<li>Поддержка заархивированных ромов в 7z/zip.</li>
+			<li>Работает на Retroarch, а также на ядрах Genesis Plus GX и PicoDrive (<a class="content_link" target="_blank" href="http://www.blast16project.com/download/LICENSE.txt">см. Лицензию</a>).</li>
+			<li>Быстрая загрузка (~ 15 секунд).</li>
+			<li>Управление интерфейсои при помощи геймпада.</li>
+			<li>Сoздавайте список любимых игр.</li>
+			<li>Поддержка контроллеров Bluetooth.</li>
+			<li>Удаление игр в интерфейсе.</li>
+			<li>Загрузка/удаление сохранений (ограничено четырьмя слотами).</li>
+			<li>Совместим с корпусом <a class="content_link" target="_blank" href="http://retroflag.com/MEGAPi-CASE-M.html">MEGAPi</a> и его сценариями сброса и выключения.</li>
+        	<li>Легкое добавление игр с USB накопителя.</li>
+        	<li>Легкое обновление.</li>
+        	<li>Если обложка для игры не найдена, вместо нее будет отображаться стоковый логотип.</li>
+        	<li>Резервное копирование и восстановление системы.</li>
+        	<li>Выход в командную строку и перезагрузка из интерфейса.</li>
+		</ul>
+		<br><hr><br>
+		<h1 align="center">СКРИНШОТЫ</h1>
+		<br>
+		<!-- CAROUSEL -->
+		<div id="carousel" class="carousel slide" data-ride="carousel" style="display: inline-block;">
+        <div class="carousel-inner">
+            <div class="item active">
+                <img src="source/slider/1.jpg" alt="01">
+            </div>
+            <div class="item">
+                <img src="source/slider/2.jpg" alt="02">
+            </div>
+            <div class="item">
+                <img src="source/slider/3.jpg" alt="03">
+            </div>
+            <div class="item">
+                <img src="source/slider/4.jpg" alt="04">
+            </div>
+            <div class="item">
+                <img src="source/slider/5.jpg" alt="05">
+            </div>
+            <div class="item">
+                <img src="source/slider/6.jpg" alt="06">
+            </div>
+            <div class="item">
+                <img src="source/slider/7.jpg" alt="07">
+            </div>
+            <div class="item">
+                <img src="source/slider/8.jpg" alt="08">
+            </div>
+        </div>
+        <!-- LEFT|RIGHT -->
+        <a class="left carousel-control" href="#carousel" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">NEXT</span>
+        </a>
+        <a class="right carousel-control" href="#carousel" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <span class="sr-only">PREW</span>
+        </a>
+    </div>
+    <br>
+    <br><hr><br>
+        <h1 align="center">ОТЛИЧИЯ ОТ BLAST16</h1>
+        <br>
+        <ul>
+        	<li>Теперь поддерживаются только стандартные обложки 230x320.</li>
+        	<li>Функции некоторых кнопок были изменены.</li>
+        	<li>Анимированный фон был удален. Вместо него теперь есть три статичных фона, которые меняются в настройках.</li>
+            <li>Таким же образом меняются верхние и нижние текстуры.</li>
+            <li>Изменена музыка и звуки. Полностью переписан стиль отрисовки всех шрифтов.</li>
+        	<li>Были добавлены некоторые настройки для Retroarch и изменены горячие клавиши (<a class="content_link" target="_blank" href="source/help.txt">Мануал</a>).</li>
+        </ul>
+        <br><hr><br>
+        <h1 align="center">ВСТРОЕННЫЕ ЯЗЫКИ</h1>
+        <br>
+        <ul id="1">
+            <li>Английский</li>
+            <li>Испанский</li>
+            <li>Французкий</li>
+            <li>Немецкий</li>
+            <li>Итальянский</li>
+            <li>Португальский (Бразилия)</li>
+            <li>Русский</li>
+        </ul>
+        <br><hr><br>
+        <h1 align="center">СКАЧАТЬ</h1>
+        <br>
+        <p align="center">Если вы хотите поддержать разработку мода, или просто отблагодарить автора, нажмите на кнопку:</p>
+        <br>
+        <div id="donate" class="text-center" onclick="window.open('../donations.html')";">
+        	<p>Пожертвовать</p>
+        </div>
+        <br>
+        <br>
+        <div class="row">
+            <div align="center">
+                <h2>Мод был обновлен.</h2>
+                <h2>Исправлены мелкие баги и исправлена графика.</h2>
+            </div>
+            <div align="center" class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <h2>Стабильная версия Blast16</h2>
+                <div id="download" onclick="window.open('https://mega.nz/#!Z1BCHY5K!DPy-3dQqXzIKBcGvEW1Ir0oyIneN4s35kZXLJJytTyI')";">
+                    <p align="center">СКАЧАТЬ</p>
+                </div>
+            </div>
+            <div align="center" class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <h2>Blast 16 UI MOD</h2>
+                <div id="download" onclick="location.href='download/blast16_update.zip';">
+                    <p align="center">СКАЧАТЬ</p>
+                </div>
+            </div>
+        </div>
+        <br id="2"><br><br><hr><br>
+        <h1 align="center">ИНСТРУКЦИЯ</h1>
+        <br>
+        <p>Данный мод полностью совместим со всеми сценариями Blast16, поэтому он реализован в виде USB обновления.</p>
+        <br>
+        <p>УСТАНОВКА МОДА</p>
+        <ol>
+            <li><p>Скачайте и установите Blast16 с этого сайта на вашу SD карту.</p></li>
+            <li><p>Произведите первый запуск Blast16.<br>На этом этапе вам нужно убедиться, что в настройках установлен английский язык. Это очень важно.</p></li>
+            <li><p>Отформатируйте USB флешку <a class="content_link" target="_blank" href="download/SDCardFormatterv5_WinEN.zip">SD Formatter'ом</a>, удалив все из поля "volume label".</p></li>
+            <li><p>Скачайте файл с UI модом и скопируйте его в корень флешки.</p></li>
+            <li><p>Подключите флешку к Raspberry Pi и включите ее. Обновление установится автоматически, как только вы увидете логотип SEGA, флешку можно извлечь.</p></li>
+            <li><p>Наслаждайтесь!</p></li>
+        </ol>
+        <div class="row">
+            <div align="center" class="col-xs-12">
+                <h2>МАНУАЛ ДЛЯ BLAST16</h2>
+                <div id="download" onclick="location.href='../blast16/manual.html';">
+                    <p align="center">ЧИТАТЬ</p>
+                </div>
+            </div>
+        </div><br><br>
+        <hr><br>
+        <h1 align="center">БЛАГОДАРНОСТИ</h1>
+        <br><br>
+            <p align="center">Tripware и Luis Morcillo за предоставление инструментов и консультацию.</p>
+        <br><br>
+	</div>
+</section>
+<div class="developer">
+    <br>
+    <a style="font-family: Bold" target="_blank" href="http://www.blast16project.com/">OFFICIAL SITE BLAST 16</a>
+    <br>
+    <a style="font-family: Bold" target="_blank" href="http://tripware.es">TRIPWARE.ES SITE</a>
+    <h4>Developed by <a target="_blank" href="https://twitter.com/freegenkms">free.gen</a></h4>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js">
+</script> 
+<script src="js/bootstrap.min.js">
+</script>
+<script src="js/animation.js"></script>
+</body>
+</html>

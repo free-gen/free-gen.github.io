@@ -1,0 +1,96 @@
+@font-face {
+	font-family: 'SF UI Text Heavy';
+	src: local('SF UI Text Heavy'), url('..//header.woff') format('woff');
+	}
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@100;200;300;400;500;600;700;800;900&display=swap');
+/* ========== BASE ========== */
+:root {
+	--index: calc(1vw + 1vh);
+  --bg_alpha: rgba(10, 10, 10, 0.90);
+	--bg_solid: rgb(0, 0, 0);
+	--txt_first: rgb(255, 255, 255);
+	--txt_second: rgb(223, 223, 223);
+	--txt_bg: rgb(0, 140, 255);
+	--link: rgb(255, 247, 0);
+}
+
+body {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	font-family: 'Noto Sans Mono', monospace;
+	margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+	background-color: var(--bg_solid);
+}
+/* MODAL */
+#modalTrigger {
+	color: var(--txt_first);
+}
+.modalWindow {
+	display: none;
+}
+.prices {
+	color: var(--txt_first);
+	font-weight: 300;
+	background-color: var(--bg_alpha);
+	border-radius: 10px;
+	font-size: 12pt;
+	padding: 10px;
+}
+.serviceName {
+	display: flex;
+  justify-content: space-between;
+}
+.serviceSub {
+  color: var(--txt_second);
+}
+hr {
+  border: 0;
+  border-bottom: 1px dashed #747474;
+}
+/* ================================ */
+a {text-decoration: none;color: var(--txt_second); white-space: pre;}
+a:hover, a:focus {cursor: pointer;}
+a>span:hover, a>span:focus, .price:hover, .price:focus {color: var(--link);}
+.aboutButton, .worksButton, .contactsButton {color: var(--txt_first);}
+.aboutHide, .worksHide, .contactsHide {display: none;}
+/* ========== TEXT =========== */
+h1 {
+	font-family: 'SF UI Text Heavy';
+	font-size: calc(var(--index) * 3.8);
+	line-height: calc(var(--index) * 3.8);
+	margin-left: calc(var(--index) * -.3);
+}
+h2 {
+	font-size: calc(var(--index) * 1.6);
+	font-family: 'SF UI Text Heavy';
+}
+.terminal {
+	color: var(--txt_second);
+	font-size: calc(var(--index) * 0.6);
+	line-height: calc(var(--index) * 0.8);
+	font-weight: 300;
+	position: absolute;
+	bottom: 5vh;
+}
+/* ============= BLOCK ============= */
+.head {
+	color: var(--txt_first);
+}
+.text {
+	position:relative;
+	/* border: var(--txt_bg) 1px dashed; */
+	height: 40vw;
+}
+.myLogo {
+	position: relative;
+	z-index: -1;
+	width: 40vw; 
+	height: 40vw; 
+	/* border: var(--txt_bg) 1px dashed; */
+}

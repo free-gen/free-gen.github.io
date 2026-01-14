@@ -1,0 +1,93 @@
+@font-face {font-family: 'Regular';src: url('../fonts/font.eot');src: url('../fonts/font.eot?#iefix') format('embedded-opentype'),url('../fonts/font.woff') format('woff'),url('../fonts/font.ttf') format('truetype');font-weight: normal;font-style: normal;}
+@font-face {font-family: 'Bold';src: url('../fonts/bold.eot');src: url('../fonts/bold.eot?#iefix') format('embedded-opentype'),url('../fonts/bold.woff') format('woff'),url('../fonts/bold.ttf') format('truetype');font-weight: normal;font-style: normal;}
+@font-face {font-family: 'icon';src: url(../fonts/1.eot);src: url(../fonts/1.eot) format("embedded-opentype"), url(../fonts/1.woff) format("woff"), url(../fonts/1.ttf) format("truetype"), url(../fonts/1.svg#1) format("svg")}
+@font-face {font-family: 'glyph';src: url(../fonts/glyphicons-halflings-regular.eot);src: url(../fonts/glyphicons-halflings-regular.eot) format("embedded-opentype"), url(../fonts/glyphicons-halflings-regular.woff2) format("woff2"), url(../fonts/glyphicons-halflings-regular.woff) format("woff"), url(../fonts/glyphicons-halflings-regular.ttf) format("truetype"), url(../fonts/glyphicons-halflings-regular.svg#GothaProMed) format("svg")}
+a {text-decoration: none; color: #fff;}
+a:hover {text-decoration: none; color: rgba(240, 30, 140, 0.8);}
+a:link {text-decoration: none;}
+a:visited {text-decoration: none;}
+html, body {overflow-x: hidden; padding: 0!important}
+
+.container{
+	background-color: rgba(0, 0, 0, 0.5);
+	width: 85%;
+	border-style: none solid;
+	border-width: 1px;
+	border-color: #fff; 
+}
+
+.header_banner {
+	margin: 0;
+    padding: 0;
+	background-image: url(../source/bgg.png);
+	background-position: center 80%;
+	-webkit-background-size: cover;
+	background-size: cover;
+	background-repeat: no-repeat;
+	height: 400px;
+	position:relative;
+}
+
+.header_banner>h1 {
+	padding-top: 20px;
+}
+.mini {
+	margin-top: -30px;
+}
+.thisis {
+	background-color: rgba(0, 0, 0, 0.8);
+	margin: 1%; 
+	padding: 1%;
+	position:absolute;
+	bottom: 0;
+	width: 98%;
+}
+
+.img_center {
+	display: block; margin-left: auto; margin-right: auto;
+	width: 60%;
+}
+#pic1:hover {
+	-webkit-filter: drop-shadow(0 0 30px rgba(146,28,104,1));
+    filter: drop-shadow(0 0 30px rgba(146,28,104,1));
+}
+#pic2:hover {
+	-webkit-filter: drop-shadow(0 0 30px rgba(146,28,104,1));
+    filter: drop-shadow(0 0 30px rgba(146,28,104,1));
+}
+
+.content_link {color: rgba(240, 30, 140, 1);}
+body {background-image: url(../source/bg.png);background-repeat: repeat;background-color: black;height: 100vh;color: #fff;font-family: Regular;font-size: 20px;}
+h1{font-family: Bold;}h2 {font-size: 20px; margin-left: 20px;}h3 {font-size: 15px;}h4 {font-size: 15px;line-height: 100px;}
+#donate {background-color: rgba(240, 30, 140, 1);width: 300px;height: 50px;cursor: pointer;margin: auto;-webkit-box-shadow: -5px 5px 0px 0px rgba(0,187,255,1);-moz-box-shadow: -5px 5px 0px 0px rgba(0,187,255,1);box-shadow: -5px 5px 0px 0px rgba(0,187,255,1);}
+#donate:hover {background-color: rgba(240, 30, 140, 0.8);}
+#donate>p {line-height: 50px;}
+#download {background-color: rgba(240, 30, 140, 1);width: 300px;height: 50px;transform: skew(50deg);cursor: pointer;-webkit-box-shadow: -10px 5px 0px 0px rgba(0,187,255,1);-moz-box-shadow: -10px 5px 0px 0px rgba(0,187,255,1);box-shadow: -10px 5px 0px 0px rgba(0,187,255,1);}
+#download:hover {background-color: rgba(240, 30, 140, 0.8);}
+#download>p {line-height: 50px;transform: skew(-50deg);}
+.developer {width: 100%; text-align: center;background-color: rgba(0, 0, 0, 1); margin: 0;padding: 0;border-style: solid none;border-width: 1px;border-color: #fff;}
+iframe{height: 600px;}
+h4>a {font-family: Bold;}
+hr {border: 1px solid rgba(255, 255, 255, 0.35);}
+
+@media (min-width: 992px) and (max-width: 1199px) {.header_banner {height: 350px;}iframe{height: 500px;}}
+@media (min-width: 768px) and (max-width: 991px) {.header_banner {height: 350px;}h1 {font-size: 35px;}iframe{height: 400px;}}
+@media (min-width: 481px) and (max-width: 767px) {
+	p, li {font-size: 22px;}
+	li {margin-left: -30px;}
+	h1 {font-size: 30px;}
+	.header_banner {height: 350px;}
+	.img_center {width: 80%}
+	iframe{height: 300px;}
+}
+@media (max-width: 480px) {
+	#download {width: 200px;height: 50px;}
+	#donate {width: 200px;height: 50px;}
+	p, li {font-size: 18px;}
+	li {margin-left: -30px;}
+	h1 {font-size: 30px;}
+	.header_banner {height: 300px;}
+	.container{width: 100%;}
+	.img_center {width: 90%}
+	iframe{height: 300px;}
+}

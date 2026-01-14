@@ -1,0 +1,41 @@
+@media all and (orientation: portrait) {
+	body {
+		display: block;
+	}
+  .myLogo {
+		width: 100vw;
+		height: 50vh;
+		top: -30px;
+	}
+	.head {
+		position: relative;
+		left: 0; 
+		top: calc(var(--index) * 3); 
+		width: 100%; 
+		text-align: center;
+	}
+	h1 {
+		font-size: calc(var(--index) * 4); 
+		line-height: calc(var(--index) * 4);
+	}
+	h2 {
+		font-size: calc(var(--index) * 1.8); 
+		line-height: calc(var(--index) * 2.5); 
+		background-color: rgba(0, 0, 0, 0.5);
+	}
+	.text {
+		position: static;
+	}
+	.terminal {
+		font-size: calc(var(--index) * 1);
+		line-height: calc(var(--index) * 2);
+		left: 0;
+		padding-left: 2pt;
+		bottom: calc(var(--index) * 2);
+		width: 100%;
+		height: calc(var(--index) * 13);
+	}
+	.prices {
+		font-size: 3vw;
+	}
+}

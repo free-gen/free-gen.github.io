@@ -1,0 +1,1938 @@
+@font-face {
+    font-family: 'icon';
+    src: url(../fonts/fontawesome-webfont.eot);
+    src: url(../fonts/fontawesome-webfont.eot) format("embedded-opentype"), url(../fonts/fontawesome-webfont.woff2) format("woff2"), url(../fonts/fontawesome-webfont.woff) format("woff"), url(../fonts/fontawesome-webfont.ttf) format("truetype"), url(../fonts/fontawesome-webfont.svg#fontawesome-webfont) format("svg")
+}
+
+@font-face {
+    font-family: 'glyph';
+    src: url(../fonts/glyphicons-halflings-regular.eot);
+    src: url(../fonts/glyphicons-halflings-regular.eot) format("embedded-opentype"), url(../fonts/glyphicons-halflings-regular.woff2) format("woff2"), url(../fonts/glyphicons-halflings-regular.woff) format("woff"), url(../fonts/glyphicons-halflings-regular.ttf) format("truetype"), url(../fonts/glyphicons-halflings-regular.svg#GothaProMed) format("svg")
+}
+
+@font-face {
+    font-family: 'med';
+    src: url(../fonts/GothaProMed.eot);
+    src: url(../fonts/GothaProMed.eot) format("embedded-opentype"), url(../fonts/GothaProMed.woff2) format("woff2"), url(../fonts/GothaProMed.woff) format("woff"), url(../fonts/GothaProMed.ttf) format("truetype"), url(../fonts/GothaProMed.svg#GothaProMed) format("svg")
+}
+
+@font-face {
+    font-family: 'bold';
+    src: url(../fonts/GothaProBol.eot);
+    src: url(../fonts/GothaProBol.eot) format("embedded-opentype"), url(../fonts/GothaProBol.woff2) format("woff2"), url(../fonts/GothaProBol.woff) format("woff"), url(../fonts/GothaProBol.ttf) format("truetype"), url(../fonts/GothaProBol.svg#GothaProMed) format("svg")
+}
+
+@font-face {
+    font-family: 'header';
+    src: url(../fonts/PeaceSansWebfont.eot);
+    src: url(../fonts/PeaceSansWebfont.eot) format("embedded-opentype"), url(../fonts/PeaceSansWebfont.woff2) format("woff2"), url(../fonts/PeaceSansWebfont.woff) format("woff"), url(../fonts/PeaceSansWebfont.ttf) format("truetype"), url(../fonts/PeaceSansWebfont.svg#GothaProMed) format("svg")
+}
+
+html,
+body {
+    overflow-x: hidden;
+    background-color: #fff;
+    padding: 0!important
+}
+
+a {
+    text-decoration: none
+}
+
+a:hover {
+    text-decoration: none
+}
+
+a:link {
+    text-decoration: none
+}
+
+a:visited {
+    text-decoration: none
+}
+
+header {
+    padding-top: 1.5em;
+    padding-bottom: 1.5em;
+    background-color: #232323;
+    color: #f0f0f0;
+    position: relative
+}
+
+.logo {
+    width: auto;
+    height: auto
+}
+
+#header-place {
+    font-size: 1.3em;
+    text-align: center;
+    font-family: med;
+    margin: 0 auto
+}
+
+#header-place>span {
+    vertical-align: middle
+}
+
+#map-marker {
+    color: #b62929;
+    margin-right: .3em;
+    font-size: 1.5em
+}
+
+#phone {
+    color: #4faf4f
+}
+
+#header-tel1 {
+    font-size: 1.5em;
+    text-align: right;
+    font-family: med;
+    margin-top: .2em
+}
+
+#header-tel2 {
+    font-size: .98em;
+    text-align: right;
+    font-family: med;
+    letter-spacing: .04em
+}
+
+.section_1 {
+    width: 100%;
+    height: 100%;
+    background-image: url(../img/bg_section_1.png);
+    -webkit-background-size: cover;
+    background-size: cover;
+    background-position: center
+}
+
+.section_header {
+    font-family: header;
+    color: #242323;
+    font-size: 3em;
+    padding-top: 40%;
+    line-height: 1.5em
+}
+
+.chance {
+    font-family: header;
+    color: #242323;
+    font-size: 2.8em;
+    padding-top: 41.5%;
+    text-transform: uppercase;
+    letter-spacing: .15em
+}
+
+.chance>span {
+    color: #cb0202
+}
+
+.discount33 {
+    padding-top: 3.3em;
+    font-family: med;
+    font-size: 1.5em;
+    line-height: 2em;
+    color: #2d2c2c;
+    letter-spacing: .04em
+}
+
+.discount33>span {
+    font-family: header;
+    font-size: 1.6em;
+    color: #cb0202;
+    letter-spacing: .04em
+}
+
+.timer_info {
+    font-family: med;
+    font-size: 1.5em;
+    color: #000;
+    letter-spacing: .04em;
+    margin-left: 3%;
+    padding-top: 3%
+}
+
+.timer {
+    transform: scale(0.88, 0.88);
+    margin-left: -3.5em
+}
+
+#btn1 {
+    width: 300px;
+    height: 70px;
+    font-family: med;
+    letter-spacing: .04em;
+    background-color: #f80;
+    border-radius: 5px;
+    color: #fff;
+    border: 0 solid;
+    display: block;
+    cursor: pointer;
+    -webkit-box-shadow: 0 10px 40px -5px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0 10px 40px -5px rgba(0, 0, 0, 0.75);
+    box-shadow: 0 10px 40px -5px rgba(0, 0, 0, 0.75);
+    margin: 10% auto 15%
+}
+
+.btn1text {
+    text-align: center;
+    line-height: 70px;
+    font-size: 1.2em
+}
+
+.center-block {
+    display: block;
+    margin-left: auto;
+    margin-right: auto
+}
+
+.section_2 {
+    width: 100%;
+    height: 100%;
+    background-image: url(../img/bg_section_2.png);
+    -webkit-background-size: cover;
+    background-size: cover;
+    background-position: center
+}
+
+.section-header {
+    font-family: header;
+    color: #333;
+    font-size: 3.3em;
+    letter-spacing: .04em;
+    padding-top: 5%
+}
+
+.section-header>span {
+    font-style: italic
+}
+
+.discountdescription1 {
+    font-family: med;
+    font-size: 1.4em;
+    letter-spacing: .03em;
+    line-height: 1.6em;
+    margin-left: -3%;
+    padding-top: 10%
+}
+
+.discountdescription1>span {
+    font-style: italic;
+    font-family: bold
+}
+
+#diskountdescriptionicon1 {
+    width: 15%;
+    padding-top: 3%
+}
+
+.discountdescription2 {
+    font-family: med;
+    font-size: 1.4em;
+    letter-spacing: .03em;
+    line-height: 1.6em;
+    margin-left: 5%;
+    padding-top: 10%
+}
+
+.discountdescription2>span {
+    font-style: italic;
+    font-family: bold
+}
+
+#diskountdescriptionicon2 {
+    width: 15%;
+    padding-top: 3%
+}
+
+.discountdescription3 {
+    font-family: med;
+    font-size: 1.4em;
+    letter-spacing: .03em;
+    line-height: 1.6em;
+    margin-left: -3%;
+    padding-top: 10%
+}
+
+.discountdescription3>span {
+    font-style: italic;
+    font-family: bold
+}
+
+#diskountdescriptionicon3 {
+    width: 15%;
+    padding-top: 4%
+}
+
+.section2proviso {
+    padding-top: .2%;
+    font-family: med;
+    font-size: 1em;
+    letter-spacing: .03em;
+    color: #6a6969
+}
+
+.freemeasure {
+    padding-top: .2%;
+    padding-bottom: 3%;
+    font-family: med;
+    font-size: 1.8em;
+    color: #cb0202;
+    letter-spacing: .03em
+}
+
+.freemeasure>span {
+    font-style: italic;
+    font-family: bold
+}
+
+.section_3 {
+    background-color: #c7cde5;
+    width: 100%;
+    height: 100%;
+    padding-bottom: 3%
+}
+
+.section_3>.border-image-top {
+    width: 100%;
+    height: 3em;
+    background-image: url(../img/bg_section_3_top.png);
+    -webkit-background-size: auto 100%;
+    background-size: auto 100%;
+    background-position: top
+}
+
+.border-image-bottom {
+    width: 100%;
+    height: 3em;
+    background-image: url(../img/bg_section_3_bottom.png);
+    -webkit-background-size: auto 100%;
+    background-size: auto 100%;
+    background-position: bottom;
+    background-color: #c7cde5
+}
+
+.section_3>div>div>div>h2 {
+    padding-top: 3%
+}
+
+#warranty-content {
+    padding: 2% 0;
+    height: 20em;
+    line-height: 20em
+}
+
+#check {
+    color: #4a5ca3;
+    font-size: 1.6em
+}
+
+#warranty-text {
+    font-family: med;
+    font-size: 1.4em;
+    padding-top: .5em;
+    padding-left: 1.5em;
+    letter-spacing: .03em;
+    line-height: 1.6em
+}
+
+.col-xs-10>span {
+    font-family: bold
+}
+
+i>span {
+    font-family: bold
+}
+
+#section-3-icon {
+    width: 20em;
+    height: 20em;
+    line-height: 20em;
+    background-image: url(../img/like.png);
+    -webkit-background-size: cover;
+    background-size: cover;
+    background-position: center
+}
+
+.section_4 {
+    width: 100%;
+    height: 100%;
+    padding-bottom: 5em
+}
+
+#section-4-icon>div>#svg {
+    padding-top: 5em;
+    padding-bottom: 3em;
+    width: 15em
+}
+
+#section-4-header {
+    font-family: bold;
+    font-size: 1.5em;
+    padding-bottom: 1em
+}
+
+#section-4-text {
+    font-family: med;
+    font-size: .8em
+}
+
+#slogan-block {
+    width: 100%;
+    height: 30em;
+    display: table;
+    background: -moz-linear-gradient(45deg, #5d4ffe 0%, #ff4cde 51%, #ff4040 100%);
+    background: -webkit-gradient(left bottom, right top, color-stop(0%, #5d4ffe), color-stop(51%, #ff4cde), color-stop(100%, #ff4040));
+    background: -webkit-linear-gradient(45deg, #5d4ffe 0%, #ff4cde 51%, #ff4040 100%);
+    background: -o-linear-gradient(45deg, #5d4ffe 0%, #ff4cde 51%, #ff4040 100%);
+    background: -ms-linear-gradient(45deg, #5d4ffe 0%, #ff4cde 51%, #ff4040 100%);
+    background: linear-gradient(45deg, #5d4ffe 0%, #ff4cde 51%, #ff4040 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#5d4ffe', endColorstr='#ff4040', GradientType=1);
+    box-shadow: inset 0 40px 100px -30px #000, inset 0 -20px 100px -30px #000
+}
+
+.border-top {
+    background-image: url(../img/4-top.png);
+    width: 100%;
+    height: 2em;
+    -webkit-background-size: contain cover;
+    background-size: contain cover;
+    background-position: top
+}
+
+.border-bottom {
+    margin-top: -1em;
+    background-image: url(../img/4-bottom.png);
+    width: 100%;
+    height: 2em;
+    -webkit-background-size: cover 100%;
+    background-size: cover 100%;
+    background-position: bottom
+}
+
+.slogan-text {
+    color: #fff;
+    font-family: med;
+    font-size: 1.7em;
+    line-height: 1.8em;
+    letter-spacing: .05em;
+    margin: 3.5em 0
+}
+
+.slogan-text>span {
+    font-family: bold
+}
+
+#character {
+    width: 100%;
+    height: auto;
+    margin: 2em 0 4em
+}
+
+#badges {
+    padding-top: 5em
+}
+
+#section-5-badge {
+    width: 25em;
+    height: 15em;
+    background-color: #fafafa;
+    border-radius: 10px;
+    margin: .8em 1.42em;
+    box-shadow: 0 15px 46px 0 rgba(0, 0, 0, 0.3)
+}
+
+.section-5-header {
+    font-family: bold;
+    font-size: 1.5em;
+    margin-left: .2em;
+    letter-spacing: .04em
+}
+
+.section-5-text {
+    font-family: med;
+    font-size: .98em;
+    line-height: 1.6em;
+    letter-spacing: .04em;
+    margin-top: 1em
+}
+
+.section-5-icon {
+    width: 3em;
+    margin: .7em 0 0 -1em;
+    filter: alpha(Opacity=30);
+    opacity: .3
+}
+
+.section_5 {
+    margin-bottom: 10em
+}
+
+.section_6 {
+    width: 100%;
+    height: auto;
+    padding-bottom: 8em;
+    background: -moz-linear-gradient(45deg, #0d7165 0%, #3a9d91 100%);
+    background: -webkit-gradient(left bottom, right top, color-stop(0%, #0d7165), color-stop(100%, #3a9d91));
+    background: -webkit-linear-gradient(45deg, #0d7165 0%, #3a9d91 100%);
+    background: -o-linear-gradient(45deg, #0d7165 0%, #3a9d91 100%);
+    background: -ms-linear-gradient(45deg, #0d7165 0%, #3a9d91 100%);
+    background: linear-gradient(45deg, #0d7165 0%, #3a9d91 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#0d7165', endColorstr='#3a9d91', GradientType=1)
+}
+
+.section_6>div>div>div>h2 {
+    color: #e9e5e5;
+    margin-top: -.2em
+}
+
+.section-6-border-top {
+    background-image: url(../img/ruler-top.png);
+    width: 100%;
+    height: 4em;
+    -webkit-background-size: contain cover;
+    background-size: contain cover;
+    background-position: top
+}
+
+.section-6-border-bottom {
+    background-image: url(../img/ruler-bottom.png);
+    width: 100%;
+    height: 4em;
+    -webkit-background-size: contain cover;
+    background-size: contain cover;
+    background-position: bottom;
+    margin-top: -3.8em
+}
+
+#calc-badge {
+    height: 7em;
+    background-color: #4f9890;
+    border-radius: 10px;
+    margin-top: 5em;
+    -webkit-box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.3);
+    box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.3)
+}
+
+#badge-number {
+    font-family: header;
+    font-size: 6em;
+    color: #008a7b;
+    margin-top: -.1em
+}
+
+#badge-text {
+    font-family: med;
+    font-size: 1em;
+    letter-spacing: .04em;
+    margin-top: 1.2em;
+    margin-left: 1em;
+    color: #fff
+}
+
+#badge-icon {
+    margin-left: -2em;
+    padding: .8em
+}
+
+#calc-body {
+    height: 31em;
+    background-color: #4f9890;
+    border-radius: 10px;
+    margin-top: 5em;
+    -webkit-box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.3);
+    box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.3)
+}
+
+.calc {
+    width: 80%;
+    margin-left: 10%;
+    font-family: med;
+}
+.calc>p {
+    color: #fff;
+    font-size: 15px;
+}
+.calc>h4 {
+    color: #e3e3e3;
+}
+.calc>.total {
+    color: #FDB902;
+    font-family: header;
+    font-size: 35px;
+}
+.calc>input {
+    height: 3em;
+}
+.calc>#material {
+    height: 3em;
+}
+
+#btn2 {
+    width: 70%;
+    height: 5em;
+    font-family: med;
+    letter-spacing: .04em;
+    background-color: #f80;
+    border-radius: 5px;
+    color: #fff;
+    border: 0 solid;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    cursor: pointer
+}
+
+.btn2text {
+    text-align: center;
+    line-height: 4em;
+    font-size: 1.2em
+}
+
+#calc-proviso {
+    font-family: med;
+    font-size: 1em;
+    color: #fff;
+    opacity: .25
+}
+
+.section_7>div>div>div>h2 {
+    margin-top: 1em;
+    margin-bottom: 1em
+}
+
+.section-7-header-2 {
+    font-family: med;
+    font-size: 1.5em;
+    padding-bottom: 5em
+}
+
+#slider {
+    z-index: 99;
+    width: 90%;
+    height: auto;
+    border-radius: 30px;
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    box-shadow: 0 59px 106px 0 rgba(0, 0, 0, 0.29);
+    position: relative
+}
+
+#slider-text {
+    z-index: 99;
+    font-family: med;
+    font-size: 1em;
+    line-height: 2em;
+    letter-spacing: .05em;
+    width: 45%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    padding: 2em 3em;
+    background-color: #f1f1f1;
+    display: flex;
+    justify-content: center;
+    align-items: center
+}
+
+#slider-img {
+    z-index: 99;
+    display: table-cell;
+    float: right;
+    padding: 0
+}
+
+.carousel-indicators {
+    z-index: 999;
+    opacity: .8;
+    margin-left: 3%
+}
+
+#slider-control-l {
+    font-family: glyph;
+    z-index: 99;
+    margin-left: -5%;
+    color: #000;
+    background: none;
+    opacity: 1
+}
+
+#slider-control-r {
+    font-family: glyph;
+    z-index: 99;
+    margin-right: -5%;
+    color: #000;
+    background: none;
+    opacity: 1
+}
+
+.section_8 {
+    margin-top: -23em;
+    padding-top: 23em;
+    z-index: 9;
+    width: 100%;
+    height: auto;
+    background-color: #e8e8e8
+}
+
+.carousel-fade .carousel-inner .item {
+    opacity: 0;
+    transition-property: opacity
+}
+
+.carousel-fade .carousel-inner .active {
+    opacity: 1
+}
+
+.carousel-fade .carousel-inner .active.left,
+.carousel-fade .carousel-inner .active.right {
+    left: 0;
+    opacity: 0;
+    z-index: 1
+}
+
+.carousel-fade .carousel-inner .next.left,
+.carousel-fade .carousel-inner .prev.right {
+    opacity: 1
+}
+
+@media all and (transform-3d),
+(-webkit-transform-3d) {
+    .carousel-fade .carousel-inner > .item.next,
+    .carousel-fade .carousel-inner > .item.active.right {
+        opacity: 0;
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0)
+    }
+    .carousel-fade .carousel-inner > .item.prev,
+    .carousel-fade .carousel-inner > .item.active.left {
+        opacity: 0;
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0)
+    }
+    .carousel-fade .carousel-inner > .item.next.left,
+    .carousel-fade .carousel-inner > .item.prev.right,
+    .carousel-fade .carousel-inner > .item.active {
+        opacity: 1;
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0)
+    }
+}
+
+#reviews {
+    margin-top: 5em;
+    width: 100%;
+    height: auto
+}
+
+#slide-reviews {
+    width: 100%;
+    padding-left: 2.5em;
+    padding-right: 2.5em;
+    margin-left: 1em;
+    margin-right: 1em;
+    padding-bottom: 2em
+}
+
+#rewiews-block {
+    width: 80%;
+    height: 10em;
+    display: table;
+    margin-bottom: 4em;
+    background-color: #fff;
+    border-radius: 15px;
+    padding: 1em;
+    box-shadow: 0 25px 60px 0 rgba(0, 0, 0, 0.3)
+}
+
+#reviews-text {
+    font-family: med;
+    font-size: 1.2em;
+    line-height: 1.4em;
+    letter-spacing: .04em;
+    display: table-cell;
+    vertical-align: middle;
+    padding: 0 .7em
+}
+
+#reviews-name {
+    font-family: bold;
+    margin-top: .8em;
+    margin-bottom: 1em;
+    font-size: 1.7em;
+    line-height: 0
+}
+
+#reviews-img {
+    width: 60%
+}
+
+.more-reviews {
+    margin-bottom: 2em;
+    font-family: bold;
+    font-size: 2em
+}
+
+.section-9-text {
+    font-family: med;
+    font-size: 1.5em;
+    letter-spacing: .04em;
+    margin-top: 2em;
+    margin-bottom: 3em
+}
+
+#btn3 {
+    width: 100%;
+    height: 70px;
+    font-family: med;
+    letter-spacing: .04em;
+    background-color: #003580;
+    border-radius: 5px;
+    color: #fff;
+    border: 0 solid;
+    display: block;
+    cursor: pointer;
+    -webkit-box-shadow: 0 10px 40px -5px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0 10px 40px -5px rgba(0, 0, 0, 0.75);
+    box-shadow: 0 10px 40px -5px rgba(0, 0, 0, 0.75);
+    margin: 10% auto 15%
+}
+
+.btn3text {
+    text-align: center;
+    line-height: 70px;
+    font-size: 1.2em
+}
+
+#btn4 {
+    width: 100%;
+    height: 70px;
+    font-family: med;
+    letter-spacing: .04em;
+    background-color: #f80;
+    border-radius: 5px;
+    color: #fff;
+    border: 0 solid;
+    display: block;
+    cursor: pointer;
+    -webkit-box-shadow: 0 10px 40px -5px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0 10px 40px -5px rgba(0, 0, 0, 0.75);
+    box-shadow: 0 10px 40px -5px rgba(0, 0, 0, 0.75);
+    margin: 10% auto 15%
+}
+
+.btn4text {
+    text-align: center;
+    line-height: 70px;
+    font-size: 1.2em
+}
+
+.footer {
+    background-color: #232323;
+    padding: 2em 0
+}
+
+.footer-text {
+    font-size: 1em;
+    font-family: med;
+    letter-spacing: .04em;
+    color: #fff
+}
+
+.vk-link {
+    font-size: 1em;
+    font-family: med;
+    letter-spacing: .04em;
+    color: #fff
+}
+
+.vk-link:hover {
+    color: #fff
+}
+
+.vk-link:link {
+    color: #fff
+}
+
+.vk-link:visited {
+    color: #fff
+}
+
+.developer {
+    font-family: bold;
+    font-size: 1em;
+    color: #fff
+}
+
+.modal {
+    text-align: center
+}
+
+@media screen and (min-width: 768px) {
+    .modal:before {
+        display: inline-block;
+        vertical-align: middle;
+        content: " ";
+        height: 100%
+    }
+}
+
+.modal-dialog {
+    display: inline-block;
+    text-align: left;
+    vertical-align: middle
+}
+
+#modal-input {
+    width: 60%;
+    margin: -5% 20% 5%;
+    padding: 5%;
+    font-family: med;
+    font-size: 1em
+}
+
+#modal-textarea {
+    width: 60%;
+    margin: -5% 20% 5%;
+    padding: 5%;
+    font-family: med;
+    font-size: 1em;
+    resize: none
+}
+
+#modal-header {
+    font-family: bold;
+    font-size: 2em;
+    padding: 5% 5% 0;
+    font-family: header
+}
+
+#modal-text {
+    padding: 3% 0 0;
+    font-family: med;
+    font-size: .8em;
+    color: #999
+}
+
+#modal-button {
+    background-color: #003580;
+    color: #fff;
+    font-family: bold;
+    width: 60%;
+    margin: 0 20%;
+    margin-bottom: 5%;
+    padding: -5%;
+    border-radius: 5px;
+    cursor: pointer;
+    border: 0
+}
+
+#modal-button>h2 {
+    padding-bottom: 3%;
+    font-size: 1.1em;
+    letter-spacing: .08em
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+    header {
+        padding: 1em 0
+    }
+    .logo {
+        margin-right: 2em
+    }
+    #header-place {
+        font-size: 1.1em;
+        margin-top: .6em
+    }
+    #header-tel1 {
+        font-size: 1.3em;
+        margin-top: .6em
+    }
+    .section_header {
+        margin-top: -1em;
+        font-size: 2.5em
+    }
+    .chance {
+        font-size: 2.1em;
+        margin-top: -1em
+    }
+    .discount33 {
+        font-size: 1.3em;
+        margin-top: -.5em
+    }
+    .timer_info {
+        font-size: 1em;
+        margin-top: 1em
+    }
+    .timer {
+        transform: scale(0.68, 0.68);
+        margin-left: -6em;
+        margin-top: -1.2em
+    }
+    #btn1 {
+        margin-top: 5em;
+        margin-bottom: 5em
+    }
+    .section-header {
+        font-size: 2.5em
+    }
+    .discountdescription1,
+    .discountdescription2,
+    .discountdescription3 {
+        font-size: 1.1em
+    }
+    #diskountdescriptionicon1,
+    #diskountdescriptionicon2,
+    #diskountdescriptionicon3 {
+        padding-top: 1.5em
+    }
+    .section2proviso {
+        font-size: .8em;
+        margin-left: 13.4em
+    }
+    .freemeasure {
+        font-size: 1.5em
+    }
+    .section_3 {
+        padding-bottom: 0
+    }
+    section>div>div>div>div>h2 {
+        margin-top: 0
+    }
+    .section_3>.border-image-top,
+    .border-image-bottom {
+        height: 2.3em
+    }
+    #warranty-text {
+        font-size: 1.1em
+    }
+    #check {
+        margin-left: 1em
+    }
+    #section-3-icon {
+        width: 16em;
+        height: 16em
+    }
+    #section-4-icon>div>#svg {
+        padding-top: 3em;
+        padding-bottom: 2em;
+        width: 11em
+    }
+    #section-4-header {
+        font-size: 1.2em
+    }
+    #section-4-text {
+        font-size: .7em
+    }
+    .slogan-text {
+        font-size: 1.4em
+    }
+    #badges {
+        padding-top: 3em
+    }
+    #section-5-badge {
+        width: 21em;
+        height: 12em;
+        margin: 1em
+    }
+    .section-5-header {
+        font-size: 1.2em
+    }
+    .section-5-text {
+        font-size: .78em
+    }
+    .section-5-icon {
+        width: 2.5em
+    }
+    .section_5 {
+        margin-bottom: 6em
+    }
+    .section_6 {
+        padding-bottom: 5em
+    }
+    .section_6>div>div>div>h2 {
+        margin-top: -.8em;
+        margin-bottom: -.5em
+    }
+    #badge-icon {
+        padding-top: 1.4em
+    }
+    #btn2 {
+        width: 60%;
+        height: 4em;
+        margin-top: 2em
+    }
+    .btn2text {
+        font-size: 1em;
+        line-height: 4em
+    }
+    #calc-proviso {
+        font-size: .8em;
+        margin-left: 1em
+    }
+    .section_7>div>div>div>h2 {
+        margin-top: .5em
+    }
+    .section-7-header-2 {
+        font-size: 1.2em
+    }
+    #slider-text {
+        font-size: .9em
+    }
+    .section_8 {
+        margin-top: -20em;
+        padding-top: 20em
+    }
+    .more-reviews {
+        font-size: 1.5em
+    }
+    .section-9-text {
+        font-size: 1.1em;
+        margin-bottom: 2em
+    }
+    #btn3,
+    #btn4 {
+        width: 80%;
+        height: 50px;
+        margin-bottom: 0
+    }
+    .btn3text,
+    .btn4text {
+        font-size: 1em;
+        line-height: 50px
+    }
+    .footer-text,
+    .vk-link,
+    .developer {
+        font-size: .9em
+    }
+    #modal-input,
+    #modal-textarea {
+        width: 80%;
+        margin: -5% 10% 5%
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    header {
+        padding: .5em 0
+    }
+    .logo {
+        margin-right: 1em;
+        margin-top: .1em
+    }
+    #header-place {
+        font-size: .9em;
+        margin-top: .7em
+    }
+    #header-tel1 {
+        font-size: 1em;
+        margin-top: .7em
+    }
+    #header-tel2 {
+        font-size: .65em
+    }
+    .section_header {
+        margin-top: 0;
+        font-size: 1.95em
+    }
+    .chance {
+        font-size: 1.8em;
+        margin-top: .15em
+    }
+    .discount33 {
+        font-size: .95em;
+        margin-top: -.5em
+    }
+    .timer_info {
+        font-size: .8em;
+        margin-top: .4em
+    }
+    .timer {
+        transform: scale(0.55, 0.55);
+        margin-left: -7.5em;
+        margin-top: -2em
+    }
+    #btn1 {
+        width: 200px;
+        height: 50px;
+        margin-top: 4em;
+        margin-bottom: 5em
+    }
+    .btn1text {
+        font-size: .8em;
+        line-height: 50px
+    }
+    .section-header {
+        font-size: 2.2em
+    }
+    .discountdescription1,
+    .discountdescription2,
+    .discountdescription3 {
+        font-size: .87em
+    }
+    #diskountdescriptionicon1,
+    #diskountdescriptionicon2,
+    #diskountdescriptionicon3 {
+        padding-top: 1.2em
+    }
+    .section2proviso {
+        font-size: .6em;
+        margin-left: 14em;
+        margin-top: 2em;
+        margin-bottom: 4em
+    }
+    .freemeasure {
+        font-size: 1.2em;
+        margin-bottom: 1em
+    }
+    .section_3 {
+        padding-bottom: 0;
+        height: 24em
+    }
+    section>div>div>div>div>h2 {
+        margin-top: .5em;
+        margin-bottom: .5em
+    }
+    .section_3>.border-image-top,
+    .border-image-bottom {
+        height: 2.3em
+    }
+    #warranty-text {
+        font-size: .9em
+    }
+    #check {
+        margin-left: 1em
+    }
+    #section-3-icon {
+        width: 12em;
+        height: 12em
+    }
+    .section_4>div>div>div>h2 {
+        margin-top: -.5em;
+        margin-bottom: -.5em
+    }
+    #section-4-icon>div>#svg {
+        padding-top: 5em;
+        padding-bottom: 1em;
+        width: 14em
+    }
+    #section-4-header {
+        font-size: 1.2em;
+        margin-bottom: -.2em
+    }
+    #section-4-text {
+        font-size: .8em
+    }
+    .slogan-text {
+        margin-top: 4.8em;
+        font-size: 1.05em
+    }
+    #slogan-block {
+        height: 25em
+    }
+    #badges {
+        padding-top: 2em
+    }
+    #section-5-badge {
+        width: 16.8em;
+        height: 10em;
+        margin: .5em
+    }
+    .section-5-header {
+        font-size: 1em
+    }
+    .section-5-text {
+        font-size: .62em
+    }
+    .section-5-icon {
+        width: 2em
+    }
+    .section_5 {
+        margin-bottom: 5em;
+        margin-top: -2em
+    }
+    .section_6 {
+        padding-bottom: 5em
+    }
+    .section_6>div>div>div>h2 {
+        margin-top: -.4em;
+        margin-bottom: -.4em
+    }
+    #calc-badge {
+        margin-top: 4.95em
+    }
+    #badge-text {
+        font-size: .7em;
+        margin-top: 2.8em;
+        padding-right: 2em
+    }
+    #badge-icon {
+        padding-top: 1.4em;
+        width: 5.46em
+    }
+    .uCalc_81708 {
+        transform: scale(0.88, 0.88);
+        margin-top: -1em
+    }
+    #btn2 {
+        width: 80%;
+        height: 4em;
+        margin-top: -1em
+    }
+    .btn2text {
+        font-size: .8em;
+        line-height: 5em
+    }
+    #calc-proviso {
+        font-size: .7em;
+        margin-left: 1em
+    }
+    .section_7>div>div>div>h2 {
+        margin-top: .5em
+    }
+    .section-7-header-2 {
+        font-size: 1em;
+        padding-bottom: 3em
+    }
+    #slider-text {
+        font-size: .7em
+    }
+    .carousel-indicators {
+        margin-left: 1%
+    }
+    .section_8 {
+        margin-top: -15em;
+        padding-top: 15em
+    }
+    #reviews {
+        margin-top: 3em
+    }
+    #slide-reviews {
+        margin-bottom: -3em
+    }
+    #rewiews-block {
+        height: 8em;
+        box-shadow: 0 15px 40px 0 rgba(0, 0, 0, 0.3)
+    }
+    #reviews-text {
+        font-size: .9em;
+        padding: 0 .5em;
+        line-height: 1.2em
+    }
+    #reviews-name {
+        font-size: 1.4em;
+        margin-top: 1em
+    }
+    #reviews-img {
+        width: 70%
+    }
+    .more-reviews {
+        font-size: 1.3em
+    }
+    .section-9-text {
+        font-size: .9em;
+        margin-bottom: 2em
+    }
+    #btn3,
+    #btn4 {
+        width: 100%;
+        height: 50px;
+        margin-bottom: 0
+    }
+    .btn3text,
+    .btn4text {
+        font-size: .8em;
+        line-height: 50px
+    }
+    .footer-text,
+    .vk-link,
+    .developer {
+        font-size: .7em
+    }
+    #modal-input,
+    #modal-textarea {
+        width: 80%;
+        margin: -5% 10% 5%
+    }
+}
+
+@media (min-width: 481px) and (max-width: 767px) {
+    header {
+        padding: 2em 0
+    }
+    .logo {
+        width: 190px;
+        margin: auto;
+        margin-left: 0
+    }
+    #header-place {
+        text-align: right;
+        font-size: .7em;
+        margin-top: -.1em
+    }
+    #header-tel1 {
+        font-size: 1em;
+        margin-top: .8em
+    }
+    #header-tel2 {
+        font-size: .65em
+    }
+    .section_header {
+        text-align: center;
+        margin-top: -30%;
+        font-size: 2.5em
+    }
+    .chance {
+        text-align: center;
+        font-size: 2em;
+        margin-top: -35%
+    }
+    .discount33 {
+        text-align: center;
+        font-size: 1.2em;
+        margin-top: -5%
+    }
+    .timer_info {
+        font-size: 1.2em;
+        margin-top: .4em;
+        text-align: center
+    }
+    .timer {
+        width: 400px;
+        margin: auto
+    }
+    .timer-1 {
+        transform: scale(0.7, 0.7);
+        margin-left: -5.5em
+    }
+    #btn1 {
+        width: 80%;
+        height: 50px;
+        margin-top: 0;
+        margin-bottom: 2em
+    }
+    .btn1text {
+        font-size: .8em;
+        line-height: 50px
+    }
+    .section-header {
+        font-size: 1.8em
+    }
+    .discountdescription1,
+    .discountdescription2,
+    .discountdescription3 {
+        font-size: .85em;
+        margin-left: 2em
+    }
+    .discountdescription2 {
+        float: right
+    }
+    #diskountdescriptionicon1,
+    #diskountdescriptionicon2,
+    #diskountdescriptionicon3 {
+        padding-top: 3em;
+        width: 8em
+    }
+    #diskountdescriptionicon2 {
+        margin-left: 2em;
+        width: 8em;
+        padding-top: 3em
+    }
+    .section2proviso {
+        text-align: center;
+        font-size: .6em;
+        margin-top: 4em;
+        margin-bottom: 2em
+    }
+    .freemeasure {
+        font-size: 1.2em;
+        margin-bottom: 1em
+    }
+    .section_3 {
+        padding-bottom: 0;
+        height: 18em
+    }
+    .section_3>div>div>div>h2 {
+        margin-top: .5em;
+        margin-bottom: 1em
+    }
+    .section_3>.border-image-top,
+    .border-image-bottom {
+        height: 1.5em
+    }
+    #warranty-text {
+        font-size: .65em
+    }
+    #check {
+        margin-left: .5em
+    }
+    #section-3-icon {
+        margin-left: -2em;
+        width: 10em;
+        height: 8.5em
+    }
+    .section_4>div>div>div>h2 {
+        margin-top: -4em
+    }
+    #section-4-icon>div>#svg {
+        padding-top: 2em;
+        padding-bottom: 1em;
+        width: 14em
+    }
+    #section-4-header {
+        font-size: 1.2em;
+        margin-bottom: -.2em
+    }
+    #section-4-text {
+        font-size: .8em
+    }
+    .slogan-text {
+        margin-top: 6em;
+        font-size: 1.7vw
+    }
+    #slogan-block {
+        height: 15em
+    }
+    section>div>div>div>div>h2 {
+        margin-top: 1.5em;
+        margin-bottom: 2em
+    }
+    #badges {
+        padding-top: 0;
+        margin-left: 0;
+        margin-right: 2.8em
+    }
+    #section-5-badge {
+        width: 100%;
+        height: 17em;
+        margin: .5px auto
+    }
+    .section-5-header {
+        margin-top: 1.5em;
+        font-size: 1.5em
+    }
+    .section-5-text {
+        font-size: 1.1em;
+        margin-top: 1em
+    }
+    .section-5-icon {
+        width: 4em;
+        margin-left: -2em
+    }
+    .section_5 {
+        margin-bottom: 5em;
+        margin-top: -2em
+    }
+    .section_6 {
+        padding-bottom: 5em
+    }
+    .section_6>div>div>div>h2 {
+        margin-top: -.4em;
+        margin-bottom: -.4em
+    }
+    #calc-badge {
+        margin-top: 2em
+    }
+    #badge-text {
+        font-size: .9em;
+        margin-top: 2em;
+        padding-right: 2em
+    }
+    #badge-icon {
+        padding-top: 1.4em;
+        width: 5.46em
+    }
+    .uCalc_81708 {
+        transform: scale(1, 1);
+        padding-top: 2em
+    }
+    #calc-body {
+        margin-top: 2em
+    }
+    #btn2 {
+        width: 80%;
+        height: 4em;
+        margin-top: -1em
+    }
+    .btn2text {
+        font-size: .8em;
+        line-height: 5em
+    }
+    #calc-proviso {
+        font-size: .7em;
+        margin-left: 1em
+    }
+    .section_7>div>div>div>h2 {
+        margin-top: .5em
+    }
+    .section-7-header-2 {
+        font-size: 1em;
+        padding-bottom: 3em
+    }
+    #slider-text {
+        font-size: .6em;
+        letter-spacing: 0
+    }
+    .carousel-indicators {
+        margin-left: -2em
+    }
+    .section_8 {
+        margin-top: -9em;
+        padding-top: 8em
+    }
+    #reviews {
+        margin-top: -1em
+    }
+    #slide-reviews {
+        margin-bottom: -3em
+    }
+    #rewiews-block {
+        height: 6em;
+        box-shadow: 0 15px 40px 0 rgba(0, 0, 0, 0.3)
+    }
+    #reviews-text {
+        font-size: .7em;
+        padding: 0 .5em;
+        line-height: 1.2em
+    }
+    #reviews-name {
+        font-size: .8em;
+        margin-top: 1.5em
+    }
+    #reviews-img {
+        width: 100%
+    }
+    .more-reviews {
+        margin-top: -.5em;
+        font-size: 1.3em
+    }
+    .section-9-text {
+        font-size: .9em;
+        margin-bottom: -1em
+    }
+    #btn3,
+    #btn4 {
+        width: 100%;
+        height: 50px;
+        margin-bottom: -2em
+    }
+    .btn3text,
+    .btn4text {
+        font-size: .8em;
+        line-height: 50px
+    }
+    .footer-text,
+    .vk-link,
+    .developer {
+        font-size: .7em
+    }
+    #modal-input,
+    #modal-textarea {
+        width: 80%;
+        margin: -5% 10% 5%
+    }
+}
+
+@media (max-width: 480px) {
+    header {
+        padding: 2em 0
+    }
+    .logo {
+        width: 140px;
+        margin: auto;
+        margin-left: 0
+    }
+    #header-place {
+        text-align: right;
+        font-size: .5em;
+        margin-top: -.1em
+    }
+    #header-tel1 {
+        font-size: .8em;
+        margin-top: .8em
+    }
+    #header-tel2 {
+        font-size: .52em
+    }
+    .section_header {
+        text-align: center;
+        margin-top: -30%;
+        font-size: 2em
+    }
+    .chance {
+        text-align: center;
+        font-size: 1.5em;
+        margin-top: -35%
+    }
+    .discount33 {
+        text-align: center;
+        font-size: 1em;
+        margin-top: -5%
+    }
+    .timer_info {
+        font-size: 1.2em;
+        margin-top: .4em;
+        text-align: center
+    }
+    .timer {
+        width: 320px;
+        margin: auto
+    }
+    .timer-1 {
+        transform: scale(0.5, 0.5);
+        -webkit-transform: scale(0.5, 0.5);
+        margin-left: -6.35em
+    }
+    #btn1 {
+        width: 80%;
+        height: 50px;
+        margin-top: 0;
+        margin-bottom: 2em
+    }
+    .btn1text {
+        font-size: .8em;
+        line-height: 50px
+    }
+    .section-header {
+        font-size: 1.5em
+    }
+    .discountdescription1,
+    .discountdescription2,
+    .discountdescription3 {
+        font-size: .57em;
+        margin-left: 0
+    }
+    .discountdescription2 {
+        float: right
+    }
+    #diskountdescriptionicon1,
+    #diskountdescriptionicon2,
+    #diskountdescriptionicon3 {
+        padding-top: 1.4em;
+        width: 7em
+    }
+    #diskountdescriptionicon2 {
+        margin-left: 0;
+        width: 7em;
+        padding-top: 1.4em
+    }
+    .section2proviso {
+        text-align: center;
+        font-size: .6em;
+        margin-top: 2em;
+        margin-bottom: 0
+    }
+    .freemeasure {
+        font-size: 1em;
+        margin-bottom: 1em
+    }
+    .section_3 {
+        padding-bottom: 0;
+        height: 15em
+    }
+    .section_3>div>div>div>h2 {
+        margin-top: .1em;
+        margin-bottom: 1em
+    }
+    .section_3>.border-image-top,
+    .border-image-bottom {
+        height: 1.5em
+    }
+    #warranty-text {
+        font-size: .5em;
+        letter-spacing: 0;
+        margin-left: -5em;
+        margin-bottom: -.5em;
+        line-height: 1.4em
+    }
+    #check {
+        margin-left: 1.5em
+    }
+    #section-3-icon {
+        margin-top: -.3em;
+        margin-left: -2em;
+        width: 7.3em;
+        height: 7.3em
+    }
+    .section_4>div>div>div>h2 {
+        margin-top: 1em;
+        margin-bottom: 0
+    }
+    #section-4-icon>div>#svg {
+        padding-top: 2em;
+        padding-bottom: 1em;
+        width: 14em
+    }
+    #section-4-header {
+        font-size: 1.2em;
+        margin-bottom: -.2em
+    }
+    #section-4-text {
+        font-size: .8em
+    }
+    .slogan-text {
+        margin-top: 7em;
+        margin-left: -4em;
+        font-size: 2vw
+    }
+    #character {
+        margin-top: 2em;
+        width: 150%;
+        margin-bottom: 2em
+    }
+    #slogan-block {
+        height: auto
+    }
+    section>div>div>div>div>h2 {
+        margin-top: 1.5em;
+        margin-bottom: 2em
+    }
+    #badges {
+        padding-top: 0;
+        margin-left: 0;
+        margin-right: 2.8em
+    }
+    #section-5-badge {
+        width: 100%;
+        height: 10em;
+        margin: .5px auto
+    }
+    .section-5-header {
+        margin-top: 1.5em;
+        font-size: 1em
+    }
+    .section-5-text {
+        font-size: .6em;
+        margin-top: 1em
+    }
+    .section-5-icon {
+        width: 2.3em;
+        margin-left: -2em
+    }
+    .section_5 {
+        margin-bottom: 3em;
+        margin-top: -2em
+    }
+    .section_6 {
+        padding-bottom: 5em
+    }
+    .section_6>div>div>div>h2 {
+        margin-top: .4em;
+        margin-bottom: .4em
+    }
+    #calc-badge {
+        margin-top: 2em
+    }
+    #badge-text {
+        font-size: .6em;
+        margin-top: 4em;
+        padding-right: 2em
+    }
+    #badge-icon {
+        padding-top: 1.7em;
+        width: 5em
+    }
+    .uCalc_81708 {
+        transform: scale(0.9, 0.9);
+        padding-top: -.5em
+    }
+    #calc-body {
+        margin-top: 2em
+    }
+    #btn2 {
+        width: 80%;
+        height: 4em;
+        margin-top: -2em
+    }
+    .btn2text {
+        font-size: .8em;
+        line-height: 5em
+    }
+    #calc-proviso {
+        font-size: .7em;
+        margin-left: 1em
+    }
+    .section_7>div>div>div>h2 {
+        margin-top: .5em
+    }
+    .section-7-header-2 {
+        font-size: .8em;
+        padding-bottom: 3em
+    }
+    #slider {
+        width: 90%
+    }
+    #slider-text {
+        display: none;
+        background: none;
+        font-size: .8em
+    }
+    #slider-img {
+        width: 100%
+    }
+    .carousel-indicators {
+        display: none
+    }
+    .section_8 {
+        margin-top: -10em;
+        padding-top: 10em
+    }
+    #reviews {
+        margin-top: -1em
+    }
+    #slide-reviews {
+        margin-bottom: 0
+    }
+    #rewiews-block {
+        width: 70%;
+        margin: .5em 1em;
+        height: 4em;
+        box-shadow: 0 15px 40px 0 rgba(0, 0, 0, 0.3)
+    }
+    #reviews-text {
+        font-size: .5em;
+        padding: 0 .5em;
+        line-height: 1.2em
+    }
+    #reviews-name {
+        font-size: .5em;
+        margin-top: 2em
+    }
+    #reviews-img {
+        width: 2em
+    }
+    .more-reviews {
+        margin-top: 0;
+        font-size: 1.3em
+    }
+    .section-9-text {
+        font-size: .9em;
+        margin-bottom: -1em
+    }
+    #btn3,
+    #btn4 {
+        width: 100%;
+        height: 50px;
+        margin-bottom: -2em
+    }
+    .btn3text,
+    .btn4text {
+        font-size: .8em;
+        line-height: 50px
+    }
+    .footer-text,
+    .vk-link,
+    .developer {
+        font-size: .7em
+    }
+    #modal-input,
+    #modal-textarea {
+        width: 80%;
+        margin: -5% 10% 5%
+    }
+}

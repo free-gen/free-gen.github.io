@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Templates</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+		<style>
+			html, body {overflow-x: hidden; padding: 0!important}
+			body {
+				background-color: black;
+				font-weight: 500;
+				font-family: monospace;
+				width: 100vw;
+				height: 100vh;
+			}
+			audio {
+					/* width: 100%; */
+					margin-top: 50px;
+					/* margin: 50px; */
+					/* padding: 10px; */
+			}
+			h1 {
+				
+				margin: 50px;
+				color: #fff;
+				font-weight: 900;
+			}
+			li {
+				margin: 10px;
+				color: #fff;
+			}
+			a {
+				text-decoration: none;
+				color: #fff;
+				background-color: #333;
+				border-radius: 5px;
+				padding: 5px;
+			}
+			a:hover {
+				text-decoration: none;
+				color: yellow;
+			}
+	</style>
+</head>
+<body>
+
+<div class="container">
+    <h1 class="">Минусовки для ознакомления</h1>
+    
+    <ul>
+        <li><a href="#" data-src="./misc/aasti.mp3">Anna Asti - По барам</a></li>
+        <li><a href="#" data-src="./misc/dvn.mp3">DVN - Можно я с тобой</a></li>
+        <li><a href="#" data-src="./misc/krug.mp3">Круг - Владимирский Централ</a></li>
+        <li><a href="#" data-src="./misc/morgen.mp3">Моргенштерн - Последняя любовь</a></li>
+        <li><a href="#" data-src="./misc/mukka.mp3">Мукка - Девочка с каре</a></li>
+        <li><a href="#" data-src="./misc/serebro.mp3">Serebro - Отпусти меня</a></li>
+        <li><a href="#" data-src="./misc/stig.mp3">Stigmata - Сентябрь</a></li>
+        <li><a href="#" data-src="./misc/wallem.mp3">Wallem - Харизма</a></li>
+        <li><a href="#" data-src="./misc/zveri.mp3">Звери - Районы, кварталы</a></li>
+
+				<audio controls controlsList="nodownload noremoteplayback">
+					<source src="#" type="audio/mp3">
+					Your browser does not support the audio element.
+			</audio>
+        
+    </ul>
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('ul li a').click(function(e) {
+            e.preventDefault();
+            var audioPlayer = $('audio')[0];
+            audioPlayer.src = $(this).data('src');
+            audioPlayer.play();
+        });
+    });
+</script>
+
+</body>
+</html>

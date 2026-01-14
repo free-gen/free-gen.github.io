@@ -1,0 +1,341 @@
+/* ----------------------- BASE ----------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap');
+:root {
+	--index: calc(1vw + 1vh);
+	--baseTextColor: #313131;
+	--baseTextColorLight: #5f5f5f;
+	--secondaryTextColor: #fff;
+	--secondaryBgColor: #f5f5f5;
+	--buttonPrimary: #1c71d8;
+	--buttonHover: #3584e4;
+	--alphaBased: rgba(200, 200, 200, 0.5);
+	--alphaPrimary: rgba(30, 115, 215, 0.2);
+}
+
+
+
+/* ----------------------- Menu Button Styles OFF ----------------------- */
+.navbar-toggler,
+.navbar-toggler:focus,
+.navbar-toggler:active,
+.navbar-toggler-icon:focus {
+    outline: none;
+    border: none;
+    box-shadow: none;
+}
+.carousel {
+	border-radius: 15px;
+	overflow: hidden;
+	margin-left: 8em;
+	margin-right: 8em;
+}
+a {
+	text-decoration: none;
+}
+body {
+	background-repeat: no-repeat;
+	overflow-x: hidden !important;
+	font-family: 'Open Sans';
+}
+.sectionHeader {
+	padding-top: 60pt;
+	padding-bottom: 100pt;
+	font-size: 30pt;
+	line-height: 30pt;
+	font-weight: 700;
+}
+.sectionContent {
+	padding-top: 24pt;
+	padding-bottom: 8em;
+}
+
+
+
+/* ----------------------- BUTTONS ----------------------- */
+.btn {
+	margin: 5px;
+	padding: 12pt;
+	border-radius: 10px;
+}
+.btnMain {
+	font-size: 12pt;
+	font-weight: 700;
+	width: 15em;
+}
+.btn-primary {
+	background-color: var(--buttonPrimary);
+	border-color: var(--buttonPrimary);
+	color: var(--secondaryTextColor);
+}
+.btn-primary:hover {
+	background-color: var(--buttonHover);
+	border-color: var(--buttonHover);
+}
+.btn-outline-primary {
+	border-color: var(--buttonPrimary);
+	color: var(--secondaryTextColor);
+}
+.btn-outline-primary:hover {
+	border-color: var(--buttonHover);
+	background-color: transparent;
+}
+
+
+
+/* ----------------------- HEADER ----------------------- */
+.fa-bars {
+	font-size: 24pt;
+}
+.navbar {
+	background-color: #111;
+	padding: calc(var(--index) * 0.3);
+}
+.navbar-nav .nav-item .nav-link {
+	border-bottom: 1px solid rgba(0, 0, 0, 0);
+}
+.navbar-nav .nav-item.active .nav-link,
+.navbar-nav .nav-item:hover .nav-link {
+	border-bottom: 1px solid var(--buttonPrimary);
+}
+.brandLogo {
+	position: relative;
+	top: 5px;
+	height: 42px;
+}
+.city {
+	font-size: 10pt;
+	color: var(--buttonHover);
+}
+
+
+
+/* ----------------------- MAIN ----------------------- */
+.mainTextArea>h1 {
+	font-size: 36pt;
+	font-weight: 800;
+	/* width: 25vw; */
+	line-height: 48pt;
+} 
+.mainTextArea>p {
+	margin-top: 48pt;
+	margin-bottom: 48pt;
+	font-size: 18pt;
+	/* width: 35vw; */
+}
+.mainSection {
+	height: 100vh;
+	background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 1)), url(../img/banner.jpg) center center/cover no-repeat;
+}
+.mainSectionContent {
+	position: relative;
+	top: calc(var(--index) * 8);
+	color: var(--secondaryTextColor)
+}
+.mainTextArea {
+	z-index: 5;
+	position: absolute;
+	top: 6em;
+}
+.mainBrokenPhone {
+	z-index: 1;
+	position: relative;
+	height: 40em;
+	background: url(../img/phone.png) right center/contain no-repeat;
+}
+
+
+
+/* ----------------------- ADVANTAGE ----------------------- */
+.advantageSection {
+	background-color: var(--secondaryBgColor);
+}
+.advantageIcon {
+	color: var(--buttonPrimary);
+	font-size: 60pt;
+	line-height: 70pt;
+}
+.advantageItem>h2 {
+	margin: 12pt;
+	font-weight: 600;
+	font-size: 16pt;
+	text-align: left;
+	padding-top: 36pt;
+	padding-bottom: 8pt;
+}
+.advantageItem>p {
+	margin: 12pt;
+	font-weight: 400;
+	font-size: 12pt;
+	padding-top: 6pt;
+	text-align: left;
+	color: var(--baseTextColorLight);
+}
+.serviceCounter {
+	margin-top: 96pt;
+	font-size: 24pt;
+	font-weight: 600;
+}
+.serviceCounter>span {
+	color: var(--buttonPrimary);
+	font-weight: 800;
+}
+
+
+
+/* ----------------------- GUARANTEE ----------------------- */
+.guaranteeItem  {
+	background-color: var(--secondaryBgColor);
+	text-align: center;
+	padding: 12pt;
+	margin-bottom: 18pt;
+	border-radius: 15px;
+	box-shadow: 3px 10px 20px 0px rgba(90, 116, 148, 0.2);
+}
+.btnItem {
+	box-shadow: 3px 10px 20px 0px rgba(90, 116, 148, 0.4);
+}
+.carousel {
+	box-shadow: 3px 10px 20px 0px rgba(90, 116, 148, 0.2);
+}
+.itemName {
+	font-size: 16pt;
+	font-weight: 500;
+}
+.daysCount {
+	font-size: 60pt;
+	line-height: 30pt;
+	font-weight: 800;
+	padding-top: 16pt;
+}
+.daysCount>span {
+	color: var(--baseTextColorLight);
+	font-size: 12pt;
+	font-weight: 500;
+}
+.itemDescription {
+	padding-top: 12pt;
+	height: 100px;
+}
+.btnItem {
+	width: 10em;
+	font-size: 12pt;
+	font-weight: 400;
+}
+
+
+
+/* ----------------------- PORTFOLIO ----------------------- */
+.portfolioSection {
+	background-color: var(--secondaryBgColor);
+}
+.carousel-item>img {
+	position: relative;
+	object-fit: contain;
+}
+.carousel-caption {
+	background-color: var(--alphaBased);
+	border-radius: 15px;
+}
+.carousel-indicators {
+	padding-bottom: 12pt;
+}
+
+
+
+/* ----------------------- TEAM ----------------------- */
+.teamPhoto>img {
+	width: 180px;
+	border-radius: 100px;
+}
+.teamName {
+	font-size: 16pt;
+	padding-top: 24pt;
+	font-weight: 500;
+}
+.teamDescription {
+	/* margin-bottom: 60pt; */
+	font-weight: 400;
+	color: var(--baseTextColorLight);
+}
+.teamItem {
+	/* background-color: var(--secondaryBgColor); */
+	border-radius: 10px;
+	padding: 12pt;
+	margin-bottom: 24pt;
+	box-shadow: 3px 10px 20px 0px rgba(90, 116, 148, 0.2);
+}
+
+
+
+/* ----------------------- CONTACTS ----------------------- */
+.contactsSection {
+	background-color: var(--secondaryBgColor);
+}
+.contactsDescription {
+	padding-bottom: 24pt;
+}
+
+
+/* ----------------------- 2GIS ----------------------- */
+.carousel2GIS {
+	/* background-color: var(--secondaryBgColor); */
+	height: 300px;
+}
+.testImonialBlock {
+	padding-top: 12pt;
+	padding-left: 12vw;
+	padding-right: 12vw;
+}
+.gisName {
+	padding-left: 6pt;
+	font-size: 12pt;
+	font-weight: 600;
+	margin-bottom: 3pt;
+}
+.gisDate {
+	padding-left: 6pt;
+	margin-bottom: 2pt;
+	font-size: 10pt;
+	/* line-height: 12pt; */
+	/* background-color: blue; */
+}
+.gisStars {
+	padding-left: 6pt;
+}
+.gisText {
+	/* text-align: left; */
+	margin-top: 18pt;
+	background-color: var(--secondaryBgColor);
+	padding: 12pt;
+	border-radius: 10px;
+	font-size: 10pt;
+}
+.gisLogo {
+	padding-top: 12pt;
+}
+
+
+
+/* ----------------------- FOOTER ----------------------- */
+footer, a {
+	background-color: #111;
+	color: var(--secondaryTextColor);
+	font-size: 10pt;
+}
+.footer {
+	display: flex;
+	gap: 10vw;
+	justify-content: center;
+}
+.companyLinks {
+	margin: 24pt;
+}
+.companyLinks>a>i {
+	margin-right: 6pt;
+}
+.copyright {
+	margin: 24pt;
+}
+.autor {
+	color: orange;
+}

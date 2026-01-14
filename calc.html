@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="white">
+    <meta name="apple-mobile-web-app-title" content="Калькулятор раскроя профилей">
+    <title>Калькулятор раскроя профилей</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="https://img.icons8.com/?size=180&id=Exgit9KCWt69&format=png&color=000000">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0;
+            color: #333;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            background: #fff;
+            overflow: hidden;
+            margin: 0;
+        }
+        
+        header {
+            background: #2c3e50;
+            color: #fff;
+            padding: 12px;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .description {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        
+        .input-section {
+            padding: 12px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #eaeaea;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        input[type="number"] {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        /* Скрываем стрелки у number inputs */
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            appearance: none;
+            margin: 0;
+        }
+        input[type="number"] {
+            -moz-appearance: textfield;
+            appearance: textfield;
+        }
+        
+        input[type="number"]:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+        
+        .details-container {
+            margin-top: 15px;
+        }
+        
+        .detail-item {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+        
+        .detail-item input {
+            flex: 1;
+        }
+        
+        .remove-item-btn {
+            background: #fff;
+            color: #e74c3c;
+            border: 1px solid #e0e0e0;
+            width: 38px;
+            height: 44px;
+            border-radius: 4px;
+            font-size: 20px;
+            line-height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .inline-group {
+            display: flex;
+            gap: 15px;
+            align-items: flex-end;
+        }
+        .inline-group .field {
+            flex: 1;
+        }
+        .inline-group .field.small {
+            flex: 0 0 180px;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 12px;
+        }
+        
+        button {
+            padding: 10px 14px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        
+        #calculate-btn {
+            background: #3498db;
+            color: white;
+            flex: 2;
+        }
+        
+        #calculate-btn:hover { background: #2980b9; }
+        
+        #reset-btn {
+            background: #e74c3c;
+            color: white;
+            flex: 1;
+        }
+        
+        #reset-btn:hover { background: #c0392b; }
+        
+        .results-section { padding: 12px; }
+        
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #eee;
+        }
+        
+        .results-title {
+            font-size: 22px;
+            color: #2c3e50;
+        }
+        
+        .summary {
+            background: #eef6fd;
+            padding: 12px;
+            border-radius: 4px;
+            margin-bottom: 16px;
+        }
+        
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        
+        .summary-value {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .profile-results {
+            display: grid;
+            gap: 20px;
+        }
+        
+        .profile-result {
+            background: #f8f9fa;
+            border-radius: 4px;
+            padding: 12px;
+        }
+        
+        .profile-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px dashed #ccc;
+        }
+        
+        .profile-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #454545;
+        }
+        
+        .profile-waste {
+            color: #e74c3c;
+            font-weight: 600;
+        }
+        
+        .visualization {
+            height: 30px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+        }
+        
+        .segment {
+            height: 100%;
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: default;
+            overflow: hidden;
+            background: #757575;
+            border-left: 1px solid #ffffff;
+        }
+        
+        /* Убраны hover-эффекты намеренно */
+        
+        .segment-text {
+            white-space: nowrap;
+            font-weight: 400;
+            font-size: 12px;
+            color: #ffffff;
+        }
+        
+        .segment-details {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .waste-segment { background: #700200 !important; }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px 0;
+            color: #404040;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 768px) {
+            .container { max-width: 100%; }
+            .input-section, .results-section { padding: 12px; }
+            /* Оставляем длина, количество, крестик в одной строке */
+            .detail-item { display: grid; grid-template-columns: 1fr 110px 44px; gap: 8px; align-items: stretch; }
+            .detail-item .detail-length, .detail-item .detail-quantity { min-width: 0; }
+            .button-group { flex-direction: column; }
+            .inline-group { flex-direction: column; align-items: stretch; }
+            .inline-group .field, .inline-group .field.small { flex: 1 1 auto; width: 100%; }
+            .remove-item-btn { width: 44px; height: 44px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Калькулятор раскроя профилей</h1>
+            <p class="description">Оптимизированный расчет с визуализацией</p>
+        </header>
+        
+        <section class="input-section">
+            <div class="form-group">
+                <div class="inline-group">
+                    <div class="field">
+                        <label for="profile-length">Длина профиля (мм):</label>
+                        <input type="number" id="profile-length" value="2700" min="1">
+                    </div>
+                    <div class="field small">
+                        <label for="kerf">Допуск на рез (мм):</label>
+                        <input type="number" id="kerf" value="3" min="0">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>Детали:</label>
+                <div class="details-container" id="details-container">
+                    <div class="detail-item">
+                        <input type="number" class="detail-length" placeholder="Длина (мм)" min="1">
+                        <input type="number" class="detail-quantity" placeholder="Количество" min="1">
+                        <button type="button" class="remove-item-btn" title="Удалить строку" aria-label="Удалить строку">×</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="button-group">
+                <button id="calculate-btn">Расчет</button>
+                <button id="reset-btn">Сброс</button>
+            </div>
+        </section>
+        
+        <section class="results-section" id="results-section">
+            <div class="results-header">
+                <h2 class="results-title">Результаты расчета</h2>
+            </div>
+            
+            <div class="summary">
+                <div class="summary-item">
+                    <span>Общая длина профиля:</span>
+                    <span class="summary-value" id="total-profile-length">2700 мм</span>
+                </div>
+                <div class="summary-item">
+                    <span>Необходимо профилей:</span>
+                    <span class="summary-value" id="profiles-needed">-</span>
+                </div>
+                <div class="summary-item">
+                    <span>Общий отход:</span>
+                    <span class="summary-value" id="total-waste">-</span>
+                </div>
+                <div class="summary-item">
+                    <span>Эффективность раскроя:</span>
+                    <span class="summary-value" id="efficiency">-</span>
+                </div>
+            </div>
+            
+            <div class="profile-results" id="profile-results">
+                <div class="empty-state" id="empty-state">
+                    Введите данные и нажмите "Рассчитать" для получения результатов
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <footer>
+        <p>Калькулятор раскроя профилей &copy; 2025</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const detailsContainer = document.getElementById('details-container');
+            const calculateBtn = document.getElementById('calculate-btn');
+            const resetBtn = document.getElementById('reset-btn');
+            const profileLengthInput = document.getElementById('profile-length');
+            const profilesNeededSpan = document.getElementById('profiles-needed');
+            const totalWasteSpan = document.getElementById('total-waste');
+            const efficiencySpan = document.getElementById('efficiency');
+            const profileResultsDiv = document.getElementById('profile-results');
+            const emptyStateDiv = document.getElementById('empty-state');
+            const totalProfileLengthSpan = document.getElementById('total-profile-length');
+            const kerfInput = document.getElementById('kerf');
+            
+            // Обновляем отображаемую длину профиля при изменении
+            profileLengthInput.addEventListener('input', function() {
+                totalProfileLengthSpan.textContent = `${this.value} мм`;
+            });
+            
+            // Добавляем обработчик для автоматического добавления новой строки
+            detailsContainer.addEventListener('input', function(e) {
+    if (e.target.classList.contains('detail-quantity')) {
+        const items = detailsContainer.querySelectorAll('.detail-item');
+        const lastItem = items[items.length - 1];
+        
+        // Добавляем новую строку если ввели любое значение в последнее поле количества
+        if (e.target.closest('.detail-item') === lastItem && e.target.value !== "") {
+            addNewDetailItem();
+        }
+    }
+});
+
+            // Удаление строки по клику на крестик
+            detailsContainer.addEventListener('click', function(e) {
+                const removeBtn = e.target.closest('.remove-item-btn');
+                if (removeBtn) {
+                    const item = removeBtn.closest('.detail-item');
+                    if (item) {
+                        item.remove();
+                    }
+                }
+            });
+            
+            // Функция для добавления новой позиции
+            function addNewDetailItem() {
+                const newItem = document.createElement('div');
+                newItem.className = 'detail-item';
+                newItem.innerHTML = `
+                    <input type="number" class="detail-length" placeholder="Длина (мм)" min="1">
+                    <input type="number" class="detail-quantity" placeholder="Количество" min="1">
+                    <button type=\"button\" class=\"remove-item-btn\" title=\"Удалить строку\" aria-label=\"Удалить строку\">×</button>
+                `;
+                detailsContainer.appendChild(newItem);
+            }
+            
+            // Функция для сброса формы
+            resetBtn.addEventListener('click', function() {
+                detailsContainer.innerHTML = '';
+                addNewDetailItem();
+                profileLengthInput.value = 2700;
+                kerfInput.value = 3;
+                totalProfileLengthSpan.textContent = '2700 мм';
+                emptyStateDiv.classList.remove('hidden');
+                profileResultsDiv.innerHTML = '';
+                profilesNeededSpan.textContent = '-';
+                totalWasteSpan.textContent = '-';
+                efficiencySpan.textContent = '-';
+            });
+
+            // Блокируем изменение значений числовых полей колесом мыши и стрелками
+            function preventNumberScrollAndKeys(element) {
+                element.addEventListener('wheel', function(e) {
+                    if (document.activeElement === element) {
+                        e.preventDefault();
+                    }
+                }, { passive: false });
+                element.addEventListener('keydown', function(e) {
+                    if (e.key === 'ArrowUp' || e.key === 'ArrowDown' || e.key === 'PageUp' || e.key === 'PageDown') {
+                        e.preventDefault();
+                    }
+                });
+            }
+            
+            // Применяем ко всем текущим числовым полям
+            [profileLengthInput, kerfInput, ...detailsContainer.querySelectorAll('input[type="number"]')].forEach(preventNumberScrollAndKeys);
+            
+            // И к будущим добавленным
+            const observer = new MutationObserver(() => {
+                detailsContainer.querySelectorAll('input[type="number"]').forEach(preventNumberScrollAndKeys);
+            });
+            observer.observe(detailsContainer, { childList: true, subtree: true });
+            
+            // Функция для расчета раскроя
+            calculateBtn.addEventListener('click', function() {
+                const profileLength = parseInt(profileLengthInput.value);
+                const kerf = parseInt(kerfInput.value) || 0;
+                
+                // Собираем данные о деталях
+                const details = [];
+                const detailItems = detailsContainer.querySelectorAll('.detail-item');
+                
+                detailItems.forEach(item => {
+                    const length = parseInt(item.querySelector('.detail-length').value);
+                    const quantity = parseInt(item.querySelector('.detail-quantity').value);
+                    
+                    if (length && quantity && length > 0 && quantity > 0) {
+                        for (let i = 0; i < quantity; i++) {
+                            details.push(length);
+                        }
+                    }
+                });
+                
+                if (details.length === 0) {
+                    alert('Добавьте хотя бы одну деталь для раскроя');
+                    return;
+                }
+                
+                // Проверяем, что ни одна деталь не превышает длину профиля
+                if (Math.max(...details) > profileLength) {
+                    alert('Одна из деталей превышает длину профиля!');
+                    return;
+                }
+                
+                // Оптимизированный алгоритм раскроя c учетом допуска на рез (kerf)
+                const results = optimizeCutting(profileLength, details, kerf);
+                
+                // Отображаем результаты
+                displayResults(results, profileLength);
+            });
+            
+            // Оптимизированный алгоритм раскроя (комбинация First-Fit Decreasing и дополнительной оптимизации)
+            function optimizeCutting(profileLength, details, kerf) {
+                // Сортируем детали по убыванию длины
+                const sortedDetails = [...details].sort((a, b) => b - a);
+                const profiles = [];
+                
+                // Пытаемся найти оптимальное решение с помощью нескольких проходов
+                for (let attempt = 0; attempt < 3; attempt++) {
+                    const currentProfiles = [];
+                    
+                    for (let detail of sortedDetails) {
+                        let placed = false;
+                        
+                        // Пытаемся разместить деталь в существующем профиле
+                        for (let i = 0; i < currentProfiles.length; i++) {
+                            // Если профиль уже содержит детали, нужен дополнительный рез (kerf)
+                            const requiredLength = detail + (currentProfiles[i].pieces.length > 0 ? kerf : 0);
+                            if (currentProfiles[i].remaining >= requiredLength) {
+                                currentProfiles[i].pieces.push(detail);
+                                currentProfiles[i].remaining -= requiredLength;
+                                placed = true;
+                                break;
+                            }
+                        }
+                        
+                        // Если не удалось разместить, создаем новый профиль
+                        if (!placed) {
+                            currentProfiles.push({
+                                pieces: [detail],
+                                // Первая деталь не требует реза в начале
+                                remaining: profileLength - detail
+                            });
+                        }
+                    }
+                    
+                    // Сохраняем лучшее решение
+                    if (profiles.length === 0 || currentProfiles.length < profiles.length) {
+                        // Клонируем массив
+                        profiles.length = 0;
+                        currentProfiles.forEach(p => profiles.push({
+                            pieces: [...p.pieces],
+                            remaining: p.remaining
+                        }));
+                    }
+                    
+                    // Немного перемешиваем массив для следующей попытки
+                    sortedDetails.sort(() => Math.random() - 0.5);
+                }
+                
+                return profiles;
+            }
+            
+            // Функция для отображения результатов
+            function displayResults(profiles, profileLength) {
+                emptyStateDiv.classList.add('hidden');
+                
+                // Обновляем сводную информацию
+                profilesNeededSpan.textContent = profiles.length;
+                
+                const totalWaste = profiles.reduce((sum, profile) => sum + profile.remaining, 0);
+                totalWasteSpan.textContent = `${totalWaste} мм`;
+                
+                const totalUsed = profiles.length * profileLength - totalWaste;
+                const efficiency = ((totalUsed / (profiles.length * profileLength)) * 100).toFixed(1);
+                efficiencySpan.textContent = `${efficiency}%`;
+                
+                // Отображаем результаты для каждого профиля
+                profileResultsDiv.innerHTML = '';
+                
+                profiles.forEach((profile, index) => {
+                    const profileDiv = document.createElement('div');
+                    profileDiv.className = 'profile-result';
+                    
+                    const profileHeader = document.createElement('div');
+                    profileHeader.className = 'profile-header';
+                    profileHeader.innerHTML = `
+                        <div class="profile-title">Профиль ${index + 1}</div>
+                        <div class="profile-waste">Отход: ${profile.remaining} мм</div>
+                    `;
+                    
+                    const visualization = document.createElement('div');
+                    visualization.className = 'visualization';
+                    
+                    let position = 0;
+                    profile.pieces.forEach((piece, pieceIndex) => {
+                        const width = (piece / profileLength) * 100;
+                        
+                        const segment = document.createElement('div');
+                        segment.className = 'segment';
+                        segment.style.left = `${position}%`;
+                        segment.style.width = `${width}%`;
+                        segment.title = `${piece} мм`;
+                        
+                        const segmentText = document.createElement('div');
+                        segmentText.className = 'segment-text';
+                        segmentText.textContent = `${piece}`;
+                        segment.appendChild(segmentText);
+                        
+                        visualization.appendChild(segment);
+                        
+                        position += width;
+                    });
+                    
+                    // Добавляем segment отхода, если есть
+                    if (profile.remaining > 0) {
+                        const wasteWidth = (profile.remaining / profileLength) * 100;
+                        
+                        const wasteSegment = document.createElement('div');
+                        wasteSegment.className = 'segment waste-segment';
+                        wasteSegment.style.left = `${position}%`;
+                        wasteSegment.style.width = `${wasteWidth}%`;
+                        wasteSegment.title = `Отход: ${profile.remaining} мм`;
+                        
+                        const wasteText = document.createElement('div');
+                        wasteText.className = 'segment-text';
+                        wasteText.textContent = `${profile.remaining}`;
+                        wasteSegment.appendChild(wasteText);
+                        
+                        visualization.appendChild(wasteSegment);
+                    }
+                    
+                    profileDiv.appendChild(profileHeader);
+                    profileDiv.appendChild(visualization);
+                    
+                    profileResultsDiv.appendChild(profileDiv);
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>
+
+

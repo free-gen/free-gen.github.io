@@ -1,0 +1,36 @@
+@font-face {font-family: 'Regular';src: url('../fonts/font.eot');src: url('../fonts/font.eot?#iefix') format('embedded-opentype'),url('../fonts/font.woff') format('woff'),url('../fonts/font.ttf') format('truetype');font-weight: normal;font-style: normal;}
+@font-face {font-family: 'Bold';src: url('../fonts/bold.eot');src: url('../fonts/bold.eot?#iefix') format('embedded-opentype'),url('../fonts/bold.woff') format('woff'),url('../fonts/bold.ttf') format('truetype');font-weight: normal;font-style: normal;}
+@font-face {font-family: 'icon';src: url(../fonts/1.eot);src: url(../fonts/1.eot) format("embedded-opentype"), url(../fonts/1.woff) format("woff"), url(../fonts/1.ttf) format("truetype"), url(../fonts/1.svg#1) format("svg")}
+@font-face {font-family: 'glyph';src: url(../fonts/glyphicons-halflings-regular.eot);src: url(../fonts/glyphicons-halflings-regular.eot) format("embedded-opentype"), url(../fonts/glyphicons-halflings-regular.woff2) format("woff2"), url(../fonts/glyphicons-halflings-regular.woff) format("woff"), url(../fonts/glyphicons-halflings-regular.ttf) format("truetype"), url(../fonts/glyphicons-halflings-regular.svg#GothaProMed) format("svg")}
+.icon-twitter1:before {content: "\ea96";}.icon-youtube-play:before {content: "\e900";}.icon-envelope:before {content: "\e905";}
+a {text-decoration: none; color: #fff;}
+a:hover {text-decoration: none; color: #4287f5;}
+a:link {text-decoration: none;}
+a:visited {text-decoration: none;}
+html, body {overflow-x: hidden; padding: 0!important}
+#go_top {background-color: #000;position: fixed;right: 30px;bottom: 15px; width: 30px; height: 30px; opacity: 1; cursor: pointer; border-radius: 5px;} #go_top:hover {background-color: #2478ff;}
+#go_top>a:hover {color: #fff;} #go_top>a:link {color: #fff;} #go_top>a:visited {color: #fff;}
+#go_top>a>#up {margin-left: 2px; margin-top: 3px;}
+.content_link {color: #4287f5;}
+body {background-image: url(../source/bg.png);-webkit-background-size: cover;background-size: cover;background-position: center;background-color: black;height: 100vh;color: #fff;font-family: Regular;font-size: 20px;}
+h1{font-family: Bold;}h2 {font-size: 20px; margin-left: 20px;}h3 {font-size: 15px;}h4 {font-size: 15px;line-height: 100px;}
+header {overflow-y: scroll; background-color: #232323;text-align: center;font-family: Bold;font-size: 20px;display:table-cell;position: fixed;top: 0;width: 100vw;z-index: 20;}
+.logo>img {display:block; margin:0 auto; cursor: pointer;}
+#link {margin-top: 2.1%;}
+#link_icon {font-family: icon;margin-top: 2.1%;}
+.ghost {width: auto;height: 30vh;}
+#donate {background-color: #078500;width: 300px;height: 50px;border-radius: 5px;cursor: pointer;margin: auto;}
+#donate:hover {background-color: #0bd600;}
+#donate>p {line-height: 50px;}
+#download {background-color: #345385;width: 100%;height: 50px;border-radius: 5px;cursor: pointer;}
+#download:hover {background-color: #2478ff;}
+#download>p {line-height: 50px; margin-left: 20px;}
+.developer {width: 100%; text-align: center;}
+.achtung {font-family: monospace; background-color: black; color: #FF9B0C; padding: 5px; width: 90%; text-align: center; margin-left: 5%; border-radius: 5px;}
+.achtung>span {font-weight: 900;}
+h4>a {font-family: Bold;}
+hr {border: 1px solid #8C7691;}
+@media (min-width: 992px) and (max-width: 1199px) {.ghost {height: 20vh;}}
+@media (min-width: 768px) and (max-width: 991px) {#link {margin-top: 2.4%;}#link_icon {margin-top: 2%;}.ghost {height: 20vh;}header {font-size: 18px;}.crutch_r {text-align: right;}.crutch_l {text-align: left;}}
+@media (min-width: 481px) and (max-width: 767px) {.ghost {height: 200px;}header {height: 170px;}#link {line-height: 20px;}#link_icon {margin-top: 20px;}.logo>img {height: 80px;}}
+@media (max-width: 480px) {.ghost {height: 200px;}.logo>img {height: 50px;}header {height: 130px;}.crutch_r {text-align: right;}.crutch_l {text-align: left;}}
