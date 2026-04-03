@@ -1,1 +1,177 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Автобус №16</title>
+<style>
+body {
+  font-family: monospace;
+  margin: 0;
+  padding: 20px;
+  background: #f5f5f5;
+}
 
+/* Единый стиль для всех интерактивных элементов */
+button, select {
+  width: 100%;
+  padding: 15px;
+  margin: 10px 0;
+  font-size: 16px;
+  font-family: monospace;
+  cursor: pointer;
+  border: 2px solid #999;
+  border-radius: 10px;
+  background: white;
+  color: #333;
+  box-sizing: border-box;
+}
+
+.header {
+  margin-top: 100px;
+}
+
+h2 {
+  font-weight: normal;
+  color: #333;
+}
+
+#result {
+  margin-top: 20px;
+  font-size: 16px;
+  white-space: pre-line;
+  text-align: left;
+  color: #333;
+}
+</style>
+</head>
+<body>
+
+<h1 class="header">Расписание 16 маршрута</h1>
+
+<h2>Выбор графика</h2>
+
+<select id="dayType">
+  <option value="weekday">Будние</option>
+  <option value="weekend">Выходные</option>
+</select>
+
+<br><br>
+
+<h2>Откуда едем?</h2>
+
+<button onclick="findBus('to_city')">С Дружбы</button>
+<button onclick="findBus('to_druzhba')">С Автовокзала</button>
+
+<div id="result"></div>
+
+<script>
+
+const schedules = {
+
+  // ================= БУДНИ =================
+  weekday: {
+    to_city: [
+      { g: 1, times: ["07:00", "08:40", "12:00", "13:40", "15:20", "17:00", "18:40", "20:20"] },
+      { g: 2, times: ["07:20", "09:00", "10:40", "14:00", "15:40", "17:20", "19:00"] },
+      { g: 3, times: ["07:35", "09:15", "12:35", "14:15", "15:55", "17:35", "19:15", "21:00"] },
+      { g: 4, times: ["07:50", "09:30", "11:10", "14:30", "16:10", "17:50", "19:30"] },
+      { g: 5, times: ["06:25", "08:05", "09:45", "13:05", "14:45", "16:25", "18:05", "19:45"] },
+      { g: 6, times: ["06:40", "08:20", "10:00", "11:40", "15:00", "16:40", "18:20", "20:00"] }
+    ],
+    
+    to_druzhba: [
+      { g: 1, times: ["06:15", "07:50", "11:10", "12:50", "14:30", "16:10", "17:50", "19:30", "21:10"] },
+      { g: 2, times: ["06:30", "08:10", "09:50", "13:10", "14:50", "16:30", "18:10"] },
+      { g: 3, times: ["06:45", "08:25", "11:45", "13:25", "15:05", "16:45", "18:25", "20:05"] },
+      { g: 4, times: ["07:00", "08:40", "10:20", "13:40", "15:20", "17:00", "18:40"] },
+      { g: 5, times: ["07:15", "08:55", "12:15", "13:55", "15:35", "17:15", "18:55", "20:35"] },
+      { g: 6, times: ["07:30", "09:10", "10:50", "14:10", "15:50", "17:30", "19:10"] }
+    ]
+  },
+
+  // ================= ВЫХОДНЫЕ =================
+  weekend: {
+    to_city: [
+      { g: 1, times: ["06:50", "08:30", "10:10", "13:30", "15:10", "16:50", "18:30", "20:10"] },
+      { g: 2, times: ["07:10", "08:50", "12:10", "13:50", "15:30", "17:10", "18:50"] },
+      { g: 3, times: ["07:30", "09:10", "10:50", "14:10", "15:50", "17:30", "19:10", "20:50"] },
+      { g: 4, times: ["06:10", "07:50", "09:30", "12:50", "14:30", "16:10", "17:50", "19:30"] },
+      { g: 5, times: ["06:25", "08:10", "09:50", "11:30", "14:50", "16:30", "18:10"] }
+    ],
+    
+    to_druzhba: [
+      { g: 1, times: ["06:00", "07:40", "09:20", "12:40", "14:20", "16:00", "17:40", "19:20", "21:00"] },
+      { g: 2, times: ["06:20", "08:00", "11:20", "13:00", "14:40", "16:20", "18:00"] },
+      { g: 3, times: ["06:40", "08:20", "10:00", "13:20", "15:00", "16:40", "18:20", "20:00"] },
+      { g: 4, times: ["07:00", "08:40", "12:00", "13:40", "15:20", "17:00", "18:40"] },
+      { g: 5, times: ["07:20", "09:00", "10:40", "14:00", "15:40", "17:20", "19:00"] }
+    ]
+  }
+};
+
+// Функция преобразования времени в минуты
+function toMinutes(time) {
+  const [h, m] = time.split(":").map(Number);
+  return h * 60 + m;
+}
+
+// Функция парсинга расписания из группированной структуры в плоский массив
+function parseSchedule(dayType, direction) {
+  const scheduleGroups = schedules[dayType][direction];
+  const allTimes = [];
+  
+  for (const group of scheduleGroups) {
+    for (const time of group.times) {
+      allTimes.push({ time, g: group.g });
+    }
+  }
+  
+  // Сортируем по времени
+  return allTimes.sort((a, b) => toMinutes(a.time) - toMinutes(b.time));
+}
+
+function findBus(direction) {
+  const dayType = document.getElementById("dayType").value;
+  
+  // Получаем текущее время
+  let now = new Date();
+  const currentMinutes = now.getHours() * 60 + now.getMinutes();
+  
+  // Парсим расписание в плоский массив
+  const times = parseSchedule(dayType, direction);
+  
+  let next = null;
+  let afterNext = null;
+  
+  // Ищем ближайший и следующий рейсы
+  for (let i = 0; i < times.length; i++) {
+    if (toMinutes(times[i].time) >= currentMinutes) {
+      next = times[i];
+      afterNext = times[i + 1] || null;
+      break;
+    }
+  }
+  
+  const resultDiv = document.getElementById("result");
+  
+  if (next) {
+    let text = `Ближайший: ${next.time} (график ${next.g})`;
+    
+    if (afterNext) {
+      text += `\nСледующий: ${afterNext.time} (график ${afterNext.g})`;
+    }
+    
+    resultDiv.innerText = text;
+  } else {
+    const last = times[times.length - 1];
+    resultDiv.innerText = `Сегодня рейсов больше нет\nПоследний был в ${last.time} (график ${last.g})`;
+  }
+}
+
+// Добавляем возможность обновить расписание при смене дня
+document.getElementById("dayType").onchange = () => result.innerText = "";
+
+</script>
+</body>
+</html>
