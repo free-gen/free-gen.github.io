@@ -15,8 +15,8 @@ body {
 /* Единый стиль для всех интерактивных элементов */
 button, select {
   width: 100%;
-  min-height: 55px; /* Минимальная высота вместо фиксированной */
-  padding: 12px 15px; /* Уменьшенный вертикальный padding */
+  min-height: 40px;
+  padding: 10px 15px;
   margin: 10px 0;
   font-size: 16px;
   font-family: monospace;
@@ -30,7 +30,7 @@ button, select {
   /* Дополнительные свойства для iOS */
   -webkit-appearance: none;
   appearance: none;
-  line-height: 1.2; /* Стабильный line-height */
+  line-height: 1.2;
 }
 
 .header {
@@ -186,7 +186,11 @@ function findBus(direction) {
     resultDiv.innerText = text;
   } else {
     const last = times[times.length - 1];
-    resultDiv.innerText = `Сегодня рейсов больше нет\nПоследний был в ${last.time} (график ${last.g})`;
+    const tomorrowFirst = times[0];
+    let text = `Сегодня рейсов больше нет\nПоследний был в ${last.time} (график ${last.g})`;
+    text += `\n\nБлижайший завтра в ${tomorrowFirst.time} (график ${tomorrowFirst.g})`;
+  
+    resultDiv.innerText = text;
   }
 }
 
