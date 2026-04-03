@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>16BUS</title>
+<title>CHECK16BUS</title>
 <style>
 body {
   font-family: monospace;
@@ -61,10 +61,10 @@ h2 {
 <h2>📅 Выбор графика</h2>
 
 <select id="dayType">
-  <option value="winter_weekday">❄️ Будние</option>
-  <option value="winter_weekend">❄️ Выходные</option>
-  <option value="summer_weekend">☀️ Будние</option>
-  <option value="summer_weekend">☀️ Выходные</option>
+  <option value="winter_weekday">Будние дни (Зима)</option>
+  <option value="winter_weekend">Выходные дни (Зима)</option>
+  <option value="summer_weekday">Будние дни (Лето)</option>
+  <option value="summer_weekend">Выходные дни (Лето)</option>
 </select>
 
 <br><br>
@@ -80,7 +80,7 @@ h2 {
 
 const schedules = {
 
-  // ================= БУДНИ =================
+  // ================= ЗИМА БУДНИ =================
   winter_weekday: {
     to_city: [
       { g: 1, times: ["07:00", "08:40", "12:00", "13:40", "15:20", "17:00", "18:40", "20:20"] },
@@ -101,7 +101,7 @@ const schedules = {
     ]
   },
 
-  // ================= ВЫХОДНЫЕ =================
+  // ================= ЗИМА ВЫХОДНЫЕ =================
   winter_weekend: {
     to_city: [
       { g: 1, times: ["06:50", "08:30", "10:10", "13:30", "15:10", "16:50", "18:30", "20:10"] },
@@ -118,6 +118,16 @@ const schedules = {
       { g: 4, times: ["07:00", "08:40", "12:00", "13:40", "15:20", "17:00", "18:40"] },
       { g: 5, times: ["07:20", "09:00", "10:40", "14:00", "15:40", "17:20", "19:00"] }
     ]
+  },
+  // ================= ЛЕТО БУДНИ =================
+  summer_weekday: {
+    to_city: [],
+    to_druzhba: []
+  },
+  // ================= ЛЕТО ВЫХОДНЫЕ =================
+  summer_weekend: {
+    to_city: [],
+    to_druzhba: []
   }
 };
 
