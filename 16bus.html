@@ -3,200 +3,235 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
 <title>CHECK16BUS</title>
 <style>
-body {
-  font-family: monospace;
-  margin: 0;
-  padding: 20px;
-  background: #f5f5f5;
+:root {
+  --bg: #fff;
+  --surface: #fbfbfb;
+  --border: #c8c8c8;
+  --text: #333;
+  --text-active: #111;
+  --active: #ededed;
+  --radius-sm: 10px;
+  --radius-lg: 30px;
+  --border-width: 1px;
+  --pill-height: 50px;
 }
 
-/* Единый стиль для всех интерактивных элементов */
-button, select {
-  width: 100%;
-  min-height: 40px;
-  padding: 10px 15px;
-  margin: 10px 0;
-  font-size: 16px;
-  font-family: monospace;
+body {
+  font-family: "Manrope", sans-serif;
+  margin: 0;
+  padding: 15px;
+  background: var(--bg);
+  color: var(--text);
+}
+
+button {
+  font-family: inherit;
   cursor: pointer;
-  border: 2px solid #999;
-  border-radius: 10px;
-  background: white;
-  color: #333;
   box-sizing: border-box;
-  
-  /* Дополнительные свойства для iOS */
   -webkit-appearance: none;
   appearance: none;
-  line-height: 1.2;
 }
 
 .header {
-  margin-top: 50px;
-  font-size: 24px;
+  padding: 50px;
+  font-size: 22px;
+  text-align: center;
 }
 
 h2 {
   font-weight: normal;
-  color: #333;
+  font-size: 14px;
+  margin-left: 15px;
+  color: var(--text);
 }
 
 #result {
   margin-top: 20px;
-  font-size: 16px;
+  margin-left: 15px;
+  font-size: 14px;
   white-space: pre-line;
   text-align: left;
-  color: #333;
+}
+
+/* Общий стиль для всех пилюль */
+.pill {
+  display: flex;
+  align-items: stretch;
+  /* margin: 15px 0; */
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  overflow: hidden;
+  min-height: var(--pill-height);
+}
+
+.pill-text {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 10px;
+  text-align: center;
+  background: var(--surface);
+  color: var(--text);
+}
+
+.pill-btn {
+  flex: 1;
+  padding: 10px;
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  background: var(--surface);
+  border: none;
+  border-radius: 0;
+  color: var(--text);
+  line-height: 1.2;
+}
+
+.pill-btn:first-child {
+  border-right: var(--border-width) solid var(--border);
+}
+
+.pill-btn.active {
+  background: var(--active);
+  color: var(--text-active);
+  font-weight: 600;
+}
+
+/* Специфичные стили для кнопки направления */
+.direction-btn {
+  width: 50px;
+  flex: none;
+  padding: 0;
+  /* font-size: 24px; */
+  background: var(--surface);
+  border: none;
+  border-left: var(--border-width) solid var(--border);
+  border-right: var(--border-width) solid var(--border);
+  /* border-radius: 0; */
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.direction-btn:active {
+  background: var(--active);
 }
 </style>
 </head>
 <body>
 
-<h1 class="header">🚌 Ближайший 16-й</h1>
+<h1 class="header">Ближайший 16-й</h1>
+
+<h2>Расписание</h2>
+<div class="pill">
+  <button id="weekdayBtn" class="pill-btn active" onclick="setDay('winter_weekday')">Рабочие дни</button>
+  <button id="weekendBtn" class="pill-btn" onclick="setDay('winter_weekend')">Выходные дни</button>
+</div>
 
 <br>
 
-<h2>📅 Выбор графика</h2>
+<h2>Направление</h2>
+<div class="pill">
+  <span id="fromText" class="pill-text">Дружба</span>
+  <button class="direction-btn" onclick="swapDirection()">
+    <span class="material-icons">swap_horiz</span>
+  </button>
+  <span id="toText" class="pill-text">Автовокзал</span>
+</div>
 
-<select id="dayType">
-  <option value="winter_weekday">Будние дни (Зима)</option>
-  <option value="winter_weekend">Выходные дни (Зима)</option>
-  <option value="summer_weekday">Будние дни (Лето)</option>
-  <option value="summer_weekend">Выходные дни (Лето)</option>
-</select>
-
-<br><br>
-
-<h2>📍 Откуда едем?</h2>
-
-<button onclick="findBus('to_city')">С Дружбы</button>
-<button onclick="findBus('to_druzhba')">С Автовокзала</button>
+<br>
 
 <div id="result"></div>
 
 <script>
-
-const schedules = {
-
-  // ================= ЗИМА БУДНИ =================
+const S = {
   winter_weekday: {
     to_city: [
-      { g: 1, times: ["07:00", "08:40", "12:00", "13:40", "15:20", "17:00", "18:40", "20:20"] },
-      { g: 2, times: ["07:20", "09:00", "10:40", "14:00", "15:40", "17:20", "19:00"] },
-      { g: 3, times: ["07:35", "09:15", "12:35", "14:15", "15:55", "17:35", "19:15", "21:00"] },
-      { g: 4, times: ["07:50", "09:30", "11:10", "14:30", "16:10", "17:50", "19:30"] },
-      { g: 5, times: ["06:25", "08:05", "09:45", "13:05", "14:45", "16:25", "18:05", "19:45"] },
-      { g: 6, times: ["06:40", "08:20", "10:00", "11:40", "15:00", "16:40", "18:20", "20:00"] }
+      ["07:00","08:40","12:00","13:40","15:20","17:00","18:40","20:20"],
+      ["07:20","09:00","10:40","14:00","15:40","17:20","19:00"],
+      ["07:35","09:15","12:35","14:15","15:55","17:35","19:15","21:00"],
+      ["07:50","09:30","11:10","14:30","16:10","17:50","19:30"],
+      ["06:25","08:05","09:45","13:05","14:45","16:25","18:05","19:45"],
+      ["06:40","08:20","10:00","11:40","15:00","16:40","18:20","20:00"]
     ],
-    
     to_druzhba: [
-      { g: 1, times: ["06:15", "07:50", "11:10", "12:50", "14:30", "16:10", "17:50", "19:30", "21:10"] },
-      { g: 2, times: ["06:30", "08:10", "09:50", "13:10", "14:50", "16:30", "18:10"] },
-      { g: 3, times: ["06:45", "08:25", "11:45", "13:25", "15:05", "16:45", "18:25", "20:05"] },
-      { g: 4, times: ["07:00", "08:40", "10:20", "13:40", "15:20", "17:00", "18:40"] },
-      { g: 5, times: ["07:15", "08:55", "12:15", "13:55", "15:35", "17:15", "18:55", "20:35"] },
-      { g: 6, times: ["07:30", "09:10", "10:50", "14:10", "15:50", "17:30", "19:10"] }
+      ["06:15","07:50","11:10","12:50","14:30","16:10","17:50","19:30","21:10"],
+      ["06:30","08:10","09:50","13:10","14:50","16:30","18:10"],
+      ["06:45","08:25","11:45","13:25","15:05","16:45","18:25","20:05"],
+      ["07:00","08:40","10:20","13:40","15:20","17:00","18:40"],
+      ["07:15","08:55","12:15","13:55","15:35","17:15","18:55","20:35"],
+      ["07:30","09:10","10:50","14:10","15:50","17:30","19:10"]
     ]
   },
-
-  // ================= ЗИМА ВЫХОДНЫЕ =================
   winter_weekend: {
     to_city: [
-      { g: 1, times: ["06:50", "08:30", "10:10", "13:30", "15:10", "16:50", "18:30", "20:10"] },
-      { g: 2, times: ["07:10", "08:50", "12:10", "13:50", "15:30", "17:10", "18:50"] },
-      { g: 3, times: ["07:30", "09:10", "10:50", "14:10", "15:50", "17:30", "19:10", "20:50"] },
-      { g: 4, times: ["06:10", "07:50", "09:30", "12:50", "14:30", "16:10", "17:50", "19:30"] },
-      { g: 5, times: ["06:25", "08:10", "09:50", "11:30", "14:50", "16:30", "18:10"] }
+      ["06:50","08:30","10:10","13:30","15:10","16:50","18:30","20:10"],
+      ["07:10","08:50","12:10","13:50","15:30","17:10","18:50"],
+      ["07:30","09:10","10:50","14:10","15:50","17:30","19:10","20:50"],
+      ["06:10","07:50","09:30","12:50","14:30","16:10","17:50","19:30"],
+      ["06:25","08:10","09:50","11:30","14:50","16:30","18:10"]
     ],
-    
     to_druzhba: [
-      { g: 1, times: ["06:00", "07:40", "09:20", "12:40", "14:20", "16:00", "17:40", "19:20", "21:00"] },
-      { g: 2, times: ["06:20", "08:00", "11:20", "13:00", "14:40", "16:20", "18:00"] },
-      { g: 3, times: ["06:40", "08:20", "10:00", "13:20", "15:00", "16:40", "18:20", "20:00"] },
-      { g: 4, times: ["07:00", "08:40", "12:00", "13:40", "15:20", "17:00", "18:40"] },
-      { g: 5, times: ["07:20", "09:00", "10:40", "14:00", "15:40", "17:20", "19:00"] }
+      ["06:00","07:40","09:20","12:40","14:20","16:00","17:40","19:20","21:00"],
+      ["06:20","08:00","11:20","13:00","14:40","16:20","18:00"],
+      ["06:40","08:20","10:00","13:20","15:00","16:40","18:20","20:00"],
+      ["07:00","08:40","12:00","13:40","15:20","17:00","18:40"],
+      ["07:20","09:00","10:40","14:00","15:40","17:20","19:00"]
     ]
-  },
-  // ================= ЛЕТО БУДНИ =================
-  summer_weekday: {
-    to_city: [],
-    to_druzhba: []
-  },
-  // ================= ЛЕТО ВЫХОДНЫЕ =================
-  summer_weekend: {
-    to_city: [],
-    to_druzhba: []
   }
 };
 
-// Функция преобразования времени в минуты
-function toMinutes(time) {
-  const [h, m] = time.split(":").map(Number);
-  return h * 60 + m;
+let day = 'winter_weekday', dir = 'to_city';
+
+function toMin(t) { let [h,m]=t.split(':'); return +h*60 + +m; }
+
+function getTimes() {
+  let all = [];
+  S[day][dir].forEach((g,i) => g.forEach(t => all.push({t, g:i+1})));
+  return all.sort((a,b) => toMin(a.t) - toMin(b.t));
 }
 
-// Функция парсинга расписания из группированной структуры в плоский массив
-function parseSchedule(dayType, direction) {
-  const scheduleGroups = schedules[dayType][direction];
-  const allTimes = [];
-  
-  for (const group of scheduleGroups) {
-    for (const time of group.times) {
-      allTimes.push({ time, g: group.g });
-    }
-  }
-  
-  // Сортируем по времени
-  return allTimes.sort((a, b) => toMinutes(a.time) - toMinutes(b.time));
-}
-
-function findBus(direction) {
-  const dayType = document.getElementById("dayType").value;
-  
-  // Получаем текущее время
-  let now = new Date();
-  const currentMinutes = now.getHours() * 60 + now.getMinutes();
-  
-  // Парсим расписание в плоский массив
-  const times = parseSchedule(dayType, direction);
-  
-  let next = null;
-  let afterNext = null;
-  
-  // Ищем ближайший и следующий рейсы
-  for (let i = 0; i < times.length; i++) {
-    if (toMinutes(times[i].time) >= currentMinutes) {
-      next = times[i];
-      afterNext = times[i + 1] || null;
-      break;
-    }
-  }
-  
-  const resultDiv = document.getElementById("result");
+function update() {
+  let times = getTimes(), now = new Date(), cur = now.getHours()*60 + now.getMinutes();
+  let next = times.find(t => toMin(t.t) >= cur);
+  let idx = times.indexOf(next);
+  let after = idx>=0 && idx+1<times.length ? times[idx+1] : null;
+  let r = document.getElementById('result');
   
   if (next) {
-    let text = `Ближайший: ${next.time} (график ${next.g})`;
-    
-    if (afterNext) {
-      text += `\nСледующий: ${afterNext.time} (график ${afterNext.g})`;
-    }
-    
-    resultDiv.innerText = text;
+    r.innerText = `Ближайший: ${next.t} (график ${next.g})` + (after ? `\nСледующий: ${after.t} (график ${after.g})` : '');
   } else {
-    const last = times[times.length - 1];
-    const tomorrowFirst = times[0];
-    let text = `Сегодня рейсов больше нет\nПоследний был в ${last.time} (график ${last.g})`;
-    text += `\n\nБлижайший завтра в ${tomorrowFirst.time} (график ${tomorrowFirst.g})`;
-  
-    resultDiv.innerText = text;
+    let last = times[times.length-1], first = times[0];
+    r.innerText = `Сегодня рейсов больше нет\nПоследний был в ${last.t} (график ${last.g})\n\nБлижайший завтра в ${first.t} (график ${first.g})`;
   }
 }
 
-// Добавляем возможность обновить расписание при смене дня
-document.getElementById("dayType").onchange = () => result.innerText = "";
+function setDay(d) {
+  day = d;
+  document.getElementById('weekdayBtn').classList.toggle('active', d==='winter_weekday');
+  document.getElementById('weekendBtn').classList.toggle('active', d==='winter_weekend');
+  update();
+}
 
+function swapDirection() {
+  dir = dir === 'to_city' ? 'to_druzhba' : 'to_city';
+  document.getElementById('fromText').innerText = dir === 'to_city' ? 'Дружба' : 'Автовокзал';
+  document.getElementById('toText').innerText = dir === 'to_city' ? 'Автовокзал' : 'Дружба';
+  update();
+}
+
+update();
 </script>
 </body>
 </html>
