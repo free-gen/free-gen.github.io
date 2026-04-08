@@ -3,16 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
 <title>CHECK16BUS</title>
 <style>
 :root {
   --bg: #fff;
   --surface: #fbfbfb;
-  --border: #c8c8c8;
+  --border: #e2e2e2;
   --text: #333;
   --text-active: #111;
   --active: #ededed;
@@ -23,7 +23,7 @@
 }
 
 body {
-  font-family: "Manrope", sans-serif;
+  font-family: "JetBrains Mono", sans-serif;
   margin: 0;
   padding: 15px;
   background: var(--bg);
@@ -39,31 +39,27 @@ button {
 }
 
 .header {
-  padding: 50px;
-  font-size: 22px;
-  text-align: center;
+  margin-top: 50px;
+  font-size: 2.3rem;
+  font-weight: 800;
+}
+
+.subscription {
+  font-size: 0.9rem;
+  margin-bottom: 50px;
 }
 
 h2 {
-  font-weight: normal;
-  font-size: 14px;
+  font-weight: 400;
+  font-size: 1rem;
   margin-left: 15px;
   color: var(--text);
-}
-
-#result {
-  margin-top: 20px;
-  margin-left: 15px;
-  font-size: 14px;
-  white-space: pre-line;
-  text-align: left;
 }
 
 /* Общий стиль для всех пилюль */
 .pill {
   display: flex;
   align-items: stretch;
-  /* margin: 15px 0; */
   border: var(--border-width) solid var(--border);
   border-radius: var(--radius-lg);
   background: var(--surface);
@@ -76,7 +72,7 @@ h2 {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
+  font-size: 0.95rem;
   font-weight: 500;
   padding: 10px;
   text-align: center;
@@ -88,13 +84,22 @@ h2 {
   flex: 1;
   padding: 10px;
   margin: 0;
-  font-size: 14px;
+  font-size: 0.95rem;
   font-weight: 500;
   background: var(--surface);
   border: none;
   border-radius: 0;
   color: var(--text);
   line-height: 1.2;
+}
+
+#result {
+  margin-top: 20px;
+  margin-left: 15px;
+  font-size: 1rem;
+  font-weight: 600;
+  white-space: pre-line;
+  text-align: left;
 }
 
 .pill-btn:first-child {
@@ -133,7 +138,14 @@ h2 {
 
 <h1 class="header">Ближайший 16-й</h1>
 
-<h2>Расписание</h2>
+<p class="subscription">
+  <span>Данный сервис отображает ближайшие автобусы на конечных остановках на основе расписаний от перевозчика.</span>
+  <br>
+  <span>Информация носит справочный характер и не гарантирует фактическое движение автобусов по маршруту</span>
+</p>
+
+
+<h2>Выбор расписания</h2>
 <div class="pill">
   <button id="weekdayBtn" class="pill-btn active" onclick="setDay('winter_weekday')">Рабочие дни</button>
   <button id="weekendBtn" class="pill-btn" onclick="setDay('winter_weekend')">Выходные дни</button>
@@ -141,7 +153,7 @@ h2 {
 
 <br>
 
-<h2>Направление</h2>
+<h2>Напрвление следования</h2>
 <div class="pill">
   <span id="fromText" class="pill-text">Дружба</span>
   <button class="direction-btn" onclick="swapDirection()">
