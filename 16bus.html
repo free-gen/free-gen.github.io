@@ -20,14 +20,22 @@
   --radius-lg: 30px;
   --border-width: 1px;
   --pill-height: 50px;
+  --body-padding: 15px;
 }
 
 body {
   font-family: "JetBrains Mono", sans-serif;
   margin: 0;
-  padding: 15px;
+  padding: var(--body-padding);
   background: var(--bg);
   color: var(--text);
+}
+
+hr {
+  border: none;
+  border-top: var(--border-width) solid var(--border);
+  margin: 20px calc(-1 * var(--body-padding));
+  width: calc(100% + 2 * var(--body-padding));
 }
 
 button {
@@ -38,25 +46,32 @@ button {
   appearance: none;
 }
 
-.header {
-  margin-top: 50px;
+h1 {
   font-size: 2.3rem;
   font-weight: 800;
 }
 
 .subscription {
   font-size: 0.9rem;
-  margin-bottom: 50px;
+  margin-bottom: 3rem;
 }
 
 h2 {
   font-weight: 400;
   font-size: 1rem;
-  margin-left: 15px;
+  /* margin-left: 15px; */
+  text-align: center;
   color: var(--text);
 }
 
-/* Общий стиль для всех пилюль */
+.pillSchedule {
+  margin: 3rem 0;
+}
+
+.pillDirection {
+  margin: 3rem 0;
+}
+
 .pill {
   display: flex;
   align-items: stretch;
@@ -94,8 +109,8 @@ h2 {
 }
 
 #result {
-  margin-top: 20px;
-  margin-left: 15px;
+  margin-top: 1rem;
+  margin-left: 0.5rem;
   font-size: 1rem;
   font-weight: 600;
   white-space: pre-line;
@@ -144,25 +159,28 @@ h2 {
   <span>Информация носит справочный характер и не гарантирует фактическое движение автобусов по маршруту</span>
 </p>
 
+<hr>
 
-<h2>Выбор расписания</h2>
-<div class="pill">
-  <button id="weekdayBtn" class="pill-btn active" onclick="setDay('winter_weekday')">Рабочие дни</button>
-  <button id="weekendBtn" class="pill-btn" onclick="setDay('winter_weekend')">Выходные дни</button>
+<div class="pillSchedule">
+  <h2>Выбор расписания</h2>
+  <div class="pill">
+    <button id="weekdayBtn" class="pill-btn active" onclick="setDay('winter_weekday')">Рабочие дни</button>
+    <button id="weekendBtn" class="pill-btn" onclick="setDay('winter_weekend')">Выходные дни</button>
+  </div>
 </div>
 
-<br>
-
-<h2>Напрвление следования</h2>
-<div class="pill">
-  <span id="fromText" class="pill-text">Дружба</span>
-  <button class="direction-btn" onclick="swapDirection()">
-    <span class="material-icons">swap_horiz</span>
-  </button>
-  <span id="toText" class="pill-text">Автовокзал</span>
+<div class="pillDirection">
+  <h2>Направление следования</h2>
+  <div class="pill">
+    <span id="fromText" class="pill-text">Дружба</span>
+    <button class="direction-btn" onclick="swapDirection()">
+      <span class="material-icons">swap_horiz</span>
+    </button>
+    <span id="toText" class="pill-text">Автовокзал</span>
+  </div>
 </div>
 
-<br>
+<hr>
 
 <div id="result"></div>
 
