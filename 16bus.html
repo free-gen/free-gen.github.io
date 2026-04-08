@@ -49,6 +49,7 @@ button {
 h1 {
   font-size: 2rem;
   font-weight: 800;
+  text-align: center;
 }
 
 .subscription {
@@ -151,13 +152,7 @@ h2 {
 </head>
 <body>
 
-<h1 class="header">Ближайший 16-й</h1>
-
-<p class="subscription">
-  <span>Данный сервис отображает ближайшие автобусы на конечных остановках на основе расписаний от перевозчика.</span>
-  <br>
-  <span>Информация носит справочный характер и не гарантирует фактическое движение автобусов по маршруту</span>
-</p>
+<h1>Ближайший 16-й</h1>
 
 <hr>
 
@@ -183,6 +178,14 @@ h2 {
 <hr>
 
 <div id="result"></div>
+
+<hr>
+
+<p class="subscription">
+  <span>Данный сервис отображает ближайшие автобусы на конечных остановках на основе расписаний от перевозчика.</span>
+  <br>
+  <span>Информация носит справочный характер и не гарантирует фактическое движение автобусов по маршруту</span>
+</p>
 
 <script>
 const S = {
@@ -234,16 +237,20 @@ function getTimes() {
 
 function update() {
   let times = getTimes(), now = new Date(), cur = now.getHours()*60 + now.getMinutes();
+
+  // ТЕСТОВОЕ ВРЕМЯ
+  // cur = 21 * 60 + 30;
+
   let next = times.find(t => toMin(t.t) >= cur);
   let idx = times.indexOf(next);
   let after = idx>=0 && idx+1<times.length ? times[idx+1] : null;
   let r = document.getElementById('result');
   
   if (next) {
-    r.innerText = `Ближайший: ${next.t} (график ${next.g})` + (after ? `\nСледующий: ${after.t} (график ${after.g})` : '');
+    r.innerText = `Ближайший: ${next.t} | График ${next.g}` + (after ? `\nСледующий: ${after.t} | График ${after.g}` : '');
   } else {
     let last = times[times.length-1], first = times[0];
-    r.innerText = `Сегодня рейсов больше нет\nПоследний был в ${last.t} (график ${last.g})\n\nБлижайший завтра в ${first.t} (график ${first.g})`;
+    r.innerText = `Сегодня рейсов больше нет :(\nПоследний был в ${last.t} (график ${last.g})\nБлижайший завтра в ${first.t} (график ${first.g})`;
   }
 }
 
