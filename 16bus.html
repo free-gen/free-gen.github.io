@@ -7,14 +7,16 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
-<title>CHECK16BUS</title>
+<title>Ближайший 16-й</title>
 <style>
 :root {
   --bg: #fff;
   --surface: #fbfbfb;
-  --border: #e2e2e2;
+  --border: #ddd;
   --text: #333;
+  --text-secondary: #555;
   --text-active: #111;
+  --link: #00f;
   --active: #ededed;
   --radius-sm: 10px;
   --radius-lg: 30px;
@@ -34,8 +36,18 @@ body {
 hr {
   border: none;
   border-top: var(--border-width) solid var(--border);
-  margin: 20px calc(-1 * var(--body-padding));
-  width: calc(100% + 2 * var(--body-padding));
+  margin-left: calc(-1 * var(--body-padding));
+  margin-right: calc(-1 * var(--body-padding));
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.result-top {
+  margin-bottom: 1.5rem;
+}
+
+.result-bottom {
+  margin-top: 1.5rem;
 }
 
 button {
@@ -50,27 +62,35 @@ h1 {
   font-size: 2rem;
   font-weight: 800;
   text-align: center;
+  margin-bottom: 5rem;
 }
 
 .subscription {
+  color: var(--text-secondary);
   font-size: 0.9rem;
-  margin-bottom: 2rem;
+  margin-bottom: 5rem;
 }
 
 h2 {
   font-weight: 400;
   font-size: 1rem;
-  /* margin-left: 15px; */
   text-align: center;
   color: var(--text);
 }
 
+a {
+  color: var(--link);
+  font-weight: 700;
+  text-decoration: none;
+}
+
 .pillSchedule {
-  margin: 2rem 0;
+  /* margin: 2rem 0; */
+  margin-bottom: 3rem;
 }
 
 .pillDirection {
-  margin: 2rem 0;
+  /* margin: 2rem 0; */
 }
 
 .pill {
@@ -110,8 +130,6 @@ h2 {
 }
 
 #result {
-  margin-top: 1rem;
-  margin-left: 0.5rem;
   font-size: 1rem;
   font-weight: 600;
   white-space: pre-line;
@@ -154,8 +172,6 @@ h2 {
 
 <h1>Ближайший 16-й</h1>
 
-<hr>
-
 <div class="pillSchedule">
   <h2>Выбор расписания</h2>
   <div class="pill">
@@ -175,16 +191,20 @@ h2 {
   </div>
 </div>
 
-<hr>
+<hr class="result-top">
 
 <div id="result"></div>
 
-<hr>
+<hr class="result-bottom">
 
 <p class="subscription">
-  <span>Данный сервис отображает ближайшие автобусы на конечных остановках на основе расписаний от перевозчика.</span>
+  <span>Данный сервис отображает ближайшие автобусы на конечных остановках согласно расписанию перевозчика.</span>
   <br>
-  <span>Информация носит справочный характер и не гарантирует фактическое движение автобусов по маршруту</span>
+  <span>Информация носит справочный характер и не гарантирует фактическое движение автобусов по маршруту.</span>
+  <br><br>
+  <span>Актуальную информацию о движении автобусов можно уточнить у диспетчера по телефону: <a href="tel:+79241010684">+7 (924) 101-06-84</a>.</span>
+  <br><br>
+  <span>Перевозчик: <a href="https://www.rusprofile.ru/person/dadey-sn-270315585770" target="_blank">Дадей Сергей Николаевич</a>.</span>
 </p>
 
 <script>
@@ -239,7 +259,7 @@ function update() {
   let times = getTimes(), now = new Date(), cur = now.getHours()*60 + now.getMinutes();
 
   // ТЕСТОВОЕ ВРЕМЯ
-  // cur = 21 * 60 + 30;
+  // cur = 21 * 60 + 05;
 
   let next = times.find(t => toMin(t.t) >= cur);
   let idx = times.indexOf(next);
@@ -247,10 +267,16 @@ function update() {
   let r = document.getElementById('result');
   
   if (next) {
-    r.innerText = `Ближайший: ${next.t} | График ${next.g}` + (after ? `\nСледующий: ${after.t} | График ${after.g}` : '');
+    r.innerText = 
+    `Ближайший: ${next.t} | ${next.g} график` + (after ? `
+    Следующий: ${after.t} | ${after.g} график` : '');
   } else {
     let last = times[times.length-1], first = times[0];
-    r.innerText = `Сегодня рейсов больше нет :(\nПоследний был в ${last.t} (график ${last.g})\nБлижайший завтра в ${first.t} (график ${first.g})`;
+    r.innerText = 
+    `Ah shit, here we go again...
+
+    Последний выехал в ${last.t}  | ${last.g} график
+    Ближайший завтра в ${first.t} | ${first.g} график`;
   }
 }
 
