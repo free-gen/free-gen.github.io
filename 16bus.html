@@ -42,11 +42,13 @@ hr {
 }
 
 .result-top {
+  margin-top: 1.5rem;
   margin-bottom: 1.5rem;
 }
 
 .result-bottom {
   margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
 button {
@@ -212,6 +214,7 @@ a {
 <body>
 
 <h1>Ближайший 16-й</h1>
+<p align="center">Подскажет, когда должен быть автобус на выбранной остановке.</p>
 
 <hr>
 
@@ -249,6 +252,10 @@ a {
 
 <hr class="result-bottom">
 
+<!-- <p>Сегодня: (Тут будет праздник на сегодня)</p>
+
+<hr class="result-bottom"> -->
+
 <p class="subscription">
   <span>Данный сервис отображает ближайшие автобусы на выбранной остановке согласно расписанию перевозчика.</span>
   <br>
@@ -260,81 +267,78 @@ a {
 </p>
 
 <script>
-// ========== МАРШРУТЫ ПО НАПРАВЛЕНИЯМ ==========
-// Направление: Дружба → Автовокзал
+// ========== НАСТРОЙКИ ==========
+const DEBUG = false;
+
+// Тестовые параметры
+if (DEBUG) {
+  window.TEST_CUR = 21 * 60 + 30;
+  window.TEST_DATE = '20260410';
+  console.log('=== ТЕСТОВЫЙ РЕЖИМ ===');
+  console.log('Тестовое время:', Math.floor(window.TEST_CUR / 60) + ':' + (window.TEST_CUR % 60).toString().padStart(2,'0'));
+  console.log('Тестовая дата:', window.TEST_DATE);
+}
+// ===============================
+
+// ========== МАРШРУТЫ ==========
 const ROUTE_TO_CITY = [
-  { name: "мкр-н. Дружба", leg: 0 },
-  { name: "ТЭЦ-3", leg: 5 },
+  { name: "мкр-н. Дружба", leg: 0 }, 
+  { name: "ТЭЦ-3", leg: 5 }, 
   { name: "пос. Чкаловский", leg: 2 },
-  { name: "УМ-4", leg: 1 },
-  { name: "Металлобаза", leg: 2 },
+  { name: "УМ-4", leg: 1 }, 
+  { name: "Металлобаза", leg: 2 }, 
   { name: "Сернокислотный завод", leg: 2 },
-  { name: "Спецавтохозяйство", leg: 2 },
-  { name: "Завод ЖБИ", leg: 2 },
+  { name: "Спецавтохозяйство", leg: 2 }, 
+  { name: "Завод ЖБИ", leg: 2 }, 
   { name: "Завод ПТО", leg: 2 },
-  { name: "пос. Хабаровский", leg: 3 },
-  { name: "Дом правосудия", leg: 1 },
+  { name: "пос. Хабаровский", leg: 3 }, 
+  { name: "Дом правосудия", leg: 1 }, 
   { name: "пл. Металлургов", leg: 3 },
-  { name: "пр-т. Ленина", leg: 2 },
-  { name: "Технический университет", leg: 2 },
+  { name: "пр-т. Ленина", leg: 2 }, 
+  { name: "Технический университет", leg: 2 }, 
   { name: "Гостиница Восход", leg: 1 },
-  { name: "Швейная фабрика", leg: 2 },
-  { name: "Торговый комплекс Океан", leg: 2 },
+  { name: "Швейная фабрика", leg: 2 }, 
+  { name: "Торговый комплекс Океан", leg: 2 }, 
   { name: "ул. Комсомольская", leg: 1 },
-  { name: "пр-т. Интернациональный", leg: 1 },
-  { name: "Драматический театр", leg: 2 },
+  { name: "пр-т. Интернациональный", leg: 1 }, 
+  { name: "Драматический театр", leg: 2 }, 
   { name: "пр. Октябрьский", leg: 1 },
-  { name: "Авиационно-технический техникум", leg: 2 },
-  { name: "пл. Кирова", leg: 2 },
+  { name: "Авиационно-технический техникум", leg: 2 }, 
+  { name: "пл. Кирова", leg: 2 }, 
   { name: "Педагогический университет", leg: 1 },
   { name: "Автовокзал", leg: 3 }
 ];
 
-// Направление: Автовокзал → Дружба
 const ROUTE_TO_DRUZHBA = [
-  { name: "Автовокзал", leg: 0 },
-  { name: "Педагогический университет", leg: 3 },
+  { name: "Автовокзал", leg: 0 }, 
+  { name: "Педагогический университет", leg: 3 }, 
   { name: "пл. Кирова", leg: 2 },
-  { name: "ДК ЗЛК", leg: 2 },
-  { name: "пр. Октябрьский", leg: 1 },
+  { name: "ДК ЗЛК", leg: 2 }, 
+  { name: "пр. Октябрьский", leg: 1 }, 
   { name: "Драматический театр", leg: 2 },
-  { name: "пр-т. Интернациональный", leg: 1 },
-  { name: "ул. Комсомольская", leg: 1 },
+  { name: "пр-т. Интернациональный", leg: 1 }, 
+  { name: "ул. Комсомольская", leg: 1 }, 
   { name: "Торговый комплекс Океан", leg: 2 },
-  { name: "Швейная фабрика", leg: 2 },
-  { name: "Технический университет", leg: 3 },
+  { name: "Швейная фабрика", leg: 2 }, 
+  { name: "Технический университет", leg: 3 }, 
   { name: "Площадь Ленина", leg: 2 },
-  { name: "Школа №1", leg: 3 },
-  { name: "Дом правосудия", leg: 1 },
+  { name: "Школа №1", leg: 2 }, 
+  { name: "Дом правосудия", leg: 1 }, 
   { name: "пос. Хабаровский", leg: 3 },
-  { name: "Завод ПТО", leg: 2 },
-  { name: "УМ-3", leg: 1 },
-  { name: "Завод ЖБИ", leg: 2 },
-  { name: "Спецавтохозяйство", leg: 2 },
-  { name: "Сернокислотный завод", leg: 2 },
+  { name: "Завод ПТО", leg: 3 }, 
+  { name: "УМ-3", leg: 1 }, 
+  { name: "Завод ЖБИ", leg: 1 },
+  { name: "Спецавтохозяйство", leg: 2 }, 
+  { name: "Сернокислотный завод", leg: 2 }, 
   { name: "Металлобаза", leg: 2 },
-  { name: "УМ-4", leg: 1 },
-  { name: "пос. Чкаловский", leg: 2 },
-  { name: "ТЭЦ-3", leg: 5 },
-  { name: "мкр-н. Дружба", leg: 0 }
+  { name: "УМ-4", leg: 1 }, 
+  { name: "пос. Чкаловский", leg: 1 }, 
+  { name: "ТЭЦ-3", leg: 1 },
+  { name: "мкр-н. Дружба", leg: 5 }
 ];
 
-// Функция для получения списка остановок с накопленным временем от старта
-function getStopsWithTime(direction) {
-  let route = direction === 'to_city' ? ROUTE_TO_CITY : ROUTE_TO_DRUZHBA;
-  let cumulative = 0;
-  
-  return route.map((stop, idx) => {
-    if (idx === 0) {
-      return { name: stop.name, minutes_from_start: 0 };
-    } else {
-      cumulative += stop.leg;
-      return { name: stop.name, minutes_from_start: cumulative };
-    }
-  });
-}
-
-const S = {
+// ========== РАСПИСАНИЯ ==========
+const SCHEDULES = {
   winter_weekday: {
     to_city: [
       { g: 1, times: ["07:00","08:40","12:00","13:40","15:20","17:00","18:40","20:20"] },
@@ -371,27 +375,141 @@ const S = {
   }
 };
 
-let day = 'winter_weekday', dir = 'to_city';
-let selectedStop = null;
+// ========== СОСТОЯНИЕ ==========
+const state = {
+  day: 'winter_weekday',
+  dir: 'to_city',
+  selectedStop: null
+};
 
-function toMin(t) { let [h,m]=t.split(':'); return +h*60 + +m; }
-
-function getTimes() {
-  let all = [];
-  S[day][dir].forEach(group => group.times.forEach(t => all.push({t, g: group.g})));
-  return all.sort((a,b) => toMin(a.t) - toMin(b.t));
+// ========== УТИЛИТЫ ==========
+function toMin(t) { 
+  let [h, m] = t.split(':'); 
+  return +h * 60 + +m; 
 }
 
+function formatTime(minutes) {
+  let h = Math.floor(minutes / 60) % 24;
+  let m = minutes % 60;
+  return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`;
+}
+
+function getCurrentTime() {
+  if (DEBUG && window.TEST_CUR !== undefined) return window.TEST_CUR;
+  return new Date().getHours() * 60 + new Date().getMinutes();
+}
+
+function getBaseDate() {
+  if (DEBUG && window.TEST_DATE) {
+    let y = parseInt(window.TEST_DATE.substring(0, 4));
+    let m = parseInt(window.TEST_DATE.substring(4, 6)) - 1;
+    let d = parseInt(window.TEST_DATE.substring(6, 8));
+    return new Date(y, m, d);
+  }
+  return new Date();
+}
+
+// ========== РАБОТА С МАРШРУТАМИ ==========
+function getStopsWithTime() {
+  let route = state.dir === 'to_city' ? ROUTE_TO_CITY : ROUTE_TO_DRUZHBA;
+  let cumulative = 0;
+  
+  return route.map((stop, idx) => {
+    if (idx === 0) return { name: stop.name, minutes_from_start: 0 };
+    cumulative += stop.leg;
+    return { name: stop.name, minutes_from_start: cumulative };
+  });
+}
+
+function getTimes(scheduleType = null, direction = null) {
+  let schedType = scheduleType || state.day;
+  let dir = direction || state.dir;
+  let all = [];
+  SCHEDULES[schedType][dir].forEach(group => 
+    group.times.forEach(t => all.push({ t, g: group.g }))
+  );
+  return all.sort((a, b) => toMin(a.t) - toMin(b.t));
+}
+
+// ========== РАБОТА С API ==========
+async function fetchDayTypeForDate(daysOffset) {
+  let date = getBaseDate();
+  date.setDate(date.getDate() + daysOffset);
+  
+  let y = date.getFullYear();
+  let m = String(date.getMonth() + 1).padStart(2, '0');
+  let d = String(date.getDate()).padStart(2, '0');
+  
+  let url = `https://isdayoff.ru/${y}${m}${d}?tz=Asia/Vladivostok&cc=ru&holiday=1`;
+  
+  try {
+    const response = await fetch(url);
+    const code = await response.text();
+    return (code === '0' || code === '2') ? 'weekday' : 'weekend';
+  } catch (error) {
+    if (DEBUG) console.error('API error:', error);
+    return 'weekday';
+  }
+}
+
+async function getDayTypes() {
+  const [today, tomorrow] = await Promise.all([
+    fetchDayTypeForDate(0),
+    fetchDayTypeForDate(1)
+  ]);
+  return { today, tomorrow };
+}
+
+// ========== ОСНОВНАЯ ЛОГИКА ==========
+function getArrivalTimesForStop(stopName) {
+  let cur = getCurrentTime();
+  let stops = getStopsWithTime();
+  let targetStop = stops.find(s => s.name === stopName);
+  if (!targetStop) return null;
+  
+  let times = getTimes();
+  let upcoming = [];
+  
+  for (let bus of times) {
+    let arrivalMin = toMin(bus.t) + targetStop.minutes_from_start;
+    if (arrivalMin >= cur) {
+      upcoming.push({
+        bus_time: bus.t,
+        bus_group: bus.g,
+        arrival_time: formatTime(arrivalMin),
+        arrival_minutes: arrivalMin
+      });
+    }
+  }
+  return upcoming;
+}
+
+async function getFirstBusTomorrow(targetStop) {
+  const { tomorrow } = await getDayTypes();
+  let tomorrowSchedule = tomorrow === 'weekday' ? 'winter_weekday' : 'winter_weekend';
+  let tomorrowTimes = getTimes(tomorrowSchedule, state.dir);
+  
+  let firstBus = tomorrowTimes[0];
+  let arrivalMin = toMin(firstBus.t) + targetStop.minutes_from_start;
+  
+  return {
+    time: formatTime(arrivalMin),
+    group: firstBus.g,
+    scheduleType: tomorrow
+  };
+}
+
+// ========== UI ОБНОВЛЕНИЯ ==========
 function populateStops() {
-  let stops = getStopsWithTime(dir);
+  let stops = getStopsWithTime();
   let select = document.getElementById('stopSelect');
   let currentVal = select.value;
   
   select.innerHTML = '';
-  stops.forEach((stop, idx) => {
+  stops.forEach(stop => {
     let option = document.createElement('option');
     option.value = stop.name;
-    option.textContent = `${stop.name}`;
+    option.textContent = stop.name;
     select.appendChild(option);
   });
   
@@ -401,56 +519,19 @@ function populateStops() {
     select.value = stops[0].name;
   }
   
-  selectedStop = select.value;
+  state.selectedStop = select.value;
 }
 
-function getArrivalTimesForStop(stopName) {
-  let cur = window.TEST_CUR !== undefined ? window.TEST_CUR : new Date().getHours() * 60 + new Date().getMinutes();
-
-  let stops = getStopsWithTime(dir);
-  let targetStop = stops.find(s => s.name === stopName);
-  if (!targetStop) return null;
-  
-  let times = getTimes();
-  let upcoming = [];
-  
-  for (let bus of times) {
-    let departureMin = toMin(bus.t);
-    let arrivalMin = departureMin + targetStop.minutes_from_start;
-    
-    if (arrivalMin >= cur) {
-      let hours = Math.floor(arrivalMin / 60) % 24;
-      let minutes = arrivalMin % 60;
-      let arrivalTimeStr = `${hours.toString().padStart(2,'0')}:${minutes.toString().padStart(2,'0')}`;
-      
-      upcoming.push({
-        bus_time: bus.t,
-        bus_group: bus.g,
-        arrival_time: arrivalTimeStr,
-        departure_minutes: departureMin,
-        arrival_minutes: arrivalMin
-      });
-    }
-  }
-  
-  return upcoming;
-}
-
-function update() {
-  // Время для тестов
-  // window.TEST_CUR = 21 * 60 + 30;
-  
+async function update() {
   let select = document.getElementById('stopSelect');
-  if (select) {
-    selectedStop = select.value;
-  }
+  if (select) state.selectedStop = select.value;
   
-  if (!selectedStop) {
+  if (!state.selectedStop) {
     document.getElementById('result').innerText = 'Выберите остановку';
     return;
   }
   
-  let upcoming = getArrivalTimesForStop(selectedStop);
+  let upcoming = getArrivalTimesForStop(state.selectedStop);
   
   if (!upcoming || upcoming.length === 0) {
     let times = getTimes();
@@ -459,30 +540,24 @@ function update() {
       return;
     }
     
-    let lastBus = times[times.length - 1];
-    let stops = getStopsWithTime(dir);
-    let targetStop = stops.find(s => s.name === selectedStop);
+    let stops = getStopsWithTime();
+    let targetStop = stops.find(s => s.name === state.selectedStop);
     
     if (targetStop) {
-      let lastDeparture = toMin(lastBus.t);
-      let lastArrival = lastDeparture + targetStop.minutes_from_start;
-      let lastHours = Math.floor(lastArrival / 60) % 24;
-      let lastMinutes = lastArrival % 60;
-      let lastArrivalStr = `${lastHours.toString().padStart(2,'0')}:${lastMinutes.toString().padStart(2,'0')}`;
+      let lastBus = times[times.length - 1];
+      let lastArrivalMin = toMin(lastBus.t) + targetStop.minutes_from_start;
+      let lastArrivalStr = formatTime(lastArrivalMin);
       
-      let firstBus = times[0];
-      let firstDeparture = toMin(firstBus.t);
-      let firstArrival = firstDeparture + targetStop.minutes_from_start;
-      let firstHours = Math.floor(firstArrival / 60) % 24;
-      let firstMinutes = firstArrival % 60;
-      let firstArrivalStr = `${firstHours.toString().padStart(2,'0')}:${firstMinutes.toString().padStart(2,'0')}`;
+      let firstBusTomorrow = await getFirstBusTomorrow(targetStop);
+      
+      if (DEBUG && firstBusTomorrow) {
+        console.log('[INFO] Рейсов сегодня нет. Завтра (' + firstBusTomorrow.scheduleType + ') первый рейс в ' + firstBusTomorrow.time);
+      }
       
       document.getElementById('result').innerText = 
         `Ah shit, here we go again...\n\n` +
         `Последний выехал в ${lastArrivalStr} | ${lastBus.g} график\n` +
-        `Ближайший завтра в ${firstArrivalStr} | ${firstBus.g} график`;
-    } else {
-      document.getElementById('result').innerText = 'Остановка не найдена';
+        `Ближайший завтра в ${firstBusTomorrow.time} | ${firstBusTomorrow.group} график`;
     }
     return;
   }
@@ -490,40 +565,47 @@ function update() {
   let next = upcoming[0];
   let after = upcoming.length > 1 ? upcoming[1] : null;
   
-  let r = document.getElementById('result');
+  let message = `Остановка: ${state.selectedStop}\n\nБлижайший: ${next.arrival_time} | ${next.bus_group} график`;
+  if (after) message += `\nСледующий: ${after.arrival_time} | ${after.bus_group} график`;
   
-  if (next) {
-    r.innerText = 
-      `Остановка: ${selectedStop}\n\n` +
-      `Ближайший: ${next.arrival_time} | ${next.bus_group} график` + 
-      (after ? `\nСледующий: ${after.arrival_time} | ${after.bus_group} график` : '');
-  } else {
-    r.innerText = 'Нет ближайших рейсов';
-  }
+  document.getElementById('result').innerText = message;
 }
 
+// ========== ДЕЙСТВИЯ ПОЛЬЗОВАТЕЛЯ ==========
 function setDay(d) {
-  day = d;
-  document.getElementById('weekdayBtn').classList.toggle('active', d==='winter_weekday');
-  document.getElementById('weekendBtn').classList.toggle('active', d==='winter_weekend');
+  state.day = d;
+  document.getElementById('weekdayBtn').classList.toggle('active', d === 'winter_weekday');
+  document.getElementById('weekendBtn').classList.toggle('active', d === 'winter_weekend');
   populateStops();
   update();
 }
 
 function swapDirection() {
-  dir = dir === 'to_city' ? 'to_druzhba' : 'to_city';
-  document.getElementById('fromText').innerText = dir === 'to_city' ? 'Дружба' : 'Автовокзал';
-  document.getElementById('toText').innerText = dir === 'to_city' ? 'Автовокзал' : 'Дружба';
+  state.dir = state.dir === 'to_city' ? 'to_druzhba' : 'to_city';
+  document.getElementById('fromText').innerText = state.dir === 'to_city' ? 'Дружба' : 'Автовокзал';
+  document.getElementById('toText').innerText = state.dir === 'to_city' ? 'Автовокзал' : 'Дружба';
   
-  let select = document.getElementById('stopSelect');
   populateStops();
-  select.value = dir === 'to_city' ? 'мкр-н. Дружба' : 'Автовокзал';
-
   update();
 }
 
-populateStops();
-update();
+async function autoSetSchedule() {
+  const { today, tomorrow } = await getDayTypes();
+  
+  if (DEBUG) {
+    console.log('[INFO] Сегодня:', today.toUpperCase());
+    console.log('[INFO] Завтра:', tomorrow.toUpperCase());
+  }
+  
+  let newDay = today === 'weekday' ? 'winter_weekday' : 'winter_weekend';
+  setDay(newDay);
+}
+
+// ========== ИНИЦИАЛИЗАЦИЯ ==========
+autoSetSchedule().then(() => {
+  populateStops();
+  update();
+});
 </script>
 </body>
 </html>
