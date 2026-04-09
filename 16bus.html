@@ -260,26 +260,9 @@ a {
 </p>
 
 <script>
-// Исключение
-const EXCLUDED_STOPS_TO_DRUZHBA = [
-  "Гостиница Восход"
-];
-
-const RENAME_STOPS_TO_DRUZHBA = {
-  "Авиационно-технический техникум": "ДК ЗЛК",
-  "пр-т. Ленина": "Площадь Ленина",
-  "пл. Металлургов": "Школа №1"
-};
-
-const EXTRA_STOPS_TO_DRUZHBA = [
-  {
-    after: "Завод ПТО",
-    stop: { name: "УМ-3", leg: 1 }
-  }
-];
-
-// ========== МАРШРУТ С ИНТЕРВАЛАМИ (в минутах от предыдущей остановки) ==========
-const ROUTE = [
+// ========== МАРШРУТЫ ПО НАПРАВЛЕНИЯМ ==========
+// Направление: Дружба → Автовокзал
+const ROUTE_TO_CITY = [
   { name: "мкр-н. Дружба", leg: 0 },
   { name: "ТЭЦ-3", leg: 5 },
   { name: "пос. Чкаловский", leg: 2 },
@@ -307,63 +290,47 @@ const ROUTE = [
   { name: "Автовокзал", leg: 3 }
 ];
 
+// Направление: Автовокзал → Дружба
+const ROUTE_TO_DRUZHBA = [
+  { name: "Автовокзал", leg: 0 },
+  { name: "Педагогический университет", leg: 3 },
+  { name: "пл. Кирова", leg: 2 },
+  { name: "ДК ЗЛК", leg: 2 },
+  { name: "пр. Октябрьский", leg: 1 },
+  { name: "Драматический театр", leg: 2 },
+  { name: "пр-т. Интернациональный", leg: 1 },
+  { name: "ул. Комсомольская", leg: 1 },
+  { name: "Торговый комплекс Океан", leg: 2 },
+  { name: "Швейная фабрика", leg: 2 },
+  { name: "Технический университет", leg: 3 },
+  { name: "Площадь Ленина", leg: 2 },
+  { name: "Школа №1", leg: 3 },
+  { name: "Дом правосудия", leg: 1 },
+  { name: "пос. Хабаровский", leg: 3 },
+  { name: "Завод ПТО", leg: 2 },
+  { name: "УМ-3", leg: 1 },
+  { name: "Завод ЖБИ", leg: 2 },
+  { name: "Спецавтохозяйство", leg: 2 },
+  { name: "Сернокислотный завод", leg: 2 },
+  { name: "Металлобаза", leg: 2 },
+  { name: "УМ-4", leg: 1 },
+  { name: "пос. Чкаловский", leg: 2 },
+  { name: "ТЭЦ-3", leg: 5 },
+  { name: "мкр-н. Дружба", leg: 0 }
+];
+
 // Функция для получения списка остановок с накопленным временем от старта
 function getStopsWithTime(direction) {
-  let route;
-
-  if (direction === 'to_city') {
-    route = ROUTE;
-  } else {
-    // реверс
-    let reversed = [...ROUTE].reverse();
-
-    // убираем лишние остановки
-    let filtered = reversed.filter(
-      stop => !EXCLUDED_STOPS_TO_DRUZHBA.includes(stop.name)
-    );
-
-    // вставка дополнительных остановок
-    if (direction === 'to_druzhba') {
-      EXTRA_STOPS_TO_DRUZHBA.forEach(extra => {
-        let idx = filtered.findIndex(s => s.name === extra.after);
-        if (idx !== -1) {
-          filtered.splice(idx + 1, 0, extra.stop);
-        }
-      });
-    }
-
-    // пересчитываем leg
-    route = filtered.map((stop, i, arr) => {
-      if (i === 0) return { name: stop.name, leg: 0 };
-
-      let from = ROUTE.findIndex(s => s.name === arr[i - 1].name);
-      let to = ROUTE.findIndex(s => s.name === stop.name);
-
-      let [start, end] = from < to ? [from, to] : [to, from];
-
-      let leg = 0;
-      for (let j = start + 1; j <= end; j++) {
-        leg += ROUTE[j].leg;
-      }
-
-      return { name: stop.name, leg };
-    });
-  }
-
+  let route = direction === 'to_city' ? ROUTE_TO_CITY : ROUTE_TO_DRUZHBA;
   let cumulative = 0;
-
+  
   return route.map((stop, idx) => {
-    let name = stop.name;
-
-    // переименование для обратного направления
-    if (direction === 'to_druzhba' && RENAME_STOPS_TO_DRUZHBA[name]) {
-      name = RENAME_STOPS_TO_DRUZHBA[name];
+    if (idx === 0) {
+      return { name: stop.name, minutes_from_start: 0 };
+    } else {
+      cumulative += stop.leg;
+      return { name: stop.name, minutes_from_start: cumulative };
     }
-
-    if (idx === 0) return { name, minutes_from_start: 0 };
-
-    cumulative += stop.leg;
-    return { name, minutes_from_start: cumulative };
   });
 }
 
@@ -438,14 +405,13 @@ function populateStops() {
 }
 
 function getArrivalTimesForStop(stopName) {
+  let cur = window.TEST_CUR !== undefined ? window.TEST_CUR : new Date().getHours() * 60 + new Date().getMinutes();
+
   let stops = getStopsWithTime(dir);
   let targetStop = stops.find(s => s.name === stopName);
   if (!targetStop) return null;
   
   let times = getTimes();
-  let now = new Date();
-  let cur = now.getHours() * 60 + now.getMinutes();
-  
   let upcoming = [];
   
   for (let bus of times) {
@@ -471,6 +437,9 @@ function getArrivalTimesForStop(stopName) {
 }
 
 function update() {
+  // Время для тестов
+  // window.TEST_CUR = 21 * 60 + 30;
+  
   let select = document.getElementById('stopSelect');
   if (select) {
     selectedStop = select.value;
@@ -510,8 +479,8 @@ function update() {
       
       document.getElementById('result').innerText = 
         `Ah shit, here we go again...\n\n` +
-        `Последний сегодня прибывает на остановку "${selectedStop}" в ${lastArrivalStr} (отправление ${lastBus.t} | ${lastBus.g} график)\n` +
-        `Ближайший завтра в ${firstArrivalStr} (отправление ${firstBus.t} | ${firstBus.g} график)`;
+        `Последний выехал в ${lastArrivalStr} | ${lastBus.g} график\n` +
+        `Ближайший завтра в ${firstArrivalStr} | ${firstBus.g} график`;
     } else {
       document.getElementById('result').innerText = 'Остановка не найдена';
     }
