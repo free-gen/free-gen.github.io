@@ -266,8 +266,17 @@ const EXCLUDED_STOPS_TO_DRUZHBA = [
 ];
 
 const RENAME_STOPS_TO_DRUZHBA = {
-  "Авиационно-технический техникум": "ДК ЗЛК"
+  "Авиационно-технический техникум": "ДК ЗЛК",
+  "пр-т. Ленина": "Площадь Ленина",
+  "пл. Металлургов": "Школа №1"
 };
+
+const EXTRA_STOPS_TO_DRUZHBA = [
+  {
+    after: "Завод ПТО",
+    stop: { name: "УМ-3", leg: 1 }
+  }
+];
 
 // ========== МАРШРУТ С ИНТЕРВАЛАМИ (в минутах от предыдущей остановки) ==========
 const ROUTE = [
@@ -289,7 +298,7 @@ const ROUTE = [
   { name: "Швейная фабрика", leg: 2 },
   { name: "Торговый комплекс Океан", leg: 2 },
   { name: "ул. Комсомольская", leg: 1 },
-  { name: "Интернациональный проспект", leg: 1 },
+  { name: "пр-т. Интернациональный", leg: 1 },
   { name: "Драматический театр", leg: 2 },
   { name: "пр. Октябрьский", leg: 1 },
   { name: "Авиационно-технический техникум", leg: 2 },
@@ -312,6 +321,16 @@ function getStopsWithTime(direction) {
     let filtered = reversed.filter(
       stop => !EXCLUDED_STOPS_TO_DRUZHBA.includes(stop.name)
     );
+
+    // вставка дополнительных остановок
+    if (direction === 'to_druzhba') {
+      EXTRA_STOPS_TO_DRUZHBA.forEach(extra => {
+        let idx = filtered.findIndex(s => s.name === extra.after);
+        if (idx !== -1) {
+          filtered.splice(idx + 1, 0, extra.stop);
+        }
+      });
+    }
 
     // пересчитываем leg
     route = filtered.map((stop, i, arr) => {
