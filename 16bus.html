@@ -57,11 +57,33 @@ button {
   appearance: none;
 }
 
+select {
+  font-family: inherit;
+  cursor: pointer;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  appearance: none;
+  background: var(--btn-secondary);
+  border: none;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  text-align: center;
+  text-align-last: center;
+}
+
+select option {
+  text-align: left;
+}
+
 h1 {
   font-size: 2rem;
   font-weight: 800;
   text-align: center;
-  margin-bottom: 5rem;
+  /* margin-bottom: 5rem; */
   color: var(--text-primary);
 }
 
@@ -85,12 +107,15 @@ a {
 }
 
 .pillSchedule {
-  /* margin: 2rem 0; */
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
 }
 
 .pillDirection {
-  /* margin: 2rem 0; */
+  margin-bottom: 2rem;
+}
+
+.pillBusStop {
+  margin-bottom: 3rem;
 }
 
 .pill {
@@ -129,6 +154,25 @@ a {
   line-height: 1.2;
 }
 
+.pill-select {
+  flex: 1;
+  padding: 0;
+  margin: 0;
+  border: none;
+  border-radius: 0;
+  background: var(--btn-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pill-select select {
+  background: var(--btn-secondary);
+  border: none;
+  outline: none;
+  font-weight: 500;
+}
+
 #result {
   font-size: 1rem;
   font-weight: 600;
@@ -146,7 +190,6 @@ a {
   font-weight: 600;
 }
 
-/* Специфичные стили для кнопки направления */
 .direction-btn {
   width: 50px;
   flex: none;
@@ -170,6 +213,8 @@ a {
 
 <h1>Ближайший 16-й</h1>
 
+<hr>
+
 <div class="pillSchedule">
   <h2>Выбор расписания</h2>
   <div class="pill">
@@ -189,6 +234,15 @@ a {
   </div>
 </div>
 
+<div class="pillBusStop">
+  <h2>Выбор остановки</h2>
+  <div class="pill">
+    <div class="pill-select">
+      <select id="stopSelect" onchange="update()"></select>
+    </div>
+  </div>
+</div>
+
 <hr class="result-top">
 
 <div id="result"></div>
@@ -196,17 +250,104 @@ a {
 <hr class="result-bottom">
 
 <p class="subscription">
-  <span>Данный сервис отображает ближайшие автобусы на конечных остановках согласно расписанию перевозчика.</span>
+  <span>Данный сервис отображает ближайшие автобусы на выбранной остановке согласно расписанию перевозчика.</span>
   <br>
   <span>Информация носит справочный характер и не гарантирует фактическое движение автобусов по маршрутам.</span>
   <br><br>
-  <!-- <span>Услуги по перевозке пассажиров оказывает <a href="https://www.rusprofile.ru/id/3757911" target="_blank">ООО «Ефимов»</a>.</span> -->
   <span>Услуги по перевозке пассажиров оказывает <a href="https://www.rusprofile.ru/id/965" target="_blank">ООО «Вираж»</a>.</span>
   <br>
   <span>Актуальную информацию о движении автобусов можно уточнить у диспетчера по телефону: <a href="tel:+79241010684">+7 (924) 101-06-84</a>.</span>
 </p>
 
 <script>
+// Исключение
+const EXCLUDED_STOPS_TO_DRUZHBA = [
+  "Гостиница Восход"
+];
+
+const RENAME_STOPS_TO_DRUZHBA = {
+  "Авиационно-технический техникум": "ДК ЗЛК"
+};
+
+// ========== МАРШРУТ С ИНТЕРВАЛАМИ (в минутах от предыдущей остановки) ==========
+const ROUTE = [
+  { name: "мкр-н. Дружба", leg: 0 },
+  { name: "ТЭЦ-3", leg: 5 },
+  { name: "пос. Чкаловский", leg: 2 },
+  { name: "УМ-4", leg: 1 },
+  { name: "Металлобаза", leg: 2 },
+  { name: "Сернокислотный завод", leg: 2 },
+  { name: "Спецавтохозяйство", leg: 2 },
+  { name: "Завод ЖБИ", leg: 2 },
+  { name: "Завод ПТО", leg: 2 },
+  { name: "пос. Хабаровский", leg: 3 },
+  { name: "Дом правосудия", leg: 1 },
+  { name: "пл. Металлургов", leg: 3 },
+  { name: "пр-т. Ленина", leg: 2 },
+  { name: "Технический университет", leg: 2 },
+  { name: "Гостиница Восход", leg: 1 },
+  { name: "Швейная фабрика", leg: 2 },
+  { name: "Торговый комплекс Океан", leg: 2 },
+  { name: "ул. Комсомольская", leg: 1 },
+  { name: "Интернациональный проспект", leg: 1 },
+  { name: "Драматический театр", leg: 2 },
+  { name: "пр. Октябрьский", leg: 1 },
+  { name: "Авиационно-технический техникум", leg: 2 },
+  { name: "пл. Кирова", leg: 2 },
+  { name: "Педагогический университет", leg: 1 },
+  { name: "Автовокзал", leg: 3 }
+];
+
+// Функция для получения списка остановок с накопленным временем от старта
+function getStopsWithTime(direction) {
+  let route;
+
+  if (direction === 'to_city') {
+    route = ROUTE;
+  } else {
+    // реверс
+    let reversed = [...ROUTE].reverse();
+
+    // убираем лишние остановки
+    let filtered = reversed.filter(
+      stop => !EXCLUDED_STOPS_TO_DRUZHBA.includes(stop.name)
+    );
+
+    // пересчитываем leg
+    route = filtered.map((stop, i, arr) => {
+      if (i === 0) return { name: stop.name, leg: 0 };
+
+      let from = ROUTE.findIndex(s => s.name === arr[i - 1].name);
+      let to = ROUTE.findIndex(s => s.name === stop.name);
+
+      let [start, end] = from < to ? [from, to] : [to, from];
+
+      let leg = 0;
+      for (let j = start + 1; j <= end; j++) {
+        leg += ROUTE[j].leg;
+      }
+
+      return { name: stop.name, leg };
+    });
+  }
+
+  let cumulative = 0;
+
+  return route.map((stop, idx) => {
+    let name = stop.name;
+
+    // переименование для обратного направления
+    if (direction === 'to_druzhba' && RENAME_STOPS_TO_DRUZHBA[name]) {
+      name = RENAME_STOPS_TO_DRUZHBA[name];
+    }
+
+    if (idx === 0) return { name, minutes_from_start: 0 };
+
+    cumulative += stop.leg;
+    return { name, minutes_from_start: cumulative };
+  });
+}
+
 const S = {
   winter_weekday: {
     to_city: [
@@ -245,6 +386,7 @@ const S = {
 };
 
 let day = 'winter_weekday', dir = 'to_city';
+let selectedStop = null;
 
 function toMin(t) { let [h,m]=t.split(':'); return +h*60 + +m; }
 
@@ -254,28 +396,121 @@ function getTimes() {
   return all.sort((a,b) => toMin(a.t) - toMin(b.t));
 }
 
+function populateStops() {
+  let stops = getStopsWithTime(dir);
+  let select = document.getElementById('stopSelect');
+  let currentVal = select.value;
+  
+  select.innerHTML = '';
+  stops.forEach((stop, idx) => {
+    let option = document.createElement('option');
+    option.value = stop.name;
+    option.textContent = `${stop.name}`;
+    select.appendChild(option);
+  });
+  
+  if (currentVal && stops.some(s => s.name === currentVal)) {
+    select.value = currentVal;
+  } else if (stops.length > 0) {
+    select.value = stops[0].name;
+  }
+  
+  selectedStop = select.value;
+}
+
+function getArrivalTimesForStop(stopName) {
+  let stops = getStopsWithTime(dir);
+  let targetStop = stops.find(s => s.name === stopName);
+  if (!targetStop) return null;
+  
+  let times = getTimes();
+  let now = new Date();
+  let cur = now.getHours() * 60 + now.getMinutes();
+  
+  let upcoming = [];
+  
+  for (let bus of times) {
+    let departureMin = toMin(bus.t);
+    let arrivalMin = departureMin + targetStop.minutes_from_start;
+    
+    if (arrivalMin >= cur) {
+      let hours = Math.floor(arrivalMin / 60) % 24;
+      let minutes = arrivalMin % 60;
+      let arrivalTimeStr = `${hours.toString().padStart(2,'0')}:${minutes.toString().padStart(2,'0')}`;
+      
+      upcoming.push({
+        bus_time: bus.t,
+        bus_group: bus.g,
+        arrival_time: arrivalTimeStr,
+        departure_minutes: departureMin,
+        arrival_minutes: arrivalMin
+      });
+    }
+  }
+  
+  return upcoming;
+}
+
 function update() {
-  let times = getTimes(), now = new Date(), cur = now.getHours()*60 + now.getMinutes();
-
-  // ТЕСТОВОЕ ВРЕМЯ
-  // cur = 21 * 60 + 05;
-
-  let next = times.find(t => toMin(t.t) >= cur);
-  let idx = times.indexOf(next);
-  let after = idx>=0 && idx+1<times.length ? times[idx+1] : null;
+  let select = document.getElementById('stopSelect');
+  if (select) {
+    selectedStop = select.value;
+  }
+  
+  if (!selectedStop) {
+    document.getElementById('result').innerText = 'Выберите остановку';
+    return;
+  }
+  
+  let upcoming = getArrivalTimesForStop(selectedStop);
+  
+  if (!upcoming || upcoming.length === 0) {
+    let times = getTimes();
+    if (times.length === 0) {
+      document.getElementById('result').innerText = 'Нет рейсов';
+      return;
+    }
+    
+    let lastBus = times[times.length - 1];
+    let stops = getStopsWithTime(dir);
+    let targetStop = stops.find(s => s.name === selectedStop);
+    
+    if (targetStop) {
+      let lastDeparture = toMin(lastBus.t);
+      let lastArrival = lastDeparture + targetStop.minutes_from_start;
+      let lastHours = Math.floor(lastArrival / 60) % 24;
+      let lastMinutes = lastArrival % 60;
+      let lastArrivalStr = `${lastHours.toString().padStart(2,'0')}:${lastMinutes.toString().padStart(2,'0')}`;
+      
+      let firstBus = times[0];
+      let firstDeparture = toMin(firstBus.t);
+      let firstArrival = firstDeparture + targetStop.minutes_from_start;
+      let firstHours = Math.floor(firstArrival / 60) % 24;
+      let firstMinutes = firstArrival % 60;
+      let firstArrivalStr = `${firstHours.toString().padStart(2,'0')}:${firstMinutes.toString().padStart(2,'0')}`;
+      
+      document.getElementById('result').innerText = 
+        `Ah shit, here we go again...\n\n` +
+        `Последний сегодня прибывает на остановку "${selectedStop}" в ${lastArrivalStr} (отправление ${lastBus.t} | ${lastBus.g} график)\n` +
+        `Ближайший завтра в ${firstArrivalStr} (отправление ${firstBus.t} | ${firstBus.g} график)`;
+    } else {
+      document.getElementById('result').innerText = 'Остановка не найдена';
+    }
+    return;
+  }
+  
+  let next = upcoming[0];
+  let after = upcoming.length > 1 ? upcoming[1] : null;
+  
   let r = document.getElementById('result');
   
   if (next) {
     r.innerText = 
-    `Ближайший: ${next.t} | ${next.g} график` + (after ? `
-    Следующий: ${after.t} | ${after.g} график` : '');
+      `Остановка: ${selectedStop}\n\n` +
+      `Ближайший: ${next.arrival_time} | ${next.bus_group} график` + 
+      (after ? `\nСледующий: ${after.arrival_time} | ${after.bus_group} график` : '');
   } else {
-    let last = times[times.length-1], first = times[0];
-    r.innerText = 
-    `Ah shit, here we go again...
-
-    Последний выехал в ${last.t}  | ${last.g} график
-    Ближайший завтра в ${first.t} | ${first.g} график`;
+    r.innerText = 'Нет ближайших рейсов';
   }
 }
 
@@ -283,6 +518,7 @@ function setDay(d) {
   day = d;
   document.getElementById('weekdayBtn').classList.toggle('active', d==='winter_weekday');
   document.getElementById('weekendBtn').classList.toggle('active', d==='winter_weekend');
+  populateStops();
   update();
 }
 
@@ -290,9 +526,15 @@ function swapDirection() {
   dir = dir === 'to_city' ? 'to_druzhba' : 'to_city';
   document.getElementById('fromText').innerText = dir === 'to_city' ? 'Дружба' : 'Автовокзал';
   document.getElementById('toText').innerText = dir === 'to_city' ? 'Автовокзал' : 'Дружба';
+  
+  let select = document.getElementById('stopSelect');
+  populateStops();
+  select.value = dir === 'to_city' ? 'мкр-н. Дружба' : 'Автовокзал';
+
   update();
 }
 
+populateStops();
 update();
 </script>
 </body>
