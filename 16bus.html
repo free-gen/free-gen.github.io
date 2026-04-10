@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -220,7 +222,9 @@ a {
   background: var(--btn-primary);
 }
 </style>
+
 </head>
+
 <body>
 
 <h1>Ближайший 16-й</h1>
@@ -594,6 +598,15 @@ function swapDirection() {
   document.getElementById('toText').innerText = state.dir === 'to_city' ? 'Автовокзал' : 'Дружба';
   
   populateStops();
+
+  const select = document.getElementById('stopSelect');
+  if (state.dir === 'to_city') {
+    select.value = "мкр-н. Дружба";
+  } else {
+    select.value = "Автовокзал";
+  }
+  state.selectedStop = select.value;
+  
   update();
 }
 
