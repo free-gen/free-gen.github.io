@@ -737,19 +737,27 @@ function initPWAOverlay() {
 
   const platform = getPlatform();
 
-  // iOS — только инструкция (кнопки install нет в принципе)
-  if (platform === 'ios') {
-    showOverlay('ios');
-    return;
-  }
-
-  // Android — только официальный install prompt
   if (platform === 'android') {
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
       window.deferredPrompt = e;
       showOverlay('android');
     });
+
+    // fallback как у тебя раньше
+    setTimeout(() => {
+      if (!window.deferredPrompt) {
+        showOverlay('android');
+      }
+    }, 1500);
+
+    return;
+  }
+
+  // ВАЖНО: iOS как раньше — просто показываем оверлей
+  if (platform === 'ios') {
+    showOverlay('ios');
+    return;
   }
 }
 
