@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="icon" type="image/png" sizes="16x16" href="/srcbus/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/srcbus/favicon-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/srcbus/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/srcbus/android-chrome-192x192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/srcbus/android-chrome-512x512.png">
+<link rel="manifest" href="/srcbus/site.webmanifest">
+
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
+  
+<title>Ближайший 16-й</title>
+  
+<style>
+:root {
+  --bg: #ffffff;
+  --btn-primary: #eeeeee;
+  --btn-secondary: #fbfbfb;
+  --border: #c8c8c8;
+  --text-primary: #333333;
+  --text-secondary: #555;
+  --text-active: #111;
+  --link: #00f;
+  --radius-sm: 10px;
+  --radius-lg: 30px;
+  --border-width: 1px;
+  --pill-height: 50px;
+  --body-padding: 15px;
+}
+
+body {
+  font-family: "JetBrains Mono", sans-serif;
+  margin: 0;
+  padding: var(--body-padding);
+  background: var(--bg);
+}
+
+hr {
+  border: none;
+  border-top: var(--border-width) solid var(--border);
+  margin-left: calc(-1 * var(--body-padding));
+  margin-right: calc(-1 * var(--body-padding));
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.result-top {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.result-bottom {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+select {
+  font-family: inherit;
+  cursor: pointer;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  appearance: none;
+  background: var(--btn-secondary);
+  border: none;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  text-align: center;
+  text-align-last: center;
+}
+
+select option {
+  text-align: left;
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  text-align: center;
+  /* margin-bottom: 5rem; */
+  color: var(--text-primary);
+}
+
+.orientation {
+  font-size: 0.9rem;
+}
+
+.subscription {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin-bottom: 5rem;
+}
+
+h2 {
+  font-weight: 400;
+  font-size: 1rem;
+  text-align: center;
+  color: var(--text-primary);
+}
+
+a {
+  color: var(--link);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.pillSchedule {
+  margin-bottom: 2rem;
+}
+
+.pillDirection {
+  margin-bottom: 2rem;
+}
+
+.pillBusStop {
+  margin-bottom: 3rem;
+}
+
+.pill {
+  display: flex;
+  align-items: stretch;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--btn-primary);
+  overflow: hidden;
+  min-height: var(--pill-height);
+}
+
+.pill-text {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 10px;
+  text-align: center;
+  background: var(--btn-secondary);
+  color: var(--text-primary);
+}
+
+.pill-btn {
+  flex: 1;
+  /* padding: 10px; */
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 300;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-lg);
+  color: var(--text-secondary);
+  line-height: 1.2;
+  cursor: pointer;
+}
+
+.pill-select {
+  flex: 1;
+  padding: 0;
+  margin: 0;
+  border: none;
+  border-radius: 0;
+  background: var(--btn-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pill-select select {
+  background: var(--btn-secondary);
+  border: none;
+  outline: none;
+  font-weight: 500;
+}
+
+#result {
+  font-size: 1rem;
+  font-weight: 600;
+  white-space: pre-line;
+  text-align: left;
+}
+
+.pill-btn.active {
+  background: var(--btn-secondary);
+  color: var(--text-active);
+  font-weight: 600;
+  border: var(--border-width) solid var(--border);
+  margin: -1px;
+}
+
+.direction-btn {
+  width: 50px;
+  flex: none;
+  padding: 0;
+  background: var(--btn-secondary);
+  border: none;
+  border-left: var(--border-width) solid var(--border);
+  border-right: var(--border-width) solid var(--border);
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.direction-btn:active {
+  background: var(--btn-primary);
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>Ближайший 16-й</h1>
+<p align="center">Подскажет, когда должен быть автобус на выбранной остановке.</p>
+
+<hr>
+
+<div class="pillSchedule">
+  <h2>Выбор расписания</h2>
+  <div class="pill">
+    <button id="weekdayBtn" class="pill-btn active" onclick="setDay('winter_weekday')">Рабочие дни</button>
+    <button id="weekendBtn" class="pill-btn" onclick="setDay('winter_weekend')">Выходные дни</button>
+  </div>
+</div>
+
+<div class="pillDirection">
+  <h2>Выбор направления</h2>
+  <div class="pill">
+    <span id="fromText" class="pill-text">Дружба</span>
+    <button class="direction-btn" onclick="swapDirection()">
+      <span class="material-icons">swap_horiz</span>
+    </button>
+    <span id="toText" class="pill-text">Автовокзал</span>
+  </div>
+</div>
+
+<div class="pillBusStop">
+  <h2>Выбор остановки</h2>
+  <div class="pill">
+    <div class="pill-select">
+      <select id="stopSelect" onchange="update()"></select>
+    </div>
+  </div>
+</div>
+
+<hr class="result-top">
+
+<div id="result"></div>
+
+<hr class="result-bottom">
+
+<!-- <p class="orientation">
+  <span>Сервис можно установить как отдельное приложение через меню браузера.</span><br><br>
+  <span>Android: нажмите (⋮) и выберите «Добавить на главный экран» или «Установить приложение».</span><br><br>
+  <span>iOS: нажмите «Поделиться» → «На экран Домой».</span>
+</p>
+
+<hr class="result-bottom"> -->
+
+<div id="installHint" style="display:none;" class="pill">
+  <span class="pill-text">Установить как приложение</span>
+  <button id="installBtn" class="direction-btn">
+    <span class="material-icons">download</span>
+  </button>
+</div>
+
+<p class="subscription">
+  <span>Данный сервис отображает ближайшие автобусы на выбранной остановке согласно графикам от перевозчика.</span>
+  <br>
+  <span>Информация носит справочный характер и не гарантирует фактическое движение автобусов по маршрутам.</span>
+  <br><br>
+  <span>Услуги по перевозке пассажиров оказывает <a href="https://www.rusprofile.ru/id/965" target="_blank">ООО «Вираж»</a>.</span>
+  <br>
+  <span>Актуальную информацию о движении автобусов можно уточнить у диспетчера по телефону: <a href="tel:+79241010684">+7 (924) 101-06-84</a>.</span>
+  <br><br>
+  <span>Разработка сервиса: FreeGen</span>
+  <br>
+  <span>Поддержать рублем: <a href="https://finance.ozon.ru/apps/sbp/ozonbankpay/019993bb-a466-72de-bc2c-e7ee85abc8a6" target="_blank">Ozon Банк</a></span>
+</p>
+
+<script>
+// ========== НАСТРОЙКИ ==========
+const DEBUG = false;
+
+// Тестовые параметры
+if (DEBUG) {
+  window.TEST_CUR = 21 * 60 + 30;
+  window.TEST_DATE = '20260410';
+  console.log('=== ТЕСТОВЫЙ РЕЖИМ ===');
+  console.log('Тестовое время:', Math.floor(window.TEST_CUR / 60) + ':' + (window.TEST_CUR % 60).toString().padStart(2,'0'));
+  console.log('Тестовая дата:', window.TEST_DATE);
+}
+// ===============================
+
+// ========== МАРШРУТЫ ==========
+const ROUTE_TO_CITY = [
+  { name: "мкр-н. Дружба", leg: 0 }, 
+  { name: "ТЭЦ-3", leg: 5 }, 
+  { name: "пос. Чкаловский", leg: 2 },
+  { name: "УМ-4", leg: 1 }, 
+  { name: "Металлобаза", leg: 2 }, 
+  { name: "Сернокислотный завод", leg: 2 },
+  { name: "Спецавтохозяйство", leg: 2 }, 
+  { name: "Завод ЖБИ", leg: 2 }, 
+  { name: "Завод ПТО", leg: 2 },
+  { name: "пос. Хабаровский", leg: 3 }, 
+  { name: "Дом правосудия", leg: 1 }, 
+  { name: "пл. Металлургов", leg: 3 },
+  { name: "пр-т. Ленина", leg: 2 }, 
+  { name: "Технический университет", leg: 2 }, 
+  { name: "Гостиница Восход", leg: 1 },
+  { name: "Швейная фабрика", leg: 2 }, 
+  { name: "Торговый комплекс Океан", leg: 2 }, 
+  { name: "ул. Комсомольская", leg: 1 },
+  { name: "пр-т. Интернациональный", leg: 1 }, 
+  { name: "Драматический театр", leg: 2 }, 
+  { name: "пр. Октябрьский", leg: 1 },
+  { name: "Авиационно-технический техникум", leg: 2 }, 
+  { name: "пл. Кирова", leg: 2 }, 
+  { name: "Педагогический университет", leg: 1 },
+  { name: "Автовокзал", leg: 3 }
+];
+
+const ROUTE_FROM_CITY = [
+  { name: "Автовокзал", leg: 0 }, 
+  { name: "Педагогический университет", leg: 3 }, 
+  { name: "пл. Кирова", leg: 2 },
+  { name: "ДК ЗЛК", leg: 2 }, 
+  { name: "пр. Октябрьский", leg: 1 }, 
+  { name: "Драматический театр", leg: 2 },
+  { name: "пр-т. Интернациональный", leg: 1 }, 
+  { name: "ул. Комсомольская", leg: 1 }, 
+  { name: "Торговый комплекс Океан", leg: 2 },
+  { name: "Швейная фабрика", leg: 2 }, 
+  { name: "Технический университет", leg: 3 }, 
+  { name: "Площадь Ленина", leg: 2 },
+  { name: "Школа №1", leg: 2 }, 
+  { name: "Дом правосудия", leg: 1 }, 
+  { name: "пос. Хабаровский", leg: 3 },
+  { name: "Завод ПТО", leg: 3 }, 
+  { name: "УМ-3", leg: 1 }, 
+  { name: "Завод ЖБИ", leg: 1 },
+  { name: "Спецавтохозяйство", leg: 2 }, 
+  { name: "Сернокислотный завод", leg: 2 }, 
+  { name: "Металлобаза", leg: 2 },
+  { name: "УМ-4", leg: 1 }, 
+  { name: "пос. Чкаловский", leg: 1 }, 
+  { name: "ТЭЦ-3", leg: 1 },
+  { name: "мкр-н. Дружба", leg: 5 }
+];
+
+// ========== РАСПИСАНИЯ ==========
+const SCHEDULES = {
+  winter_weekday: {
+    to_city: [
+      { g: 1, times: ["07:00","08:40","12:00","13:40","15:20","17:00","18:40","20:20"] },
+      { g: 2, times: ["07:20","09:00","10:40","14:00","15:40","17:20","19:00"] },
+      { g: 3, times: ["07:35","09:15","12:35","14:15","15:55","17:35","19:15","21:00"] },
+      { g: 4, times: ["07:50","09:30","11:10","14:30","16:10","17:50","19:30"] },
+      { g: 5, times: ["06:25","08:05","09:45","13:05","14:45","16:25","18:05","19:45"] },
+      { g: 6, times: ["06:40","08:20","10:00","11:40","15:00","16:40","18:20","20:00"] }
+    ],
+    from_city: [
+      { g: 1, times: ["06:15","07:50","11:10","12:50","14:30","16:10","17:50","19:30","21:10"] },
+      { g: 2, times: ["06:30","08:10","09:50","13:10","14:50","16:30","18:10"] },
+      { g: 3, times: ["06:45","08:25","11:45","13:25","15:05","16:45","18:25","20:05"] },
+      { g: 4, times: ["07:00","08:40","10:20","13:40","15:20","17:00","18:40"] },
+      { g: 5, times: ["07:15","08:55","12:15","13:55","15:35","17:15","18:55","20:35"] },
+      { g: 6, times: ["07:30","09:10","10:50","14:10","15:50","17:30","19:10"] }
+    ]
+  },
+  winter_weekend: {
+    to_city: [
+      { g: 1, times: ["06:50","08:30","10:10","13:30","15:10","16:50","18:30","20:10"] },
+      { g: 2, times: ["07:10","08:50","12:10","13:50","15:30","17:10","18:50"] },
+      { g: 3, times: ["07:30","09:10","10:50","14:10","15:50","17:30","19:10","20:50"] },
+      { g: 4, times: ["06:10","07:50","09:30","12:50","14:30","16:10","17:50","19:30"] },
+      { g: 5, times: ["06:25","08:10","09:50","11:30","14:50","16:30","18:10"] }
+    ],
+    from_city: [
+      { g: 1, times: ["06:00","07:40","09:20","12:40","14:20","16:00","17:40","19:20","21:00"] },
+      { g: 2, times: ["06:20","08:00","11:20","13:00","14:40","16:20","18:00"] },
+      { g: 3, times: ["06:40","08:20","10:00","13:20","15:00","16:40","18:20","20:00"] },
+      { g: 4, times: ["07:00","08:40","12:00","13:40","15:20","17:00","18:40"] },
+      { g: 5, times: ["07:20","09:00","10:40","14:00","15:40","17:20","19:00"] }
+    ]
+  }
+};
+
+// ========== СОСТОЯНИЕ ==========
+const state = {
+  day: 'winter_weekday',
+  dir: 'to_city',
+  selectedStop: null
+};
+
+// ========== УТИЛИТЫ ==========
+function toMin(t) { 
+  let [h, m] = t.split(':'); 
+  return +h * 60 + +m; 
+}
+
+function formatTime(minutes) {
+  let h = Math.floor(minutes / 60) % 24;
+  let m = minutes % 60;
+  return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`;
+}
+
+function getCurrentTime() {
+  if (DEBUG && window.TEST_CUR !== undefined) return window.TEST_CUR;
+  return new Date().getHours() * 60 + new Date().getMinutes();
+}
+
+function getBaseDate() {
+  if (DEBUG && window.TEST_DATE) {
+    let y = parseInt(window.TEST_DATE.substring(0, 4));
+    let m = parseInt(window.TEST_DATE.substring(4, 6)) - 1;
+    let d = parseInt(window.TEST_DATE.substring(6, 8));
+    return new Date(y, m, d);
+  }
+  return new Date();
+}
+
+// ========== РАБОТА С МАРШРУТАМИ ==========
+function getStopsWithTime() {
+  let route = state.dir === 'to_city' ? ROUTE_TO_CITY : ROUTE_FROM_CITY;
+  let cumulative = 0;
+  
+  return route.map((stop, idx) => {
+    if (idx === 0) return { name: stop.name, minutes_from_start: 0 };
+    cumulative += stop.leg;
+    return { name: stop.name, minutes_from_start: cumulative };
+  });
+}
+
+function getTimes(scheduleType = null, direction = null) {
+  let schedType = scheduleType || state.day;
+  let dir = direction || state.dir;
+  let all = [];
+  SCHEDULES[schedType][dir].forEach(group => 
+    group.times.forEach(t => all.push({ t, g: group.g }))
+  );
+  return all.sort((a, b) => toMin(a.t) - toMin(b.t));
+}
+
+// ========== РАБОТА С API ==========
+async function fetchDayTypeForDate(daysOffset) {
+  let date = getBaseDate();
+  date.setDate(date.getDate() + daysOffset);
+  
+  let y = date.getFullYear();
+  let m = String(date.getMonth() + 1).padStart(2, '0');
+  let d = String(date.getDate()).padStart(2, '0');
+  
+  let url = `https://isdayoff.ru/${y}${m}${d}?tz=Asia/Vladivostok&cc=ru&holiday=1`;
+  
+  try {
+    const response = await fetch(url);
+    const code = await response.text();
+    return (code === '0' || code === '2') ? 'weekday' : 'weekend';
+  } catch (error) {
+    if (DEBUG) console.error('API error:', error);
+    return 'weekday';
+  }
+}
+
+async function getDayTypes() {
+  const [today, tomorrow] = await Promise.all([
+    fetchDayTypeForDate(0),
+    fetchDayTypeForDate(1)
+  ]);
+  return { today, tomorrow };
+}
+
+// ========== ОСНОВНАЯ ЛОГИКА ==========
+function getArrivalTimesForStop(stopName) {
+  let cur = getCurrentTime();
+  let stops = getStopsWithTime();
+  let targetStop = stops.find(s => s.name === stopName);
+  if (!targetStop) return null;
+  
+  let times = getTimes();
+  let upcoming = [];
+  
+  for (let bus of times) {
+    let arrivalMin = toMin(bus.t) + targetStop.minutes_from_start;
+    if (arrivalMin >= cur) {
+      upcoming.push({
+        bus_time: bus.t,
+        bus_group: bus.g,
+        arrival_time: formatTime(arrivalMin),
+        arrival_minutes: arrivalMin
+      });
+    }
+  }
+  return upcoming;
+}
+
+async function getFirstBusTomorrow(targetStop) {
+  const { tomorrow } = await getDayTypes();
+  let tomorrowSchedule = tomorrow === 'weekday' ? 'winter_weekday' : 'winter_weekend';
+  let tomorrowTimes = getTimes(tomorrowSchedule, state.dir);
+  
+  let firstBus = tomorrowTimes[0];
+  let arrivalMin = toMin(firstBus.t) + targetStop.minutes_from_start;
+  
+  return {
+    time: formatTime(arrivalMin),
+    group: firstBus.g,
+    scheduleType: tomorrow
+  };
+}
+
+// ========== UI ОБНОВЛЕНИЯ ==========
+function populateStops() {
+  let stops = getStopsWithTime();
+  let select = document.getElementById('stopSelect');
+  let currentVal = select.value;
+  
+  select.innerHTML = '';
+  stops.forEach(stop => {
+    let option = document.createElement('option');
+    option.value = stop.name;
+    option.textContent = stop.name;
+    select.appendChild(option);
+  });
+  
+  if (currentVal && stops.some(s => s.name === currentVal)) {
+    select.value = currentVal;
+  } else if (stops.length > 0) {
+    select.value = stops[0].name;
+  }
+  
+  state.selectedStop = select.value;
+}
+
+async function update() {
+  let select = document.getElementById('stopSelect');
+  if (select) state.selectedStop = select.value;
+  
+  if (!state.selectedStop) {
+    document.getElementById('result').innerText = 'Выберите остановку';
+    return;
+  }
+  
+  let upcoming = getArrivalTimesForStop(state.selectedStop);
+  
+  if (!upcoming || upcoming.length === 0) {
+    let times = getTimes();
+    if (times.length === 0) {
+      document.getElementById('result').innerText = 'Нет рейсов';
+      return;
+    }
+    
+    let stops = getStopsWithTime();
+    let targetStop = stops.find(s => s.name === state.selectedStop);
+    
+    if (targetStop) {
+      let lastBus = times[times.length - 1];
+      let lastArrivalMin = toMin(lastBus.t) + targetStop.minutes_from_start;
+      let lastArrivalStr = formatTime(lastArrivalMin);
+      
+      let firstBusTomorrow = await getFirstBusTomorrow(targetStop);
+      
+      if (DEBUG && firstBusTomorrow) {
+        console.log('[INFO] Рейсов сегодня нет. Завтра (' + firstBusTomorrow.scheduleType + ') первый рейс в ' + firstBusTomorrow.time);
+      }
+      
+      document.getElementById('result').innerText = 
+        `Ah shit, here we go again...\n\n` +
+        `Последний выехал в ${lastArrivalStr} | ${lastBus.g} график\n` +
+        `Ближайший завтра в ${firstBusTomorrow.time} | ${firstBusTomorrow.group} график`;
+    }
+    return;
+  }
+  
+  let next = upcoming[0];
+  let after = upcoming.length > 1 ? upcoming[1] : null;
+  
+  let message = `Остановка: ${state.selectedStop}\n\nБлижайший: ${next.arrival_time} | ${next.bus_group} график`;
+  if (after) message += `\nСледующий: ${after.arrival_time} | ${after.bus_group} график`;
+  
+  document.getElementById('result').innerText = message;
+}
+
+// ========== ДЕЙСТВИЯ ПОЛЬЗОВАТЕЛЯ ==========
+function setDay(d) {
+  state.day = d;
+  document.getElementById('weekdayBtn').classList.toggle('active', d === 'winter_weekday');
+  document.getElementById('weekendBtn').classList.toggle('active', d === 'winter_weekend');
+  populateStops();
+  update();
+}
+
+function swapDirection() {
+  state.dir = state.dir === 'to_city' ? 'from_city' : 'to_city';
+  document.getElementById('fromText').innerText = state.dir === 'to_city' ? 'Дружба' : 'Автовокзал';
+  document.getElementById('toText').innerText = state.dir === 'to_city' ? 'Автовокзал' : 'Дружба';
+  
+  populateStops();
+
+  const select = document.getElementById('stopSelect');
+  if (state.dir === 'to_city') {
+    select.value = "мкр-н. Дружба";
+  } else {
+    select.value = "Автовокзал";
+  }
+  state.selectedStop = select.value;
+  
+  update();
+}
+
+async function autoSetSchedule() {
+  const { today, tomorrow } = await getDayTypes();
+  
+  if (DEBUG) {
+    console.log('[INFO] Сегодня:', today.toUpperCase());
+    console.log('[INFO] Завтра:', tomorrow.toUpperCase());
+  }
+  
+  let newDay = today === 'weekday' ? 'winter_weekday' : 'winter_weekend';
+  setDay(newDay);
+}
+
+// ===== PWA INSTALL HINT =====
+let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+
+  const hint = document.getElementById('installHint');
+  if (hint) hint.style.display = 'flex';
+});
+
+document.getElementById('installBtn')?.addEventListener('click', async () => {
+  if (!deferredPrompt) return;
+
+  deferredPrompt.prompt();
+  await deferredPrompt.userChoice;
+
+  deferredPrompt = null;
+  document.getElementById('installHint').style.display = 'none';
+});
+
+// скрыть после установки
+window.addEventListener('appinstalled', () => {
+  const hint = document.getElementById('installHint');
+  if (hint) hint.style.display = 'none';
+});
+
+// iOS fallback (там нет beforeinstallprompt)
+if (!window.matchMedia('(display-mode: standalone)').matches &&
+    /iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+
+  const hint = document.getElementById('installHint');
+  if (hint) {
+    hint.style.display = 'flex';
+    hint.querySelector('.pill-text').innerText = 'Добавить на экран: Поделиться → Домой';
+  }
+}
+
+// ========== ИНИЦИАЛИЗАЦИЯ ==========
+autoSetSchedule().then(() => {
+  populateStops();
+  update();
+});
+</script>
+</body>
+</html>
