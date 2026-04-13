@@ -353,13 +353,6 @@ a {
 
 <script>
 // ========== НАСТРОЙКИ ==========
-const PWA_DEBUG_MODE = 'auto';
-// варианты:
-// 'auto'   — как на реальном устройстве
-// 'android' — принудительно Android-оверлей
-// 'ios'     — принудительно iOS-оверлей
-// 'off'     — вообще не показывать
-
 const DEBUG = false;
 
 // Тестовые параметры
@@ -711,8 +704,6 @@ const androidText = document.getElementById('installAndroidText');
 const iosText = document.getElementById('installiOSText');
 
 function getPlatform() {
-  if (PWA_DEBUG_MODE !== 'auto') return PWA_DEBUG_MODE;
-
   const ua = navigator.userAgent.toLowerCase();
 
   if (/android/.test(ua)) return 'android';
@@ -726,12 +717,6 @@ function isStandalone() {
 }
 
 function showOverlay(mode) {
-  const overlay = document.getElementById('installOverlay');
-  const installBtn = document.getElementById('installBtn');
-
-  const androidText = document.getElementById('installAndroidText');
-  const iosText = document.getElementById('installiOSText');
-
   overlay.style.display = 'flex';
 
   if (mode === 'android') {
@@ -750,24 +735,22 @@ function showOverlay(mode) {
 function initPWAOverlay() {
   if (isStandalone()) return;
 
-  if (PWA_DEBUG_MODE === 'off') return;
+  const platform = getPlatform();
 
-  if (PWA_DEBUG_MODE === 'ios') {
+  // iOS — только инструкция (кнопки install нет в принципе)
+  if (platform === 'ios') {
     showOverlay('ios');
     return;
   }
 
-  if (PWA_DEBUG_MODE === 'android') {
-    showOverlay('android');
-    return;
+  // Android — только официальный install prompt
+  if (platform === 'android') {
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      window.deferredPrompt = e;
+      showOverlay('android');
+    });
   }
-
-  // AUTO режим
-  window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    window.deferredPrompt = e;
-    showOverlay('android');
-  });
 }
 
 // кнопка установки
