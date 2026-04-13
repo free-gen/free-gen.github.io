@@ -225,13 +225,14 @@ a {
   background: var(--btn-primary);
 }
 
+/* Overlay */
 .install-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.4);
+  background: rgba(0,0,0,0.3);
   display: none;
   align-items: center;
   justify-content: center;
@@ -239,31 +240,37 @@ a {
 }
 
 .install-box {
-  background: #fff;
+  background: var(--bg);
   padding: 20px;
-  border-radius: 20px;
+  border-radius: var(--radius-lg);
   text-align: center;
   width: 80%;
-  max-width: 300px;
+  max-width: 360px;
 }
 
 .install-box p {
-  margin-bottom: 15px;
+  margin-bottom: 2rem;
 }
 
 .install-box button {
   margin: 5px;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 10px;
-  background: #eee;
+  width: 128px;
+  height: var(--pill-height);
+  min-height: var(--pill-height);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--btn-secondary);
+  color: var(--text-primary);
+  font-weight: 500;
   cursor: pointer;
 }
 
 .install-text {
   font-size: 0.9rem;
-  color: #444;
-  margin-bottom: 10px;
+  color: var(--text-secondary);
 }
 
 </style>
@@ -311,25 +318,17 @@ a {
 
 <hr class="result-bottom">
 
-<!-- <p class="orientation">
-  <span>Сервис можно установить как отдельное приложение через меню браузера.</span><br><br>
-  <span>Android: нажмите (⋮) и выберите «Добавить на главный экран» или «Установить приложение».</span><br><br>
-  <span>iOS: нажмите «Поделиться» → «На экран Домой».</span>
-</p>
-
-<hr class="result-bottom"> -->
-
 <div id="installOverlay" class="install-overlay" style="display:none;">
   <div class="install-box">
 
     <p id="installTitle">Установить приложение</p>
 
     <p id="installAndroidText" class="install-text">
-      Установите приложение для быстрого доступа к расписанию.
+      После установки приложение будет доступно с главного экрана и открываться без браузера.
     </p>
 
     <p id="installiOSText" class="install-text">
-      На iPhone: нажмите «Поделиться» → «На экран Домой».
+      Нажмите «Поделиться» в браузере и выберите опцию «На экран Домой».
     </p>
 
     <button id="installBtn">Установить</button>
@@ -354,6 +353,13 @@ a {
 
 <script>
 // ========== НАСТРОЙКИ ==========
+const PWA_DEBUG_MODE = 'auto';
+// варианты:
+// 'auto'   — как на реальном устройстве
+// 'android' — принудительно Android-оверлей
+// 'ios'     — принудительно iOS-оверлей
+// 'off'     — вообще не показывать
+
 const DEBUG = false;
 
 // Тестовые параметры
@@ -697,8 +703,6 @@ async function autoSetSchedule() {
 }
 
 // ===== PWA INSTALL OVERLAY =====
-let deferredPrompt;
-
 const overlay = document.getElementById('installOverlay');
 const installBtn = document.getElementById('installBtn');
 const closeBtn = document.getElementById('closeInstall');
@@ -706,13 +710,28 @@ const closeBtn = document.getElementById('closeInstall');
 const androidText = document.getElementById('installAndroidText');
 const iosText = document.getElementById('installiOSText');
 
-const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+function getPlatform() {
+  if (PWA_DEBUG_MODE !== 'auto') return PWA_DEBUG_MODE;
 
-// скрываем всё по умолчанию
-overlay.style.display = 'none';
+  const ua = navigator.userAgent.toLowerCase();
+
+  if (/android/.test(ua)) return 'android';
+  if (/iphone|ipad|ipod/.test(ua)) return 'ios';
+
+  return 'desktop';
+}
+
+function isStandalone() {
+  return window.matchMedia('(display-mode: standalone)').matches;
+}
 
 function showOverlay(mode) {
+  const overlay = document.getElementById('installOverlay');
+  const installBtn = document.getElementById('installBtn');
+
+  const androidText = document.getElementById('installAndroidText');
+  const iosText = document.getElementById('installiOSText');
+
   overlay.style.display = 'flex';
 
   if (mode === 'android') {
@@ -728,22 +747,38 @@ function showOverlay(mode) {
   }
 }
 
-// ===== Android install prompt =====
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
+function initPWAOverlay() {
+  if (isStandalone()) return;
 
-  showOverlay('android');
-});
+  if (PWA_DEBUG_MODE === 'off') return;
+
+  if (PWA_DEBUG_MODE === 'ios') {
+    showOverlay('ios');
+    return;
+  }
+
+  if (PWA_DEBUG_MODE === 'android') {
+    showOverlay('android');
+    return;
+  }
+
+  // AUTO режим
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    window.deferredPrompt = e;
+    showOverlay('android');
+  });
+}
 
 // кнопка установки
 installBtn.addEventListener('click', async () => {
-  if (!deferredPrompt) return;
+  const prompt = window.deferredPrompt;
+  if (!prompt) return;
 
-  deferredPrompt.prompt();
-  await deferredPrompt.userChoice;
+  prompt.prompt();
+  await prompt.userChoice;
 
-  deferredPrompt = null;
+  window.deferredPrompt = null;
   overlay.style.display = 'none';
 });
 
@@ -758,14 +793,13 @@ window.addEventListener('appinstalled', () => {
 });
 
 // ===== iOS fallback =====
-if (isIOS && !isStandalone) {
-  showOverlay('ios');
-}
+
 
 // ========== ИНИЦИАЛИЗАЦИЯ ==========
 autoSetSchedule().then(() => {
   populateStops();
   update();
+  initPWAOverlay();
 });
 </script>
 </body>
