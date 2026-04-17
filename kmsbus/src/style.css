@@ -1,0 +1,255 @@
+:root {
+  --bg: #ffffff;
+  --btn-primary: #fbfbfb;
+  --btn-secondary: #eeeeee;
+  --border: #c8c8c8;
+  --text-primary: #333333;
+  --text-secondary: #555;
+  --text-active: #111;
+  --link: #00f;
+  --radius-sm: 10px;
+  --radius-lg: 25px;
+  --border-width: 1px;
+  --pill-height: 50px;
+  --body-padding: 15px;
+}
+
+body {
+  font-family: "JetBrains Mono", sans-serif;
+  margin: 0;
+  padding: var(--body-padding);
+  background: var(--bg);
+}
+
+hr {
+  border: none;
+  border-top: var(--border-width) solid var(--border);
+  margin-left: calc(-1 * var(--body-padding));
+  margin-right: calc(-1 * var(--body-padding));
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.result-top {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.result-bottom {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+select {
+  font-family: inherit;
+  cursor: pointer;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  appearance: none;
+  background: var(--btn-primary);
+  border: none;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  text-align: center;
+  text-align-last: center;
+}
+
+select option {
+  text-align: left;
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  text-align: center;
+  color: var(--text-primary);
+}
+
+p {
+  color: var(--text-active);
+}
+
+.orientation {
+  font-size: 0.9rem;
+}
+
+.subscription {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin-bottom: 5rem;
+}
+
+h2 {
+  font-weight: 400;
+  font-size: 1rem;
+  text-align: center;
+  color: var(--text-primary);
+}
+
+a {
+  color: var(--link);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.pillBlock {
+  margin-bottom: 2rem;
+}
+
+.pillDirection {
+  margin-bottom: 2rem;
+}
+
+.pillBusStop {
+  margin-bottom: 3rem;
+}
+
+.pill {
+  display: flex;
+  align-items: stretch;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--btn-secondary);
+  overflow: hidden;
+  min-height: var(--pill-height);
+}
+
+.pill-text {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 10px;
+  text-align: center;
+  background: var(--btn-primary);
+  color: var(--text-primary);
+}
+
+.pill-btn {
+  flex: 1;
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 300;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-lg);
+  color: var(--text-secondary);
+  line-height: 1.2;
+  cursor: pointer;
+}
+
+.pill-select {
+  flex: 1;
+  padding: 0;
+  margin: 0;
+  border: none;
+  border-radius: 0;
+  background: var(--btn-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pill-select select {
+  background: var(--btn-primary);
+  border: none;
+  outline: none;
+  font-weight: 500;
+}
+
+#result {
+  color: var(--text-active);
+  font-size: 1rem;
+  font-weight: 600;
+  white-space: pre-line;
+  text-align: left;
+}
+
+.pill-btn.active {
+  /* flex: 1.25; */
+  background: var(--btn-primary);
+  color: var(--text-primary);
+  font-weight: 500;
+  border: var(--border-width) solid var(--border);
+  margin: -1px;
+}
+
+.direction-btn {
+  width: 50px;
+  flex: none;
+  padding: 0;
+  background: var(--btn-primary);
+  border: none;
+  border-left: var(--border-width) solid var(--border);
+  border-right: var(--border-width) solid var(--border);
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.direction-btn:active {
+  background: var(--btn-primary);
+}
+
+/* Overlay */
+.install-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.3);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.install-box {
+  background: var(--bg);
+  padding: 20px;
+  border-radius: var(--radius-lg);
+  text-align: center;
+  width: 80%;
+  max-width: 360px;
+}
+
+.install-box p {
+  margin-bottom: 2rem;
+}
+
+.install-box button {
+  margin: 5px;
+  width: 128px;
+  height: var(--pill-height);
+  min-height: var(--pill-height);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--btn-primary);
+  color: var(--text-primary);
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.install-text {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
