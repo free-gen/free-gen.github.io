@@ -213,13 +213,7 @@ const ui = {
       from: document.getElementById('fromText'),
       to: document.getElementById('toText'),
       providerLink: document.getElementById('providerLink'),
-      phoneLink: document.getElementById('phoneLink'),
-
-      installOverlay: document.getElementById('installOverlay'),
-      installBtn: document.getElementById('installBtn'),
-      closeInstall: document.getElementById('closeInstall'),
-      installAndroidText: document.getElementById('installAndroidText'),
-      installiOSText: document.getElementById('installiOSText')
+      phoneLink: document.getElementById('phoneLink')
     };
   },
 
@@ -359,6 +353,15 @@ const controller = {
   }
 };
 
+// ========== PWA: регистрация Service Worker ==========
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then(reg => console.log('SW registered', reg.scope))
+      .catch(err => console.log('SW registration failed', err));
+  });
+}
+
 // ========== INIT ==========
 async function init() {
   ui.initRefs();
@@ -408,63 +411,6 @@ async function init() {
   };
 
   controller.update();
-  setupInstallPrompt();
-}
-
-// ========== INSTALL PROMPT ==========
-let deferredPrompt = null;
-
-function setupInstallPrompt() {
-  // ловим событие установки (Android)
-  window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-
-    showInstallOverlay('android');
-  });
-
-  // кнопка "Установить"
-  app.ui.installBtn.onclick = async () => {
-    if (!deferredPrompt) return;
-
-    deferredPrompt.prompt();
-    await deferredPrompt.userChoice;
-
-    deferredPrompt = null;
-    hideInstallOverlay();
-  };
-
-  // кнопка "Позже"
-  app.ui.closeInstall.onclick = () => {
-    hideInstallOverlay();
-  };
-
-  // определяем iOS
-  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
-
-  if (isIOS && !window.matchMedia('(display-mode: standalone)').matches) {
-    showInstallOverlay('ios');
-  }
-}
-
-function showInstallOverlay(type) {
-  app.ui.installOverlay.style.display = 'flex';
-
-  if (type === 'android') {
-    app.ui.installBtn.style.display = 'inline-flex';
-    app.ui.installAndroidText.style.display = 'block';
-    app.ui.installiOSText.style.display = 'none';
-  }
-
-  if (type === 'ios') {
-    app.ui.installBtn.style.display = 'none';
-    app.ui.installAndroidText.style.display = 'none';
-    app.ui.installiOSText.style.display = 'block';
-  }
-}
-
-function hideInstallOverlay() {
-  app.ui.installOverlay.style.display = 'none';
 }
 
 init();
