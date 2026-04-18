@@ -2,61 +2,65 @@
 <html lang="ru">
 
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link rel="icon" type="image/png" sizes="16x16" href="/src/icon/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/src/icon/favicon-32x32.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/src/icon/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="192x192" href="/src/icon/android-chrome-192x192.png">
-<link rel="icon" type="image/png" sizes="512x512" href="/src/icon/android-chrome-512x512.png">
-<link rel="manifest" href="/src/site.webmanifest">
+    <link rel="icon" type="image/png" sizes="16x16" href="/src/icon/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/src/icon/favicon-32x32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/src/icon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/src/icon/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/src/icon/android-chrome-512x512.png">
+    <link rel="manifest" href="/src/site.webmanifest">
 
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="src/style.css">
+    <link rel="stylesheet" href="src/style.css">
 
-<title>Умное расписание</title>
+    <title>Умное расписание</title>
 </head>
 
 <body>
 
 <h1 id="routeHeader">routeHeader</h1>
-<p id="routeSubscription" align="center">routeSubscription</p>
+<p id="routeSubscription" class="text-center">routeSubscription</p>
 
 <hr>
 
-<div class="pillBlock" id="seasonBlock">
-  <h2>Выбор сезона</h2>
-  <div class="pill" id="seasonButtons"></div>
-</div>
+<h2 class="pillRowHeader">Настройки расписания</h2>
 
-<div class="pillBlock" id="dayTypeBlock">
-  <h2>Выбор типа дня</h2>
-  <div class="pill" id="dayTypeButtons"></div>
+<div class="pillRow">
+    <div class="pillBlock" id="seasonBlock">
+        <div class="pill" id="seasonButtons"></div>
+    </div>
+
+    <div class="pillBlock" id="dayTypeBlock">
+        <div class="pill" id="dayTypeButtons"></div>
+    </div>
 </div>
 
 <div class="pillDirection">
-  <h2>Выбор направления</h2>
-  <div class="pill">
-    <span id="fromText" class="pill-text"></span>
-    <button class="direction-btn">
-      <span class="material-icons">swap_horiz</span>
-    </button>
-    <span id="toText" class="pill-text"></span>
-  </div>
+    <h2>Выбор направления</h2>
+    <div class="pill">
+        <span id="fromText" class="pill-text"></span>
+
+        <button class="direction-btn" type="button">
+            <span class="material-icons">swap_horiz</span>
+        </button>
+
+        <span id="toText" class="pill-text"></span>
+    </div>
 </div>
 
 <div class="pillBusStop">
-  <h2>Выбор остановки</h2>
-  <div class="pill">
-    <div class="pill-select">
-      <select id="stopSelect" onchange="update()"></select>
+    <h2>Выбор остановки</h2>
+    <div class="pill">
+        <div class="pill-select">
+            <select id="stopSelect" onchange="update()"></select>
+        </div>
     </div>
-  </div>
 </div>
 
 <hr class="result-top">
@@ -66,19 +70,27 @@
 <hr class="result-bottom">
 
 <p class="subscription">
-  <span>Данный сервис отображает ближайшие автобусы на выбранной остановке согласно графикам от перевозчика.</span>
-  <br>
-  <span>Информация носит справочный характер и не гарантирует фактическое движение автобусов по маршрутам.</span>
-  <br><br>
-  <span>Услуги по перевозке пассажиров оказывает <a id="providerLink" href="#" target="_blank">providerLink</a>.</span>
-  <br>
-  <span>Актуальную информацию о движении автобусов можно уточнить у диспетчера по телефону: <a id="phoneLink" href="#">phoneLink</a>.</span>
-  <br><br>
-  <span>Разработка сервиса: FreeGen</span>
-  <br>
-  <span>Поддержать рублем: <a href="https://finance.ozon.ru/apps/sbp/ozonbankpay/019993bb-a466-72de-bc2c-e7ee85abc8a6" target="_blank">Ozon Банк</a></span>
+    <span>Данный сервис отображает ближайшие автобусы на выбранной остановке согласно графикам от перевозчика.</span><br>
+    <span>Информация носит справочный характер и не гарантирует фактическое движение автобусов по маршрутам.</span><br><br>
+
+    <span>Услуги по перевозке пассажиров оказывает
+        <a id="providerLink" href="#" target="_blank">providerLink</a>
+    </span><br>
+
+    <span>Актуальную информацию о движении автобусов можно уточнить у диспетчера по телефону: 
+        <a id="phoneLink" href="#">phoneLink</a>
+    </span><br><br>
+
+    <span>Разработка сервиса: FreeGen</span><br>
+    <span>
+        Поддержать рублем: 
+        <a href="https://finance.ozon.ru/apps/sbp/ozonbankpay/019993bb-a466-72de-bc2c-e7ee85abc8a6" target="_blank">
+            Ozon Банк
+        </a>
+    </span>
 </p>
 
 <script src="src/app.js"></script>
 </body>
+
 </html>

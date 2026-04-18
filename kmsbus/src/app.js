@@ -250,8 +250,8 @@ const ui = {
       this.renderButtons(
         'dayTypeButtons',
         [
-          { value: 'weekday', label: 'Рабочие дни' },
-          { value: 'weekend', label: 'Выходные дни' }
+          { value: 'weekday', label: 'Будни' },
+          { value: 'weekend', label: 'Выходные' }
         ],
         app.state.dayType,
         (val) => {
@@ -272,8 +272,8 @@ const ui = {
       this.renderButtons(
         'seasonButtons',
         [
-          { value: 'winter', label: 'Зимнее время' },
-          { value: 'summer', label: 'Летнее время' }
+          { value: 'winter', label: 'Зимнее' },
+          { value: 'summer', label: 'Летнее' }
         ],
         app.state.season,
         (val) => {
@@ -352,15 +352,6 @@ const controller = {
     this.update();
   }
 };
-
-// ========== PWA: регистрация Service Worker ==========
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js')
-      .then(reg => console.log('SW registered', reg.scope))
-      .catch(err => console.log('SW registration failed', err));
-  });
-}
 
 // ========== INIT ==========
 async function init() {

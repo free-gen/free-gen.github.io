@@ -15,7 +15,7 @@
     "  - Только сезоны: winter, summer",
     "  - Только типы дней: weekday, weekend",
     "  - Одно расписание на все дни: default",
-    "Внутри: route_forward и route_reverse, порядковый номер автобуса и массив времени 'HH:MM'"
+    "Внутри: route_forward и route_reverse, порядковый номер графика и массив времени 'HH:MM'"
   ],
 
   "route_header": "Ближайший 16-й",
