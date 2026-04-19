@@ -9,10 +9,18 @@
   --text-secondary: #555;
   --text-active: #111;
   --link: #00f;
-  --radius-lg: 25px;
-  --border-width: 1px;
+
+  --pill-radius: 25px;
   --pill-height: 50px;
   --body-padding: 15px;
+  --border-height: 1px;
+
+  --fontsize-header: 2rem;
+  --fontsize-subscription: 1rem;
+  --fontsize-pillheader: 0.9rem;
+  --fontsize-pill: 0.8rem;
+  --fontsize-result: 0.9rem;
+  --fontsize-footer: 0.8rem;
 }
 
 /* ================== BASE ================== */
@@ -35,29 +43,27 @@ select {
 /* ================== TYPOGRAPHY ================== */
 
 h1 {
-  font-size: 2rem;
+  font-size: var(--fontsize-header);
   font-weight: 800;
   text-align: center;
   color: var(--text-primary);
 }
 
+h3 {
+  font-size: var(--fontsize-subscription);
+  text-align: center;
+  font-weight: normal;
+}
+
 h2 {
-  font-size: 1rem;
+  font-size: var(--fontsize-pillheader);
   font-weight: 400;
   text-align: center;
   color: var(--text-primary);
 }
 
-p {
-  color: var(--text-active);
-}
-
-.text-center {
-  text-align: center;
-}
-
-.subscription {
-  font-size: 0.9rem;
+.footer {
+  font-size: var(--fontsize-footer);
   color: var(--text-secondary);
   margin-bottom: 5rem;
 }
@@ -72,7 +78,7 @@ a {
 
 hr {
   border: none;
-  border-top: var(--border-width) solid var(--border);
+  border-top: var(--border-height) solid var(--border);
   margin: 2.5rem calc(-1 * var(--body-padding));
 }
 
@@ -82,31 +88,61 @@ hr {
   margin-bottom: 1.25rem;
 }
 
-/* ================== BLOCKS ================== */
-
-.pillBlock,
-.pillDirection {
-  margin-bottom: 2rem;
-}
-
-.pillBusStop {
-  margin-bottom: 3rem;
-}
-
-/* ================== PILL ================== */
+/* ================== UNIVERSAL PILL STYLES ================== */
 
 .pill {
   display: flex;
   align-items: stretch;
   min-height: var(--pill-height);
-  border: var(--border-width) solid var(--border);
-  border-radius: var(--radius-lg);
+  border: var(--border-height) solid var(--border);
+  border-radius: var(--pill-radius);
   background: var(--btn-secondary);
   overflow: hidden;
-  position: relative; /* важно для active */
+  font-size: var(--fontsize-pill);
 }
 
-/* ================== CONTENT ================== */
+.pill-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  font-weight: 500;
+  font-size: var(--fontsize-pill);
+  background: var(--btn-primary);
+  color: var(--text-primary);
+  text-align: center;
+}
+
+/* ================== PILL BUTTON (активная кнопка-пилюля) ================== */
+
+.pill-btn {
+  font-size: var(--fontsize-pill);
+  padding: 0 5px;
+  flex: 1 1 0;
+  margin: 0;
+  font-weight: 300;
+  line-height: 1.2;
+  background: transparent;
+  border: none;
+  border-radius: var(--pill-radius);
+  color: var(--text-secondary);
+}
+
+.pill-btn.active {
+  background: var(--btn-primary);
+  color: var(--text-primary);
+  font-weight:500;
+  border: var(--border-height) solid var(--border);
+  margin: -1px;
+  z-index: 2;
+}
+
+/* ================== DIRECTION PILL (с кнопкой swap) ================== */
+
+.pillDirection .pill {
+  background: var(--btn-primary);
+}
 
 .pill-text {
   flex: 1;
@@ -114,40 +150,55 @@ hr {
   align-items: center;
   justify-content: center;
   padding: 10px;
-  font-size: 0.95rem;
   font-weight: 500;
-  background: var(--btn-primary);
   color: var(--text-primary);
   text-align: center;
 }
 
-/* ================== BUTTONS ================== */
-
-.pill-btn {
-  padding: 0 5px;
-  flex: 1;
-  margin: 0;
-  font-size: 0.85rem;
-  font-weight: 300;
-  line-height: 1.2;
-  background: transparent;
-  border: none;
-  border-radius: var(--radius-lg);
-  color: var(--text-secondary);
-  position: relative;
-  z-index: 1;
-}
-
-.pill-btn.active {
+.direction-btn {
+  width: var(--pill-height);
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
   background: var(--btn-primary);
+  border: none;
+  border-left: var(--border-height) solid var(--border);
+  border-right: var(--border-height) solid var(--border);
   color: var(--text-primary);
-  font-weight: 500;
-  border: var(--border-width) solid var(--border);
-  margin: -1px;
-  z-index: 2;
 }
 
-/* ================== DIRECTION ================== */
+/* ================== BLOCK SPACING ================== */
+
+.pillBlock,
+.pillDirection,
+.pillBusStop {
+  margin-bottom: 2rem;
+}
+
+.pillBusStop {
+  margin-bottom: 3rem;
+}
+
+/* ================== COMPACT CONTROLS (2 пилюли в ряд) ================== */
+
+.pillRow {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.pillBlock {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+.pillRow .pill-btn.active {
+  flex: 1.5 1 0;
+}
+
+/* ================== DIRECTION PILL (с кнопкой swap) ================== */
 
 .direction-btn {
   width: 50px;
@@ -157,18 +208,12 @@ hr {
   justify-content: center;
   padding: 0;
   background: var(--btn-primary);
-  border-left: var(--border-width) solid var(--border);
-  border-right: var(--border-width) solid var(--border);
-  border-top: none;
-  border-bottom: none;
+  border-left: var(--border-height) solid var(--border);
+  border-right: var(--border-height) solid var(--border);
   color: var(--text-primary);
 }
 
-.direction-btn:active {
-  background: var(--btn-primary);
-}
-
-/* ================== SELECT ================== */
+/* ================== SELECT PILL ================== */
 
 .pill-select {
   flex: 1;
@@ -179,17 +224,17 @@ hr {
 }
 
 .pill-select select {
-  background: var(--btn-primary) !important;
+  font-size: var(--fontsize-pill);
   width: 100%;
   height: 100%;
   border: none;
   outline: none;
   padding: 10px;
-  font-size: 0.95rem;
   font-weight: 500;
   color: var(--text-primary);
   text-align: center;
   text-align-last: center;
+  background: var(--btn-primary);
 }
 
 select option {
@@ -199,31 +244,9 @@ select option {
 /* ================== RESULT ================== */
 
 #result {
-  font-size: 0.9rem;
+  font-size: var(--fontsize-result);
   font-weight: 600;
   color: var(--text-active);
   white-space: pre-line;
   text-align: left;
-}
-
-/* ================== COMPACT CONTROLS ================== */
-
-.pillRow {
-  display: flex;
-  gap: 1rem;
-  margin-bottom: 2rem;
-}
-
-.pillRow .pill {
-  /* min-height: 40px; */
-  /* border-radius: 15px; */
-}
-
-.pillRow .pill-btn {
-  /* border-radius: 15px; */
-}
-
-.pillBlock {
-  flex: 1;
-  margin-bottom: 0;
 }

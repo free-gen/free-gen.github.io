@@ -4,7 +4,7 @@ const DEBUG = true;
 // TEST
 const USE_TEST_DATE = false;
 const TEST_DATE_VALUE = "20250510"; // YYYYMMDD
-const TEST_TIME_VALUE = 1200; // MINUTES
+const TEST_TIME_VALUE = 1280; // MINUTES
 
 // ========== APP STATE ==========
 const app = {
@@ -317,7 +317,7 @@ const controller = {
     const upcoming = logic.getArrivalTimes(app.state.selectedStop);
 
     if (!upcoming.length) {
-      ui.renderResult('На сегодня рейсов больше нет');
+      ui.renderResult('На сегодня рейсов больше нет :(');
       return;
     }
 
