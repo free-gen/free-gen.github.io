@@ -1,7 +1,7 @@
 {
     "name": "Smart Cooler Dashboard",
     "short_name": "Smart Cooler Dashboard",
-    "start_url": "/",
+    "start_url": "/testwebapp/",
     "theme_color": "#121212",
     "background_color": "#121212",
     "display": "standalone",
