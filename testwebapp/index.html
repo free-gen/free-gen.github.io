@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="ru">
+    
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <!-- PWA -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Smart Cooler Dashboard" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="theme-color" content="#121212" />
+
+    <!-- Иконки -->
+    <link rel="icon" type="image/png" sizes="16x16" href="src/icon/favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="src/icon/favicon-32x32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="src/icon/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="src/icon/android-chrome-192x192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="src/icon/android-chrome-512x512.png" />
+    <link rel="manifest" href="src/site.webmanifest" />
+
+    <link rel="stylesheet" href="style.css" />
+
+    <title>Smart Cooler Dashboard</title>
+
+
+</head>
+
+<!--
+==============================================================================
+HTML STYLE GUIDE
+==============================================================================
+
+1. СТРОКА С ФОРМОЙ
+Использовать .form-row, если в строке находится подпись и элемент управления.
+
+Пример:
+<div class="form-row">
+    <label class="w-50">Hostname</label>
+    <input class="control w-50">
+</div>
+
+<div class="form-row">
+    <label class="w-50">Mode</label>
+    <select class="control w-50"></select>
+</div>
+
+------------------------------------------------------------------------------
+
+2. СТРОКА СО ЗНАЧЕНИЕМ
+Использовать .value-row, если нужно показать подпись и значение.
+
+Пример:
+<div class="value-row">
+    <span class="w-50">Firmware</span>
+    <span class="value text-secondary">2.0.0</span>
+</div>
+
+------------------------------------------------------------------------------
+
+3. ГРУППА КНОПОК
+Использовать .action-row, если в строке несколько кнопок.
+
+Пример:
+<div class="action-row">
+    <button class="button var-primary">Save</button>
+    <button class="button var-danger-outline">Reset</button>
+</div>
+
+------------------------------------------------------------------------------
+
+4. TOOLBAR
+Использовать .toolbar для панели инструментов, верхней панели или заголовка.
+Не использовать для обычных строк.
+
+------------------------------------------------------------------------------
+
+5. СЛАЙДЕР
+Использовать .slider-row только для элементов со слайдером.
+
+------------------------------------------------------------------------------
+
+6. ПОЛЕ
+Каждое поле должно быть обернуто в .field.
+
+Пример:
+<div class="field">
+    <label class="field-label">SSID</label>
+    <input class="control">
+</div>
+
+------------------------------------------------------------------------------
+
+7. КНОПКИ
+Всегда использовать компонент .button.
+
+Обычная:
+<button class="button">
+С цветом:
+<button class="button var-primary">
+С outline:
+<button class="button var-danger-outline">
+
+Никогда не использовать .control для кнопок.
+
+------------------------------------------------------------------------------
+
+8. CONTROL
+.control используется только для:
+- input
+- select
+- textarea
+Не использовать для button.
+
+------------------------------------------------------------------------------
+
+9. VALUE
+.value используется только для отображения информации.
+
+Пример:
+<span class="value">1200 RPM</span>
+
+------------------------------------------------------------------------------
+
+10. ШИРИНА
+{.w-25 .w-50 .w-75 .w-100}
+
+Используются только внутри flex-строк для распределения свободного пространства.
+
+------------------------------------------------------------------------------
+
+11. SECTION
+.section используется только внутри .card.
+Не использовать отдельно.
+
+------------------------------------------------------------------------------
+
+12. CARD
+.card — контейнер логически законченного блока интерфейса.
+
+------------------------------------------------------------------------------
+
+13. VAR
+var-* используется только совместно с компонентами.
+
+<button class="button var-primary">
+
+------------------------------------------------------------------------------
+
+14. TEXT
+.text-secondary — вторичный текст.
+.text-center — центрирование.
+.text-right — выравнивание вправо.
+
+------------------------------------------------------------------------------
+
+15. ROW
+Если существует специализированный layout
+(form-row, value-row, action-row, toolbar, slider-row),
+использовать его.
+
+Обычный .row использовать только тогда,
+когда ни один специализированный layout не подходит.
+
+==============================================================================
+-->
+
+<body>
+    <!-- ===== HEADER ===== -->
+    <header id="header">
+        <div class="toolbar">
+            <span id="ps-logo"></span>
+            <span>Smart Cooler Dashboard</span>
+            <span class="i2c-state"></span>
+        </div>
+    </header>
+
+    <!-- ===== CONTENT ===== -->
+    <main id="content">
+
+        <!-- Раздел 1 (Мониторинг всех датчиков) -->
+        <div id="page1" class="page active">
+            <div class="card">
+                <h2>Monitoring</h2>
+                <p>All data</p>
+            </div>
+        </div>
+
+        <!-- Раздел 2 (Управление кулером) -->
+        <div id="page2" class="page">
+            <h2>Fan</h2>
+            <p>Fan settings</p>
+        </div>
+
+        <!-- ============================================================
+     PAGE 3 — UI Components Showcase
+     ============================================================ -->
+<div id="page3" class="page">
+
+    <!-- ==========================================================
+    SECTION 1 — Sliders
+    ========================================================== -->
+    <div class="section">
+        <h2>Slider Controls</h2>
+
+        <div class="slider-row">
+            <span class="w-25 text-secondary">Fan Speed</span>
+            <input type="range" class="range w-50" min="0" max="100" value="72">
+            <span class="value w-25 text-secondary">72%</span>
+        </div>
+
+        <div class="slider-row">
+            <span class="w-25 text-secondary">Temperature</span>
+            <input type="range" class="range w-50" min="0" max="100" value="48">
+            <span class="value w-25 text-secondary">48°C</span>
+        </div>
+
+        <div class="slider-row">
+            <span class="w-25 text-secondary">Brightness</span>
+            <input type="range" class="range w-50" min="0" max="100" value="85">
+            <span class="value w-25 text-secondary">85%</span>
+        </div>
+
+        <div class="slider-row">
+            <span class="w-25 text-secondary">Volume</span>
+            <input type="range" class="range w-50" min="0" max="100" value="30">
+            <span class="value w-25 text-secondary">30%</span>
+        </div>
+
+        <div class="action-row mt-8">
+            <button class="button var-primary w-25">Apply All</button>
+            <button class="button var-danger-outline w-25">Reset</button>
+        </div>
+    </div>
+
+    <!-- ==========================================================
+    SECTION 2 — Button Variants
+    ========================================================== -->
+    <div class="section">
+        <h2>Button Variants</h2>
+
+        <div class="action-row">
+            <button class="button var-primary">Primary</button>
+            <button class="button var-success">Success</button>
+            <button class="button var-danger">Danger</button>
+        </div>
+
+        <div class="action-row">
+            <button class="button var-primary-outline">Primary Outline</button>
+            <button class="button var-success-outline">Success Outline</button>
+            <button class="button var-danger-outline">Danger Outline</button>
+        </div>
+
+        <div class="action-row">
+            <button class="button">Default</button>
+            <button class="button var-primary" disabled>Disabled</button>
+            <button class="button var-success-outline" disabled>Disabled</button>
+        </div>
+
+        <div class="action-row">
+            <button class="button var-primary w-50">Full Width</button>
+            <button class="button var-danger-outline w-25">Small</button>
+        </div>
+    </div>
+
+    <!-- ==========================================================
+    SECTION 3 — Form Controls (Inputs & Selects)
+    ========================================================== -->
+    <div class="section">
+        <h2>Form Controls</h2>
+
+        <div class="field">
+            <label class="field-label">Username</label>
+            <input type="text" class="control" placeholder="Enter username" value="cooler_user">
+        </div>
+
+        <div class="field">
+            <label class="field-label">Password</label>
+            <input type="password" class="control" placeholder="Enter password" value="••••••••">
+        </div>
+
+        <div class="field">
+            <label class="field-label">Email Address</label>
+            <input type="email" class="control" placeholder="user@example.com">
+        </div>
+
+        <div class="field">
+            <label class="field-label">Fan Curve Profile</label>
+            <select class="control">
+                <option value="silent">Silent</option>
+                <option value="balanced" selected>Balanced</option>
+                <option value="performance">Performance</option>
+                <option value="full">Full Speed</option>
+                <option value="custom">Custom</option>
+            </select>
+        </div>
+
+        <div class="field">
+            <label class="field-label">Temperature Unit</label>
+            <select class="control">
+                <option value="celsius" selected>Celsius (°C)</option>
+                <option value="fahrenheit">Fahrenheit (°F)</option>
+                <option value="kelvin">Kelvin (K)</option>
+            </select>
+        </div>
+
+        <div class="field">
+            <label class="field-label">Notes</label>
+            <textarea class="control" rows="3" placeholder="Additional comments or settings..."></textarea>
+        </div>
+
+        <div class="form-row">
+            <label class="w-50">Number of Fans</label>
+            <input type="number" class="control w-50" min="1" max="8" value="4">
+        </div>
+
+        <div class="form-row">
+            <label class="w-50">Delay (seconds)</label>
+            <input type="number" class="control w-50" min="0" max="60" value="5" step="0.5">
+        </div>
+    </div>
+
+    <!-- ==========================================================
+    SECTION 4 — Toggle Switches
+    ========================================================== -->
+    <div class="section">
+        <h2>Toggle Switches</h2>
+
+        <div class="form-row">
+            <label class="w-75">Smart Fan Control</label>
+            <label class="toggle w-25">
+                <input type="checkbox" class="toggle-input" checked>
+                <span class="toggle-slider"></span>
+            </label>
+        </div>
+
+        <div class="form-row">
+            <label class="w-75">Auto-Start on Boot</label>
+            <label class="toggle w-25">
+                <input type="checkbox" class="toggle-input" checked>
+                <span class="toggle-slider"></span>
+            </label>
+        </div>
+
+        <div class="form-row">
+            <label class="w-75">Temperature Alerts</label>
+            <label class="toggle w-25">
+                <input type="checkbox" class="toggle-input">
+                <span class="toggle-slider"></span>
+            </label>
+        </div>
+
+        <div class="form-row">
+            <label class="w-75">RGB Sync with Fan Speed</label>
+            <label class="toggle w-25">
+                <input type="checkbox" class="toggle-input">
+                <span class="toggle-slider"></span>
+            </label>
+        </div>
+
+        <div class="form-row">
+            <label class="w-75">Developer Mode</label>
+            <label class="toggle w-25">
+                <input type="checkbox" class="toggle-input">
+                <span class="toggle-slider"></span>
+            </label>
+        </div>
+
+        <div class="form-row">
+            <label class="w-75">Enable Logging</label>
+            <label class="toggle w-25">
+                <input type="checkbox" class="toggle-input" checked>
+                <span class="toggle-slider"></span>
+            </label>
+        </div>
+
+        <div class="action-row mt-8">
+            <button class="button var-primary w-50">Save Toggles</button>
+            <button class="button var-danger-outline w-25">Reset</button>
+        </div>
+    </div>
+
+    <!-- ==========================================================
+    SECTION 5 — Value Displays & Status
+    ========================================================== -->
+    <div class="section">
+        <h2>Value Displays</h2>
+
+        <div class="value-row">
+            <span class="w-50">Current Temperature</span>
+            <span class="value text-secondary">54°C</span>
+            <span class="dot" style="display:inline-block;width:12px;height:12px;border-radius:50%;background:var(--caution);flex-shrink:0;"></span>
+        </div>
+
+        <div class="value-row">
+            <span class="w-50">Fan RPM</span>
+            <span class="value text-secondary">2,450 RPM</span>
+            <span class="dot" style="display:inline-block;width:12px;height:12px;border-radius:50%;background:var(--success);flex-shrink:0;"></span>
+        </div>
+
+        <div class="value-row">
+            <span class="w-50">Power Consumption</span>
+            <span class="value text-secondary">18.7 W</span>
+        </div>
+
+        <div class="value-row">
+            <span class="w-50">Uptime</span>
+            <span class="value text-secondary">3d 14h 22m</span>
+        </div>
+
+        <div class="value-row">
+            <span class="w-50">Firmware</span>
+            <span class="value text-secondary">v2.1.4</span>
+        </div>
+
+        <div class="value-row">
+            <span class="w-50">Last Calibration</span>
+            <span class="value text-secondary">2026-07-14 09:23</span>
+        </div>
+
+        <div class="row mt-8 evenly">
+            <span style="display:flex;align-items:center;gap:6px;">
+                <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--success);"></span>
+                Online
+            </span>
+            <span style="display:flex;align-items:center;gap:6px;">
+                <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--caution);"></span>
+                Warning
+            </span>
+            <span style="display:flex;align-items:center;gap:6px;">
+                <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--critical);"></span>
+                Critical
+            </span>
+        </div>
+    </div>
+
+    <!-- ==========================================================
+    SECTION 6 — Mixed Card with All Controls
+    ========================================================== -->
+    <div class="section">
+        <h2>Combined Controls</h2>
+
+        <div class="card">
+            <div class="field">
+                <label class="field-label">Profile Name</label>
+                <input type="text" class="control" placeholder="My custom profile" value="Gaming Boost">
+            </div>
+
+            <div class="form-row">
+                <label class="w-50">Fan Curve</label>
+                <select class="control w-50">
+                    <option value="aggressive">Aggressive</option>
+                    <option value="balanced" selected>Balanced</option>
+                    <option value="eco">Eco</option>
+                </select>
+            </div>
+
+            <div class="slider-row">
+                <span class="w-25 text-secondary">Target Temp</span>
+                <input type="range" class="range w-50" min="40" max="85" value="65">
+                <span class="value w-25 text-secondary">65°C</span>
+            </div>
+
+            <div class="form-row">
+                <label class="w-75">Enable Overclock</label>
+                <label class="toggle w-25">
+                    <input type="checkbox" class="toggle-input">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <div class="action-row">
+                <button class="button var-primary w-50">Apply Profile</button>
+                <button class="button var-danger-outline w-25">Delete</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 style="font-size:0.9rem;font-weight:600;margin-bottom:8px;">System Status</h2>
+            <div class="value-row">
+                <span class="w-50">CPU Load</span>
+                <span class="value text-secondary">34%</span>
+            </div>
+            <div class="value-row">
+                <span class="w-50">Memory Usage</span>
+                <span class="value text-secondary">1.8 / 4.0 GB</span>
+            </div>
+            <div class="value-row">
+                <span class="w-50">Network</span>
+                <span class="value text-secondary">192.168.1.42</span>
+            </div>
+            <div class="row mt-8">
+                <button class="button var-primary w-100">Refresh Status</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================================
+    SECTION 7 — Action Row Examples
+    ========================================================== -->
+    <div class="section">
+        <h2>Action Groups</h2>
+
+        <div class="action-row">
+            <button class="button var-primary">Save</button>
+            <button class="button var-success">Apply</button>
+            <button class="button var-danger">Reset</button>
+        </div>
+
+        <div class="action-row">
+            <button class="button var-primary-outline">Cancel</button>
+            <button class="button var-success-outline">Preview</button>
+            <button class="button var-danger-outline">Discard</button>
+        </div>
+
+        <div class="action-row">
+            <button class="button var-primary w-75">Save All Settings</button>
+            <button class="button var-danger-outline w-25">✕</button>
+        </div>
+
+        <div class="action-row">
+            <button class="button w-25">⬅ Back</button>
+            <button class="button var-primary w-50">Next Step ➡</button>
+        </div>
+    </div>
+
+</div>
+<!-- ===== END PAGE 3 ===== -->
+
+        <!-- Раздел 4 (Настройка RGB подсветки) -->
+        <div id="page4" class="page">
+            <h2>RGB Led</h2>
+            <p>RGB Backlight modes</p>
+        </div>
+
+        <!-- Раздел 5 (Общие настройки и информация) -->
+        <div id="page5" class="page">
+
+            <!-- About & Links -->
+            <div class="section">
+                <h2>PS5 Smart Cooler</h2>
+                <div class="col">
+                    <div class="value-row">
+                        <span class="w-50">Firmware Version</span>
+                        <span class="value text-secondary">2.0.0</span>
+                    </div>
+                    <div class="value-row">
+                        <span class="w-50">Device ID</span>
+                        <span class="value text-secondary">087AXXXXYYYY</span>
+                    </div>
+                    <div class="value-row">
+                        <span class="w-50">Host IP</span>
+                        <span class="value text-secondary">192.168.1.1</span>
+                    </div>
+                    <div class="value-row">
+                        <span>Hostname</span>
+                        <span class="value text-secondary">ps5-xxxx.local</span>
+                    </div>
+                </div>
+                <div class="col mt-24">
+                    <a class="text-center" href="#">
+                        Created by Walkman Life TV
+                    </a>
+
+                    <a class="text-center mt-16" href="#">
+                        Web UI Designed by FreeGen
+                    </a>
+                </div>
+                <div class="row evenly">
+                    <a href="#">Tech Support</a>
+                    <a href="#">Donate</a>
+                    <a href="#">Users Guide</a>
+                </div>
+            </div>
+
+            <!-- Appearance -->
+            <div class="section">
+                <h2>Appearance</h2>
+                <div class="form-row">
+                    <label class="w-50">Color Mode</label>
+                    <select class="control w-50" id="theme-select">
+                        <option value="system">Default</option>
+                        <option value="light">Light</option>
+                        <option value="dark">Dark</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Network Settings -->
+            <div class="section">
+                <h2>Network Settings</h2>
+                <div class="field">
+                    <label class="field-label">Device Name (.local)</label>
+                    <input type="text" class="control" placeholder="ps5-xxxx (Max 15 Chars)">
+                </div>
+                <div class="field">
+                    <label class="field-label">Access Point Name</label>
+                    <input type="text" class="control" placeholder="Example: Keenetic-0230">
+                </div>
+                <div class="field">
+                    <label class="field-label">Password</label>
+                    <input type="text" class="control" placeholder="Min 8 Chars">
+                </div>
+                <div class="field">
+                    <label class="field-label">Confirm Password</label>
+                    <input type="text" class="control" placeholder="Min 8 Chars">
+                </div>
+                <div class="form-row">
+                    <label class="w-75">Connect to Home Router</label>
+                    <label class="toggle w-25">
+                        <input type="checkbox" class="toggle-input">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+
+                <h2 class="mt-32">Access Point Mode</h2>
+                <div class="field">
+                    <label class="field-label">Access Point Name</label>
+                    <input type="text" class="control" placeholder="Example: Ps5_Smart_Cooler">
+                </div>
+                <div class="field">
+                    <label class="field-label">Access Point Password</label>
+                    <input type="text" class="control" placeholder="Min 8 Chars">
+                </div>
+
+                <button class="button mt-16 var-primary">Apply & Reboot</button>
+                <button class="button var-danger-outline">Reset Wi-Fi to Default</button>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer id="footer">
+        <button class="footer-btn active" data-page="page1">
+            <span class="footer-icon" id="icon-monitoring"></span>
+            <span>Monitoring</span>
+        </button>
+        <button class="footer-btn" data-page="page2">
+            <span class="footer-icon" id="icon-fan"></span>
+            <span>Fan</span>
+        </button>
+        <button class="footer-btn" data-page="page3">
+            <span class="footer-icon" id="icon-advanced"></span>
+            <span>Advanced</span>
+        </button>
+        <button class="footer-btn" data-page="page4">
+            <span class="footer-icon" id="icon-led"></span>
+            <span>Backlight</span>
+        </button>
+        <button class="footer-btn" data-page="page5">
+            <span class="footer-icon" id="icon-settings"></span>
+            <span>Settings</span>
+        </button>
+    </footer>
+
+    <!-- Лейбл бесплатной версии -->
+    <div class="license-area">
+        <span class="license-badge">TRIAL MODE (ONLY MONITORING & RGB)</span>
+    </div>
+
+    <!-- Safe area для iOS -->
+    <div class="safe-area"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
