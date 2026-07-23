@@ -1,0 +1,12 @@
+{
+  "name": "PS5 Smart Cooler",
+  "short_name": "PS5 Smart Cooler",
+  "description": "Smart Cooler Dashboard by Walkman Life TV",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#121212",
+  "theme_color": "#121212",
+  "orientation": "portrait",
+  "scope": "/",
+  "lang": "en"
+}
