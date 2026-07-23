@@ -1,0 +1,22 @@
+{
+  "name": "PS5 Smart Cooler",
+  "short_name": "PS5 Smart Cooler",
+  "description": "Smart Cooler Dashboard by Walkman Life TV",
+  "start_url": "/sc-sw/",
+  "display": "standalone",
+  "background_color": "#121212",
+  "theme_color": "#121212",
+  "orientation": "portrait",
+  "icons": [
+        {
+            "src":"icon/icon-192.png",
+            "sizes":"192x192",
+            "type":"image/png"
+            },
+        {
+            "src":"icon/icon-512.png",
+            "sizes":"512x512",
+            "type":"image/png"
+        }
+    ]
+}
