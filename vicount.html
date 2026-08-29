@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+    <title>VICounter</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        html, body {
+            height: 100%;
+            min-height: 100vh;
+        }
+        body {
+            background: linear-gradient(189deg, #1f1f38 0.55%, #18182d 30.38%, #111222 65.19%, #0c0d1b 100%) no-repeat fixed;
+            background-size: cover;
+            color: #f1eaff;
+            font-family: "Roboto Mono", monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            text-align: center;
+            font-weight: 900;
+            font-size: 1.25rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <span>GTA VI Countdown</span>
+        <br><br>
+        <span class="label">Preload</span>
+        <span class="timer" id="preloadTimer"></span>
+        <br><br>
+        <span class="label">Release</span>
+        <span class="timer" id="releaseTimer"></span>
+    </div>
+
+    <script>
+        function updateTimers() {
+            const now = new Date();
+            
+            const preloadTarget = new Date(2026, 10, 12, 8, 0, 0);
+            const releaseTarget = new Date(2026, 10, 19, 8, 0, 0);
+            
+            const preloadDiff = preloadTarget - now;
+            const releaseDiff = releaseTarget - now;
+            
+            function formatTime(diff) {
+                if (diff <= 0) {
+                    return '00:00:00:00';
+                }
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+                
+                return `
+                ${String(days).padStart(2, '0')}d
+                ${String(hours).padStart(2, '0')}h
+                ${String(minutes).padStart(2, '0')}m
+                ${String(seconds).padStart(2, '0')}s`;
+            }
+            
+            document.getElementById('preloadTimer').textContent = formatTime(preloadDiff);
+            document.getElementById('releaseTimer').textContent = formatTime(releaseDiff);
+        }
+        
+        updateTimers();
+        setInterval(updateTimers, 1000);
+    </script>
+</body>
+</html>
