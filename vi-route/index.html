@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+
+    <title>VI Route</title>
+
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+
+<div id="map">
+
+    <img id="map-image" src="./map.svg" alt="" draggable="false">
+
+    <svg id="measurement-layer" aria-hidden="true"></svg>
+    <svg id="route-layer" aria-hidden="true"></svg>
+
+    <div id="map-tools">
+        <button id="measure-button" class="tool-button" type="button">
+            Measure
+        </button>
+
+        <button id="route-button" class="tool-button" type="button" disabled>
+            Route
+        </button>
+
+        <button id="clear-button" class="tool-button" type="button">
+            Clear
+        </button>
+    </div>
+
+    <div id="map-credit">
+        <span class="credit-title">VI Route 0.0.1</span>
+        <span class="credit-source">Based on the community GTA VI map</span>
+        <span class="credit-copyright">© 2026 FreeGen</span>
+    </div>
+
+</div>
+
+
+
+<script src="./map.js"></script>
+<script src="./road-network.js"></script>
+
+</body>
+</html>

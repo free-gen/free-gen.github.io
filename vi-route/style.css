@@ -1,0 +1,385 @@
+/* =========================================================
+   DESIGN TOKENS
+   ========================================================= */
+
+:root {
+    /* Colors */
+    --color-water: #2C67A4;
+
+    --color-surface: rgba(25, 25, 25, 0.92);
+    --color-surface-footer: rgba(25, 25, 25, 0.90);
+    --color-surface-hover: rgba(255, 255, 255, 0.10);
+    --color-border: rgba(255, 255, 255, 0.16);
+    --color-shadow: rgba(0, 0, 0, 0.28);
+
+    --color-text: #ffffff;
+    --color-text-muted: #b8c0c7;
+    --color-text-disabled: rgba(255, 255, 255, 0.45);
+    --color-text-dark: #202020;
+
+    --color-measure: #ffcc00;
+    --color-route: #e45ac1;
+
+    --color-label-outline: rgba(0, 0, 0, 0.80);
+    --color-path-outline: transparent;
+
+    /* Spacing */
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+
+    /* Typography */
+    --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+    --font-size-xs: 10px;
+    --font-size-sm: 12px;
+    --font-size-md: 14px;
+    --font-size-lg: 16px;
+
+    --font-weight-medium: 500;
+    --font-weight-bold: 800;
+
+    /* UI */
+    --toolbar-top: var(--space-4);
+    --toolbar-padding: var(--space-1);
+    --toolbar-gap: var(--space-1);
+
+    --button-height: 32px;
+    --button-padding-x: var(--space-4);
+
+    --footer-height: 24px;
+    --footer-padding-x: var(--space-3);
+    --footer-gap: var(--space-3);
+
+    --radius-pill: 999px;
+
+    /* Map overlays */
+    --path-width: 8px;
+    --measure-outline-width: 16px;
+    --route-outline-width: 9px;
+
+    --point-size: 6px;
+    --point-stroke-width: 2px;
+
+    --label-stroke-width: 4px;
+
+    /* Effects */
+    --surface-blur: 8px;
+    --transition-fast: 120ms ease;
+
+    /* Layer order */
+    --layer-map: 1;
+    --layer-measure: 10;
+    --layer-route: 12;
+    --layer-ui: 20;
+}
+
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+body {
+    background: var(--color-water);
+    font-family: var(--font-family);
+}
+
+
+/* =========================================================
+   MAP VIEWPORT
+   ========================================================= */
+
+#map {
+    position: relative;
+
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+
+    overflow: hidden;
+
+    background: var(--color-water);
+
+    cursor: grab;
+
+    user-select: none;
+    -webkit-user-select: none;
+
+    touch-action: none;
+}
+
+#map.dragging {
+    cursor: grabbing;
+}
+
+#map.measuring,
+#map.routing {
+    cursor: crosshair;
+}
+
+
+/* =========================================================
+   MAP IMAGE
+   ========================================================= */
+
+#map-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: var(--layer-map);
+
+    display: block;
+
+    max-width: none;
+    max-height: none;
+
+    pointer-events: none;
+
+    transform-origin: 0 0;
+
+    -webkit-user-drag: none;
+}
+
+
+/* =========================================================
+   TOOLBAR
+   ========================================================= */
+
+#map-tools {
+    position: absolute;
+
+    top: calc(var(--toolbar-top) + env(safe-area-inset-top));
+    left: 50%;
+
+    z-index: var(--layer-ui);
+
+    display: flex;
+    align-items: center;
+    gap: var(--toolbar-gap);
+
+    padding: var(--toolbar-padding);
+
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+
+    box-shadow: 0 3px 12px var(--color-shadow);
+
+    backdrop-filter: blur(var(--surface-blur));
+    -webkit-backdrop-filter: blur(var(--surface-blur));
+
+    transform: translateX(-50%);
+
+    pointer-events: auto;
+}
+
+.tool-button {
+    height: var(--button-height);
+    padding: 0 var(--button-padding-x);
+
+    border: 0;
+    border-radius: var(--radius-pill);
+
+    background: transparent;
+    color: var(--color-text);
+
+    font: inherit;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+
+    cursor: pointer;
+
+    transition:
+        background var(--transition-fast),
+        color var(--transition-fast),
+        opacity var(--transition-fast);
+}
+
+.tool-button:hover:not(:disabled):not(.active) {
+    background: var(--color-surface-hover);
+}
+
+.tool-button.active {
+    background: var(--color-text);
+    color: var(--color-text-dark);
+}
+
+.tool-button:disabled {
+    color: var(--color-text-disabled);
+    cursor: wait;
+}
+
+
+/* =========================================================
+   OVERLAY LAYERS
+   ========================================================= */
+
+#measurement-layer,
+#route-layer {
+    position: absolute;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    pointer-events: none;
+    overflow: visible;
+}
+
+#measurement-layer {
+    z-index: var(--layer-measure);
+}
+
+#route-layer {
+    z-index: var(--layer-route);
+}
+
+
+/* =========================================================
+   SHARED OVERLAY STYLES
+   ========================================================= */
+
+.measurement-line,
+.measurement-line-outline,
+.route-line,
+.route-line-outline {
+    fill: none;
+
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.measurement-line,
+.measurement-line-outline {
+    vector-effect: non-scaling-stroke;
+}
+
+.measurement-label,
+.route-marker-label,
+.route-distance-label {
+    fill: var(--color-text);
+
+    font-family: var(--font-family);
+    font-weight: var(--font-weight-bold);
+
+    paint-order: stroke;
+    stroke: var(--color-label-outline);
+    stroke-width: var(--label-stroke-width);
+    stroke-linejoin: round;
+}
+
+
+/* =========================================================
+   MEASUREMENT
+   ========================================================= */
+
+.measurement-line-outline {
+    stroke: var(--color-path-outline);
+    stroke-width: var(--measure-outline-width);
+}
+
+.measurement-line {
+    stroke: var(--color-measure);
+    stroke-width: var(--path-width);
+}
+
+.measurement-point {
+    fill: var(--color-measure);
+
+    stroke-width: var(--point-stroke-width);
+}
+
+.measurement-label {
+    font-size: var(--font-size-md);
+}
+
+
+/* =========================================================
+   ROUTE
+   ========================================================= */
+
+.route-line-outline {
+    stroke: var(--color-path-outline);
+    stroke-width: var(--route-outline-width);
+}
+
+.route-line {
+    stroke: var(--color-route);
+    stroke-width: var(--path-width);
+}
+
+.route-point,
+.route-point-end {
+    fill: var(--color-route);
+}
+
+.route-point {
+    stroke-width: var(--measure-outline-width);
+}
+
+.route-marker-label {
+    font-size: var(--font-size-lg);
+}
+
+.route-distance-label {
+    font-size: var(--font-size-md);
+}
+
+
+/* =========================================================
+   FOOTER / CREDITS
+   ========================================================= */
+
+#map-credit {
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    z-index: var(--layer-ui);
+
+    min-height: var(--footer-height);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--footer-gap);
+
+    padding:
+        0
+        var(--footer-padding-x)
+        env(safe-area-inset-bottom);
+
+    background: var(--color-surface-footer);
+
+    font-size: var(--font-size-xs);
+    line-height: 1;
+
+    white-space: nowrap;
+
+    pointer-events: none;
+}
+
+.credit-title {
+    color: var(--color-text);
+}
+
+.credit-source,
+.credit-copyright {
+    color: var(--color-text-muted);
+}
