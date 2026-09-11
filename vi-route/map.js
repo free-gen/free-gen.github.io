@@ -1,4 +1,4 @@
-const mapVersion = "0.1.0";
+const mapVersion = "0.1.1";
 const author = "FreeGen";
 document.getElementById("map-version").textContent = `v${mapVersion}`;
 document.getElementById("map-author").textContent = author;

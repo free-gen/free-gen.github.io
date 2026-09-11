@@ -1,71 +1,39 @@
 /* =========================================================
-   DESIGN TOKENS
+   SETTINGS
    ========================================================= */
 
 :root {
-    /* Colors */
-    --color-water: #2c68a4;
+    /* Map */
+    --water: #2c68a4;
 
-    --color-surface: rgba(25, 25, 25, 0.92);
-    --color-surface-footer: rgba(25, 25, 25, 0.90);
-    --color-surface-hover: rgba(255, 255, 255, 0.10);
-    --color-border: rgba(255, 255, 255, 0.16);
-    --color-shadow: rgba(0, 0, 0, 0.28);
+    /* UI */
+    --surface: rgba(25, 25, 25, 0.90);
+    --hover: rgba(255, 255, 255, 0.10);
 
-    --color-text: #ffffff;
-    --color-text-muted: #b8c0c7;
-    --color-text-disabled: rgba(255, 255, 255, 0.45);
-    --color-text-dark: #202020;
+    --text: #ffffff;
+    --text-muted: #b8c0c7;
+    --text-disabled: rgba(255, 255, 255, 0.45);
+    --text-dark: #202020;
 
     /* Measure + Route */
-    --overlay-color: #ce44ab;
-    --overlay-text-outline: rgba(0, 0, 0, 0.80);
-
-    /* Spacing */
-    --space-xs: 4px;
-    --space-sm: 8px;
-    --space-md: 12px;
-    --space-lg: 16px;
-
-    /* Typography */
-    --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    --font-size-xs: 10px;
-    --font-size-sm: 12px;
-    --font-size-md: 14px;
-
-    --font-weight-medium: 500;
-    --font-weight-bold: 700;
+    --map-color: #ce44ab;
+    --map-line: 5px;
+    --map-point: 4px;
+    --map-label: 14px;
 
     /* Toolbar */
-    --toolbar-top: var(--space-lg);
-    --toolbar-padding: var(--space-xs);
-    --toolbar-gap: var(--space-xs);
-
-    --button-height: 32px;
-    --button-padding-x: var(--space-lg);
+    --toolbar-x: 16px;
+    --toolbar-y: 16px;
+    --toolbar-height: 32px;
+    --toolbar-padding: 4px;
+    --button-padding: 16px;
 
     /* Footer */
     --footer-height: 24px;
-    --footer-gap: var(--space-md);
-    --footer-padding-x: var(--space-md);
 
-    /* Measure + Route sizing */
-    --overlay-line-width: 6px;
-    --overlay-marker-size: 8px;
-    --overlay-label-size: 14px;
-
-    /* Shape */
-    --radius-pill: 999px;
-
-    /* Effects */
-    --surface-blur: 8px;
-    --transition-fast: 120ms ease;
-
-    /* Layers */
-    --layer-map: 1;
-    --layer-measure: 10;
-    --layer-route: 12;
-    --layer-ui: 20;
+    /* Global */
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --radius: 999px;
 }
 
 
@@ -82,13 +50,12 @@ body {
     width: 100%;
     height: 100%;
     margin: 0;
-    padding: 0;
     overflow: hidden;
 }
 
 body {
-    background: var(--color-water);
-    font-family: var(--font-family);
+    background: var(--water);
+    font-family: var(--font);
 }
 
 
@@ -98,20 +65,17 @@ body {
 
 #map {
     position: relative;
-
     width: 100vw;
     height: 100vh;
     height: 100dvh;
 
     overflow: hidden;
-
-    background: var(--color-water);
+    background: var(--water);
 
     cursor: grab;
 
     user-select: none;
     -webkit-user-select: none;
-
     touch-action: none;
 }
 
@@ -129,15 +93,12 @@ body {
     top: 0;
     left: 0;
 
-    z-index: var(--layer-map);
-
     display: block;
 
     max-width: none;
     max-height: none;
 
     pointer-events: none;
-
     transform-origin: 0 0;
 
     -webkit-user-drag: none;
@@ -151,70 +112,59 @@ body {
 #map-tools {
     position: absolute;
 
-    top: calc(var(--toolbar-top) + env(safe-area-inset-top));
-    left: 50%;
+    top: calc(var(--toolbar-y) + env(safe-area-inset-top));
+    left: var(--toolbar-x);
 
-    z-index: var(--layer-ui);
+    z-index: 20;
 
     display: flex;
-    align-items: center;
+    gap: 4px;
 
-    gap: var(--toolbar-gap);
     padding: var(--toolbar-padding);
 
-    background: var(--color-surface);
+    background: var(--surface);
+    border-radius: var(--radius);
 
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-pill);
-
-    box-shadow: 0 3px 12px var(--color-shadow);
-
-    backdrop-filter: blur(var(--surface-blur));
-    -webkit-backdrop-filter: blur(var(--surface-blur));
-
-    transform: translateX(-50%);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
 
     pointer-events: auto;
 }
 
 .tool-button {
-    height: var(--button-height);
-    padding: 0 var(--button-padding-x);
+    height: var(--toolbar-height);
+    padding: 0 var(--button-padding);
 
     border: 0;
-    border-radius: var(--radius-pill);
+    border-radius: var(--radius);
 
     background: transparent;
-    color: var(--color-text);
+    color: var(--text);
 
     font: inherit;
-    font-size: var(--font-size-sm);
-    font-weight: var(--font-weight-medium);
+    font-size: 12px;
+    font-weight: 500;
 
     cursor: pointer;
-
-    transition:
-        background var(--transition-fast),
-        color var(--transition-fast);
 }
 
 .tool-button:hover:not(:disabled):not(.active) {
-    background: var(--color-surface-hover);
+    background: var(--hover);
 }
 
 .tool-button.active {
-    background: var(--color-text);
-    color: var(--color-text-dark);
+    background: var(--text);
+    color: var(--text-dark);
 }
 
 .tool-button:disabled {
-    color: var(--color-text-disabled);
+    color: var(--text-disabled);
     cursor: wait;
 }
 
 
 /* =========================================================
-   MAP OVERLAYS
+   OVERLAYS
    ========================================================= */
 
 #measurement-layer,
@@ -230,11 +180,11 @@ body {
 }
 
 #measurement-layer {
-    z-index: var(--layer-measure);
+    z-index: 10;
 }
 
 #route-layer {
-    z-index: var(--layer-route);
+    z-index: 12;
 }
 
 
@@ -246,36 +196,30 @@ body {
 .route-line {
     fill: none;
 
-    stroke: var(--overlay-color);
-    stroke-width: var(--overlay-line-width);
+    stroke: var(--map-color);
+    stroke-width: var(--map-line);
 
     stroke-linecap: round;
     stroke-linejoin: round;
 }
 
-.measurement-line {
-    vector-effect: non-scaling-stroke;
-}
-
 .measurement-point,
 .route-point {
-    fill: var(--overlay-color);
-    stroke: none;
-
-    r: var(--overlay-marker-size);
+    fill: var(--map-color);
+    r: var(--map-point);
 }
 
 .measurement-label,
 .route-marker-label,
 .route-distance-label {
-    fill: var(--color-text);
+    fill: var(--text);
 
-    font-family: var(--font-family);
-    font-size: var(--overlay-label-size);
-    font-weight: var(--font-weight-bold);
+    font-family: var(--font);
+    font-size: var(--map-label);
+    font-weight: 700;
 
     paint-order: stroke;
-    stroke: var(--overlay-text-outline);
+    stroke: rgba(0, 0, 0, 0.8);
     stroke-width: 3px;
     stroke-linejoin: round;
 }
@@ -292,36 +236,31 @@ body {
     right: 0;
     bottom: 0;
 
-    z-index: var(--layer-ui);
+    z-index: 20;
 
     min-height: var(--footer-height);
 
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 12px;
 
-    gap: var(--footer-gap);
+    padding: 0 12px env(safe-area-inset-bottom);
 
-    padding:
-        0
-        var(--footer-padding-x)
-        env(safe-area-inset-bottom);
+    background: var(--surface);
 
-    background: var(--color-surface-footer);
-
-    font-size: var(--font-size-xs);
+    font-size: 10px;
     line-height: 1;
-
     white-space: nowrap;
 
     pointer-events: none;
 }
 
 .credit-title {
-    color: var(--color-text);
+    color: var(--text);
 }
 
 .credit-source,
 .credit-copyright {
-    color: var(--color-text-muted);
+    color: var(--text-muted);
 }
