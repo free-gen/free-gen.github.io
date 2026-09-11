@@ -1,9 +1,11 @@
 const routeButton = document.getElementById("route-button");
 const routeLayer = document.getElementById("route-layer");
 
-const ROAD_GRID_STEP = 10;
-const MIN_ROAD_WIDTH = 18;
-const MAX_SNAP_DISTANCE = 300;
+const ROAD_GRID_STEP = 5;
+const MIN_ROAD_WIDTH = 5;
+const MAX_SNAP_DISTANCE = 50;
+
+const ROAD_COLOR = "#505050";
 
 let roadMask = null;
 let roadWidth = 0;
@@ -113,7 +115,7 @@ async function buildRoadNetwork() {
     const paths = [...documentSVG.querySelectorAll("path")];
 
     for (const path of paths) {
-        if (!isWhiteRoad(path)) continue;
+        if (!isRoadPath(path)) continue;
 
         const d = path.getAttribute("d");
         if (!d) continue;
@@ -135,96 +137,39 @@ async function buildRoadNetwork() {
         roadMask[i] = pixels[i * 4 + 3] > 20 ? 1 : 0;
     }
 
-    keepLargestRoadComponent();
-
     canvas.width = 1;
     canvas.height = 1;
 }
 
 
-function isWhiteRoad(path) {
-    const stroke = (path.getAttribute("stroke") || "")
-        .trim()
-        .toLowerCase()
-        .replace(/\s+/g, "");
+function isRoadPath(path) {
+    const stroke = getPathStroke(path);
 
     return (
-        stroke === "white" ||
-        stroke === "#fff" ||
-        stroke === "#ffffff" ||
-        stroke === "rgb(255,255,255)"
+        stroke === ROAD_COLOR ||
+        stroke === "rgb(80,80,80)"
     );
 }
 
+function getPathStroke(path) {
+    const directStroke = path.getAttribute("stroke");
 
-/* =========================================================
-   ROAD COMPONENT
-   ========================================================= */
-
-function keepLargestRoadComponent() {
-    const total = roadMask.length;
-    const labels = new Int32Array(total);
-    const queue = new Int32Array(total);
-
-    let componentId = 0;
-    let largestComponent = 0;
-    let largestSize = 0;
-
-    const directions = [
-        [-1, -1], [0, -1], [1, -1],
-        [-1,  0],          [1,  0],
-        [-1,  1], [0,  1], [1,  1]
-    ];
-
-    for (let i = 0; i < total; i++) {
-        if (!roadMask[i] || labels[i]) continue;
-
-        componentId++;
-
-        let head = 0;
-        let tail = 0;
-        let size = 0;
-
-        queue[tail++] = i;
-        labels[i] = componentId;
-
-        while (head < tail) {
-            const current = queue[head++];
-            size++;
-
-            const cx = current % roadWidth;
-            const cy = Math.floor(current / roadWidth);
-
-            for (const [dx, dy] of directions) {
-                const nx = cx + dx;
-                const ny = cy + dy;
-
-                if (nx < 0 || ny < 0 || nx >= roadWidth || ny >= roadHeight) continue;
-
-                const next = ny * roadWidth + nx;
-
-                if (!roadMask[next] || labels[next]) continue;
-
-                labels[next] = componentId;
-                queue[tail++] = next;
-            }
-        }
-
-        if (size > largestSize) {
-            largestSize = size;
-            largestComponent = componentId;
-        }
+    if (directStroke) {
+        return normalizeColor(directStroke);
     }
 
-    for (let i = 0; i < total; i++) {
-        if (roadMask[i] && labels[i] !== largestComponent) {
-            roadMask[i] = 0;
-        }
-    }
+    const style = path.getAttribute("style") || "";
+    const match = style.match(/(?:^|;)\s*stroke\s*:\s*([^;]+)/i);
 
-    console.log(`Main road network: ${largestSize} cells.`);
+    return match ? normalizeColor(match[1]) : "";
 }
 
+function normalizeColor(color) {
+    return color
+        .trim()
+        .toLowerCase()
+        .replace(/\s+/g, "");
+}
 
 /* =========================================================
    ROUTE MODE
@@ -561,11 +506,6 @@ function renderRouteOverlay() {
         const screenPoints = routePath.map(svgToScreen);
         const points = screenPoints.map(point => `${point.x},${point.y}`).join(" ");
 
-        const outline = createRouteSVGElement("polyline");
-        outline.setAttribute("points", points);
-        outline.setAttribute("class", "route-line-outline");
-        routeLayer.appendChild(outline);
-
         const line = createRouteSVGElement("polyline");
         line.setAttribute("points", points);
         line.setAttribute("class", "route-line");
@@ -573,11 +513,11 @@ function renderRouteOverlay() {
     }
 
     if (routeStart) {
-        drawRouteMarker(routeStart, "A", false);
+        drawRouteMarker(routeStart, "A");
     }
 
     if (routeEnd) {
-        drawRouteMarker(routeEnd, "B", true);
+        drawRouteMarker(routeEnd, "B");
 
         if (routePath.length > 1) {
             drawDistanceLabel(routeEnd);
@@ -586,14 +526,13 @@ function renderRouteOverlay() {
 }
 
 
-function drawRouteMarker(point, text, isEnd) {
+function drawRouteMarker(point, text) {
     const screen = svgToScreen(point);
 
     const circle = createRouteSVGElement("circle");
     circle.setAttribute("cx", screen.x);
     circle.setAttribute("cy", screen.y);
-    circle.setAttribute("r", 8);
-    circle.setAttribute("class", isEnd ? "route-point route-point-end" : "route-point");
+    circle.setAttribute("class", "route-point");
     routeLayer.appendChild(circle);
 
     const label = createRouteSVGElement("text");

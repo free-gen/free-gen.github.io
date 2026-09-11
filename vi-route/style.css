@@ -4,7 +4,7 @@
 
 :root {
     /* Colors */
-    --color-water: #2C67A4;
+    --color-water: #2c68a4;
 
     --color-surface: rgba(25, 25, 25, 0.92);
     --color-surface-footer: rgba(25, 25, 25, 0.90);
@@ -17,58 +17,51 @@
     --color-text-disabled: rgba(255, 255, 255, 0.45);
     --color-text-dark: #202020;
 
-    --color-measure: #ffcc00;
-    --color-route: #e45ac1;
-
-    --color-label-outline: rgba(0, 0, 0, 0.80);
-    --color-path-outline: transparent;
+    /* Measure + Route */
+    --overlay-color: #ce44ab;
+    --overlay-text-outline: rgba(0, 0, 0, 0.80);
 
     /* Spacing */
-    --space-1: 4px;
-    --space-2: 8px;
-    --space-3: 12px;
-    --space-4: 16px;
+    --space-xs: 4px;
+    --space-sm: 8px;
+    --space-md: 12px;
+    --space-lg: 16px;
 
     /* Typography */
     --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-
     --font-size-xs: 10px;
     --font-size-sm: 12px;
     --font-size-md: 14px;
-    --font-size-lg: 16px;
 
     --font-weight-medium: 500;
-    --font-weight-bold: 800;
+    --font-weight-bold: 700;
 
-    /* UI */
-    --toolbar-top: var(--space-4);
-    --toolbar-padding: var(--space-1);
-    --toolbar-gap: var(--space-1);
+    /* Toolbar */
+    --toolbar-top: var(--space-lg);
+    --toolbar-padding: var(--space-xs);
+    --toolbar-gap: var(--space-xs);
 
     --button-height: 32px;
-    --button-padding-x: var(--space-4);
+    --button-padding-x: var(--space-lg);
 
+    /* Footer */
     --footer-height: 24px;
-    --footer-padding-x: var(--space-3);
-    --footer-gap: var(--space-3);
+    --footer-gap: var(--space-md);
+    --footer-padding-x: var(--space-md);
 
+    /* Measure + Route sizing */
+    --overlay-line-width: 6px;
+    --overlay-marker-size: 8px;
+    --overlay-label-size: 14px;
+
+    /* Shape */
     --radius-pill: 999px;
-
-    /* Map overlays */
-    --path-width: 8px;
-    --measure-outline-width: 16px;
-    --route-outline-width: 9px;
-
-    --point-size: 6px;
-    --point-stroke-width: 2px;
-
-    --label-stroke-width: 4px;
 
     /* Effects */
     --surface-blur: 8px;
     --transition-fast: 120ms ease;
 
-    /* Layer order */
+    /* Layers */
     --layer-map: 1;
     --layer-measure: 10;
     --layer-route: 12;
@@ -77,7 +70,7 @@
 
 
 /* =========================================================
-   RESET
+   BASE
    ========================================================= */
 
 * {
@@ -100,7 +93,7 @@ body {
 
 
 /* =========================================================
-   MAP VIEWPORT
+   MAP
    ========================================================= */
 
 #map {
@@ -131,15 +124,11 @@ body {
     cursor: crosshair;
 }
 
-
-/* =========================================================
-   MAP IMAGE
-   ========================================================= */
-
 #map-image {
     position: absolute;
     top: 0;
     left: 0;
+
     z-index: var(--layer-map);
 
     display: block;
@@ -169,11 +158,12 @@ body {
 
     display: flex;
     align-items: center;
-    gap: var(--toolbar-gap);
 
+    gap: var(--toolbar-gap);
     padding: var(--toolbar-padding);
 
     background: var(--color-surface);
+
     border: 1px solid var(--color-border);
     border-radius: var(--radius-pill);
 
@@ -205,8 +195,7 @@ body {
 
     transition:
         background var(--transition-fast),
-        color var(--transition-fast),
-        opacity var(--transition-fast);
+        color var(--transition-fast);
 }
 
 .tool-button:hover:not(:disabled):not(.active) {
@@ -225,7 +214,7 @@ body {
 
 
 /* =========================================================
-   OVERLAY LAYERS
+   MAP OVERLAYS
    ========================================================= */
 
 #measurement-layer,
@@ -250,22 +239,30 @@ body {
 
 
 /* =========================================================
-   SHARED OVERLAY STYLES
+   MEASURE + ROUTE
    ========================================================= */
 
 .measurement-line,
-.measurement-line-outline,
-.route-line,
-.route-line-outline {
+.route-line {
     fill: none;
+
+    stroke: var(--overlay-color);
+    stroke-width: var(--overlay-line-width);
 
     stroke-linecap: round;
     stroke-linejoin: round;
 }
 
-.measurement-line,
-.measurement-line-outline {
+.measurement-line {
     vector-effect: non-scaling-stroke;
+}
+
+.measurement-point,
+.route-point {
+    fill: var(--overlay-color);
+    stroke: none;
+
+    r: var(--overlay-marker-size);
 }
 
 .measurement-label,
@@ -274,74 +271,18 @@ body {
     fill: var(--color-text);
 
     font-family: var(--font-family);
+    font-size: var(--overlay-label-size);
     font-weight: var(--font-weight-bold);
 
     paint-order: stroke;
-    stroke: var(--color-label-outline);
-    stroke-width: var(--label-stroke-width);
+    stroke: var(--overlay-text-outline);
+    stroke-width: 3px;
     stroke-linejoin: round;
 }
 
 
 /* =========================================================
-   MEASUREMENT
-   ========================================================= */
-
-.measurement-line-outline {
-    stroke: var(--color-path-outline);
-    stroke-width: var(--measure-outline-width);
-}
-
-.measurement-line {
-    stroke: var(--color-measure);
-    stroke-width: var(--path-width);
-}
-
-.measurement-point {
-    fill: var(--color-measure);
-
-    stroke-width: var(--point-stroke-width);
-}
-
-.measurement-label {
-    font-size: var(--font-size-md);
-}
-
-
-/* =========================================================
-   ROUTE
-   ========================================================= */
-
-.route-line-outline {
-    stroke: var(--color-path-outline);
-    stroke-width: var(--route-outline-width);
-}
-
-.route-line {
-    stroke: var(--color-route);
-    stroke-width: var(--path-width);
-}
-
-.route-point,
-.route-point-end {
-    fill: var(--color-route);
-}
-
-.route-point {
-    stroke-width: var(--measure-outline-width);
-}
-
-.route-marker-label {
-    font-size: var(--font-size-lg);
-}
-
-.route-distance-label {
-    font-size: var(--font-size-md);
-}
-
-
-/* =========================================================
-   FOOTER / CREDITS
+   FOOTER
    ========================================================= */
 
 #map-credit {
@@ -358,6 +299,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+
     gap: var(--footer-gap);
 
     padding:

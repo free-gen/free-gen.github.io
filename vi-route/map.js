@@ -1,3 +1,8 @@
+const mapVersion = "0.1.0";
+const author = "FreeGen";
+document.getElementById("map-version").textContent = `v${mapVersion}`;
+document.getElementById("map-author").textContent = author;
+
 const viewport = document.getElementById("map");
 const mapImage = document.getElementById("map-image");
 const measurementLayer = document.getElementById("measurement-layer");
@@ -27,6 +32,12 @@ let startX = 0;
 let startY = 0;
 
 const activePointers = new Map();
+
+const TOUCH_TAP_TOLERANCE = 10;
+const TOUCH_CLICK_BLOCK_MS = 350;
+
+let touchGestureMoved = false;
+let blockMapClickUntil = 0;
 
 let pinchMode = false;
 let pinchStartDistance = 0;
@@ -191,14 +202,22 @@ viewport.addEventListener("pointerdown", event => {
     const pointToolActive = measurementMode || window.routeMode;
 
     if (event.pointerType === "touch") {
+        if (activePointers.size === 0) {
+            touchGestureMoved = false;
+        }
+
         activePointers.set(event.pointerId, {
             x: event.clientX,
-            y: event.clientY
+            y: event.clientY,
+            startX: event.clientX,
+            startY: event.clientY
         });
 
         viewport.setPointerCapture(event.pointerId);
 
         if (activePointers.size === 2) {
+            touchGestureMoved = true;
+            blockMapClick();
             startPinch();
             return;
         }
@@ -239,7 +258,20 @@ viewport.addEventListener("pointerdown", event => {
 
 viewport.addEventListener("pointermove", event => {
     if (event.pointerType === "touch" && activePointers.has(event.pointerId)) {
+        const pointer = activePointers.get(event.pointerId);
+
+        const movedDistance = Math.hypot(
+            event.clientX - pointer.startX,
+            event.clientY - pointer.startY
+        );
+
+        if (movedDistance > TOUCH_TAP_TOLERANCE) {
+            touchGestureMoved = true;
+            blockMapClick();
+        }
+
         activePointers.set(event.pointerId, {
+            ...pointer,
             x: event.clientX,
             y: event.clientY
         });
@@ -269,6 +301,10 @@ viewport.addEventListener("pointercancel", stopPointer);
 
 function stopPointer(event) {
     if (event.pointerType === "touch") {
+        if (touchGestureMoved || pinchMode) {
+            blockMapClick();
+        }
+
         activePointers.delete(event.pointerId);
 
         if (pinchMode && activePointers.size < 2) {
@@ -288,6 +324,7 @@ function stopPointer(event) {
             }
         } else if (activePointers.size === 0) {
             dragging = false;
+            touchGestureMoved = false;
             viewport.classList.remove("dragging");
         }
     } else {
@@ -362,17 +399,6 @@ function updatePinch() {
     requestRender();
 }
 
-function stopDragging(event) {
-    if (!dragging) return;
-
-    dragging = false;
-    viewport.classList.remove("dragging");
-
-    if (viewport.hasPointerCapture(event.pointerId)) {
-        viewport.releasePointerCapture(event.pointerId);
-    }
-}
-
 
 /* =========================================================
    MAP BOUNDS
@@ -418,6 +444,23 @@ mapImage.addEventListener("load", fitMap);
 if (mapImage.complete) {
     fitMap();
 }
+
+/* =========================================================
+   TOUCH CLICK GUARD
+   ========================================================= */
+
+function blockMapClick() {
+    blockMapClickUntil = performance.now() + TOUCH_CLICK_BLOCK_MS;
+}
+
+viewport.addEventListener("click", event => {
+    if (event.target.closest("#map-tools")) return;
+
+    if (performance.now() < blockMapClickUntil) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+    }
+}, true);
 
 
 /* =========================================================
@@ -554,7 +597,6 @@ function renderMeasurement() {
 
         circle.setAttribute("cx", point.x);
         circle.setAttribute("cy", point.y);
-        circle.setAttribute("r", 6);
         circle.setAttribute("class", "measurement-point");
 
         measurementLayer.appendChild(circle);
@@ -565,11 +607,6 @@ function renderMeasurement() {
     const pointsAttribute = screenPoints
         .map(point => `${point.x},${point.y}`)
         .join(" ");
-
-    const outline = createSVGElement("polyline");
-    outline.setAttribute("points", pointsAttribute);
-    outline.setAttribute("class", "measurement-line-outline");
-    measurementLayer.appendChild(outline);
 
     const line = createSVGElement("polyline");
     line.setAttribute("points", pointsAttribute);
