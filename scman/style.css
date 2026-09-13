@@ -1,0 +1,368 @@
+/* ============================================
+   ROOT ПЕРЕМЕННЫЕ (светлая тема по умолчанию)
+   ============================================ */
+:root {
+  /* Цвета */
+  --bg-body: #eeeeee;
+  --bg-content: #ffffff;
+  --bg-block: #f0f0f0;
+  --text-primary: #000000;
+  --text-secondary: #000000bb;
+  --accent: #47acff;
+  --link: #0058cc;
+  --border: #00000020;
+  
+  /* Для кода */
+  --code-bg: #000000;
+  --code-color: #f0f0f0;
+  
+  /* Размеры шрифтов */
+  --fs-xs: 0.7rem;
+  --fs-sm: 0.8rem;
+  --fs-md: 0.9rem;
+  --fs-lg: 1rem;
+  --fs-xl: 1.1rem;
+  --fs-xx: 1.3rem;
+  
+  /* Отступы */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 16px;
+  --sp-4: 32px;
+  
+  /* Скругления */
+  --radius: 8px;
+}
+
+/* ============================================
+   ТЁМНАЯ ТЕМА (активируется классом .dark на body)
+   ============================================ */
+.dark {
+  --bg-body: #121212;
+  --bg-content: #1e1e1e;
+  --bg-block: #2a2a2a;
+  --text-primary: #e0e0e0;
+  --text-secondary: #aaaaaa;
+  --accent: #0091ff;
+  --link: #4099ff;
+  --border: #ffffff20;
+  --code-bg: #000000;
+  --code-color: #d4d4d4;
+}
+
+.dark #content {
+  color: var(--text-primary);
+}
+
+/* Ссылки оставляем синими */
+.dark #content a {
+  color: var(--link);
+}
+
+.dark #content a:hover {
+  color: var(--accent);
+}
+
+/* Код и пре — отдельно (уже светлые) */
+.dark #content code,
+.dark #content pre {
+  color: var(--code-color);
+}
+
+/* Для всех остальных элементов внутри контента — наследуем цвет */
+.dark #content * {
+  color: inherit;
+}
+
+/* ============================================
+   RESET & БАЗА
+   ============================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--bg-body);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  padding: 0;
+  line-height: 1.7;
+  font-size: var(--fs-md);
+  max-width: 100%;
+  transition: background 0.2s, color 0.2s;
+}
+
+#content {
+  background: var(--bg-content);
+  padding: var(--sp-3) var(--sp-3);
+  max-width: 800px;
+  margin: 0 auto;
+  transition: background 0.2s;
+}
+
+/* ============================================
+   ЗАГОЛОВКИ
+   ============================================ */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-primary);
+}
+
+h1 {
+  font-size: var(--fs-xx);
+  text-align: center;
+  margin: var(--sp-3) 0 var(--sp-4);
+}
+
+h2 {
+  font-size: var(--fs-xl);
+  margin: var(--sp-4) 0;
+  padding-top: var(--sp-4);
+  position: relative;
+  padding-left: var(--sp-3);
+}
+
+h2::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: var(--sp-4);
+  width: 4px;
+  height: calc(100% - var(--sp-4));
+  background: var(--accent);
+}
+
+h3 {
+  font-size: var(--fs-lg);
+  margin: var(--sp-3) 0;
+  padding-top: var(--sp-3);
+}
+
+h4 {
+  font-size: var(--fs-md);
+  margin-bottom: var(--sp-4);
+}
+
+/* ============================================
+   ТЕКСТ
+   ============================================ */
+p {
+  color: var(--text-primary);
+  margin-bottom: var(--sp-4);
+}
+
+ul, ol {
+  margin: var(--sp-2) 0 var(--sp-4) var(--sp-3);
+}
+
+ul {
+  list-style-type: disc;
+}
+ul ul {
+  list-style-type: none;
+}
+
+strong, b {
+  color: var(--text-primary);
+}
+
+em {
+  color: var(--text-secondary);
+  margin-bottom: var(--sp-3);
+}
+
+/* ============================================
+   ССЫЛКИ
+   ============================================ */
+a {
+  color: var(--link);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+a[id] {
+  color: inherit !important;
+  text-decoration: none !important;
+}
+a[id]:hover {
+  color: inherit !important;
+  text-decoration: none !important;
+}
+a:not([href]) {
+  color: inherit !important;
+  text-decoration: none !important;
+}
+a:not([href]):hover {
+  color: inherit !important;
+  text-decoration: none !important;
+}
+
+/* ============================================
+   КОД
+   ============================================ */
+code {
+  font-family: "SF Mono", "Menlo", "Monaco", "Consolas", "Liberation Mono", "Courier New", monospace;
+  background: var(--code-bg);
+  padding: var(--sp-1);
+  border-radius: calc(var(--radius) / 2);
+  font-size: var(--fs-sm);
+  color: var(--code-color);
+}
+
+pre {
+  background: var(--code-bg);
+  padding: var(--sp-3);
+  border-radius: calc(var(--radius) / 2);
+  overflow: auto;
+  margin: var(--sp-2) 0;
+}
+
+pre code {
+  background: none;
+  padding: 0;
+  font-size: var(--fs-sm);
+  color: var(--code-color);
+}
+
+/* ============================================
+   ТАБЛИЦЫ
+   ============================================ */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: var(--sp-2) 0;
+  background: var(--bg-block);
+  border-radius: var(--radius);
+  overflow: hidden;
+  display: block;
+  overflow-x: auto;
+}
+
+th {
+  background: var(--accent);
+  padding: var(--sp-2) var(--sp-3);
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-primary);
+}
+
+td {
+  padding: var(--sp-2) var(--sp-3);
+  border-bottom: 1px solid var(--border);
+  color: var(--text-primary);
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+td, th {
+  white-space: normal;
+  word-wrap: break-word;
+  min-width: 200px;
+}
+
+/* ============================================
+   ЦИТАТЫ
+   ============================================ */
+blockquote {
+  background: var(--bg-block);
+  border-left: var(--sp-1) solid var(--accent);
+  padding: var(--sp-3);
+  margin: var(--sp-2) 0;
+  border-radius: calc(var(--radius) / 2);
+}
+
+blockquote > p {
+  margin: 0 !important;
+}
+
+blockquote, td, th {
+  color: var(--text-primary);
+  font-size: var(--fs-sm);
+  margin-bottom: var(--sp-4);
+}
+
+/* ============================================
+   ИЗОБРАЖЕНИЯ
+   ============================================ */
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+  margin: var(--sp-4) auto;
+  display: block;
+}
+
+img:not(.has-caption) {
+  margin: var(--sp-4) auto;
+  display: block;
+}
+
+.image-with-caption {
+  margin: var(--sp-4) auto;
+  display: block;
+}
+
+.image-with-caption img.has-caption {
+  margin: 0 auto;
+  display: block;
+}
+
+.image-caption {
+  display: block;
+  font-style: italic;
+  color: var(--text-secondary);
+  font-size: var(--fs-md);
+  margin-top: var(--sp-2);
+  margin-bottom: 0;
+}
+
+/* ============================================
+   КНОПКА ВВЕРХ
+   ============================================ */
+#backToTop {
+  display: none;
+  position: fixed;
+  bottom: var(--sp-4);
+  right: var(--sp-3);
+  width: calc(var(--sp-4) * 1.5);
+  height: calc(var(--sp-4) * 1.5);
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--bg-content);
+  cursor: pointer;
+  z-index: 999;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+#backToTop:hover {
+  background: var(--bg-block);
+}
+
+#backToTop svg {
+  width: 24px;
+  height: 24px;
+  fill: var(--text-secondary);
+  display: block;
+}
+
+/* ============================================
+   НАВИГАЦИЯ (если понадобится)
+   ============================================ */
+.navigation {
+  margin: var(--sp-2) 0;
+}
+.navigation a {
+  color: var(--link);
+  font-weight: 500;
+  padding: var(--sp-1) var(--sp-2);
+}
+.navigation a:hover {
+  color: var(--accent);
+  text-decoration: none;
+}
