@@ -18,8 +18,7 @@ let roadViewBox = {
     height: 0
 };
 
-let routeStart = null;
-let routeEnd = null;
+let routePoints = [];
 let routePath = [];
 let routeDistanceMeters = 0;
 
@@ -208,8 +207,7 @@ window.addEventListener("keydown", event => {
 function clearRoute() {
     routeSearchVersion++;
 
-    routeStart = null;
-    routeEnd = null;
+    routePoints = [];
     routePath = [];
     routeDistanceMeters = 0;
     routeSearchRunning = false;
@@ -223,7 +221,7 @@ function clearRoute() {
 
 
 /* =========================================================
-   SELECT A / B
+   ADD ROUTE POINT
    ========================================================= */
 
 viewport.addEventListener("click", event => {
@@ -238,43 +236,48 @@ viewport.addEventListener("click", event => {
         return;
     }
 
-    if (!routeStart || routeEnd) {
-        routeStart = snappedPoint;
-        routeEnd = null;
-        routePath = [];
-        routeDistanceMeters = 0;
-
+    /* First point */
+    if (routePoints.length === 0) {
+        routePoints.push(snappedPoint);
         renderRouteOverlay();
         return;
     }
 
-    routeEnd = snappedPoint;
+    /* Build only the new segment */
+    const previousPoint = routePoints[routePoints.length - 1];
+
     routeSearchRunning = true;
 
     const currentSearchVersion = ++routeSearchVersion;
 
     setRouteButtonStatus("Searching", true);
-    renderRouteOverlay();
 
     setTimeout(() => {
         if (currentSearchVersion !== routeSearchVersion) return;
 
-        const result = findShortestRoute(routeStart, routeEnd);
+        const result = findShortestRoute(previousPoint, snappedPoint);
 
         if (!result) {
-            routeEnd = null;
-            routePath = [];
-            routeDistanceMeters = 0;
-
+            routeSearchRunning = false;
+            setRouteButtonStatus("Route", false);
             showTemporaryMessage("Route not found");
-        } else {
-            routePath = simplifyRoute(result.points);
-
-            routeDistanceMeters =
-                result.distance *
-                ROAD_GRID_STEP *
-                (window.METERS_PER_SVG_UNIT || 1);
+            return;
         }
+
+        const segment = simplifyRoute(result.points);
+
+        if (routePath.length === 0) {
+            routePath = segment;
+        } else {
+            routePath.push(...segment.slice(1));
+        }
+
+        routePoints.push(snappedPoint);
+
+        routeDistanceMeters +=
+            result.distance *
+            ROAD_GRID_STEP *
+            (window.METERS_PER_SVG_UNIT || 1);
 
         routeSearchRunning = false;
         setRouteButtonStatus("Route", false);
@@ -504,25 +507,37 @@ function renderRouteOverlay() {
 
     if (routePath.length > 1) {
         const screenPoints = routePath.map(svgToScreen);
-        const points = screenPoints.map(point => `${point.x},${point.y}`).join(" ");
+
+        const points = screenPoints
+            .map(point => `${point.x},${point.y}`)
+            .join(" ");
 
         const line = createRouteSVGElement("polyline");
         line.setAttribute("points", points);
         line.setAttribute("class", "route-line");
+
         routeLayer.appendChild(line);
     }
 
-    if (routeStart) {
-        drawRouteMarker(routeStart, "A");
+    for (const point of routePoints) {
+        drawRoutePoint(point);
     }
 
-    if (routeEnd) {
-        drawRouteMarker(routeEnd, "B");
-
-        if (routePath.length > 1) {
-            drawDistanceLabel(routeEnd);
-        }
+    if (routePoints.length > 1) {
+        const lastPoint = routePoints[routePoints.length - 1];
+        drawDistanceLabel(lastPoint);
     }
+}
+
+function drawRoutePoint(point) {
+    const screen = svgToScreen(point);
+
+    const circle = createRouteSVGElement("circle");
+    circle.setAttribute("cx", screen.x);
+    circle.setAttribute("cy", screen.y);
+    circle.setAttribute("class", "route-point");
+
+    routeLayer.appendChild(circle);
 }
 
 
