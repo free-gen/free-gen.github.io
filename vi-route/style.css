@@ -224,7 +224,6 @@ body {
     stroke-linejoin: round;
 }
 
-
 /* =========================================================
    FOOTER
    ========================================================= */
@@ -263,4 +262,29 @@ body {
 .credit-source,
 .credit-copyright {
     color: var(--text-muted);
+}
+
+/* =========================================================
+   RELEASE COUNTDOWN
+   ========================================================= */
+
+#release-countdown {
+    position: absolute;
+    right: 8px;
+    bottom: calc(var(--footer-height) + 8px + env(safe-area-inset-bottom));
+    z-index: 20;
+
+    display: flex;
+    gap: 8px;
+
+    padding: 4px 8px;
+
+    background: var(--surface);
+    color: var(--text);
+
+    font-size: 12px;
+    font-family: monospace;
+
+    white-space: nowrap;
+    pointer-events: none;
 }

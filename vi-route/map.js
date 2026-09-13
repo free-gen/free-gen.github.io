@@ -1,7 +1,34 @@
-const mapVersion = "0.2.0";
+const mapVersion = "0.3.0";
 const author = "FreeGen";
+const RELEASE_DATE = new Date("2026-11-19T00:00:00+02:00");
+
 document.getElementById("map-version").textContent = `v${mapVersion}`;
 document.getElementById("map-author").textContent = author;
+
+const releaseTimer = document.getElementById("release-timer");
+
+function updateReleaseTimer() {
+    const diff = RELEASE_DATE - new Date();
+
+    if (diff <= 0) {
+        releaseTimer.textContent = "Released";
+        return;
+    }
+
+    const days = Math.floor(diff / 86400000);
+    const hours = Math.floor(diff / 3600000) % 24;
+    const minutes = Math.floor(diff / 60000) % 60;
+    const seconds = Math.floor(diff / 1000) % 60;
+
+    releaseTimer.textContent =
+        `${days}d ` +
+        `${String(hours).padStart(2, "0")}h ` +
+        `${String(minutes).padStart(2, "0")}m ` +
+        `${String(seconds).padStart(2, "0")}s`;
+}
+
+updateReleaseTimer();
+setInterval(updateReleaseTimer, 1000);
 
 const viewport = document.getElementById("map");
 const mapImage = document.getElementById("map-image");
