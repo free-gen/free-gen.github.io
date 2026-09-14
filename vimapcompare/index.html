@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>GTA VI Map Scale Compare</title>
+
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    >
+
+    <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+        }
+
+        body {
+            overflow: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        #controls {
+            position: fixed;
+            top: 12px;
+            left: 48px;
+            z-index: 1000;
+
+            display: grid;
+            gap: 8px;
+
+            padding: 10px 12px;
+            background: rgba(25, 25, 25, 0.9);
+            border-radius: 8px;
+
+            color: #fff;
+            font-size: 13px;
+        }
+
+        #controls label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+
+        #opacity {
+            width: 140px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div id="map"></div>
+
+<div id="controls">
+    <label>
+        <input id="overlay-toggle" type="checkbox" checked>
+        GTA VI map
+    </label>
+
+    <label>
+        Opacity
+        <input id="opacity" type="range" min="0" max="1" step="0.05" value="0.9">
+    </label>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+    /*
+        Current SVG:
+        width  = 12061 units = 12061 m
+        height = 17441 units = 17441 m
+
+        Default placement:
+        centered on Miami for scale comparison.
+    */
+
+    const SVG_URL = "./map.svg";
+
+    const SVG_WIDTH_METERS = 12061;
+    const SVG_HEIGHT_METERS = 17441;
+
+    const CENTER = {
+        lat: 59.9343,
+        lng: 30.3351
+    };
+
+    const EARTH_RADIUS = 6378137;
+
+    function offsetLatLng(lat, lng, eastMeters, northMeters) {
+        const latRad = lat * Math.PI / 180;
+
+        const dLat = northMeters / EARTH_RADIUS;
+        const dLng = eastMeters / (EARTH_RADIUS * Math.cos(latRad));
+
+        return [
+            lat + dLat * 180 / Math.PI,
+            lng + dLng * 180 / Math.PI
+        ];
+    }
+
+    const southWest = offsetLatLng(
+        CENTER.lat,
+        CENTER.lng,
+        -SVG_WIDTH_METERS / 2,
+        -SVG_HEIGHT_METERS / 2
+    );
+
+    const northEast = offsetLatLng(
+        CENTER.lat,
+        CENTER.lng,
+        SVG_WIDTH_METERS / 2,
+        SVG_HEIGHT_METERS / 2
+    );
+
+    const overlayBounds = [southWest, northEast];
+
+    const map = L.map("map", {
+        worldCopyJump: true
+    });
+
+    const streetLayer = L.tileLayer(
+        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        {
+            maxZoom: 19,
+            attribution: "&copy; OpenStreetMap contributors"
+        }
+    );
+
+    const satelliteLayer = L.tileLayer(
+        "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+        {
+            maxZoom: 19,
+            attribution: "Tiles © Esri"
+        }
+    );
+
+    const darkLayer = L.tileLayer(
+        "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
+        {
+            maxZoom: 20,
+            attribution: "&copy; OpenStreetMap &copy; CARTO"
+        }
+    );
+
+    const lightLayer = L.tileLayer(
+        "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+        {
+            maxZoom: 20,
+            attribution: "&copy; OpenStreetMap &copy; CARTO"
+        }
+    );
+
+    const topoLayer = L.tileLayer(
+        "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
+        {
+            maxZoom: 17,
+            attribution: "Map data © OpenStreetMap contributors, SRTM | Map style © OpenTopoMap"
+        }
+    );
+
+    const voyagerLayer = L.tileLayer(
+        "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
+        {
+            maxZoom: 20,
+            attribution: "&copy; OpenStreetMap &copy; CARTO"
+        }
+    );
+
+    satelliteLayer.addTo(map);
+
+    L.control.layers({
+        "Street": streetLayer,
+        "Satellite": satelliteLayer,
+        "Dark": darkLayer,
+        "Light": lightLayer,
+        "Topo": topoLayer,
+        "Voyager": voyagerLayer
+    }).addTo(map);
+
+    const gtaOverlay = L.imageOverlay(SVG_URL, overlayBounds, {
+        opacity: 0.9,
+        interactive: false
+    }).addTo(map);
+
+    map.fitBounds(overlayBounds, {
+        padding: [40, 40]
+    });
+
+    const toggle = document.getElementById("overlay-toggle");
+    const opacity = document.getElementById("opacity");
+
+    toggle.addEventListener("change", () => {
+        if (toggle.checked) {
+            gtaOverlay.addTo(map);
+        } else {
+            map.removeLayer(gtaOverlay);
+        }
+    });
+
+    opacity.addEventListener("input", () => {
+        gtaOverlay.setOpacity(Number(opacity.value));
+    });
+
+    map.on("click", event => {
+    CENTER.lat = event.latlng.lat;
+    CENTER.lng = event.latlng.lng;
+
+    const southWest = offsetLatLng(
+        CENTER.lat,
+        CENTER.lng,
+        -SVG_WIDTH_METERS / 2,
+        -SVG_HEIGHT_METERS / 2
+    );
+
+    const northEast = offsetLatLng(
+        CENTER.lat,
+        CENTER.lng,
+        SVG_WIDTH_METERS / 2,
+        SVG_HEIGHT_METERS / 2
+    );
+
+    gtaOverlay.setBounds([southWest, northEast]);
+    });
+</script>
+
+</body>
+</html>
