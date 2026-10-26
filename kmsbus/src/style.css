@@ -1,252 +1,461 @@
-/* ================== VARIABLES ================== */
+/* ==========================================================================
+   16BUS — стили приложения
+   ==========================================================================
+
+   Секции:
+   1. Цветовая схема
+   2. Переменные размеров и типографики
+   3. Базовые стили
+   4. Заголовки и текст
+   5. Разделители
+   6. Универсальные контейнеры-пилюли
+   7. Кнопки выбора
+   8. Направление маршрута
+   9. Компактные группы переключателей
+  10. Выбор остановки
+  11. Результат и обновление расписания
+  12. Подсказка установки PWA
+
+   Цвета и размеры задаются через CSS-переменные,
+   чтобы менять оформление приложения в одном месте.
+*/
+
+
+/* ==========================================================================
+   1. ЦВЕТОВАЯ СХЕМА
+   ========================================================================== */
+
+/* Светлая тема используется по умолчанию. */
+:root,
+:root[data-theme="light"] {
+    color-scheme: light;
+
+    --bg: #FFFFFF;
+
+    --btn-primary: #FBFBFB;
+    --btn-secondary: #EEEEEE;
+
+    --border: #C8C8C8;
+
+    --text-primary: #333333;
+    --text-secondary: #555555;
+    --text-active: #111111;
+
+    --link: #0000FF;
+}
+
+/* Тёмная тема для устройств с соответствующей системной настройкой. */
+@media (prefers-color-scheme: dark) {
+    :root {
+        color-scheme: dark;
+
+        --bg: #000000;
+
+        --btn-primary: #161616;
+        --btn-secondary: #0A0A0A;
+
+        --border: #303030;
+
+        --text-primary: #D0D0D0;
+        --text-secondary: #888888;
+        --text-active: #F0F0F0;
+
+        --link: #00AAFF;
+    }
+}
+
+
+/* ==========================================================================
+   2. ПЕРЕМЕННЫЕ РАЗМЕРОВ И ТИПОГРАФИКИ
+   ========================================================================== */
 
 :root {
-  --bg: #ffffff;
-  --btn-primary: #fbfbfb;
-  --btn-secondary: #eeeeee;
-  --border: #c8c8c8;
-  --text-primary: #333;
-  --text-secondary: #555;
-  --text-active: #111;
-  --link: #00f;
+    /* Геометрия элементов. */
+    --pill-radius: 25px;
+    --pill-height: 50px;
+    --body-padding: 15px;
+    --border-height: 1px;
 
-  --pill-radius: 25px;
-  --pill-height: 50px;
-  --body-padding: 15px;
-  --border-height: 1px;
+    /* Размеры текста. */
+    --fontsize-header: 2rem;
+    --fontsize-subscription: 1rem;
+    --fontsize-pillheader: 0.9rem;
+    --fontsize-pill: 0.8rem;
+    --fontsize-result: 0.9rem;
+    --fontsize-footer: 0.8rem;
 
-  --fontsize-header: 2rem;
-  --fontsize-subscription: 1rem;
-  --fontsize-pillheader: 0.9rem;
-  --fontsize-pill: 0.8rem;
-  --fontsize-result: 0.9rem;
-  --fontsize-footer: 0.8rem;
+    /* Отступы и скругление подсказки PWA. */
+    --hint-offset: 15px;
+    --hint-padding: 15px;
+    --hint-radius: 15px;
 }
 
-/* ================== BASE ================== */
+
+/* ==========================================================================
+   3. БАЗОВЫЕ СТИЛИ
+   ========================================================================== */
 
 body {
-  margin: 0;
-  padding: var(--body-padding);
-  font-family: "JetBrains Mono", sans-serif;
-  background: var(--bg);
+    margin: 0;
+    padding: var(--body-padding);
+
+    font-family: "JetBrains Mono", sans-serif;
+
+    background: var(--bg);
 }
 
+/* Единое поведение интерактивных элементов. */
 button,
 select {
-  font-family: inherit;
-  cursor: pointer;
-  box-sizing: border-box;
-  appearance: none;
+    box-sizing: border-box;
+    font-family: inherit;
+    cursor: pointer;
+    appearance: none;
 }
 
-/* ================== TYPOGRAPHY ================== */
+
+/* ==========================================================================
+   4. ЗАГОЛОВКИ И ТЕКСТ
+   ========================================================================== */
 
 h1 {
-  font-size: var(--fontsize-header);
-  font-weight: 800;
-  text-align: center;
-  color: var(--text-primary);
-}
+    color: var(--text-primary);
 
-h3 {
-  font-size: var(--fontsize-subscription);
-  text-align: center;
-  font-weight: normal;
+    font-size: var(--fontsize-header);
+    font-weight: 800;
+    text-align: center;
 }
 
 h2 {
-  font-size: var(--fontsize-pillheader);
-  font-weight: 400;
-  text-align: center;
-  color: var(--text-primary);
+    color: var(--text-primary);
+
+    font-size: var(--fontsize-pillheader);
+    font-weight: 400;
+    text-align: center;
 }
 
-.footer {
-  font-size: var(--fontsize-footer);
-  color: var(--text-secondary);
-  margin-bottom: 5rem;
+h3 {
+    font-size: var(--fontsize-subscription);
+    font-weight: normal;
+    text-align: center;
 }
 
 a {
-  color: var(--link);
-  font-weight: 700;
-  text-decoration: none;
+    color: var(--link);
+
+    font-weight: 700;
+    text-decoration: none;
 }
 
-/* ================== DIVIDERS ================== */
+.footer {
+    margin-bottom: 5rem;
+
+    color: var(--text-secondary);
+    font-size: var(--fontsize-footer);
+}
+
+
+/* ==========================================================================
+   5. РАЗДЕЛИТЕЛИ И ОТСТУПЫ
+   ========================================================================== */
 
 hr {
-  border: none;
-  border-top: var(--border-height) solid var(--border);
-  margin: 2.5rem calc(-1 * var(--body-padding));
+    margin: 2.5rem calc(-1 * var(--body-padding));
+
+    border: none;
+    border-top: var(--border-height) solid var(--border);
 }
 
+/* Отступы вокруг верхней и нижней частей результата. */
 .result-top,
 .result-bottom {
-  margin-top: 1.25rem;
-  margin-bottom: 1.25rem;
+    margin-block: 1.25rem;
 }
 
-/* ================== UNIVERSAL PILL STYLES ================== */
 
+/* ==========================================================================
+   6. УНИВЕРСАЛЬНЫЕ КОНТЕЙНЕРЫ-ПИЛЮЛИ
+   ========================================================================== */
+
+/* Общий контейнер для групп связанных элементов. */
 .pill {
-  display: flex;
-  align-items: stretch;
-  min-height: var(--pill-height);
-  border: var(--border-height) solid var(--border);
-  border-radius: var(--pill-radius);
-  background: var(--btn-secondary);
-  overflow: hidden;
-  font-size: var(--fontsize-pill);
+    display: flex;
+    align-items: stretch;
+
+    min-height: var(--pill-height);
+
+    overflow: hidden;
+
+    border: var(--border-height) solid var(--border);
+    border-radius: var(--pill-radius);
+
+    background: var(--btn-secondary);
+
+    font-size: var(--fontsize-pill);
 }
 
+/* Текстовая область внутри пилюли. */
 .pill-content {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px;
-  font-weight: 500;
-  font-size: var(--fontsize-pill);
-  background: var(--btn-primary);
-  color: var(--text-primary);
-  text-align: center;
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+
+    padding: 10px;
+
+    background: var(--btn-primary);
+
+    color: var(--text-primary);
+    font-size: var(--fontsize-pill);
+    font-weight: 500;
+    text-align: center;
 }
 
-/* ================== PILL BUTTON (активная кнопка-пилюля) ================== */
 
+/* ==========================================================================
+   7. КНОПКИ ВЫБОРА
+   ========================================================================== */
+
+/* Неактивная кнопка переключателя. */
 .pill-btn {
-  font-size: var(--fontsize-pill);
-  padding: 0 5px;
-  flex: 1 1 0;
-  margin: 0;
-  font-weight: 300;
-  line-height: 1.2;
-  background: transparent;
-  border: none;
-  border-radius: var(--pill-radius);
-  color: var(--text-secondary);
+    flex: 1 1 0;
+
+    margin: 0;
+    padding: 0 5px;
+
+    border: none;
+    border-radius: var(--pill-radius);
+
+    background: transparent;
+
+    color: var(--text-secondary);
+    font-size: var(--fontsize-pill);
+    font-weight: 300;
+    line-height: 1.2;
 }
 
+/* Выбранное значение. */
 .pill-btn.active {
-  background: var(--btn-primary);
-  color: var(--text-primary);
-  font-weight:500;
-  border: var(--border-height) solid var(--border);
-  margin: -1px;
-  z-index: 2;
+    z-index: 2;
+
+    flex: 1 1 0;
+
+    margin: -1px;
+
+    border: var(--border-height) solid var(--border);
+    border-radius: var(--pill-radius);
+
+    background: var(--btn-primary);
+
+    color: var(--text-primary);
+    font-weight: 500;
 }
 
-/* ================== DIRECTION PILL (с кнопкой swap) ================== */
 
+/* ==========================================================================
+   8. НАПРАВЛЕНИЕ МАРШРУТА
+   ========================================================================== */
+
+/* Контейнер направления использует основной цвет фона. */
 .pillDirection .pill {
-  background: var(--btn-primary);
+    background: var(--btn-primary);
 }
 
+/* Названия начальной и конечной остановок. */
 .pill-text {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px;
-  font-weight: 500;
-  color: var(--text-primary);
-  text-align: center;
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+
+    padding: 10px;
+
+    color: var(--text-primary);
+    font-weight: 500;
+    text-align: center;
 }
 
+/* Кнопка смены направления маршрута. */
 .direction-btn {
-  width: var(--pill-height);
-  flex: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  background: var(--btn-primary);
-  border: none;
-  border-left: var(--border-height) solid var(--border);
-  border-right: var(--border-height) solid var(--border);
-  color: var(--text-primary);
+    display: flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+
+    width: var(--pill-height);
+    padding: 0;
+
+    border: none;
+    border-right: var(--border-height) solid var(--border);
+    border-left: var(--border-height) solid var(--border);
+
+    background: var(--btn-primary);
+
+    color: var(--text-primary);
 }
 
-/* ================== BLOCK SPACING ================== */
 
+/* ==========================================================================
+   9. КОМПАКТНЫЕ ГРУППЫ ПЕРЕКЛЮЧАТЕЛЕЙ
+   ========================================================================== */
+
+/* Расстояния между основными блоками. */
 .pillBlock,
 .pillDirection,
 .pillBusStop {
-  margin-bottom: 2rem;
+    margin-bottom: 2rem;
 }
 
+/* Дополнительный отступ после выбора остановки. */
 .pillBusStop {
-  margin-bottom: 3rem;
+    margin-bottom: 3rem;
 }
 
-/* ================== COMPACT CONTROLS (2 пилюли в ряд) ================== */
-
+/* Две группы переключателей в одной строке. */
 .pillRow {
-  display: flex;
-  gap: 1rem;
-  margin-bottom: 2rem;
+    display: flex;
+    gap: 1rem;
+
+    margin-bottom: 2rem;
 }
 
-.pillBlock {
-  flex: 1;
-  margin-bottom: 0;
+/* Группы делят доступную ширину поровну. */
+.pillRow .pillBlock {
+    flex: 1;
+
+    margin-bottom: 0;
 }
 
+/* Выбранная кнопка занимает больше места в компактной группе. */
 .pillRow .pill-btn.active {
-  flex: 1.5 1 0;
+    flex: 1.5 1 0;
 }
 
-/* ================== DIRECTION PILL (с кнопкой swap) ================== */
 
-.direction-btn {
-  width: 50px;
-  flex: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  background: var(--btn-primary);
-  border-left: var(--border-height) solid var(--border);
-  border-right: var(--border-height) solid var(--border);
-  color: var(--text-primary);
-}
+/* ==========================================================================
+   10. ВЫБОР ОСТАНОВКИ
+   ========================================================================== */
 
-/* ================== SELECT PILL ================== */
-
+/* Область выпадающего списка внутри пилюли. */
 .pill-select {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--btn-primary);
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+
+    background: var(--btn-primary);
 }
 
+/* Сам список остановок. */
 .pill-select select {
-  font-size: var(--fontsize-pill);
-  width: 100%;
-  height: 100%;
-  border: none;
-  outline: none;
-  padding: 10px;
-  font-weight: 500;
-  color: var(--text-primary);
-  text-align: center;
-  text-align-last: center;
-  background: var(--btn-primary);
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+
+    border: none;
+    outline: none;
+
+    background: var(--btn-primary);
+
+    color: var(--text-primary);
+    font-size: var(--fontsize-pill);
+    font-weight: 500;
+    text-align: center;
+    text-align-last: center;
 }
 
+/* Пункты раскрытого списка выравниваются по левому краю. */
 select option {
-  text-align: left;
+    text-align: left;
 }
 
-/* ================== RESULT ================== */
 
+/* ==========================================================================
+   11. РЕЗУЛЬТАТ И ОБНОВЛЕНИЕ РАСПИСАНИЯ
+   ========================================================================== */
+
+/* Строка результата и кнопка обновления располагаются рядом. */
+.result-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Текст результата занимает всё доступное пространство. */
 #result {
-  font-size: var(--fontsize-result);
-  font-weight: 600;
-  color: var(--text-active);
-  white-space: pre-line;
-  text-align: left;
+    flex: 1;
+    min-width: 0;
+
+    color: var(--text-active);
+    font-size: var(--fontsize-result);
+    font-weight: 600;
+    text-align: left;
+    white-space: pre-line;
+}
+
+/* Круглая кнопка обновления расписания. */
+.refresh-btn {
+    flex: none;
+
+    width: var(--pill-height);
+    height: var(--pill-height);
+
+    border: var(--border-height) solid var(--border);
+    border-radius: 50%;
+}
+
+/* Значок должен поддерживать CSS-трансформации. */
+.refresh-btn .material-icons {
+    display: inline-block;
+}
+
+
+/* ==========================================================================
+   12. ПОДСКАЗКА УСТАНОВКИ PWA
+   ========================================================================== */
+
+/* Плавающая подсказка в нижней части экрана. */
+.pwa-hint {
+    position: fixed;
+    z-index: 1000;
+
+    right: var(--hint-offset);
+    bottom: var(--hint-offset);
+    left: var(--hint-offset);
+
+    display: flex;
+    align-items: center;
+    gap: var(--hint-padding);
+
+    padding: var(--hint-padding);
+
+    border: var(--border-height) solid var(--border);
+    border-radius: var(--hint-radius);
+
+    background: var(--btn-primary);
+    color: var(--text-primary);
+
+    box-shadow: 0 4px 20px #0003;
+
+    font-size: var(--fontsize-footer);
+    line-height: 1.4;
+}
+
+/* Атрибут hidden должен полностью скрывать подсказку. */
+.pwa-hint[hidden] {
+    display: none;
+}
+
+/* Кнопка закрытия подсказки. */
+#pwa-hint-close {
+    flex: none;
+
+    padding: 0;
+
+    border: none;
+
+    background: transparent;
+
+    color: var(--text-secondary);
+    font-size: var(--fontsize-header);
 }
