@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+
     <link rel="icon" type="image/png" sizes="16x16" href="src/icon/favicon-16x16.png">
     <link rel="icon" type="image/png" sizes="32x32" href="src/icon/favicon-32x32.png">
     <link rel="apple-touch-icon" sizes="180x180" href="src/icon/apple-touch-icon.png">
@@ -23,6 +26,18 @@
 </head>
 
 <body>
+
+
+
+<div id="pwa-hint" class="pwa-hint" hidden>
+    <span>
+        Сервис может работать как отдельное веб-приложение.<br><br>
+        Чтобы добавить его на главный экран, откройте меню браузера и выберите «Установить и создать ярлык» или «На экран Домой».<br><br>
+        <small>Для установки на Android рекомендуется браузер Google Chrome.</small>
+    </span>
+    <button id="pwa-hint-close" type="button" aria-label="Закрыть">×</button>
+</div>
+
 
 <h1 id="routeHeader">routeHeader</h1>
 <h3 id="routeSubscription">routeSubscription</h3>
@@ -65,7 +80,13 @@
 
 <hr class="result-top">
 
-<div id="result"></div>
+<div class="result-row">
+    <div id="result"></div>
+
+    <button id="refreshButton" class="direction-btn refresh-btn" type="button" aria-label="Обновить расписание">
+        <span class="material-icons">refresh</span>
+    </button>
+</div>
 
 <hr class="result-bottom">
 
